@@ -4,16 +4,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data.Entity;
+using MVVMFirma.Models.EntitiesForView;
+using MVVMFirma.Models.BusinessLogic;
+
+
 
 namespace MVVMFirma.ViewModels
 {
     public class NowyUdogodnieniaKlasPokojuViewModel : JedenViewModel<UdogodnieniaKlasPokoju>
     {
+        #region DB
+        HotelEntities db;
+        #endregion
+
         #region Constructor
         public NowyUdogodnieniaKlasPokojuViewModel()
             :base("Udogodnienie klasy pokoju")
         {
             item = new UdogodnieniaKlasPokoju();
+            db = new HotelEntities();
         }
         #endregion
 
@@ -54,6 +64,22 @@ namespace MVVMFirma.ViewModels
             {
                 item.IdUdogodnienia = value;
                 OnPropertyChanged(() => IdUdogodnienia);
+            }
+        }
+
+        public IQueryable<KeyAndValue> KlasaPokojuItems
+        {
+            get
+            {
+                return new KlasaPokojuB(db).GetKlasaPokojuKeyAndValueItems();
+            }
+        }
+
+        public IQueryable<KeyAndValue> UdogodnienieItems
+        {
+            get
+            {
+                return new UdogodnienieB(db).GetUdogodnienieKeyAndValueItems();
             }
         }
         #endregion

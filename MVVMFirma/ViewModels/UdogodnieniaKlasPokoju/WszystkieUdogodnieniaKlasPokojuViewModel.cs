@@ -9,12 +9,12 @@ using System.Threading.Tasks;
 
 namespace MVVMFirma.ViewModels
 {
-    public class WszystkieUdogodnieniaKlasPokojuViewModel : WszystkieViewModel<UdogodnieniaKlasPokoju>
+    public class WszystkieUdogodnieniaKlasPokojuViewModel : WszystkieViewModel<UdogodnieniaKlasPokojuForAllView>
     {
         #region Constructor
         public WszystkieUdogodnieniaKlasPokojuViewModel()
         {
-            base.DisplayName = "Rezerwacje";
+            base.DisplayName = "Udogodnienia klas pokojów";
         }
         #endregion
 
@@ -27,7 +27,8 @@ namespace MVVMFirma.ViewModels
                     select new UdogodnieniaKlasPokojuForAllView
                     {
                         IdPolaczenia = udogodnieniaKlas.IdPolaczenia,
-                        
+                        NazwaKlasyPokoju = udogodnieniaKlas.KlasaPokoju.Nazwa,
+                        NazwaUdogodnienia = udogodnieniaKlas.Udogodnienie.Nazwa
                     }
                 );
         }

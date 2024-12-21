@@ -167,7 +167,15 @@ namespace MVVMFirma.ViewModels
 
                 new CommandViewModel(
                     "Pokoje",
-                    new BaseCommand(() => this.ShowAllView(new WszystkiePokojViewModel())))
+                    new BaseCommand(() => this.ShowAllView(new WszystkiePokojViewModel()))),
+
+                /*new CommandViewModel(
+                    "Udogodnienie klasy pokoju",
+                    new BaseCommand(() => this.CreateView(new NowyUdogodnieniaKlasPokojuViewModel()))),*/
+
+                new CommandViewModel(
+                    "Udogodnienia klas pokojów",
+                    new BaseCommand(() => this.ShowAllView(new WszystkieUdogodnieniaKlasPokojuViewModel())))
             };
         }
         #endregion
@@ -264,7 +272,8 @@ namespace MVVMFirma.ViewModels
                 CreateView(new NowyTypPokojuViewModel()); 
             if (name == "Typy usługAdd")
                 CreateView(new NowyTypUslugiViewModel());
-            // tu dla udogodnień klas pokojów
+            if (name == "Udogodnienia klas pokojówAdd")
+                CreateView(new NowyUdogodnieniaKlasPokojuViewModel());
             if (name == "UdogodnieniaAdd")
                 CreateView(new NowyUdogodnienieViewModel());
             if (name == "UsługiAdd")

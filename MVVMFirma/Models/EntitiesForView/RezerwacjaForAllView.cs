@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MVVMFirma.Models.EntitiesForView
 {
-    public class UdogodnieniaKlasPokojuForAllView
+    public class RezerwacjaForAllView
     {
         public int IdRezerwacji {  get; set; }
         public int IdKlienta { get; set; } // klucz obcy

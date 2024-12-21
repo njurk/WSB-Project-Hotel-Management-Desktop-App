@@ -10,7 +10,7 @@ using System.Windows.Documents;
 
 namespace MVVMFirma.ViewModels
 {
-    public class WszystkieRezerwacjaViewModel : WszystkieViewModel<UdogodnieniaKlasPokojuForAllView>
+    public class WszystkieRezerwacjaViewModel : WszystkieViewModel<RezerwacjaForAllView>
     {
         #region Constructor
         public WszystkieRezerwacjaViewModel()

@@ -132,6 +132,14 @@
         <vw:NowyPokojView/>
     </DataTemplate>
 
+    <DataTemplate DataType="{x:Type vm:WszystkieUdogodnieniaKlasPokojuViewModel}">
+        <vw:WszystkieUdogodnieniaKlasPokojuView/>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:NowyUdogodnieniaKlasPokojuViewModel}">
+        <vw:NowyUdogodnieniaKlasPokojuView/>
+    </DataTemplate>
+
 
     <Style x:Key="MainHCCStyle" TargetType="{x:Type HeaderedContentControl}">
         <Setter Property="HeaderTemplate">

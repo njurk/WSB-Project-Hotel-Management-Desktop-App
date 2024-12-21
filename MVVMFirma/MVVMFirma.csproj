@@ -87,7 +87,11 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Helper\BaseCommand.cs" />
+    <Compile Include="Models\BusinessLogic\DatabaseClass.cs" />
+    <Compile Include="Models\BusinessLogic\KlasaPokojuB.cs" />
+    <Compile Include="Models\BusinessLogic\UdogodnienieB.cs" />
     <Compile Include="Models\EntitiesForView\FakturaForAllView.cs" />
+    <Compile Include="Models\EntitiesForView\KeyAndValue.cs" />
     <Compile Include="Models\EntitiesForView\PlatnoscForAllView.cs" />
     <Compile Include="Models\EntitiesForView\PokojForAllView.cs" />
     <Compile Include="Models\EntitiesForView\PracownikForAllView.cs" />
@@ -176,7 +180,6 @@
     <Compile Include="ViewModels\Klient\NowyKlientViewModel.cs" />
     <Compile Include="ViewModels\Klient\WszystkieKlientViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
-    <Compile Include="ViewModels\NowyUdogodnieniaKlasPokojuViewModel.cs" />
     <Compile Include="ViewModels\Pietro\NowyPietroViewModel.cs" />
     <Compile Include="ViewModels\Pietro\WszystkiePietroViewModel.cs" />
     <Compile Include="ViewModels\Platnosc\NowyPlatnoscViewModel.cs" />
@@ -199,12 +202,13 @@
     <Compile Include="ViewModels\TypPokoju\WszystkieTypPokojuViewModel.cs" />
     <Compile Include="ViewModels\TypUslugi\NowyTypUslugiViewModel.cs" />
     <Compile Include="ViewModels\TypUslugi\WszystkieTypUslugiViewModel.cs" />
+    <Compile Include="ViewModels\UdogodnieniaKlasPokoju\NowyUdogodnieniaKlasPokojuViewModel.cs" />
+    <Compile Include="ViewModels\UdogodnieniaKlasPokoju\WszystkieUdogodnieniaKlasPokojuViewModel.cs" />
     <Compile Include="ViewModels\Udogodnienie\NowyUdogodnienieViewModel.cs" />
     <Compile Include="ViewModels\Udogodnienie\WszystkieUdogodnienieViewModel.cs" />
     <Compile Include="ViewModels\Usluga\NowyUslugaViewModel.cs" />
     <Compile Include="ViewModels\Usluga\WszystkieUslugaViewModel.cs" />
     <Compile Include="ViewModels\WorkspaceViewModel.cs" />
-    <Compile Include="ViewModels\WszystkieUdogodnieniaKlasPokojuViewModel.cs" />
     <Compile Include="ViewModels\WszystkieViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
@@ -229,9 +233,6 @@
     </Compile>
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\NowyUdogodnieniaKlasPokojuView.xaml.cs">
-      <DependentUpon>NowyUdogodnieniaKlasPokojuView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Pietro\NowyPietroView.xaml.cs">
       <DependentUpon>NowyPietroView.xaml</DependentUpon>
@@ -299,6 +300,12 @@
     <Compile Include="Views\TypUslugi\WszystkieTypUslugiView.xaml.cs">
       <DependentUpon>WszystkieTypUslugiView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\UdogodnieniaKlasPokoju\NowyUdogodnieniaKlasPokojuView.xaml.cs">
+      <DependentUpon>NowyUdogodnieniaKlasPokojuView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UdogodnieniaKlasPokoju\WszystkieUdogodnieniaKlasPokojuView.xaml.cs">
+      <DependentUpon>WszystkieUdogodnieniaKlasPokojuView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Udogodnienie\NowyUdogodnienieView.xaml.cs">
       <DependentUpon>NowyUdogodnienieView.xaml</DependentUpon>
     </Compile>
@@ -310,9 +317,6 @@
     </Compile>
     <Compile Include="Views\Usluga\WszystkieUslugaView.xaml.cs">
       <DependentUpon>WszystkieUslugaView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\WszystkieUdogodnieniaKlasPokojuView.xaml.cs">
-      <DependentUpon>WszystkieUdogodnieniaKlasPokojuView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\WszystkieViewBase.cs" />
   </ItemGroup>
@@ -383,10 +387,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\MainWindowResources.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\NowyUdogodnieniaKlasPokojuView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -478,6 +478,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\UdogodnieniaKlasPokoju\NowyUdogodnieniaKlasPokojuView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\UdogodnieniaKlasPokoju\WszystkieUdogodnieniaKlasPokojuView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\Udogodnienie\NowyUdogodnienieView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -494,20 +502,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\WszystkieUdogodnieniaKlasPokojuView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ViewModels\RezerwacjaPokoju\" />
-    <Folder Include="ViewModels\UdogodnieniaKlasPokoju\" />
-    <Folder Include="Views\RezerwacjaPokoje\" />
-    <Folder Include="Views\UdogodnieniaKlasPokoju\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="Models\Entities\ModelHotel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
