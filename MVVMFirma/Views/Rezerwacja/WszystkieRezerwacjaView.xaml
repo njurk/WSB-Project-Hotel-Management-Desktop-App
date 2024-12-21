@@ -1,0 +1,28 @@
+﻿<local:WszystkieViewBase x:Class="MVVMFirma.Views.WszystkieRezerwacjaView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MVVMFirma.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="1400">
+    <Grid>
+        <DataGrid CanUserAddRows="False" IsReadOnly="True" CanUserDeleteRows="False" AutoGenerateColumns="False" ItemsSource="{Binding List}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID rezerwacji" Binding="{Binding IdRezerwacji}"/>
+                <DataGridTextColumn Header="ID klienta" Binding="{Binding IdKlienta}"/>
+                <DataGridTextColumn Header="Imie klienta" Binding="{Binding IdKlientaImie}"/>
+                <DataGridTextColumn Header="Nazwisko klienta" Binding="{Binding IdKlientaNazwisko}"/>
+                <DataGridTextColumn Header="ID pracownika" Binding="{Binding IdPracownika}"/>
+                <DataGridTextColumn Header="Ilość dorosłych" Binding="{Binding IloscDoroslych}"/>
+                <DataGridTextColumn Header="Ilość dzieci" Binding="{Binding IloscDzieci}"/>
+                <DataGridTextColumn Header="Ilość zwierząt" Binding="{Binding IloscZwierzat}"/>
+                <DataGridTextColumn Header="Data zameldowania" Binding="{Binding DataZameldowania}"/>
+                <DataGridTextColumn Header="Data wymeldowania" Binding="{Binding DataWymeldowania}"/>
+                <DataGridTextColumn Header="ID płatności" Binding="{Binding IdPlatnosci}"/>
+                <DataGridTextColumn Header="Data rezerwacji" Binding="{Binding DataRezerwacji}"/>
+                <DataGridTextColumn Header="Uwagi" Binding="{Binding Uwagi}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</local:WszystkieViewBase>

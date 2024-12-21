@@ -1,0 +1,251 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:vm="clr-namespace:MVVMFirma.ViewModels"
+                    xmlns:vw="clr-namespace:MVVMFirma.Views"
+                    >
+
+    <DataTemplate DataType="{x:Type vm:WszystkieKlasaPokojuViewModel}">
+        <vw:WszystkieKlasaPokojuView/>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:NowyKlasaPokojuViewModel}">
+        <vw:NowyKlasaPokojuView/>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:WszystkieKlientViewModel}">
+        <vw:WszystkieKlientView/>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:NowyKlientViewModel}">
+        <vw:NowyKlientView/>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:WszystkiePietroViewModel}">
+        <vw:WszystkiePietroView/>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:NowyPietroViewModel}">
+        <vw:NowyPietroView/>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:WszystkieRodzajPracownikaViewModel}">
+        <vw:WszystkieRodzajPracownikaView/>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:NowyRodzajPracownikaViewModel}">
+        <vw:NowyRodzajPracownikaView/>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:WszystkieSposobPlatnosciViewModel}">
+        <vw:WszystkieSposobPlatnosciView/>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:NowySposobPlatnosciViewModel}">
+        <vw:NowySposobPlatnosciView/>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:WszystkieStatusPlatnosciViewModel}">
+        <vw:WszystkieStatusPlatnosciView/>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:NowyStatusPlatnosciViewModel}">
+        <vw:NowyStatusPlatnosciView/>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:WszystkieStatusPokojuViewModel}">
+        <vw:WszystkieStatusPokojuView/>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:NowyStatusPokojuViewModel}">
+        <vw:NowyStatusPokojuView/>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:WszystkieTypPokojuViewModel}">
+        <vw:WszystkieTypPokojuView/>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:NowyTypPokojuViewModel}">
+        <vw:NowyTypPokojuView/>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:WszystkieTypUslugiViewModel}">
+        <vw:WszystkieTypUslugiView/>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:NowyTypUslugiViewModel}">
+        <vw:NowyTypUslugiView/>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:WszystkieUdogodnienieViewModel}">
+        <vw:WszystkieUdogodnienieView/>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:NowyUdogodnienieViewModel}">
+        <vw:NowyUdogodnienieView/>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:WszystkieFakturaViewModel}">
+        <vw:WszystkieFakturaView/>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:NowyFakturaViewModel}">
+        <vw:NowyFakturaView/>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:WszystkieRezerwacjaViewModel}">
+        <vw:WszystkieRezerwacjaView/>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:NowyRezerwacjaViewModel}">
+        <vw:NowyRezerwacjaView/>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:WszystkiePlatnoscViewModel}">
+        <vw:WszystkiePlatnoscView/>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:NowyPlatnoscViewModel}">
+        <vw:NowyPlatnoscView/>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:WszystkiePracownikViewModel}">
+        <vw:WszystkiePracownikView/>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:NowyPracownikViewModel}">
+        <vw:NowyPracownikView/>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:WszystkieUslugaViewModel}">
+        <vw:WszystkieUslugaView/>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:NowyUslugaViewModel}">
+        <vw:NowyUslugaView/>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:WszystkiePokojViewModel}">
+        <vw:WszystkiePokojView/>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:NowyPokojViewModel}">
+        <vw:NowyPokojView/>
+    </DataTemplate>
+
+
+    <Style x:Key="MainHCCStyle" TargetType="{x:Type HeaderedContentControl}">
+        <Setter Property="HeaderTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <Border 
+            Background="Blue" 
+            BorderBrush="LightGray" 
+            BorderThickness="1" 
+            CornerRadius="5" 
+            Margin="4" 
+            Padding="4" 
+            SnapsToDevicePixels="True" 
+            >
+                        <TextBlock 
+              FontSize="14"
+              FontWeight="Bold"
+              Foreground="White" 
+              HorizontalAlignment="Center"  
+              Text="{TemplateBinding Content}" 
+              />
+                    </Border>
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <!-- 
+        This template ensures that content of a HeaderedContentControl 
+        fills the available vertical space. 
+        -->
+                <ControlTemplate TargetType="{x:Type HeaderedContentControl}">
+                    <DockPanel>
+                        <ContentPresenter 
+              DockPanel.Dock="Top"
+              ContentSource="Header" 
+              ContentTemplate="{TemplateBinding HeaderTemplate}" 
+              />
+                        <ContentPresenter 
+              ContentSource="Content" 
+              ContentTemplate="{TemplateBinding ContentTemplate}" 
+              />
+                    </DockPanel>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--
+  This style ensures that the borders in the main window are consistent.
+  -->
+    <Style x:Key="MainBorderStyle" TargetType="{x:Type Border}">
+        <Setter Property="Background" Value="WhiteSmoke" />
+        <Setter Property="BorderBrush" Value="LightGray" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="5" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+    </Style>
+
+    <!--
+  This template explains how to render the list of commands on the left
+  side in the main window (the 'Control Panel' area).
+  -->
+    <DataTemplate x:Key="CommandsTemplate">
+        <ItemsControl IsTabStop="False" ItemsSource="{Binding}" Margin="6,2">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Margin="2,6">
+            <Hyperlink Command="{Binding Path=Command}">
+              <TextBlock Text="{Binding Path=DisplayName}" />
+            </Hyperlink>
+          </TextBlock>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </DataTemplate>
+
+    <!-- 
+  This template explains how to render 
+  a tab item with a close button.
+  -->
+    <DataTemplate x:Key="ClosableTabItemTemplate">
+        <DockPanel Width="120">
+            <Button 
+        Command="{Binding Path=CloseCommand}"
+        Content="X"
+        Cursor="Hand"
+        DockPanel.Dock="Right"
+        Focusable="False"
+        FontFamily="Courier" 
+        FontSize="9"
+        FontWeight="Bold"  
+        Margin="0,1,0,0"
+        Padding="0"
+        VerticalContentAlignment="Bottom"
+        Width="16" Height="16" 
+        />
+            <ContentPresenter 
+        Content="{Binding Path=DisplayName}" 
+        VerticalAlignment="Center" 
+        />
+        </DockPanel>
+    </DataTemplate>
+
+    <!--
+  This template explains how to render the 'Workspace' content area in the main window.
+  -->
+    <DataTemplate x:Key="WorkspacesTemplate">
+        <TabControl 
+      IsSynchronizedWithCurrentItem="True" 
+      ItemsSource="{Binding}" 
+      ItemTemplate="{StaticResource ClosableTabItemTemplate}"
+      Margin="4"
+      />
+    </DataTemplate>
+</ResourceDictionary>
