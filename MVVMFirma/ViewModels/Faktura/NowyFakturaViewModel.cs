@@ -1,4 +1,6 @@
-﻿using MVVMFirma.Models.Entities;
+﻿using MVVMFirma.Models.BusinessLogic;
+using MVVMFirma.Models.Entities;
+using MVVMFirma.Models.EntitiesForView;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,11 +11,19 @@ namespace MVVMFirma.ViewModels
 {
     public class NowyFakturaViewModel : JedenViewModel<Faktura>
     {
+        #region DB
+        HotelEntities db;
+        #endregion
+
         #region Constructor
         public NowyFakturaViewModel()
             : base("Faktura")
         {
             item = new Faktura();
+            DataWystawienia = DateTime.Now;
+            DataSprzedazy = DateTime.Now;
+            TerminPlatnosci = DateTime.Now.AddDays(14);
+            db = new HotelEntities();
         }
         #endregion
 
@@ -28,19 +38,6 @@ namespace MVVMFirma.ViewModels
             {
                 item.IdKlienta = value;
                 OnPropertyChanged(() => IdKlienta);
-            }
-        }
-
-        public string NIP
-        {
-            get
-            {
-                return item.NIP;
-            }
-            set
-            {
-                item.NIP = value;
-                OnPropertyChanged(() => NIP);
             }
         }
 
@@ -148,7 +145,7 @@ namespace MVVMFirma.ViewModels
             }
         }
 
-        public int IdPlatnosci
+        public int? IdPlatnosci
         {
             get
             {
@@ -171,6 +168,30 @@ namespace MVVMFirma.ViewModels
             {
                 item.TerminPlatnosci = value;
                 OnPropertyChanged(() => TerminPlatnosci);
+            }
+        }
+
+        public IQueryable<KeyAndValue> RezerwacjaItems
+        {
+            get
+            {
+                return new RezerwacjaB(db).GetRezerwacjaKeyAndValueItems();
+            }
+        }
+
+        public IQueryable<KeyAndValue> KlientItems
+        {
+            get
+            {
+                return new KlientB(db).GetKlientKeyAndValueItems();
+            }
+        }
+
+        public IQueryable<KeyAndValue> PlatnoscItems
+        {
+            get
+            {
+                return new PlatnoscB(db).GetPlatnoscKeyAndValueItems();
             }
         }
         #endregion

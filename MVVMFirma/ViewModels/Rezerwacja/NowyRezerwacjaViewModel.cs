@@ -1,4 +1,6 @@
-﻿using MVVMFirma.Models.Entities;
+﻿using MVVMFirma.Models.BusinessLogic;
+using MVVMFirma.Models.Entities;
+using MVVMFirma.Models.EntitiesForView;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,11 +12,19 @@ namespace MVVMFirma.ViewModels
 {
     public class NowyRezerwacjaViewModel : JedenViewModel<Rezerwacja>
     {
+        #region DB
+        HotelEntities db;
+        #endregion
+
         #region Constructor
         public NowyRezerwacjaViewModel()
             : base("Rezerwacja")
         {
             item = new Rezerwacja();
+            DataRezerwacji = DateTime.Now;
+            DataZameldowania = DateTime.Now;
+            DataWymeldowania = DateTime.Now.AddDays(1);
+            db = new HotelEntities();
         }
         #endregion
 
@@ -29,6 +39,19 @@ namespace MVVMFirma.ViewModels
             {
                 item.IdKlienta = value;
                 OnPropertyChanged(() => IdKlienta);
+            }
+        }
+
+        public int IdPokoju
+        {
+            get
+            {
+                return item.IdPokoju;
+            }
+            set
+            {
+                item.IdPokoju = value;
+                OnPropertyChanged(() => IdPokoju);
             }
         }
 
@@ -110,19 +133,6 @@ namespace MVVMFirma.ViewModels
             }
         }
 
-        public int? IdPlatnosci
-        {
-            get
-            {
-                return item.IdPlatnosci;
-            }
-            set
-            {
-                item.IdPlatnosci = value;
-                OnPropertyChanged(() => IdPlatnosci);
-            }
-        }
-
         public DateTime DataRezerwacji
         {
             get
@@ -146,6 +156,29 @@ namespace MVVMFirma.ViewModels
             {
                 item.Uwagi = value;
                 OnPropertyChanged(() => Uwagi);
+            }
+        }
+
+        public IQueryable<KeyAndValue> KlientItems
+        {
+            get
+            {
+                return new KlientB(db).GetKlientKeyAndValueItems();
+            }
+        }
+        public IQueryable<KeyAndValue> PracownikItems
+        {
+            get
+            {
+                return new PracownikB(db).GetPracownikKeyAndValueItems();
+            }
+        }
+
+        public IQueryable<KeyAndValue> PokojItems
+        {
+            get
+            {
+                return new PokojB(db).GetPokojKeyAndValueItems();
             }
         }
         #endregion

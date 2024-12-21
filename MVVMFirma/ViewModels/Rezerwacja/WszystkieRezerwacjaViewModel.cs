@@ -28,17 +28,16 @@ namespace MVVMFirma.ViewModels
                     select new RezerwacjaForAllView
                     {
                         IdRezerwacji = rezerwacja.IdRezerwacji,
-                        IdKlienta = rezerwacja.IdKlienta,
-                        IdKlientaImie = rezerwacja.Klient.Imie,
-                        IdKlientaNazwisko = rezerwacja.Klient.Nazwisko,
-                        IdPracownika = rezerwacja.IdPracownika,
+                        KlientImie = rezerwacja.Klient.Imie,
+                        KlientNazwisko = rezerwacja.Klient.Nazwisko,
+                        NrPokoju = rezerwacja.Pokoj.NrPokoju,
                         IloscDoroslych = rezerwacja.IloscDoroslych,
                         IloscDzieci = rezerwacja.IloscDzieci,
                         IloscZwierzat = rezerwacja.IloscZwierzat,
                         DataZameldowania = rezerwacja.DataZameldowania,
                         DataWymeldowania = rezerwacja.DataWymeldowania,
-                        IdPlatnosci = rezerwacja.IdPlatnosci,
                         DataRezerwacji = rezerwacja.DataRezerwacji,
+                        IdPracownika = rezerwacja.IdPracownika,
                         Uwagi = rezerwacja.Uwagi
                     }
                 );

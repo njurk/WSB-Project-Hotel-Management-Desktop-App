@@ -1,4 +1,6 @@
-﻿using MVVMFirma.Models.Entities;
+﻿using MVVMFirma.Models.BusinessLogic;
+using MVVMFirma.Models.Entities;
+using MVVMFirma.Models.EntitiesForView;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,11 +11,18 @@ namespace MVVMFirma.ViewModels
 {
     public class NowyUslugaViewModel : JedenViewModel<Usluga>
     {
+        #region DB
+        HotelEntities db;
+        #endregion
+
         #region Constructor
         public NowyUslugaViewModel()
             :base("Usługa")
         {
             item = new Usluga();
+            DataRozpoczeciaUslugi = DateTime.Now;
+            DataZakonczeniaUslugi = DateTime.Now;
+            db = new HotelEntities();
         }
         #endregion
 
@@ -70,16 +79,19 @@ namespace MVVMFirma.ViewModels
             }
         }
 
-        public int? IdPlatnosci
+        public IQueryable<KeyAndValue> TypUslugiItems
         {
             get
             {
-                return item.IdPlatnosci;
+                return new TypUslugiB(db).GetTypUslugiKeyAndValueItems();
             }
-            set
+        }
+
+        public IQueryable<KeyAndValue> KlientItems
+        {
+            get
             {
-                item.IdPlatnosci = value;
-                OnPropertyChanged(() => IdPlatnosci);
+                return new KlientB(db).GetKlientKeyAndValueItems();
             }
         }
         #endregion

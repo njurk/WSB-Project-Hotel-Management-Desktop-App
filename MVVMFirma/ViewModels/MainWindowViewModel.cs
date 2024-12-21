@@ -42,6 +42,14 @@ namespace MVVMFirma.ViewModels
             return new List<CommandViewModel>
             {
                 /*new CommandViewModel(
+                    "Faktura",
+                    new BaseCommand(() => this.CreateView(new NowyFakturaViewModel()))),*/
+
+                new CommandViewModel(
+                    "Faktury",
+                    new BaseCommand(() => this.ShowAllView(new WszystkieFakturaViewModel()))),
+
+                /*new CommandViewModel(
                     "Klasa pokoju",
                     new BaseCommand(() => this.CreateView(new NowyKlasaPokojuViewModel()))),*/
 
@@ -64,6 +72,38 @@ namespace MVVMFirma.ViewModels
                 new CommandViewModel(
                     "Piętra",
                     new BaseCommand(() => this.ShowAllView(new WszystkiePietroViewModel()))),
+
+                /*new CommandViewModel(
+                    "Płatność",
+                    new BaseCommand(() => this.CreateView(new NowyPlatnoscViewModel()))),*/
+
+                new CommandViewModel(
+                    "Płatności",
+                    new BaseCommand(() => this.ShowAllView(new WszystkiePlatnoscViewModel()))),
+
+                /*new CommandViewModel(
+                    "Pokój",
+                    new BaseCommand(() => this.CreateView(new NowyPokojViewModel()))),*/
+
+                new CommandViewModel(
+                    "Pokoje",
+                    new BaseCommand(() => this.ShowAllView(new WszystkiePokojViewModel()))),
+
+                /*new CommandViewModel(
+                    "Pracownik",
+                    new BaseCommand(() => this.CreateView(new NowyPracownikViewModel()))),*/
+
+                new CommandViewModel(
+                    "Pracownicy",
+                    new BaseCommand(() => this.ShowAllView(new WszystkiePracownikViewModel()))),
+
+                /*new CommandViewModel(
+                    "Rezerwacja",
+                    new BaseCommand(() => this.CreateView(new NowyRezerwacjaViewModel()))),*/
+
+                new CommandViewModel(
+                    "Rezerwacje",
+                    new BaseCommand(() => this.ShowAllView(new WszystkieRezerwacjaViewModel()))),
 
                 /*new CommandViewModel(
                     "Rodzaj pracownika",
@@ -114,6 +154,14 @@ namespace MVVMFirma.ViewModels
                     new BaseCommand(() => this.ShowAllView(new WszystkieTypUslugiViewModel()))),
 
                 /*new CommandViewModel(
+                    "Udogodnienie klasy pokoju",
+                    new BaseCommand(() => this.CreateView(new NowyUdogodnieniaKlasPokojuViewModel()))),*/
+
+                new CommandViewModel(
+                    "Udogodnienia klas pokojów",
+                    new BaseCommand(() => this.ShowAllView(new WszystkieUdogodnieniaKlasPokojuViewModel()))),
+
+                /*new CommandViewModel(
                     "Udogodnienie",
                     new BaseCommand(() => this.CreateView(new NowyUdogodnienieViewModel()))),*/
 
@@ -122,60 +170,12 @@ namespace MVVMFirma.ViewModels
                     new BaseCommand(() => this.ShowAllView(new WszystkieUdogodnienieViewModel()))),
 
                 /*new CommandViewModel(
-                    "Faktura",
-                    new BaseCommand(() => this.CreateView(new NowyFakturaViewModel()))),*/
-
-                new CommandViewModel(
-                    "Faktury",
-                    new BaseCommand(() => this.ShowAllView(new WszystkieFakturaViewModel()))),
-
-                /*new CommandViewModel(
-                    "Rezerwacja",
-                    new BaseCommand(() => this.CreateView(new NowyRezerwacjaViewModel()))),*/
-
-                new CommandViewModel(
-                    "Rezerwacje",
-                    new BaseCommand(() => this.ShowAllView(new WszystkieRezerwacjaViewModel()))),
-
-                /*new CommandViewModel(
-                    "Płatność",
-                    new BaseCommand(() => this.CreateView(new NowyPlatnoscViewModel()))),*/
-
-                new CommandViewModel(
-                    "Płatności",
-                    new BaseCommand(() => this.ShowAllView(new WszystkiePlatnoscViewModel()))),
-
-                /*new CommandViewModel(
-                    "Pracownik",
-                    new BaseCommand(() => this.CreateView(new NowyPracownikViewModel()))),*/
-
-                new CommandViewModel(
-                    "Pracownicy",
-                    new BaseCommand(() => this.ShowAllView(new WszystkiePracownikViewModel()))),
-
-                /*new CommandViewModel(
                     "Usługa",
                     new BaseCommand(() => this.CreateView(new NowyUslugaViewModel()))),*/
 
                 new CommandViewModel(
                     "Usługi",
-                    new BaseCommand(() => this.ShowAllView(new WszystkieUslugaViewModel()))),
-
-                /*new CommandViewModel(
-                    "Pokój",
-                    new BaseCommand(() => this.CreateView(new NowyPokojViewModel()))),*/
-
-                new CommandViewModel(
-                    "Pokoje",
-                    new BaseCommand(() => this.ShowAllView(new WszystkiePokojViewModel()))),
-
-                /*new CommandViewModel(
-                    "Udogodnienie klasy pokoju",
-                    new BaseCommand(() => this.CreateView(new NowyUdogodnieniaKlasPokojuViewModel()))),*/
-
-                new CommandViewModel(
-                    "Udogodnienia klas pokojów",
-                    new BaseCommand(() => this.ShowAllView(new WszystkieUdogodnieniaKlasPokojuViewModel())))
+                    new BaseCommand(() => this.ShowAllView(new WszystkieUslugaViewModel())))
             };
         }
         #endregion

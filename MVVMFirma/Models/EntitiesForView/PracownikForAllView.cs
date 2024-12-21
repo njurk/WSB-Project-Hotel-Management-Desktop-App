@@ -9,7 +9,7 @@ namespace MVVMFirma.Models.EntitiesForView
     public class PracownikForAllView
     {
         public int IdPracownika {  get; set; }
-        public string IdRodzajuPracownikaNazwa { get; set; } // z klucza obcego
+        public string RodzajPracownikaNazwa { get; set; } // z klucza obcego
         public string Imie {  get; set; }
         public string Nazwisko { get; set; }
         public string Ulica { get ; set; }

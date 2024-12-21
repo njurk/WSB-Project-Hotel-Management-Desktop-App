@@ -26,10 +26,9 @@ namespace MVVMFirma.ViewModels
                     select new FakturaForAllView
                     {
                         IdFaktury = faktura.IdFaktury,
-                        IdKlienta = faktura.IdKlienta,
-                        IdKlientaImie = faktura.Klient.Imie,
-                        IdKlientaNazwisko = faktura.Klient.Nazwisko,
-                        NIP = faktura.NIP,
+                        KlientImie = faktura.Klient.Imie,
+                        KlientNazwisko = faktura.Klient.Nazwisko,
+                        KlientNIP = faktura.Klient.NIP,
                         IdRezerwacji = faktura.IdRezerwacji,
                         NrFaktury = faktura.NrFaktury,
                         Opis = faktura.Opis,

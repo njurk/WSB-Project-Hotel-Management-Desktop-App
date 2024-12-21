@@ -9,12 +9,11 @@
     <Grid>
         <DataGrid CanUserAddRows="False" IsReadOnly="True" CanUserDeleteRows="False" AutoGenerateColumns="False" ItemsSource="{Binding List}">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="ID płatności" Binding="{Binding IdPlatnosci}"/>
-                <DataGridTextColumn Header="ID klienta" Binding="{Binding IdKlienta}"/>
-                <DataGridTextColumn Header="Imie klienta" Binding="{Binding IdKlientaImie}"/>
-                <DataGridTextColumn Header="Nazwisko klienta" Binding="{Binding IdKlientaNazwisko}"/>
-                <DataGridTextColumn Header="Sposób płatności" Binding="{Binding IdSposobuPlatnosciNazwa}"/>
-                <DataGridTextColumn Header="Status płatności" Binding="{Binding IdStatusuPlatnosciNazwa}"/>
+                <DataGridTextColumn Header="Numer płatności" Binding="{Binding IdPlatnosci}"/>
+                <DataGridTextColumn Header="Imie klienta" Binding="{Binding KlientImie}"/>
+                <DataGridTextColumn Header="Nazwisko klienta" Binding="{Binding KlientNazwisko}"/>
+                <DataGridTextColumn Header="Sposób" Binding="{Binding SposobPlatnosciNazwa}"/>
+                <DataGridTextColumn Header="Status" Binding="{Binding StatusPlatnosciNazwa}"/>
                 <DataGridTextColumn Header="Data płatności" Binding="{Binding DataPlatnosci}"/>
                 <DataGridTextColumn Header="Kwota" Binding="{Binding Kwota}"/>
             </DataGrid.Columns>

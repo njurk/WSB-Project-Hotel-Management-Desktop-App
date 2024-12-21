@@ -89,6 +89,18 @@
     <Compile Include="Helper\BaseCommand.cs" />
     <Compile Include="Models\BusinessLogic\DatabaseClass.cs" />
     <Compile Include="Models\BusinessLogic\KlasaPokojuB.cs" />
+    <Compile Include="Models\BusinessLogic\KlientB.cs" />
+    <Compile Include="Models\BusinessLogic\PietroB.cs" />
+    <Compile Include="Models\BusinessLogic\PlatnoscB.cs" />
+    <Compile Include="Models\BusinessLogic\PokojB.cs" />
+    <Compile Include="Models\BusinessLogic\PracownikB.cs" />
+    <Compile Include="Models\BusinessLogic\RezerwacjaB.cs" />
+    <Compile Include="Models\BusinessLogic\RodzajPracownikaB.cs" />
+    <Compile Include="Models\BusinessLogic\SposobPlatnosciB.cs" />
+    <Compile Include="Models\BusinessLogic\StatusPlatnosciB.cs" />
+    <Compile Include="Models\BusinessLogic\StatusPokojuB.cs" />
+    <Compile Include="Models\BusinessLogic\TypPokojuB.cs" />
+    <Compile Include="Models\BusinessLogic\TypUslugiB.cs" />
     <Compile Include="Models\BusinessLogic\UdogodnienieB.cs" />
     <Compile Include="Models\EntitiesForView\FakturaForAllView.cs" />
     <Compile Include="Models\EntitiesForView\KeyAndValue.cs" />
@@ -99,76 +111,73 @@
     <Compile Include="Models\EntitiesForView\UdogodnieniaKlasPokojuForAllView.cs" />
     <Compile Include="Models\EntitiesForView\UslugaForAllView.cs" />
     <Compile Include="Models\Entities\Faktura.cs">
-      <DependentUpon>ModelHotel.tt</DependentUpon>
+      <DependentUpon>HotelEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\HotelEntities.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HotelEntities.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\HotelEntities.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HotelEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\HotelEntities.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HotelEntities.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\Entities\KlasaPokoju.cs">
-      <DependentUpon>ModelHotel.tt</DependentUpon>
+      <DependentUpon>HotelEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Entities\Klient.cs">
-      <DependentUpon>ModelHotel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Entities\ModelHotel.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ModelHotel.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Entities\ModelHotel.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ModelHotel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Entities\ModelHotel.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ModelHotel.edmx</DependentUpon>
+      <DependentUpon>HotelEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Entities\Pietro.cs">
-      <DependentUpon>ModelHotel.tt</DependentUpon>
+      <DependentUpon>HotelEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Entities\Platnosc.cs">
-      <DependentUpon>ModelHotel.tt</DependentUpon>
+      <DependentUpon>HotelEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Entities\Pokoj.cs">
-      <DependentUpon>ModelHotel.tt</DependentUpon>
+      <DependentUpon>HotelEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Entities\Pracownik.cs">
-      <DependentUpon>ModelHotel.tt</DependentUpon>
+      <DependentUpon>HotelEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Entities\Rezerwacja.cs">
-      <DependentUpon>ModelHotel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Entities\RezerwacjaPokoje.cs">
-      <DependentUpon>ModelHotel.tt</DependentUpon>
+      <DependentUpon>HotelEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Entities\RodzajPracownika.cs">
-      <DependentUpon>ModelHotel.tt</DependentUpon>
+      <DependentUpon>HotelEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Entities\SposobPlatnosci.cs">
-      <DependentUpon>ModelHotel.tt</DependentUpon>
+      <DependentUpon>HotelEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Entities\StatusPlatnosci.cs">
-      <DependentUpon>ModelHotel.tt</DependentUpon>
+      <DependentUpon>HotelEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Entities\StatusPokoju.cs">
-      <DependentUpon>ModelHotel.tt</DependentUpon>
+      <DependentUpon>HotelEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Entities\sysdiagrams.cs">
-      <DependentUpon>ModelHotel.tt</DependentUpon>
+      <DependentUpon>HotelEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Entities\TypPokoju.cs">
-      <DependentUpon>ModelHotel.tt</DependentUpon>
+      <DependentUpon>HotelEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Entities\TypUslugi.cs">
-      <DependentUpon>ModelHotel.tt</DependentUpon>
+      <DependentUpon>HotelEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Entities\UdogodnieniaKlasPokoju.cs">
-      <DependentUpon>ModelHotel.tt</DependentUpon>
+      <DependentUpon>HotelEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Entities\Udogodnienie.cs">
-      <DependentUpon>ModelHotel.tt</DependentUpon>
+      <DependentUpon>HotelEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Entities\Usluga.cs">
-      <DependentUpon>ModelHotel.tt</DependentUpon>
+      <DependentUpon>HotelEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\CommandViewModel.cs" />
@@ -339,12 +348,12 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="app.config" />
-    <EntityDeploy Include="Models\Entities\ModelHotel.edmx">
+    <EntityDeploy Include="Models\Entities\HotelEntities.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>ModelHotel.Designer.cs</LastGenOutput>
+      <LastGenOutput>HotelEntities.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="Models\Entities\ModelHotel.edmx.diagram">
-      <DependentUpon>ModelHotel.edmx</DependentUpon>
+    <None Include="Models\Entities\HotelEntities.edmx.diagram">
+      <DependentUpon>HotelEntities.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -506,17 +515,16 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <Content Include="Models\Entities\ModelHotel.Context.tt">
+    <Content Include="Models\Entities\HotelEntities.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>ModelHotel.edmx</DependentUpon>
-      <LastGenOutput>ModelHotel.Context.cs</LastGenOutput>
+      <DependentUpon>HotelEntities.edmx</DependentUpon>
+      <LastGenOutput>HotelEntities.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\Entities\ModelHotel.tt">
+    <Content Include="Models\Entities\HotelEntities.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>ModelHotel.edmx</DependentUpon>
-      <LastGenOutput>ModelHotel.cs</LastGenOutput>
+      <DependentUpon>HotelEntities.edmx</DependentUpon>
+      <LastGenOutput>HotelEntities.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

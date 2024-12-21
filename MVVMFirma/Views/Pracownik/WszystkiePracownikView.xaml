@@ -9,8 +9,8 @@
     <Grid>
         <DataGrid CanUserAddRows="False" IsReadOnly="True" CanUserDeleteRows="False" AutoGenerateColumns="False" ItemsSource="{Binding List}">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="ID pracownika" Binding="{Binding IdPracownika}"/>
-                <DataGridTextColumn Header="Rodzaj pracownika" Binding="{Binding IdRodzajuPracownikaNazwa}"/>
+                <DataGridTextColumn Header="ID" Binding="{Binding IdPracownika}"/>
+                <DataGridTextColumn Header="Rodzaj pracownika" Binding="{Binding RodzajPracownikaNazwa}"/>
                 <DataGridTextColumn Header="Imie" Binding="{Binding Imie}"/>
                 <DataGridTextColumn Header="Nazwisko" Binding="{Binding Nazwisko}"/>
                 <DataGridTextColumn Header="Ulica" Binding="{Binding Ulica}"/>

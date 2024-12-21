@@ -10,12 +10,11 @@
         <DataGrid CanUserAddRows="False" IsReadOnly="True" CanUserDeleteRows="False" AutoGenerateColumns="False" ItemsSource="{Binding List}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID usługi" Binding="{Binding IdUslugi}"/>
-                <DataGridTextColumn Header="Typ usługi" Binding="{Binding IdTypuUslugiNazwa}"/>
+                <DataGridTextColumn Header="Typ" Binding="{Binding TypUslugiNazwa}"/>
+                <DataGridTextColumn Header="Imie klienta" Binding="{Binding KlientImie}"/>
+                <DataGridTextColumn Header="Nazwisko klienta" Binding="{Binding KlientNazwisko}"/>
                 <DataGridTextColumn Header="Data rozpoczęcia" Binding="{Binding DataRozpoczeciaUslugi}"/>
                 <DataGridTextColumn Header="Data zakończenia" Binding="{Binding DataZakonczeniaUslugi}"/>
-                <DataGridTextColumn Header="Imie klienta" Binding="{Binding IdKlientaImie}"/>
-                <DataGridTextColumn Header="Nazwisko klienta" Binding="{Binding IdKlientaNazwisko}"/>
-                <DataGridTextColumn Header="ID płatności" Binding="{Binding IdPlatnosci}"/>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

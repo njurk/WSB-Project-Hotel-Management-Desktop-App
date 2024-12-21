@@ -9,11 +9,10 @@ namespace MVVMFirma.Models.EntitiesForView
     public class UslugaForAllView
     {
         public int IdUslugi { get; set; }
-        public string IdTypuUslugiNazwa { get; set; }
+        public string TypUslugiNazwa { get; set; }
         public DateTime DataRozpoczeciaUslugi { get; set; }
         public DateTime DataZakonczeniaUslugi { get; set; }
-        public string IdKlientaImie { get; set; }
-        public string IdKlientaNazwisko { get; set; }
-        public int? IdPlatnosci { get; set; }
+        public string KlientImie { get; set; }
+        public string KlientNazwisko { get; set; }
     }
 }

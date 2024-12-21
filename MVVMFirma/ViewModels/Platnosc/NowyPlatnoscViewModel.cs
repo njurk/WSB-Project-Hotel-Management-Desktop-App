@@ -1,4 +1,6 @@
-﻿using MVVMFirma.Models.Entities;
+﻿using MVVMFirma.Models.BusinessLogic;
+using MVVMFirma.Models.Entities;
+using MVVMFirma.Models.EntitiesForView;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,11 +11,17 @@ namespace MVVMFirma.ViewModels
 {
     public class NowyPlatnoscViewModel : JedenViewModel<Platnosc>
     {
+
+        #region DB
+        HotelEntities db;
+        #endregion
         #region Constructor
         public NowyPlatnoscViewModel()
             :base("Płatność")
         {
             item = new Platnosc();
+            DataPlatnosci = DateTime.Now;
+            db = new HotelEntities();
         }
         #endregion
 
@@ -80,6 +88,30 @@ namespace MVVMFirma.ViewModels
             {
                 item.Kwota = value;
                 OnPropertyChanged(() => Kwota);
+            }
+        }
+
+        public IQueryable<KeyAndValue> KlientItems
+        {
+            get
+            {
+                return new KlientB(db).GetKlientKeyAndValueItems();
+            }
+        }
+
+        public IQueryable<KeyAndValue> SposobPlatnosciItems
+        {
+            get
+            {
+                return new SposobPlatnosciB(db).GetSposobPlatnosciKeyAndValueItems();
+            }
+        }
+
+        public IQueryable<KeyAndValue> StatusPlatnosciItems
+        {
+            get
+            {
+                return new StatusPlatnosciB(db).GetStatusPlatnosciKeyAndValueItems();
             }
         }
         #endregion

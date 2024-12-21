@@ -28,11 +28,10 @@ namespace MVVMFirma.ViewModels
                     select new PlatnoscForAllView
                     {
                         IdPlatnosci = platnosc.IdPlatnosci,
-                        IdKlienta = platnosc.IdKlienta,
-                        IdKlientaImie = platnosc.Klient.Imie,
-                        IdKlientaNazwisko = platnosc.Klient.Nazwisko,
-                        IdSposobuPlatnosciNazwa = platnosc.SposobPlatnosci.Nazwa,
-                        IdStatusuPlatnosciNazwa = platnosc.StatusPlatnosci.Nazwa,
+                        KlientImie = platnosc.Klient.Imie,
+                        KlientNazwisko = platnosc.Klient.Nazwisko,
+                        SposobPlatnosciNazwa = platnosc.SposobPlatnosci.Nazwa,
+                        StatusPlatnosciNazwa = platnosc.StatusPlatnosci.Nazwa,
                         DataPlatnosci = platnosc.DataPlatnosci,
                         Kwota = platnosc.Kwota
                     }

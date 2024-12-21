@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'D:\nikil\SynologyDrive\WSB-NLU\SEM_5\Programowanie Desktopowych Apk Biznesowych\Projekt\PDAB_projekt-master\MVVMFirma\Models\Entities\ModelHotel.edmx'. 
+﻿// T4 code generation is enabled for model 'D:\nikil\SynologyDrive\WSB-NLU\SEM_5\Programowanie Desktopowych Apk Biznesowych\Projekt\PDAB_projekt-master\MVVMFirma\Models\Entities\HotelEntities.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

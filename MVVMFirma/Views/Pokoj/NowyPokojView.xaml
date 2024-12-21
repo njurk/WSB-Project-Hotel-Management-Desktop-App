@@ -19,19 +19,19 @@
             <RowDefinition Height="40"/>
 
         </Grid.RowDefinitions>
-        <Label Grid.Column="0" Grid.Row="0" Margin="0,8,0,8" Content="Nr pokoju"/>
-        <TextBox Grid.Column="1" Grid.Row="0" Margin="0,8,0,8" Text="{Binding Path=NrPokoju, UpdateSourceTrigger=PropertyChanged}"/>
+        <Label Grid.Column="0" Grid.Row="0" Margin="0,8,0,8" Content="Piętro"/>
+        <ComboBox Grid.Column="1" Grid.Row="0" Margin="0,8,0,8" ItemsSource="{Binding PietroItems}" DisplayMemberPath="Value" SelectedValuePath="Key" SelectedValue="{Binding Path=IdPietra, Mode=TwoWay}"/>
+        
+        <Label Grid.Column="0" Grid.Row="1" Margin="0,8,0,8" Content="Numer pokoju"/>
+        <TextBox Grid.Column="1" Grid.Row="1" Margin="0,8,0,8" Text="{Binding Path=NrPokoju, UpdateSourceTrigger=PropertyChanged}"/>
 
-        <Label Grid.Column="0" Grid.Row="1" Margin="0,8,0,8" Content="ID typu pokoju"/>
-        <TextBox Grid.Column="1" Grid.Row="1" Margin="0,8,0,8" Text="{Binding Path=IdTypuPokoju, UpdateSourceTrigger=PropertyChanged}"/>
+        <Label Grid.Column="0" Grid.Row="2" Margin="0,8,0,8" Content="Typ pokoju"/>
+        <ComboBox Grid.Column="1" Grid.Row="2" Margin="0,8,0,8" ItemsSource="{Binding TypPokojuItems}" DisplayMemberPath="Value" SelectedValuePath="Key" SelectedValue="{Binding Path=IdTypuPokoju, Mode=TwoWay}"/>
 
-        <Label Grid.Column="0" Grid.Row="2" Margin="0,8,0,8" Content="ID klasy pokoju"/>
-        <TextBox Grid.Column="1" Grid.Row="2" Margin="0,8,0,8" Text="{Binding Path=IdKlasyPokoju, UpdateSourceTrigger=PropertyChanged}"/>
+        <Label Grid.Column="0" Grid.Row="3" Margin="0,8,0,8" Content="Klasa pokoju"/>
+        <ComboBox Grid.Column="1" Grid.Row="3" Margin="0,8,0,8" ItemsSource="{Binding KlasaPokojuItems}" DisplayMemberPath="Value" SelectedValuePath="Key" SelectedValue="{Binding Path=IdKlasyPokoju, Mode=TwoWay}"/>
 
-        <Label Grid.Column="0" Grid.Row="3" Margin="0,8,0,8" Content="ID statusu pokoju"/>
-        <TextBox Grid.Column="1" Grid.Row="3" Margin="0,8,0,8" Text="{Binding Path=IdStatusuPokoju, UpdateSourceTrigger=PropertyChanged}"/>
-
-        <Label Grid.Column="0" Grid.Row="4" Margin="0,8,0,8" Content="ID piętra"/>
-        <TextBox Grid.Column="1" Grid.Row="4" Margin="0,8,0,8" Text="{Binding Path=IdPietra, UpdateSourceTrigger=PropertyChanged}"/>
+        <Label Grid.Column="0" Grid.Row="4" Margin="0,8,0,8" Content="Status pokoju"/>
+        <ComboBox Grid.Column="1" Grid.Row="4" Margin="0,8,0,8" ItemsSource="{Binding StatusPokojuItems}" DisplayMemberPath="Value" SelectedValuePath="Key" SelectedValue="{Binding Path=IdStatusuPokoju, Mode=TwoWay}"/>
     </Grid>
 </local:JedenViewBase>

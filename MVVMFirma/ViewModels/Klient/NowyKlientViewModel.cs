@@ -147,6 +147,19 @@ namespace MVVMFirma.ViewModels
                 OnPropertyChanged(() => Telefon);
             }
         }
+
+        public string NIP
+        {
+            get
+            {
+                return item.NIP;
+            }
+            set
+            {
+                item.NIP = value;
+                OnPropertyChanged(() => NIP);
+            }
+        }
         #endregion
 
         #region Helpers

@@ -10,7 +10,7 @@
         <DataGrid CanUserAddRows="False" IsReadOnly="True" CanUserDeleteRows="False" AutoGenerateColumns="False" ItemsSource="{Binding List}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID" Binding="{Binding IdPietra}"/>
-                <DataGridTextColumn Header="Nr piętra" Binding="{Binding NrPietra}"/>
+                <DataGridTextColumn Header="Piętro" Binding="{Binding NrPietra}"/>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>
