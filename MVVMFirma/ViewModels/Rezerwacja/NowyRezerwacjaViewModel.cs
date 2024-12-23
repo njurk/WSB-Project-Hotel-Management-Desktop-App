@@ -181,6 +181,17 @@ namespace MVVMFirma.ViewModels
                 return new PokojB(db).GetPokojKeyAndValueItems();
             }
         }
+
+        protected override string ValidateProperty(string propertyName)
+        {
+            switch (propertyName)
+            {
+                case nameof(IloscDoroslych):
+                    return !Helper.StringValidator.ContainsOnlyNumbers(IloscDoroslych) ? "Prosze wprowadz liczbe dorosłych" : string.Empty;
+                default:
+                    return string.Empty;
+            }
+        }
         #endregion
 
         #region Helpers
