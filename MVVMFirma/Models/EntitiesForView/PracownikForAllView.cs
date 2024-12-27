@@ -17,7 +17,7 @@ namespace MVVMFirma.Models.EntitiesForView
         public string NrLokalu { get ; set; }
         public string KodPocztowy { get ; set; }
         public string Miasto { get ; set; }
-        public string Kraj { get ; set; }
+        public string Kraj { get ; set; } //  z klucza obcego
         public DateTime DataUrodzenia { get ; set; }
         public string Email { get ; set; }
         public string Telefon { get ; set; }

@@ -1,4 +1,6 @@
-﻿using MVVMFirma.Models.Entities;
+﻿using MVVMFirma.Models.BusinessLogic;
+using MVVMFirma.Models.Entities;
+using MVVMFirma.Models.EntitiesForView;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,11 +11,16 @@ namespace MVVMFirma.ViewModels
 {
     public class NowyKlientViewModel : JedenViewModel<Klient>
     {
+        #region DB
+        HotelEntities db;
+        #endregion
+
         #region Constructor
         public NowyKlientViewModel()
             : base("Klient")
         {
             item = new Klient();
+            db = new HotelEntities();
         }
         #endregion
 
@@ -109,16 +116,16 @@ namespace MVVMFirma.ViewModels
             }
         }
 
-        public string Kraj
+        public int IdKraju
         {
             get
             {
-                return item.Kraj;
+                return item.IdKraju;
             }
             set
             {
-                item.Kraj = value;
-                OnPropertyChanged(() => Kraj);
+                item.IdKraju = value;
+                OnPropertyChanged(() => IdKraju);
             }
         }
 
@@ -158,6 +165,14 @@ namespace MVVMFirma.ViewModels
             {
                 item.NIP = value;
                 OnPropertyChanged(() => NIP);
+            }
+        }
+
+        public IQueryable<KeyAndValue> KrajItems
+        {
+            get
+            {
+                return new KrajB(db).GetKrajKeyAndValueItems();
             }
         }
         #endregion

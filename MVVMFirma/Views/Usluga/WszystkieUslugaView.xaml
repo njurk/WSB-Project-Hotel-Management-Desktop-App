@@ -15,6 +15,9 @@
                 <DataGridTextColumn Header="Nazwisko klienta" Binding="{Binding KlientNazwisko}"/>
                 <DataGridTextColumn Header="Data rozpoczęcia" Binding="{Binding DataRozpoczeciaUslugi}"/>
                 <DataGridTextColumn Header="Data zakończenia" Binding="{Binding DataZakonczeniaUslugi}"/>
+                <DataGridTextColumn Header="Status płatności" Binding="{Binding StatusPlatnosci}"/>
+                <DataGridTextColumn Header="Numer płatności" Binding="{Binding NrPlatnosci}"/>
+                <DataGridTextColumn Header="Cena" Binding="{Binding Cena}"/>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

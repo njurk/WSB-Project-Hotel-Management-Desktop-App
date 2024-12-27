@@ -18,24 +18,29 @@ namespace MVVMFirma.Models.Entities
         public Rezerwacja()
         {
             this.Faktura = new HashSet<Faktura>();
+            this.Platnosc = new HashSet<Platnosc>();
+            this.Usluga = new HashSet<Usluga>();
         }
     
         public int IdRezerwacji { get; set; }
         public int IdKlienta { get; set; }
         public int IdPokoju { get; set; }
-        public int IdPracownika { get; set; }
-        public string IloscDoroslych { get; set; }
-        public string IloscDzieci { get; set; }
-        public string IloscZwierzat { get; set; }
+        public string LiczbaDoroslych { get; set; }
+        public string LiczbaDzieci { get; set; }
+        public bool CzyZwierzeta { get; set; }
         public System.DateTime DataZameldowania { get; set; }
         public System.DateTime DataWymeldowania { get; set; }
         public System.DateTime DataRezerwacji { get; set; }
         public string Uwagi { get; set; }
+        public decimal Kwota { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Faktura> Faktura { get; set; }
         public virtual Klient Klient { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Platnosc> Platnosc { get; set; }
         public virtual Pokoj Pokoj { get; set; }
-        public virtual Pracownik Pracownik { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Usluga> Usluga { get; set; }
     }
 }

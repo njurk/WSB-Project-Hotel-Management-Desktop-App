@@ -130,16 +130,16 @@ namespace MVVMFirma.ViewModels
             }
         }
 
-        public string Kraj
+        public int IdKraju
         {
             get
             {
-                return item.Kraj;
+                return item.IdKraju;
             }
             set
             {
-                item.Kraj = value;
-                OnPropertyChanged(() => Kraj);
+                item.IdKraju = value;
+                OnPropertyChanged(() => IdKraju);
             }
         }
 
@@ -187,6 +187,14 @@ namespace MVVMFirma.ViewModels
             get
             {
                 return new RodzajPracownikaB(db).GetRodzajPracownikaKeyAndValueItems();
+            }
+        }
+
+        public IQueryable<KeyAndValue> KrajItems
+        {
+            get
+            {
+                return new KrajB(db).GetKrajKeyAndValueItems();
             }
         }
         #endregion

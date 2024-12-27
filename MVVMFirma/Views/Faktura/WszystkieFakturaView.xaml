@@ -17,9 +17,9 @@
                 <DataGridTextColumn Header="Nazwisko klienta" Binding="{Binding KlientNazwisko}"/>
                 <DataGridTextColumn Header="Data wystawienia" Binding="{Binding DataWystawienia}"/>
                 <DataGridTextColumn Header="Data sprzedaży" Binding="{Binding DataSprzedazy}"/>
-                <DataGridTextColumn Header="Kwota netto" Binding="{Binding KwotaNetto}"/>
+                <DataGridTextColumn Header="Netto" Binding="{Binding KwotaNetto}"/>
                 <DataGridTextColumn Header="VAT" Binding="{Binding VAT}"/>
-                <DataGridTextColumn Header="Kwota brutto" Binding="{Binding KwotaBrutto}"/>
+                <DataGridTextColumn Header="Brutto" Binding="{Binding KwotaBrutto}"/>
                 <DataGridTextColumn Header="Termin płatności" Binding="{Binding TerminPlatnosci}"/>
                 <DataGridTextColumn Header="Numer płatności" Binding="{Binding IdPlatnosci}"/>
                 <DataGridTextColumn Header="Opis" Binding="{Binding Opis}"/>

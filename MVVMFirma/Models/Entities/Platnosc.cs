@@ -21,15 +21,14 @@ namespace MVVMFirma.Models.Entities
         }
     
         public int IdPlatnosci { get; set; }
-        public int IdKlienta { get; set; }
-        public int IdSposobuPlatnosci { get; set; }
+        public int IdRezerwacji { get; set; }
+        public Nullable<int> IdSposobuPlatnosci { get; set; }
         public int IdStatusuPlatnosci { get; set; }
         public Nullable<System.DateTime> DataPlatnosci { get; set; }
-        public decimal Kwota { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Faktura> Faktura { get; set; }
-        public virtual Klient Klient { get; set; }
+        public virtual Rezerwacja Rezerwacja { get; set; }
         public virtual SposobPlatnosci SposobPlatnosci { get; set; }
         public virtual StatusPlatnosci StatusPlatnosci { get; set; }
     }

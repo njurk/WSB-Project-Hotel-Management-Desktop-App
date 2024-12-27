@@ -10,11 +10,11 @@
         <DataGrid CanUserAddRows="False" IsReadOnly="True" CanUserDeleteRows="False" AutoGenerateColumns="False" ItemsSource="{Binding List}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID" Binding="{Binding IdPokoju}"/>
-                <DataGridTextColumn Header="Piętro" Binding="{Binding IdPietraNr}"/>
+                <DataGridTextColumn Header="Piętro" Binding="{Binding PietroNr}"/>
                 <DataGridTextColumn Header="Numer" Binding="{Binding NrPokoju}"/>
-                <DataGridTextColumn Header="Typ" Binding="{Binding IdTypuPokojuNazwa}"/>
-                <DataGridTextColumn Header="Klasa" Binding="{Binding IdKlasyPokojuNazwa}"/>
-                <DataGridTextColumn Header="Status" Binding="{Binding IdStatusuPokojuNazwa}"/>
+                <DataGridTextColumn Header="Typ" Binding="{Binding TypPokojuNazwa}"/>
+                <DataGridTextColumn Header="Klasa" Binding="{Binding KlasaPokojuNazwa}"/>
+                <DataGridTextColumn Header="Status" Binding="{Binding StatusPokojuNazwa}"/>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

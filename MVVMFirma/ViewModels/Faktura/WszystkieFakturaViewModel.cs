@@ -26,19 +26,19 @@ namespace MVVMFirma.ViewModels
                     select new FakturaForAllView
                     {
                         IdFaktury = faktura.IdFaktury,
-                        KlientImie = faktura.Klient.Imie,
-                        KlientNazwisko = faktura.Klient.Nazwisko,
-                        KlientNIP = faktura.Klient.NIP,
-                        IdRezerwacji = faktura.IdRezerwacji,
                         NrFaktury = faktura.NrFaktury,
-                        Opis = faktura.Opis,
+                        IdRezerwacji = faktura.IdRezerwacji,
+                        KlientNIP = faktura.Rezerwacja.Klient.NIP,
+                        KlientImie = faktura.Rezerwacja.Klient.Imie,
+                        KlientNazwisko = faktura.Rezerwacja.Klient.Nazwisko,
                         DataWystawienia = faktura.DataWystawienia,
                         DataSprzedazy = faktura.DataSprzedazy,
                         KwotaNetto = faktura.KwotaNetto,
-                        VAT = faktura.VAT,
+                        VAT = faktura.VAT.Stawka,
                         KwotaBrutto = faktura.KwotaBrutto,
+                        TerminPlatnosci = faktura.TerminPlatnosci,
                         IdPlatnosci = faktura.IdPlatnosci,
-                        TerminPlatnosci = faktura.TerminPlatnosci
+                        Opis = faktura.Opis
                     }
                 );
         }

@@ -34,7 +34,7 @@ namespace MVVMFirma.ViewModels
                         NrLokalu = pracownik.NrLokalu,
                         KodPocztowy = pracownik.KodPocztowy,
                         Miasto = pracownik.Miasto,
-                        Kraj = pracownik.Kraj,
+                        Kraj = pracownik.Kraj.Nazwa,
                         DataUrodzenia = pracownik.DataUrodzenia,
                         Email = pracownik.Email,
                         Telefon = pracownik.Telefon

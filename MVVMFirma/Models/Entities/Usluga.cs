@@ -15,12 +15,13 @@ namespace MVVMFirma.Models.Entities
     public partial class Usluga
     {
         public int IdUslugi { get; set; }
+        public int IdRezerwacji { get; set; }
         public int IdTypuUslugi { get; set; }
         public System.DateTime DataRozpoczeciaUslugi { get; set; }
         public System.DateTime DataZakonczeniaUslugi { get; set; }
-        public int IdKlienta { get; set; }
+        public decimal Kwota { get; set; }
     
-        public virtual Klient Klient { get; set; }
+        public virtual Rezerwacja Rezerwacja { get; set; }
         public virtual TypUslugi TypUslugi { get; set; }
     }
 }

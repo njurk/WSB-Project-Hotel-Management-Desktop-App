@@ -10,10 +10,10 @@ namespace MVVMFirma.Models.EntitiesForView
     {
         public int IdPokoju { get; set; }
         public string NrPokoju { get; set; }
-        public string IdTypuPokojuNazwa { get; set; }
-        public string IdKlasyPokojuNazwa { get; set; }
-        public string IdStatusuPokojuNazwa { get; set; }
-        public string IdPietraNr { get; set; }
+        public string TypPokojuNazwa { get; set; }
+        public string KlasaPokojuNazwa { get; set; }
+        public string StatusPokojuNazwa { get; set; }
+        public string PietroNr { get; set; }
 
     }
 }

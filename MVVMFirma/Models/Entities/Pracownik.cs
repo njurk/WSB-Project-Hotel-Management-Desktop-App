@@ -14,12 +14,6 @@ namespace MVVMFirma.Models.Entities
     
     public partial class Pracownik
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Pracownik()
-        {
-            this.Rezerwacja = new HashSet<Rezerwacja>();
-        }
-    
         public int IdPracownika { get; set; }
         public int IdRodzajuPracownika { get; set; }
         public string Imie { get; set; }
@@ -29,13 +23,12 @@ namespace MVVMFirma.Models.Entities
         public string NrLokalu { get; set; }
         public string KodPocztowy { get; set; }
         public string Miasto { get; set; }
-        public string Kraj { get; set; }
+        public int IdKraju { get; set; }
         public System.DateTime DataUrodzenia { get; set; }
         public string Email { get; set; }
         public string Telefon { get; set; }
     
+        public virtual Kraj Kraj { get; set; }
         public virtual RodzajPracownika RodzajPracownika { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Rezerwacja> Rezerwacja { get; set; }
     }
 }

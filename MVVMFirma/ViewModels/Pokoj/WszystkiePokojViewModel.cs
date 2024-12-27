@@ -29,10 +29,10 @@ namespace MVVMFirma.ViewModels
                     {
                         IdPokoju = pokoj.IdPokoju,
                         NrPokoju = pokoj.NrPokoju,
-                        IdTypuPokojuNazwa = pokoj.TypPokoju.Nazwa,
-                        IdKlasyPokojuNazwa = pokoj.KlasaPokoju.Nazwa,
-                        IdStatusuPokojuNazwa = pokoj.StatusPokoju.Nazwa,
-                        IdPietraNr = pokoj.Pietro.NrPietra
+                        TypPokojuNazwa = pokoj.TypPokoju.Nazwa,
+                        KlasaPokojuNazwa = pokoj.KlasaPokoju.Nazwa,
+                        StatusPokojuNazwa = pokoj.StatusPokoju.Nazwa,
+                        PietroNr = pokoj.Pietro.NrPietra
                     }
                 );
         }

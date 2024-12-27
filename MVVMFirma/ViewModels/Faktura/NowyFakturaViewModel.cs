@@ -28,32 +28,6 @@ namespace MVVMFirma.ViewModels
         #endregion
 
         #region Properties
-        public int IdKlienta
-        {
-            get
-            {
-                return item.IdKlienta;
-            }
-            set
-            {
-                item.IdKlienta = value;
-                OnPropertyChanged(() => IdKlienta);
-            }
-        }
-
-        public int IdRezerwacji
-        {
-            get
-            {
-                return item.IdRezerwacji;
-            }
-            set
-            {
-                item.IdRezerwacji = value;
-                OnPropertyChanged(() => IdRezerwacji);
-            }
-        }
-
         public string NrFaktury
         {
             get
@@ -67,16 +41,16 @@ namespace MVVMFirma.ViewModels
             }
         }
 
-        public string Opis
+        public int IdRezerwacji
         {
             get
             {
-                return item.Opis;
+                return item.IdRezerwacji;
             }
             set
             {
-                item.Opis = value;
-                OnPropertyChanged(() => Opis);
+                item.IdRezerwacji = value;
+                OnPropertyChanged(() => IdRezerwacji);
             }
         }
 
@@ -105,33 +79,6 @@ namespace MVVMFirma.ViewModels
                 OnPropertyChanged(() => DataSprzedazy);
             }
         }
-
-        public decimal KwotaNetto
-        {
-            get
-            {
-                return item.KwotaNetto;
-            }
-            set
-            {
-                item.KwotaNetto = value;
-                OnPropertyChanged(() => KwotaNetto);
-            }
-        }
-
-        public decimal VAT
-        {
-            get
-            {
-                return item.VAT;
-            }
-            set
-            {
-                item.VAT = value;
-                OnPropertyChanged(() => VAT);
-            }
-        }
-
         public decimal KwotaBrutto
         {
             get
@@ -145,19 +92,32 @@ namespace MVVMFirma.ViewModels
             }
         }
 
-        public int? IdPlatnosci
+        public int IdVat
         {
             get
             {
-                return item.IdPlatnosci;
+                return item.IdVat;
             }
             set
             {
-                item.IdPlatnosci = value;
-                OnPropertyChanged(() => IdPlatnosci);
+                item.IdVat = value;
+                OnPropertyChanged(() => IdVat);
             }
         }
 
+        public decimal KwotaNetto
+        {
+            get
+            {
+                return item.KwotaNetto;
+            }
+            set
+            {
+                item.KwotaNetto = value;
+                OnPropertyChanged(() => KwotaNetto);
+            }
+        }
+       
         public DateTime TerminPlatnosci
         {
             get
@@ -170,6 +130,18 @@ namespace MVVMFirma.ViewModels
                 OnPropertyChanged(() => TerminPlatnosci);
             }
         }
+        public string Opis
+        {
+            get
+            {
+                return item.Opis;
+            }
+            set
+            {
+                item.Opis = value;
+                OnPropertyChanged(() => Opis);
+            }
+        }
 
         public IQueryable<KeyAndValue> RezerwacjaItems
         {
@@ -179,19 +151,11 @@ namespace MVVMFirma.ViewModels
             }
         }
 
-        public IQueryable<KeyAndValue> KlientItems
+        public IQueryable<KeyAndValue> VATItems
         {
             get
             {
-                return new KlientB(db).GetKlientKeyAndValueItems();
-            }
-        }
-
-        public IQueryable<KeyAndValue> PlatnoscItems
-        {
-            get
-            {
-                return new PlatnoscB(db).GetPlatnoscKeyAndValueItems();
+                return new VATB(db).GetVATKeyAndValueItems();
             }
         }
         #endregion

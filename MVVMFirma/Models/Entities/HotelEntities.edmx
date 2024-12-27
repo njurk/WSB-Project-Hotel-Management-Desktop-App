@@ -10,17 +10,16 @@
             <PropertyRef Name="IdFaktury" />
           </Key>
           <Property Name="IdFaktury" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="IdKlienta" Type="int" Nullable="false" />
           <Property Name="IdRezerwacji" Type="int" Nullable="false" />
           <Property Name="NrFaktury" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Opis" Type="nvarchar" MaxLength="200" />
+          <Property Name="Opis" Type="nvarchar" MaxLength="300" />
           <Property Name="DataWystawienia" Type="date" Nullable="false" />
           <Property Name="DataSprzedazy" Type="date" Nullable="false" />
           <Property Name="KwotaNetto" Type="decimal" Precision="18" Scale="0" Nullable="false" />
-          <Property Name="VAT" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="IdVat" Type="int" Nullable="false" />
           <Property Name="KwotaBrutto" Type="decimal" Precision="18" Scale="0" Nullable="false" />
-          <Property Name="IdPlatnosci" Type="int" />
           <Property Name="TerminPlatnosci" Type="date" Nullable="false" />
+          <Property Name="IdPlatnosci" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="KlasaPokoju">
           <Key>
@@ -35,17 +34,24 @@
             <PropertyRef Name="IdKlienta" />
           </Key>
           <Property Name="IdKlienta" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Imie" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Nazwisko" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Ulica" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Imie" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Nazwisko" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Ulica" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="NrDomu" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="NrLokalu" Type="nvarchar" MaxLength="20" />
           <Property Name="KodPocztowy" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="Miasto" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Kraj" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="IdKraju" Type="int" Nullable="false" />
           <Property Name="Email" Type="nvarchar" MaxLength="100" />
-          <Property Name="Telefon" Type="nvarchar" MaxLength="20" />
+          <Property Name="Telefon" Type="nvarchar" MaxLength="30" Nullable="false" />
           <Property Name="NIP" Type="nvarchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="Kraj">
+          <Key>
+            <PropertyRef Name="IdKraju" />
+          </Key>
+          <Property Name="IdKraju" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nazwa" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="Pietro">
           <Key>
@@ -59,18 +65,17 @@
             <PropertyRef Name="IdPlatnosci" />
           </Key>
           <Property Name="IdPlatnosci" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="IdKlienta" Type="int" Nullable="false" />
-          <Property Name="IdSposobuPlatnosci" Type="int" Nullable="false" />
+          <Property Name="IdRezerwacji" Type="int" Nullable="false" />
+          <Property Name="IdSposobuPlatnosci" Type="int" />
           <Property Name="IdStatusuPlatnosci" Type="int" Nullable="false" />
           <Property Name="DataPlatnosci" Type="datetime" />
-          <Property Name="Kwota" Type="decimal" Precision="18" Scale="0" Nullable="false" />
         </EntityType>
         <EntityType Name="Pokoj">
           <Key>
             <PropertyRef Name="IdPokoju" />
           </Key>
           <Property Name="IdPokoju" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="NrPokoju" Type="nvarchar" MaxLength="5" Nullable="false" />
+          <Property Name="NrPokoju" Type="nvarchar" MaxLength="10" Nullable="false" />
           <Property Name="IdTypuPokoju" Type="int" Nullable="false" />
           <Property Name="IdKlasyPokoju" Type="int" Nullable="false" />
           <Property Name="IdStatusuPokoju" Type="int" Nullable="false" />
@@ -89,7 +94,7 @@
           <Property Name="NrLokalu" Type="nvarchar" MaxLength="20" />
           <Property Name="KodPocztowy" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="Miasto" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Kraj" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="IdKraju" Type="int" Nullable="false" />
           <Property Name="DataUrodzenia" Type="date" Nullable="false" />
           <Property Name="Email" Type="nvarchar" MaxLength="100" />
           <Property Name="Telefon" Type="nvarchar" MaxLength="20" Nullable="false" />
@@ -101,14 +106,14 @@
           <Property Name="IdRezerwacji" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="IdKlienta" Type="int" Nullable="false" />
           <Property Name="IdPokoju" Type="int" Nullable="false" />
-          <Property Name="IdPracownika" Type="int" Nullable="false" />
-          <Property Name="IloscDoroslych" Type="nvarchar" MaxLength="5" Nullable="false" />
-          <Property Name="IloscDzieci" Type="nvarchar" MaxLength="5" />
-          <Property Name="IloscZwierzat" Type="nvarchar" MaxLength="5" />
+          <Property Name="LiczbaDoroslych" Type="nvarchar" MaxLength="5" Nullable="false" />
+          <Property Name="LiczbaDzieci" Type="nvarchar" MaxLength="5" />
+          <Property Name="CzyZwierzeta" Type="bit" Nullable="false" />
           <Property Name="DataZameldowania" Type="date" Nullable="false" />
           <Property Name="DataWymeldowania" Type="date" Nullable="false" />
-          <Property Name="DataRezerwacji" Type="datetime" Nullable="false" />
-          <Property Name="Uwagi" Type="nvarchar" MaxLength="200" />
+          <Property Name="DataRezerwacji" Type="date" Nullable="false" />
+          <Property Name="Uwagi" Type="nvarchar" MaxLength="300" />
+          <Property Name="Kwota" Type="decimal" Precision="18" Scale="0" Nullable="false" />
         </EntityType>
         <EntityType Name="RodzajPracownika">
           <Key>
@@ -184,25 +189,21 @@
             <PropertyRef Name="IdUslugi" />
           </Key>
           <Property Name="IdUslugi" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdRezerwacji" Type="int" Nullable="false" />
           <Property Name="IdTypuUslugi" Type="int" Nullable="false" />
           <Property Name="DataRozpoczeciaUslugi" Type="date" Nullable="false" />
           <Property Name="DataZakonczeniaUslugi" Type="date" Nullable="false" />
-          <Property Name="IdKlienta" Type="int" Nullable="false" />
+          <Property Name="Kwota" Type="decimal" Precision="18" Scale="0" Nullable="false" />
         </EntityType>
-        <Association Name="FK_Faktura_Klient">
-          <End Role="Klient" Type="Self.Klient" Multiplicity="1" />
-          <End Role="Faktura" Type="Self.Faktura" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Klient">
-              <PropertyRef Name="IdKlienta" />
-            </Principal>
-            <Dependent Role="Faktura">
-              <PropertyRef Name="IdKlienta" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
+        <EntityType Name="VAT">
+          <Key>
+            <PropertyRef Name="IdVat" />
+          </Key>
+          <Property Name="IdVat" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Stawka" Type="nvarchar" MaxLength="5" Nullable="false" />
+        </EntityType>
         <Association Name="FK_Faktura_Platnosc">
-          <End Role="Platnosc" Type="Self.Platnosc" Multiplicity="0..1" />
+          <End Role="Platnosc" Type="Self.Platnosc" Multiplicity="1" />
           <End Role="Faktura" Type="Self.Faktura" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Platnosc">
@@ -225,20 +226,44 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Platnosc_Klient">
-          <End Role="Klient" Type="Self.Klient" Multiplicity="1" />
+        <Association Name="FK_Faktura_VAT">
+          <End Role="VAT" Type="Self.VAT" Multiplicity="1" />
+          <End Role="Faktura" Type="Self.Faktura" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VAT">
+              <PropertyRef Name="IdVat" />
+            </Principal>
+            <Dependent Role="Faktura">
+              <PropertyRef Name="IdVat" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Klient_Kraj">
+          <End Role="Kraj" Type="Self.Kraj" Multiplicity="1" />
+          <End Role="Klient" Type="Self.Klient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kraj">
+              <PropertyRef Name="IdKraju" />
+            </Principal>
+            <Dependent Role="Klient">
+              <PropertyRef Name="IdKraju" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Platnosc_Rezerwacja">
+          <End Role="Rezerwacja" Type="Self.Rezerwacja" Multiplicity="1" />
           <End Role="Platnosc" Type="Self.Platnosc" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Klient">
-              <PropertyRef Name="IdKlienta" />
+            <Principal Role="Rezerwacja">
+              <PropertyRef Name="IdRezerwacji" />
             </Principal>
             <Dependent Role="Platnosc">
-              <PropertyRef Name="IdKlienta" />
+              <PropertyRef Name="IdRezerwacji" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Platnosc_SposobPlatnosci">
-          <End Role="SposobPlatnosci" Type="Self.SposobPlatnosci" Multiplicity="1" />
+          <End Role="SposobPlatnosci" Type="Self.SposobPlatnosci" Multiplicity="0..1" />
           <End Role="Platnosc" Type="Self.Platnosc" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="SposobPlatnosci">
@@ -309,6 +334,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Pracownik_Kraj">
+          <End Role="Kraj" Type="Self.Kraj" Multiplicity="1" />
+          <End Role="Pracownik" Type="Self.Pracownik" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kraj">
+              <PropertyRef Name="IdKraju" />
+            </Principal>
+            <Dependent Role="Pracownik">
+              <PropertyRef Name="IdKraju" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Pracownik_RodzajPracownika">
           <End Role="RodzajPracownika" Type="Self.RodzajPracownika" Multiplicity="1" />
           <End Role="Pracownik" Type="Self.Pracownik" Multiplicity="*" />
@@ -345,18 +382,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Rezerwacja_Pracownik">
-          <End Role="Pracownik" Type="Self.Pracownik" Multiplicity="1" />
-          <End Role="Rezerwacja" Type="Self.Rezerwacja" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Pracownik">
-              <PropertyRef Name="IdPracownika" />
-            </Principal>
-            <Dependent Role="Rezerwacja">
-              <PropertyRef Name="IdPracownika" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_UdogodnieniaKlasPokoju_KlasaPokoju">
           <End Role="KlasaPokoju" Type="Self.KlasaPokoju" Multiplicity="1" />
           <End Role="UdogodnieniaKlasPokoju" Type="Self.UdogodnieniaKlasPokoju" Multiplicity="*" />
@@ -381,15 +406,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Usluga_Klient">
-          <End Role="Klient" Type="Self.Klient" Multiplicity="1" />
+        <Association Name="FK_Usluga_Rezerwacja">
+          <End Role="Rezerwacja" Type="Self.Rezerwacja" Multiplicity="1" />
           <End Role="Usluga" Type="Self.Usluga" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Klient">
-              <PropertyRef Name="IdKlienta" />
+            <Principal Role="Rezerwacja">
+              <PropertyRef Name="IdRezerwacji" />
             </Principal>
             <Dependent Role="Usluga">
-              <PropertyRef Name="IdKlienta" />
+              <PropertyRef Name="IdRezerwacji" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -409,6 +434,7 @@
           <EntitySet Name="Faktura" EntityType="Self.Faktura" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="KlasaPokoju" EntityType="Self.KlasaPokoju" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Klient" EntityType="Self.Klient" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Kraj" EntityType="Self.Kraj" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Pietro" EntityType="Self.Pietro" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Platnosc" EntityType="Self.Platnosc" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Pokoj" EntityType="Self.Pokoj" Schema="dbo" store:Type="Tables" />
@@ -424,10 +450,7 @@
           <EntitySet Name="UdogodnieniaKlasPokoju" EntityType="Self.UdogodnieniaKlasPokoju" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Udogodnienie" EntityType="Self.Udogodnienie" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Usluga" EntityType="Self.Usluga" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_Faktura_Klient" Association="Self.FK_Faktura_Klient">
-            <End Role="Klient" EntitySet="Klient" />
-            <End Role="Faktura" EntitySet="Faktura" />
-          </AssociationSet>
+          <EntitySet Name="VAT" EntityType="Self.VAT" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Faktura_Platnosc" Association="Self.FK_Faktura_Platnosc">
             <End Role="Platnosc" EntitySet="Platnosc" />
             <End Role="Faktura" EntitySet="Faktura" />
@@ -436,8 +459,16 @@
             <End Role="Rezerwacja" EntitySet="Rezerwacja" />
             <End Role="Faktura" EntitySet="Faktura" />
           </AssociationSet>
-          <AssociationSet Name="FK_Platnosc_Klient" Association="Self.FK_Platnosc_Klient">
+          <AssociationSet Name="FK_Faktura_VAT" Association="Self.FK_Faktura_VAT">
+            <End Role="VAT" EntitySet="VAT" />
+            <End Role="Faktura" EntitySet="Faktura" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Klient_Kraj" Association="Self.FK_Klient_Kraj">
+            <End Role="Kraj" EntitySet="Kraj" />
             <End Role="Klient" EntitySet="Klient" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Platnosc_Rezerwacja" Association="Self.FK_Platnosc_Rezerwacja">
+            <End Role="Rezerwacja" EntitySet="Rezerwacja" />
             <End Role="Platnosc" EntitySet="Platnosc" />
           </AssociationSet>
           <AssociationSet Name="FK_Platnosc_SposobPlatnosci" Association="Self.FK_Platnosc_SposobPlatnosci">
@@ -464,6 +495,10 @@
             <End Role="TypPokoju" EntitySet="TypPokoju" />
             <End Role="Pokoj" EntitySet="Pokoj" />
           </AssociationSet>
+          <AssociationSet Name="FK_Pracownik_Kraj" Association="Self.FK_Pracownik_Kraj">
+            <End Role="Kraj" EntitySet="Kraj" />
+            <End Role="Pracownik" EntitySet="Pracownik" />
+          </AssociationSet>
           <AssociationSet Name="FK_Pracownik_RodzajPracownika" Association="Self.FK_Pracownik_RodzajPracownika">
             <End Role="RodzajPracownika" EntitySet="RodzajPracownika" />
             <End Role="Pracownik" EntitySet="Pracownik" />
@@ -476,10 +511,6 @@
             <End Role="Pokoj" EntitySet="Pokoj" />
             <End Role="Rezerwacja" EntitySet="Rezerwacja" />
           </AssociationSet>
-          <AssociationSet Name="FK_Rezerwacja_Pracownik" Association="Self.FK_Rezerwacja_Pracownik">
-            <End Role="Pracownik" EntitySet="Pracownik" />
-            <End Role="Rezerwacja" EntitySet="Rezerwacja" />
-          </AssociationSet>
           <AssociationSet Name="FK_UdogodnieniaKlasPokoju_KlasaPokoju" Association="Self.FK_UdogodnieniaKlasPokoju_KlasaPokoju">
             <End Role="KlasaPokoju" EntitySet="KlasaPokoju" />
             <End Role="UdogodnieniaKlasPokoju" EntitySet="UdogodnieniaKlasPokoju" />
@@ -488,8 +519,8 @@
             <End Role="Udogodnienie" EntitySet="Udogodnienie" />
             <End Role="UdogodnieniaKlasPokoju" EntitySet="UdogodnieniaKlasPokoju" />
           </AssociationSet>
-          <AssociationSet Name="FK_Usluga_Klient" Association="Self.FK_Usluga_Klient">
-            <End Role="Klient" EntitySet="Klient" />
+          <AssociationSet Name="FK_Usluga_Rezerwacja" Association="Self.FK_Usluga_Rezerwacja">
+            <End Role="Rezerwacja" EntitySet="Rezerwacja" />
             <End Role="Usluga" EntitySet="Usluga" />
           </AssociationSet>
           <AssociationSet Name="FK_Usluga_TypUslugi" Association="Self.FK_Usluga_TypUslugi">
@@ -507,20 +538,19 @@
             <PropertyRef Name="IdFaktury" />
           </Key>
           <Property Name="IdFaktury" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IdKlienta" Type="Int32" Nullable="false" />
           <Property Name="IdRezerwacji" Type="Int32" Nullable="false" />
           <Property Name="NrFaktury" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Opis" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Opis" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
           <Property Name="DataWystawienia" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="DataSprzedazy" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="KwotaNetto" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
-          <Property Name="VAT" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="IdVat" Type="Int32" Nullable="false" />
           <Property Name="KwotaBrutto" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
-          <Property Name="IdPlatnosci" Type="Int32" />
           <Property Name="TerminPlatnosci" Type="DateTime" Nullable="false" Precision="0" />
-          <NavigationProperty Name="Klient" Relationship="Self.FK_Faktura_Klient" FromRole="Faktura" ToRole="Klient" />
+          <Property Name="IdPlatnosci" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Platnosc" Relationship="Self.FK_Faktura_Platnosc" FromRole="Faktura" ToRole="Platnosc" />
           <NavigationProperty Name="Rezerwacja" Relationship="Self.FK_Faktura_Rezerwacja" FromRole="Faktura" ToRole="Rezerwacja" />
+          <NavigationProperty Name="VAT" Relationship="Self.FK_Faktura_VAT" FromRole="Faktura" ToRole="VAT" />
         </EntityType>
         <EntityType Name="KlasaPokoju">
           <Key>
@@ -537,21 +567,28 @@
             <PropertyRef Name="IdKlienta" />
           </Key>
           <Property Name="IdKlienta" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Imie" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Nazwisko" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Ulica" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Imie" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Nazwisko" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Ulica" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="NrDomu" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="NrLokalu" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="KodPocztowy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Miasto" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Kraj" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IdKraju" Type="Int32" Nullable="false" />
           <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Telefon" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Telefon" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="NIP" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Faktura" Relationship="Self.FK_Faktura_Klient" FromRole="Klient" ToRole="Faktura" />
-          <NavigationProperty Name="Platnosc" Relationship="Self.FK_Platnosc_Klient" FromRole="Klient" ToRole="Platnosc" />
+          <NavigationProperty Name="Kraj" Relationship="Self.FK_Klient_Kraj" FromRole="Klient" ToRole="Kraj" />
           <NavigationProperty Name="Rezerwacja" Relationship="Self.FK_Rezerwacja_Klient" FromRole="Klient" ToRole="Rezerwacja" />
-          <NavigationProperty Name="Usluga" Relationship="Self.FK_Usluga_Klient" FromRole="Klient" ToRole="Usluga" />
+        </EntityType>
+        <EntityType Name="Kraj">
+          <Key>
+            <PropertyRef Name="IdKraju" />
+          </Key>
+          <Property Name="IdKraju" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nazwa" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Klient" Relationship="Self.FK_Klient_Kraj" FromRole="Kraj" ToRole="Klient" />
+          <NavigationProperty Name="Pracownik" Relationship="Self.FK_Pracownik_Kraj" FromRole="Kraj" ToRole="Pracownik" />
         </EntityType>
         <EntityType Name="Pietro">
           <Key>
@@ -566,13 +603,12 @@
             <PropertyRef Name="IdPlatnosci" />
           </Key>
           <Property Name="IdPlatnosci" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IdKlienta" Type="Int32" Nullable="false" />
-          <Property Name="IdSposobuPlatnosci" Type="Int32" Nullable="false" />
+          <Property Name="IdRezerwacji" Type="Int32" Nullable="false" />
+          <Property Name="IdSposobuPlatnosci" Type="Int32" />
           <Property Name="IdStatusuPlatnosci" Type="Int32" Nullable="false" />
           <Property Name="DataPlatnosci" Type="DateTime" Precision="3" />
-          <Property Name="Kwota" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
           <NavigationProperty Name="Faktura" Relationship="Self.FK_Faktura_Platnosc" FromRole="Platnosc" ToRole="Faktura" />
-          <NavigationProperty Name="Klient" Relationship="Self.FK_Platnosc_Klient" FromRole="Platnosc" ToRole="Klient" />
+          <NavigationProperty Name="Rezerwacja" Relationship="Self.FK_Platnosc_Rezerwacja" FromRole="Platnosc" ToRole="Rezerwacja" />
           <NavigationProperty Name="SposobPlatnosci" Relationship="Self.FK_Platnosc_SposobPlatnosci" FromRole="Platnosc" ToRole="SposobPlatnosci" />
           <NavigationProperty Name="StatusPlatnosci" Relationship="Self.FK_Platnosc_StatusPlatnosci" FromRole="Platnosc" ToRole="StatusPlatnosci" />
         </EntityType>
@@ -581,7 +617,7 @@
             <PropertyRef Name="IdPokoju" />
           </Key>
           <Property Name="IdPokoju" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="NrPokoju" Type="String" MaxLength="5" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="NrPokoju" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="IdTypuPokoju" Type="Int32" Nullable="false" />
           <Property Name="IdKlasyPokoju" Type="Int32" Nullable="false" />
           <Property Name="IdStatusuPokoju" Type="Int32" Nullable="false" />
@@ -605,12 +641,12 @@
           <Property Name="NrLokalu" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="KodPocztowy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Miasto" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Kraj" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IdKraju" Type="Int32" Nullable="false" />
           <Property Name="DataUrodzenia" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Telefon" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Kraj" Relationship="Self.FK_Pracownik_Kraj" FromRole="Pracownik" ToRole="Kraj" />
           <NavigationProperty Name="RodzajPracownika" Relationship="Self.FK_Pracownik_RodzajPracownika" FromRole="Pracownik" ToRole="RodzajPracownika" />
-          <NavigationProperty Name="Rezerwacja" Relationship="Self.FK_Rezerwacja_Pracownik" FromRole="Pracownik" ToRole="Rezerwacja" />
         </EntityType>
         <EntityType Name="Rezerwacja">
           <Key>
@@ -619,18 +655,19 @@
           <Property Name="IdRezerwacji" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="IdKlienta" Type="Int32" Nullable="false" />
           <Property Name="IdPokoju" Type="Int32" Nullable="false" />
-          <Property Name="IdPracownika" Type="Int32" Nullable="false" />
-          <Property Name="IloscDoroslych" Type="String" MaxLength="5" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="IloscDzieci" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
-          <Property Name="IloscZwierzat" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="LiczbaDoroslych" Type="String" MaxLength="5" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LiczbaDzieci" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="CzyZwierzeta" Type="Boolean" Nullable="false" />
           <Property Name="DataZameldowania" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="DataWymeldowania" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="DataRezerwacji" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Uwagi" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="DataRezerwacji" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Uwagi" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Kwota" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
           <NavigationProperty Name="Faktura" Relationship="Self.FK_Faktura_Rezerwacja" FromRole="Rezerwacja" ToRole="Faktura" />
           <NavigationProperty Name="Klient" Relationship="Self.FK_Rezerwacja_Klient" FromRole="Rezerwacja" ToRole="Klient" />
+          <NavigationProperty Name="Platnosc" Relationship="Self.FK_Platnosc_Rezerwacja" FromRole="Rezerwacja" ToRole="Platnosc" />
           <NavigationProperty Name="Pokoj" Relationship="Self.FK_Rezerwacja_Pokoj" FromRole="Rezerwacja" ToRole="Pokoj" />
-          <NavigationProperty Name="Pracownik" Relationship="Self.FK_Rezerwacja_Pracownik" FromRole="Rezerwacja" ToRole="Pracownik" />
+          <NavigationProperty Name="Usluga" Relationship="Self.FK_Usluga_Rezerwacja" FromRole="Rezerwacja" ToRole="Usluga" />
         </EntityType>
         <EntityType Name="RodzajPracownika">
           <Key>
@@ -715,27 +752,24 @@
             <PropertyRef Name="IdUslugi" />
           </Key>
           <Property Name="IdUslugi" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdRezerwacji" Type="Int32" Nullable="false" />
           <Property Name="IdTypuUslugi" Type="Int32" Nullable="false" />
           <Property Name="DataRozpoczeciaUslugi" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="DataZakonczeniaUslugi" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="IdKlienta" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Klient" Relationship="Self.FK_Usluga_Klient" FromRole="Usluga" ToRole="Klient" />
+          <Property Name="Kwota" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <NavigationProperty Name="Rezerwacja" Relationship="Self.FK_Usluga_Rezerwacja" FromRole="Usluga" ToRole="Rezerwacja" />
           <NavigationProperty Name="TypUslugi" Relationship="Self.FK_Usluga_TypUslugi" FromRole="Usluga" ToRole="TypUslugi" />
         </EntityType>
-        <Association Name="FK_Faktura_Klient">
-          <End Role="Klient" Type="Self.Klient" Multiplicity="1" />
-          <End Role="Faktura" Type="Self.Faktura" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Klient">
-              <PropertyRef Name="IdKlienta" />
-            </Principal>
-            <Dependent Role="Faktura">
-              <PropertyRef Name="IdKlienta" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
+        <EntityType Name="VAT">
+          <Key>
+            <PropertyRef Name="IdVat" />
+          </Key>
+          <Property Name="IdVat" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Stawka" Type="String" MaxLength="5" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Faktura" Relationship="Self.FK_Faktura_VAT" FromRole="VAT" ToRole="Faktura" />
+        </EntityType>
         <Association Name="FK_Faktura_Platnosc">
-          <End Role="Platnosc" Type="Self.Platnosc" Multiplicity="0..1" />
+          <End Role="Platnosc" Type="Self.Platnosc" Multiplicity="1" />
           <End Role="Faktura" Type="Self.Faktura" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Platnosc">
@@ -755,6 +789,18 @@
             </Principal>
             <Dependent Role="Faktura">
               <PropertyRef Name="IdRezerwacji" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Faktura_VAT">
+          <End Role="VAT" Type="Self.VAT" Multiplicity="1" />
+          <End Role="Faktura" Type="Self.Faktura" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VAT">
+              <PropertyRef Name="IdVat" />
+            </Principal>
+            <Dependent Role="Faktura">
+              <PropertyRef Name="IdVat" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -782,15 +828,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Platnosc_Klient">
-          <End Role="Klient" Type="Self.Klient" Multiplicity="1" />
-          <End Role="Platnosc" Type="Self.Platnosc" Multiplicity="*" />
+        <Association Name="FK_Klient_Kraj">
+          <End Role="Kraj" Type="Self.Kraj" Multiplicity="1" />
+          <End Role="Klient" Type="Self.Klient" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Klient">
-              <PropertyRef Name="IdKlienta" />
+            <Principal Role="Kraj">
+              <PropertyRef Name="IdKraju" />
             </Principal>
-            <Dependent Role="Platnosc">
-              <PropertyRef Name="IdKlienta" />
+            <Dependent Role="Klient">
+              <PropertyRef Name="IdKraju" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -806,15 +852,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Usluga_Klient">
-          <End Role="Klient" Type="Self.Klient" Multiplicity="1" />
-          <End Role="Usluga" Type="Self.Usluga" Multiplicity="*" />
+        <Association Name="FK_Pracownik_Kraj">
+          <End Role="Kraj" Type="Self.Kraj" Multiplicity="1" />
+          <End Role="Pracownik" Type="Self.Pracownik" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Klient">
-              <PropertyRef Name="IdKlienta" />
+            <Principal Role="Kraj">
+              <PropertyRef Name="IdKraju" />
             </Principal>
-            <Dependent Role="Usluga">
-              <PropertyRef Name="IdKlienta" />
+            <Dependent Role="Pracownik">
+              <PropertyRef Name="IdKraju" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -830,8 +876,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Platnosc_Rezerwacja">
+          <End Role="Rezerwacja" Type="Self.Rezerwacja" Multiplicity="1" />
+          <End Role="Platnosc" Type="Self.Platnosc" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rezerwacja">
+              <PropertyRef Name="IdRezerwacji" />
+            </Principal>
+            <Dependent Role="Platnosc">
+              <PropertyRef Name="IdRezerwacji" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Platnosc_SposobPlatnosci">
-          <End Role="SposobPlatnosci" Type="Self.SposobPlatnosci" Multiplicity="1" />
+          <End Role="SposobPlatnosci" Type="Self.SposobPlatnosci" Multiplicity="0..1" />
           <End Role="Platnosc" Type="Self.Platnosc" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="SposobPlatnosci">
@@ -902,15 +960,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Rezerwacja_Pracownik">
-          <End Role="Pracownik" Type="Self.Pracownik" Multiplicity="1" />
-          <End Role="Rezerwacja" Type="Self.Rezerwacja" Multiplicity="*" />
+        <Association Name="FK_Usluga_Rezerwacja">
+          <End Role="Rezerwacja" Type="Self.Rezerwacja" Multiplicity="1" />
+          <End Role="Usluga" Type="Self.Usluga" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Pracownik">
-              <PropertyRef Name="IdPracownika" />
+            <Principal Role="Rezerwacja">
+              <PropertyRef Name="IdRezerwacji" />
             </Principal>
-            <Dependent Role="Rezerwacja">
-              <PropertyRef Name="IdPracownika" />
+            <Dependent Role="Usluga">
+              <PropertyRef Name="IdRezerwacji" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -942,6 +1000,7 @@
           <EntitySet Name="Faktura" EntityType="Self.Faktura" />
           <EntitySet Name="KlasaPokoju" EntityType="Self.KlasaPokoju" />
           <EntitySet Name="Klient" EntityType="Self.Klient" />
+          <EntitySet Name="Kraj" EntityType="Self.Kraj" />
           <EntitySet Name="Pietro" EntityType="Self.Pietro" />
           <EntitySet Name="Platnosc" EntityType="Self.Platnosc" />
           <EntitySet Name="Pokoj" EntityType="Self.Pokoj" />
@@ -957,16 +1016,17 @@
           <EntitySet Name="UdogodnieniaKlasPokoju" EntityType="Self.UdogodnieniaKlasPokoju" />
           <EntitySet Name="Udogodnienie" EntityType="Self.Udogodnienie" />
           <EntitySet Name="Usluga" EntityType="Self.Usluga" />
-          <AssociationSet Name="FK_Faktura_Klient" Association="Self.FK_Faktura_Klient">
-            <End Role="Klient" EntitySet="Klient" />
-            <End Role="Faktura" EntitySet="Faktura" />
-          </AssociationSet>
+          <EntitySet Name="VAT" EntityType="Self.VAT" />
           <AssociationSet Name="FK_Faktura_Platnosc" Association="Self.FK_Faktura_Platnosc">
             <End Role="Platnosc" EntitySet="Platnosc" />
             <End Role="Faktura" EntitySet="Faktura" />
           </AssociationSet>
           <AssociationSet Name="FK_Faktura_Rezerwacja" Association="Self.FK_Faktura_Rezerwacja">
             <End Role="Rezerwacja" EntitySet="Rezerwacja" />
+            <End Role="Faktura" EntitySet="Faktura" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Faktura_VAT" Association="Self.FK_Faktura_VAT">
+            <End Role="VAT" EntitySet="VAT" />
             <End Role="Faktura" EntitySet="Faktura" />
           </AssociationSet>
           <AssociationSet Name="FK_Pokoj_KlasaPokoju" Association="Self.FK_Pokoj_KlasaPokoju">
@@ -977,21 +1037,25 @@
             <End Role="KlasaPokoju" EntitySet="KlasaPokoju" />
             <End Role="UdogodnieniaKlasPokoju" EntitySet="UdogodnieniaKlasPokoju" />
           </AssociationSet>
-          <AssociationSet Name="FK_Platnosc_Klient" Association="Self.FK_Platnosc_Klient">
+          <AssociationSet Name="FK_Klient_Kraj" Association="Self.FK_Klient_Kraj">
+            <End Role="Kraj" EntitySet="Kraj" />
             <End Role="Klient" EntitySet="Klient" />
-            <End Role="Platnosc" EntitySet="Platnosc" />
           </AssociationSet>
           <AssociationSet Name="FK_Rezerwacja_Klient" Association="Self.FK_Rezerwacja_Klient">
             <End Role="Klient" EntitySet="Klient" />
             <End Role="Rezerwacja" EntitySet="Rezerwacja" />
           </AssociationSet>
-          <AssociationSet Name="FK_Usluga_Klient" Association="Self.FK_Usluga_Klient">
-            <End Role="Klient" EntitySet="Klient" />
-            <End Role="Usluga" EntitySet="Usluga" />
+          <AssociationSet Name="FK_Pracownik_Kraj" Association="Self.FK_Pracownik_Kraj">
+            <End Role="Kraj" EntitySet="Kraj" />
+            <End Role="Pracownik" EntitySet="Pracownik" />
           </AssociationSet>
           <AssociationSet Name="FK_Pokoj_Pietro" Association="Self.FK_Pokoj_Pietro">
             <End Role="Pietro" EntitySet="Pietro" />
             <End Role="Pokoj" EntitySet="Pokoj" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Platnosc_Rezerwacja" Association="Self.FK_Platnosc_Rezerwacja">
+            <End Role="Rezerwacja" EntitySet="Rezerwacja" />
+            <End Role="Platnosc" EntitySet="Platnosc" />
           </AssociationSet>
           <AssociationSet Name="FK_Platnosc_SposobPlatnosci" Association="Self.FK_Platnosc_SposobPlatnosci">
             <End Role="SposobPlatnosci" EntitySet="SposobPlatnosci" />
@@ -1017,9 +1081,9 @@
             <End Role="RodzajPracownika" EntitySet="RodzajPracownika" />
             <End Role="Pracownik" EntitySet="Pracownik" />
           </AssociationSet>
-          <AssociationSet Name="FK_Rezerwacja_Pracownik" Association="Self.FK_Rezerwacja_Pracownik">
-            <End Role="Pracownik" EntitySet="Pracownik" />
+          <AssociationSet Name="FK_Usluga_Rezerwacja" Association="Self.FK_Usluga_Rezerwacja">
             <End Role="Rezerwacja" EntitySet="Rezerwacja" />
+            <End Role="Usluga" EntitySet="Usluga" />
           </AssociationSet>
           <AssociationSet Name="FK_Usluga_TypUslugi" Association="Self.FK_Usluga_TypUslugi">
             <End Role="TypUslugi" EntitySet="TypUslugi" />
@@ -1040,17 +1104,16 @@
             <EntityTypeMapping TypeName="HotelModel.Faktura">
               <MappingFragment StoreEntitySet="Faktura">
                 <ScalarProperty Name="IdFaktury" ColumnName="IdFaktury" />
-                <ScalarProperty Name="IdKlienta" ColumnName="IdKlienta" />
                 <ScalarProperty Name="IdRezerwacji" ColumnName="IdRezerwacji" />
                 <ScalarProperty Name="NrFaktury" ColumnName="NrFaktury" />
                 <ScalarProperty Name="Opis" ColumnName="Opis" />
                 <ScalarProperty Name="DataWystawienia" ColumnName="DataWystawienia" />
                 <ScalarProperty Name="DataSprzedazy" ColumnName="DataSprzedazy" />
                 <ScalarProperty Name="KwotaNetto" ColumnName="KwotaNetto" />
-                <ScalarProperty Name="VAT" ColumnName="VAT" />
+                <ScalarProperty Name="IdVat" ColumnName="IdVat" />
                 <ScalarProperty Name="KwotaBrutto" ColumnName="KwotaBrutto" />
-                <ScalarProperty Name="IdPlatnosci" ColumnName="IdPlatnosci" />
                 <ScalarProperty Name="TerminPlatnosci" ColumnName="TerminPlatnosci" />
+                <ScalarProperty Name="IdPlatnosci" ColumnName="IdPlatnosci" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1074,10 +1137,18 @@
                 <ScalarProperty Name="NrLokalu" ColumnName="NrLokalu" />
                 <ScalarProperty Name="KodPocztowy" ColumnName="KodPocztowy" />
                 <ScalarProperty Name="Miasto" ColumnName="Miasto" />
-                <ScalarProperty Name="Kraj" ColumnName="Kraj" />
+                <ScalarProperty Name="IdKraju" ColumnName="IdKraju" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="Telefon" ColumnName="Telefon" />
                 <ScalarProperty Name="NIP" ColumnName="NIP" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Kraj">
+            <EntityTypeMapping TypeName="HotelModel.Kraj">
+              <MappingFragment StoreEntitySet="Kraj">
+                <ScalarProperty Name="IdKraju" ColumnName="IdKraju" />
+                <ScalarProperty Name="Nazwa" ColumnName="Nazwa" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1093,11 +1164,10 @@
             <EntityTypeMapping TypeName="HotelModel.Platnosc">
               <MappingFragment StoreEntitySet="Platnosc">
                 <ScalarProperty Name="IdPlatnosci" ColumnName="IdPlatnosci" />
-                <ScalarProperty Name="IdKlienta" ColumnName="IdKlienta" />
+                <ScalarProperty Name="IdRezerwacji" ColumnName="IdRezerwacji" />
                 <ScalarProperty Name="IdSposobuPlatnosci" ColumnName="IdSposobuPlatnosci" />
                 <ScalarProperty Name="IdStatusuPlatnosci" ColumnName="IdStatusuPlatnosci" />
                 <ScalarProperty Name="DataPlatnosci" ColumnName="DataPlatnosci" />
-                <ScalarProperty Name="Kwota" ColumnName="Kwota" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1125,7 +1195,7 @@
                 <ScalarProperty Name="NrLokalu" ColumnName="NrLokalu" />
                 <ScalarProperty Name="KodPocztowy" ColumnName="KodPocztowy" />
                 <ScalarProperty Name="Miasto" ColumnName="Miasto" />
-                <ScalarProperty Name="Kraj" ColumnName="Kraj" />
+                <ScalarProperty Name="IdKraju" ColumnName="IdKraju" />
                 <ScalarProperty Name="DataUrodzenia" ColumnName="DataUrodzenia" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="Telefon" ColumnName="Telefon" />
@@ -1138,14 +1208,14 @@
                 <ScalarProperty Name="IdRezerwacji" ColumnName="IdRezerwacji" />
                 <ScalarProperty Name="IdKlienta" ColumnName="IdKlienta" />
                 <ScalarProperty Name="IdPokoju" ColumnName="IdPokoju" />
-                <ScalarProperty Name="IdPracownika" ColumnName="IdPracownika" />
-                <ScalarProperty Name="IloscDoroslych" ColumnName="IloscDoroslych" />
-                <ScalarProperty Name="IloscDzieci" ColumnName="IloscDzieci" />
-                <ScalarProperty Name="IloscZwierzat" ColumnName="IloscZwierzat" />
+                <ScalarProperty Name="LiczbaDoroslych" ColumnName="LiczbaDoroslych" />
+                <ScalarProperty Name="LiczbaDzieci" ColumnName="LiczbaDzieci" />
+                <ScalarProperty Name="CzyZwierzeta" ColumnName="CzyZwierzeta" />
                 <ScalarProperty Name="DataZameldowania" ColumnName="DataZameldowania" />
                 <ScalarProperty Name="DataWymeldowania" ColumnName="DataWymeldowania" />
                 <ScalarProperty Name="DataRezerwacji" ColumnName="DataRezerwacji" />
                 <ScalarProperty Name="Uwagi" ColumnName="Uwagi" />
+                <ScalarProperty Name="Kwota" ColumnName="Kwota" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1231,10 +1301,19 @@
             <EntityTypeMapping TypeName="HotelModel.Usluga">
               <MappingFragment StoreEntitySet="Usluga">
                 <ScalarProperty Name="IdUslugi" ColumnName="IdUslugi" />
+                <ScalarProperty Name="IdRezerwacji" ColumnName="IdRezerwacji" />
                 <ScalarProperty Name="IdTypuUslugi" ColumnName="IdTypuUslugi" />
                 <ScalarProperty Name="DataRozpoczeciaUslugi" ColumnName="DataRozpoczeciaUslugi" />
                 <ScalarProperty Name="DataZakonczeniaUslugi" ColumnName="DataZakonczeniaUslugi" />
-                <ScalarProperty Name="IdKlienta" ColumnName="IdKlienta" />
+                <ScalarProperty Name="Kwota" ColumnName="Kwota" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VAT">
+            <EntityTypeMapping TypeName="HotelModel.VAT">
+              <MappingFragment StoreEntitySet="VAT">
+                <ScalarProperty Name="IdVat" ColumnName="IdVat" />
+                <ScalarProperty Name="Stawka" ColumnName="Stawka" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

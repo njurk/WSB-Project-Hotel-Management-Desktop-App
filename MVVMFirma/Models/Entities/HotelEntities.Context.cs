@@ -28,6 +28,7 @@ namespace MVVMFirma.Models.Entities
         public virtual DbSet<Faktura> Faktura { get; set; }
         public virtual DbSet<KlasaPokoju> KlasaPokoju { get; set; }
         public virtual DbSet<Klient> Klient { get; set; }
+        public virtual DbSet<Kraj> Kraj { get; set; }
         public virtual DbSet<Pietro> Pietro { get; set; }
         public virtual DbSet<Platnosc> Platnosc { get; set; }
         public virtual DbSet<Pokoj> Pokoj { get; set; }
@@ -43,5 +44,6 @@ namespace MVVMFirma.Models.Entities
         public virtual DbSet<UdogodnieniaKlasPokoju> UdogodnieniaKlasPokoju { get; set; }
         public virtual DbSet<Udogodnienie> Udogodnienie { get; set; }
         public virtual DbSet<Usluga> Usluga { get; set; }
+        public virtual DbSet<VAT> VAT { get; set; }
     }
 }

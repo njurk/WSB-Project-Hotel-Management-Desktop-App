@@ -1,4 +1,5 @@
-﻿using MVVMFirma.Models.Entities;
+﻿using MVVMFirma.Models.BusinessLogic;
+using MVVMFirma.Models.Entities;
 using MVVMFirma.Models.EntitiesForView;
 using MVVMFirma.Views;
 using System;
@@ -28,12 +29,11 @@ namespace MVVMFirma.ViewModels
                     select new PlatnoscForAllView
                     {
                         IdPlatnosci = platnosc.IdPlatnosci,
-                        KlientImie = platnosc.Klient.Imie,
-                        KlientNazwisko = platnosc.Klient.Nazwisko,
+                        IdRezerwacji = platnosc.IdRezerwacji,
                         SposobPlatnosciNazwa = platnosc.SposobPlatnosci.Nazwa,
                         StatusPlatnosciNazwa = platnosc.StatusPlatnosci.Nazwa,
                         DataPlatnosci = platnosc.DataPlatnosci,
-                        Kwota = platnosc.Kwota
+                        Kwota = platnosc.Rezerwacja.Kwota
                     }
                 );
         }

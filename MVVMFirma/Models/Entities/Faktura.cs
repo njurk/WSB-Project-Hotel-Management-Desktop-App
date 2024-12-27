@@ -15,20 +15,19 @@ namespace MVVMFirma.Models.Entities
     public partial class Faktura
     {
         public int IdFaktury { get; set; }
-        public int IdKlienta { get; set; }
         public int IdRezerwacji { get; set; }
         public string NrFaktury { get; set; }
         public string Opis { get; set; }
         public System.DateTime DataWystawienia { get; set; }
         public System.DateTime DataSprzedazy { get; set; }
         public decimal KwotaNetto { get; set; }
-        public decimal VAT { get; set; }
+        public int IdVat { get; set; }
         public decimal KwotaBrutto { get; set; }
-        public Nullable<int> IdPlatnosci { get; set; }
         public System.DateTime TerminPlatnosci { get; set; }
+        public int IdPlatnosci { get; set; }
     
-        public virtual Klient Klient { get; set; }
         public virtual Platnosc Platnosc { get; set; }
         public virtual Rezerwacja Rezerwacja { get; set; }
+        public virtual VAT VAT { get; set; }
     }
 }

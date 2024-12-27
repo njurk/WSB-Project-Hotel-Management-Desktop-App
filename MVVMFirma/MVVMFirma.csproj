@@ -91,6 +91,7 @@
     <Compile Include="Models\BusinessLogic\DatabaseClass.cs" />
     <Compile Include="Models\BusinessLogic\KlasaPokojuB.cs" />
     <Compile Include="Models\BusinessLogic\KlientB.cs" />
+    <Compile Include="Models\BusinessLogic\KrajB.cs" />
     <Compile Include="Models\BusinessLogic\PietroB.cs" />
     <Compile Include="Models\BusinessLogic\PlatnoscB.cs" />
     <Compile Include="Models\BusinessLogic\PokojB.cs" />
@@ -103,8 +104,10 @@
     <Compile Include="Models\BusinessLogic\TypPokojuB.cs" />
     <Compile Include="Models\BusinessLogic\TypUslugiB.cs" />
     <Compile Include="Models\BusinessLogic\UdogodnienieB.cs" />
+    <Compile Include="Models\BusinessLogic\VATB.cs" />
     <Compile Include="Models\EntitiesForView\FakturaForAllView.cs" />
     <Compile Include="Models\EntitiesForView\KeyAndValue.cs" />
+    <Compile Include="Models\EntitiesForView\KlientForAllView.cs" />
     <Compile Include="Models\EntitiesForView\PlatnoscForAllView.cs" />
     <Compile Include="Models\EntitiesForView\PokojForAllView.cs" />
     <Compile Include="Models\EntitiesForView\PracownikForAllView.cs" />
@@ -133,6 +136,9 @@
       <DependentUpon>HotelEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Entities\Klient.cs">
+      <DependentUpon>HotelEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\Kraj.cs">
       <DependentUpon>HotelEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Entities\Pietro.cs">
@@ -180,6 +186,9 @@
     <Compile Include="Models\Entities\Usluga.cs">
       <DependentUpon>HotelEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Entities\VAT.cs">
+      <DependentUpon>HotelEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\CommandViewModel.cs" />
     <Compile Include="ViewModels\Faktura\NowyFakturaViewModel.cs" />
@@ -189,6 +198,8 @@
     <Compile Include="ViewModels\KlasaPokoju\WszystkieKlasaPokojuViewModel.cs" />
     <Compile Include="ViewModels\Klient\NowyKlientViewModel.cs" />
     <Compile Include="ViewModels\Klient\WszystkieKlientViewModel.cs" />
+    <Compile Include="ViewModels\Kraj\NowyKrajViewModel.cs" />
+    <Compile Include="ViewModels\Kraj\WszystkieKrajViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\Pietro\NowyPietroViewModel.cs" />
     <Compile Include="ViewModels\Pietro\WszystkiePietroViewModel.cs" />
@@ -218,6 +229,8 @@
     <Compile Include="ViewModels\Udogodnienie\WszystkieUdogodnienieViewModel.cs" />
     <Compile Include="ViewModels\Usluga\NowyUslugaViewModel.cs" />
     <Compile Include="ViewModels\Usluga\WszystkieUslugaViewModel.cs" />
+    <Compile Include="ViewModels\VAT\NowyVATViewModel.cs" />
+    <Compile Include="ViewModels\VAT\WszystkieVATViewModel.cs" />
     <Compile Include="ViewModels\WorkspaceViewModel.cs" />
     <Compile Include="ViewModels\WszystkieViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
@@ -240,6 +253,12 @@
     </Compile>
     <Compile Include="Views\Klient\WszystkieKlientView.xaml.cs">
       <DependentUpon>WszystkieKlientView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Kraj\NowyKrajView.xaml.cs">
+      <DependentUpon>NowyKrajView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Kraj\WszystkieKrajView.xaml.cs">
+      <DependentUpon>WszystkieKrajView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -328,6 +347,12 @@
     <Compile Include="Views\Usluga\WszystkieUslugaView.xaml.cs">
       <DependentUpon>WszystkieUslugaView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\VAT\NowyVATView.xaml.cs">
+      <DependentUpon>NowyVATView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\VAT\WszystkieVATView.xaml.cs">
+      <DependentUpon>WszystkieVATView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\WszystkieViewBase.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -389,6 +414,14 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Klient\WszystkieKlientView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Kraj\NowyKrajView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Kraj\WszystkieKrajView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -509,6 +542,14 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Usluga\WszystkieUslugaView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\VAT\NowyVATView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\VAT\WszystkieVATView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

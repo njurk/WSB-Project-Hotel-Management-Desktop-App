@@ -27,6 +27,19 @@ namespace MVVMFirma.ViewModels
         #endregion
 
         #region Properties
+        public int IdRezerwacji
+        {
+            get
+            {
+                return item.IdRezerwacji;
+            }
+            set
+            {
+                item.IdRezerwacji = value;
+                OnPropertyChanged(() => IdRezerwacji);
+            }
+        }
+
         public int IdTypuUslugi
         {
             get
@@ -66,16 +79,16 @@ namespace MVVMFirma.ViewModels
             }
         }
 
-        public int IdKlienta
+        public decimal Kwota
         {
             get
             {
-                return item.IdKlienta;
+                return item.Kwota;
             }
             set
             {
-                item.IdKlienta = value;
-                OnPropertyChanged(() => IdKlienta);
+                item.Kwota = value;
+                OnPropertyChanged(() => Kwota);
             }
         }
 
@@ -87,11 +100,11 @@ namespace MVVMFirma.ViewModels
             }
         }
 
-        public IQueryable<KeyAndValue> KlientItems
+        public IQueryable<KeyAndValue> RezerwacjaItems
         {
             get
             {
-                return new KlientB(db).GetKlientKeyAndValueItems();
+                return new RezerwacjaB(db).GetRezerwacjaKeyAndValueItems();
             }
         }
         #endregion

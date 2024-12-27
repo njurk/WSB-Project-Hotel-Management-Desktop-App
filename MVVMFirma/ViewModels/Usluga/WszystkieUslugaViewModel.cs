@@ -27,11 +27,11 @@ namespace MVVMFirma.ViewModels
                     select new UslugaForAllView
                     {
                         IdUslugi = usluga.IdUslugi,
+                        IdRezerwacji = usluga.IdRezerwacji,
                         TypUslugiNazwa = usluga.TypUslugi.Nazwa,
                         DataRozpoczeciaUslugi = usluga.DataRozpoczeciaUslugi,
                         DataZakonczeniaUslugi = usluga.DataZakonczeniaUslugi,
-                        KlientImie = usluga.Klient.Imie,
-                        KlientNazwisko = usluga.Klient.Nazwisko
+                        Kwota = usluga.Kwota
                     }
                 );
         }

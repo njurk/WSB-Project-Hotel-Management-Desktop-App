@@ -55,55 +55,42 @@ namespace MVVMFirma.ViewModels
             }
         }
 
-        public int IdPracownika
+        public string LiczbaDoroslych
         {
             get
             {
-                return item.IdPracownika;
+                return item.LiczbaDoroslych;
             }
             set
             {
-                item.IdPracownika = value;
-                OnPropertyChanged(() => IdPracownika);
+                item.LiczbaDoroslych = value;
+                OnPropertyChanged(() => LiczbaDoroslych);
             }
         }
 
-        public string IloscDoroslych
+        public string LiczbaDzieci
         {
             get
             {
-                return item.IloscDoroslych;
+                return item.LiczbaDzieci;
             }
             set
             {
-                item.IloscDoroslych = value;
-                OnPropertyChanged(() => IloscDoroslych);
+                item.LiczbaDzieci = value;
+                OnPropertyChanged(() => LiczbaDzieci);
             }
         }
 
-        public string IloscDzieci
+        public bool CzyZwierzeta
         {
             get
             {
-                return item.IloscDzieci;
+                return item.CzyZwierzeta;
             }
             set
             {
-                item.IloscDzieci = value;
-                OnPropertyChanged(() => IloscDzieci);
-            }
-        }
-
-        public string IloscZwierzat
-        {
-            get
-            {
-                return item.IloscZwierzat;
-            }
-            set
-            {
-                item.IloscZwierzat = value;
-                OnPropertyChanged(() => IloscZwierzat);
+                item.CzyZwierzeta = value;
+                OnPropertyChanged(() => CzyZwierzeta);
             }
         }
 
@@ -159,18 +146,24 @@ namespace MVVMFirma.ViewModels
             }
         }
 
+        public decimal Kwota
+        {
+            get
+            {
+                return item.Kwota;
+            }
+            set
+            {
+                item.Kwota = value;
+                OnPropertyChanged(() => Kwota);
+            }
+        }
+
         public IQueryable<KeyAndValue> KlientItems
         {
             get
             {
                 return new KlientB(db).GetKlientKeyAndValueItems();
-            }
-        }
-        public IQueryable<KeyAndValue> PracownikItems
-        {
-            get
-            {
-                return new PracownikB(db).GetPracownikKeyAndValueItems();
             }
         }
 
@@ -186,8 +179,8 @@ namespace MVVMFirma.ViewModels
         {
             switch (propertyName)
             {
-                case nameof(IloscDoroslych):
-                    return !Helper.StringValidator.ContainsOnlyNumbers(IloscDoroslych) ? "Prosze wprowadz liczbe dorosłych" : string.Empty;
+                case nameof(LiczbaDoroslych):
+                    return !Helper.StringValidator.ContainsOnlyNumbers(LiczbaDoroslych) ? "Prosze wprowadz liczbe dorosłych" : string.Empty;
                 default:
                     return string.Empty;
             }

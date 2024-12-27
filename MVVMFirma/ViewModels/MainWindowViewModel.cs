@@ -66,6 +66,14 @@ namespace MVVMFirma.ViewModels
                     new BaseCommand(() => this.ShowAllView(new WszystkieKlientViewModel()))),
 
                 /*new CommandViewModel(
+                    "Kraj",
+                    new BaseCommand(() => this.CreateView(new NowyKrajViewModel()))),*/
+
+                new CommandViewModel(
+                    "Kraje",
+                    new BaseCommand(() => this.ShowAllView(new WszystkieKrajViewModel()))),
+
+                /*new CommandViewModel(
                     "Piętro",
                     new BaseCommand(() => this.CreateView(new NowyPietroViewModel()))),*/
 
@@ -175,7 +183,15 @@ namespace MVVMFirma.ViewModels
 
                 new CommandViewModel(
                     "Usługi",
-                    new BaseCommand(() => this.ShowAllView(new WszystkieUslugaViewModel())))
+                    new BaseCommand(() => this.ShowAllView(new WszystkieUslugaViewModel()))),
+
+                /*new CommandViewModel(
+                    "Stawka VAT",
+                    new BaseCommand(() => this.CreateView(new NowyVATViewModel()))),*/
+
+                new CommandViewModel(
+                    "Stawki VAT",
+                    new BaseCommand(() => this.ShowAllView(new WszystkieVATViewModel()))),
             };
         }
         #endregion
@@ -259,7 +275,6 @@ namespace MVVMFirma.ViewModels
                 CreateView(new NowyPracownikViewModel());
             if (name == "RezerwacjeAdd")
                 CreateView(new NowyRezerwacjaViewModel());
-            // tu dla rezerwacji pokojów
             if (name == "Rodzaje pracownikówAdd")
                 CreateView(new NowyRodzajPracownikaViewModel());
             if (name == "Sposoby płatnościAdd")
@@ -278,6 +293,10 @@ namespace MVVMFirma.ViewModels
                 CreateView(new NowyUdogodnienieViewModel());
             if (name == "UsługiAdd")
                 CreateView(new NowyUslugaViewModel());
+            if (name == "KrajeAdd")
+                CreateView(new NowyKrajViewModel());
+            if (name == "Stawki VATAdd")
+                CreateView(new NowyVATViewModel());
         }
         #endregion
     }

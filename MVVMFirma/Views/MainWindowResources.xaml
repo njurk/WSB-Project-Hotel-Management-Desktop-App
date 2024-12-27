@@ -28,6 +28,14 @@
         <vw:NowyKlientView/>
     </DataTemplate>
 
+    <DataTemplate DataType="{x:Type vm:WszystkieKrajViewModel}">
+        <vw:WszystkieKrajView/>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:NowyKrajViewModel}">
+        <vw:NowyKrajView/>
+    </DataTemplate>
+
     <DataTemplate DataType="{x:Type vm:WszystkiePietroViewModel}">
         <vw:WszystkiePietroView/>
     </DataTemplate>
@@ -146,6 +154,14 @@
 
     <DataTemplate DataType="{x:Type vm:NowyUdogodnieniaKlasPokojuViewModel}">
         <vw:NowyUdogodnieniaKlasPokojuView/>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:WszystkieVATViewModel}">
+        <vw:WszystkieVATView/>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:NowyVATViewModel}">
+        <vw:NowyVATView/>
     </DataTemplate>
 
 

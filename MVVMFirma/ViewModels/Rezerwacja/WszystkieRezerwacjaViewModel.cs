@@ -31,14 +31,14 @@ namespace MVVMFirma.ViewModels
                         KlientImie = rezerwacja.Klient.Imie,
                         KlientNazwisko = rezerwacja.Klient.Nazwisko,
                         NrPokoju = rezerwacja.Pokoj.NrPokoju,
-                        IloscDoroslych = rezerwacja.IloscDoroslych,
-                        IloscDzieci = rezerwacja.IloscDzieci,
-                        IloscZwierzat = rezerwacja.IloscZwierzat,
+                        LiczbaDoroslych = rezerwacja.LiczbaDoroslych,
+                        LiczbaDzieci = rezerwacja.LiczbaDzieci,
+                        CzyZwierzeta = rezerwacja.CzyZwierzeta,
                         DataZameldowania = rezerwacja.DataZameldowania,
                         DataWymeldowania = rezerwacja.DataWymeldowania,
                         DataRezerwacji = rezerwacja.DataRezerwacji,
-                        IdPracownika = rezerwacja.IdPracownika,
-                        Uwagi = rezerwacja.Uwagi
+                        Uwagi = rezerwacja.Uwagi,
+                        Kwota = rezerwacja.Kwota
                     }
                 );
         }

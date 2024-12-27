@@ -12,29 +12,21 @@ namespace MVVMFirma.Models.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class Klient
+    public partial class Kraj
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Klient()
+        public Kraj()
         {
-            this.Rezerwacja = new HashSet<Rezerwacja>();
+            this.Klient = new HashSet<Klient>();
+            this.Pracownik = new HashSet<Pracownik>();
         }
     
-        public int IdKlienta { get; set; }
-        public string Imie { get; set; }
-        public string Nazwisko { get; set; }
-        public string Ulica { get; set; }
-        public string NrDomu { get; set; }
-        public string NrLokalu { get; set; }
-        public string KodPocztowy { get; set; }
-        public string Miasto { get; set; }
         public int IdKraju { get; set; }
-        public string Email { get; set; }
-        public string Telefon { get; set; }
-        public string NIP { get; set; }
+        public string Nazwa { get; set; }
     
-        public virtual Kraj Kraj { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Rezerwacja> Rezerwacja { get; set; }
+        public virtual ICollection<Klient> Klient { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Pracownik> Pracownik { get; set; }
     }
 }

@@ -50,7 +50,7 @@
         <TextBox Grid.Column="1" Grid.Row="7" Margin="0,8,0,8" Text="{Binding Path=Miasto, UpdateSourceTrigger=PropertyChanged}"/>
 
         <Label Grid.Column="0" Grid.Row="8" Margin="0,8,0,8" Content="Kraj"/>
-        <TextBox Grid.Column="1" Grid.Row="8" Margin="0,8,0,8" Text="{Binding Path=Kraj, UpdateSourceTrigger=PropertyChanged}"/>
+        <ComboBox Grid.Column="1" Grid.Row="8" Margin="0,8,0,8" ItemsSource="{Binding KrajItems}" DisplayMemberPath="Value" SelectedValuePath="Key" SelectedValue="{Binding Path=IdKraju, Mode=TwoWay}"/>
 
         <Label Grid.Column="0" Grid.Row="9" Margin="0,8,0,8" Content="Data urodzenia"/>
         <DatePicker Grid.Column="1" Grid.Row="9" Margin="0,8,0,8" SelectedDate="{Binding DataUrodzenia}"/>

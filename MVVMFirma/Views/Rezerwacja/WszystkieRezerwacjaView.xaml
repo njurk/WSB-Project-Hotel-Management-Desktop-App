@@ -14,13 +14,15 @@
                 <DataGridTextColumn Header="Pokój" Binding="{Binding NrPokoju}"/>
                 <DataGridTextColumn Header="Imie klienta" Binding="{Binding KlientImie}"/>
                 <DataGridTextColumn Header="Nazwisko klienta" Binding="{Binding KlientNazwisko}"/>
-                <DataGridTextColumn Header="Ilość dorosłych" Binding="{Binding IloscDoroslych}"/>
-                <DataGridTextColumn Header="Ilość dzieci" Binding="{Binding IloscDzieci}"/>
-                <DataGridTextColumn Header="Ilość zwierząt" Binding="{Binding IloscZwierzat}"/>
+                <DataGridTextColumn Header="Liczba dorosłych" Binding="{Binding LiczbaDoroslych}"/>
+                <DataGridTextColumn Header="Liczba dzieci" Binding="{Binding LiczbaDzieci}"/>
+                <DataGridTextColumn Header="Zwierzęta" Binding="{Binding CzyZwierzeta}"/>
                 <DataGridTextColumn Header="Data zameldowania" Binding="{Binding DataZameldowania}"/>
                 <DataGridTextColumn Header="Data wymeldowania" Binding="{Binding DataWymeldowania}"/>
-                <DataGridTextColumn Header="Numer pracownika" Binding="{Binding IdPracownika}"/>
                 <DataGridTextColumn Header="Uwagi" Binding="{Binding Uwagi}"/>
+                <DataGridTextColumn Header="Cena" Binding="{Binding Cena}"/>
+                <DataGridTextColumn Header="Status płatności" Binding="{Binding StatusPlatnosci}"/>
+                <DataGridTextColumn Header="Numer płatności" Binding="{Binding NrPlatnosci}"/>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

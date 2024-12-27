@@ -16,10 +16,9 @@
             <RowDefinition Height="40"/>
             <RowDefinition Height="40"/>
             <RowDefinition Height="40"/>
-            <RowDefinition Height="40"/>
         </Grid.RowDefinitions>
-        <Label Grid.Column="0" Grid.Row="0" Margin="0,8,0,8" Content="Klient"/>
-        <ComboBox Grid.Column="1" Grid.Row="0" Margin="0,8,0,8" ItemsSource="{Binding KlientItems}" DisplayMemberPath="Value" SelectedValuePath="Key" SelectedValue="{Binding Path=IdKlienta, Mode=TwoWay}"/>
+        <Label Grid.Column="0" Grid.Row="0" Margin="0,8,0,8" Content="Numer rezerwacji"/>
+        <ComboBox Grid.Column="1" Grid.Row="0" Margin="0,8,0,8" ItemsSource="{Binding RezerwacjaItems}" DisplayMemberPath="Value" SelectedValuePath="Key" SelectedValue="{Binding Path=IdKlienta, Mode=TwoWay}"/>
 
         <Label Grid.Column="0" Grid.Row="1" Margin="0,8,0,8" Content="Sposób płatności"/>
         <ComboBox Grid.Column="1" Grid.Row="1" Margin="0,8,0,8" ItemsSource="{Binding SposobPlatnosciItems}" DisplayMemberPath="Value" SelectedValuePath="Key" SelectedValue="{Binding Path=IdSposobuPlatnosci, Mode=TwoWay}"/>
@@ -29,8 +28,5 @@
 
         <Label Grid.Column="0" Grid.Row="3" Margin="0,8,0,8" Content="Data płatności"/>
         <DatePicker Grid.Column="1" Grid.Row="3" Margin="0,8,0,8" SelectedDate="{Binding DataPlatnosci}"/>
-
-        <Label Grid.Column="0" Grid.Row="4" Margin="0,8,0,8" Content="Kwota"/>
-        <TextBox Grid.Column="1" Grid.Row="4" Margin="0,8,0,8" Text="{Binding Path=Kwota, UpdateSourceTrigger=PropertyChanged}"/>
     </Grid>
 </local:JedenViewBase>

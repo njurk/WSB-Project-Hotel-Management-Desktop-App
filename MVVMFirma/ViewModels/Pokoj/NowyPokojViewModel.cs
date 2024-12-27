@@ -25,6 +25,19 @@ namespace MVVMFirma.ViewModels
         #endregion
 
         #region Properties
+        public int IdPietra
+        {
+            get
+            {
+                return item.IdPietra;
+            }
+            set
+            {
+                item.IdPietra = value;
+                OnPropertyChanged(() => IdPietra);
+            }
+        }
+
         public string NrPokoju
         {
             get
@@ -74,19 +87,6 @@ namespace MVVMFirma.ViewModels
             {
                 item.IdStatusuPokoju = value;
                 OnPropertyChanged(() => IdStatusuPokoju);
-            }
-        }
-
-        public int IdPietra
-        {
-            get
-            {
-                return item.IdPietra;
-            }
-            set
-            {
-                item.IdPietra = value;
-                OnPropertyChanged(() => IdPietra);
             }
         }
 

@@ -21,8 +21,6 @@
             <RowDefinition Height="40"/>
             <RowDefinition Height="40"/>
             <RowDefinition Height="40"/>
-            <RowDefinition Height="40"/>
-            <RowDefinition Height="40"/>
         </Grid.RowDefinitions>
         <Label Grid.Column="0" Grid.Row="0" Margin="0,8,0,8" Content="Numer faktury"/>
         <TextBox Grid.Column="1" Grid.Row="0" Margin="0,8,0,8" Text="{Binding Path=NrFaktury, UpdateSourceTrigger=PropertyChanged}"/>
@@ -30,31 +28,25 @@
         <Label Grid.Column="0" Grid.Row="1" Margin="0,8,0,8" Content="Numer rezerwacji"/>
         <ComboBox Grid.Column="1" Grid.Row="1" Margin="0,8,0,8" ItemsSource="{Binding RezerwacjaItems}" DisplayMemberPath="Value" SelectedValuePath="Key" SelectedValue="{Binding Path=IdRezerwacji, Mode=TwoWay}"/>
 
-        <Label Grid.Column="0" Grid.Row="2" Margin="0,8,0,8" Content="Klient"/>
-        <ComboBox Grid.Column="1" Grid.Row="2" Margin="0,8,0,8" ItemsSource="{Binding KlientItems}" DisplayMemberPath="Value" SelectedValuePath="Key" SelectedValue="{Binding Path=IdKlienta, Mode=TwoWay}"/>
+        <Label Grid.Column="0" Grid.Row="2" Margin="0,8,0,8" Content="Data wystawienia"/>
+        <DatePicker Grid.Column="1" Grid.Row="2" Margin="0,8,0,8" SelectedDate="{Binding DataWystawienia}"/>
 
-        <Label Grid.Column="0" Grid.Row="3" Margin="0,8,0,8" Content="Data wystawienia"/>
-        <DatePicker Grid.Column="1" Grid.Row="3" Margin="0,8,0,8" SelectedDate="{Binding DataWystawienia}"/>
+        <Label Grid.Column="0" Grid.Row="3" Margin="0,8,0,8" Content="Data sprzedaży"/>
+        <DatePicker Grid.Column="1" Grid.Row="3" Margin="0,8,0,8" SelectedDate="{Binding DataSprzedazy}"/>
 
-        <Label Grid.Column="0" Grid.Row="4" Margin="0,8,0,8" Content="Data sprzedaży"/>
-        <DatePicker Grid.Column="1" Grid.Row="4" Margin="0,8,0,8" SelectedDate="{Binding DataSprzedazy}"/>
+        <Label Grid.Column="0" Grid.Row="4" Margin="0,8,0,8" Content="Kwota brutto"/>
+        <TextBox Grid.Column="1" Grid.Row="4" Margin="0,8,0,8" Text="{Binding Path=KwotaBrutto, UpdateSourceTrigger=PropertyChanged}"/>
 
-        <Label Grid.Column="0" Grid.Row="5" Margin="0,8,0,8" Content="Kwota netto"/>
-        <TextBox Grid.Column="1" Grid.Row="5" Margin="0,8,0,8" Text="{Binding Path=KwotaNetto, UpdateSourceTrigger=PropertyChanged}"/>
+        <Label Grid.Column="0" Grid.Row="5" Margin="0,8,0,8" Content="VAT"/>
+        <ComboBox Grid.Column="1" Grid.Row="5" Margin="0,8,0,8" ItemsSource="{Binding VATItems}" DisplayMemberPath="Value" SelectedValuePath="Key" SelectedValue="{Binding Path=IdVat, Mode=TwoWay}"/>
 
-        <Label Grid.Column="0" Grid.Row="6" Margin="0,8,0,8" Content="VAT"/>
-        <TextBox Grid.Column="1" Grid.Row="6" Margin="0,8,0,8" Text="{Binding Path=VAT, UpdateSourceTrigger=PropertyChanged}"/>
+        <Label Grid.Column="0" Grid.Row="6" Margin="0,8,0,8" Content="Kwota netto"/>
+        <TextBox Grid.Column="1" Grid.Row="6" Margin="0,8,0,8" Text="{Binding Path=KwotaNetto, UpdateSourceTrigger=PropertyChanged}"/>
 
-        <Label Grid.Column="0" Grid.Row="7" Margin="0,8,0,8" Content="Kwota Brutto"/>
-        <TextBox Grid.Column="1" Grid.Row="7" Margin="0,8,0,8" Text="{Binding Path=KwotaBrutto, UpdateSourceTrigger=PropertyChanged}"/>
+        <Label Grid.Column="0" Grid.Row="7" Margin="0,8,0,8" Content="Termin płatności"/>
+        <DatePicker Grid.Column="1" Grid.Row="7" Margin="0,8,0,8" SelectedDate="{Binding TerminPlatnosci}"/>
 
-        <Label Grid.Column="0" Grid.Row="8" Margin="0,8,0,8" Content="Termin płatności"/>
-        <DatePicker Grid.Column="1" Grid.Row="8" Margin="0,8,0,8" SelectedDate="{Binding TerminPlatnosci}"/>
-
-        <Label Grid.Column="0" Grid.Row="9" Margin="0,8,0,8" Content="Numer płatności"/>
-        <ComboBox Grid.Column="1" Grid.Row="9" Margin="0,8,0,8" ItemsSource="{Binding PlatnoscItems}" DisplayMemberPath="Value" SelectedValuePath="Key" SelectedValue="{Binding Path=IdPlatnosci, Mode=TwoWay}"/>
-
-        <Label Grid.Column="0" Grid.Row="10" Margin="0,8,0,8" Content="Opis"/>
-        <TextBox Grid.Column="1" Grid.Row="10" Margin="0,8,0,8" Text="{Binding Path=Opis, UpdateSourceTrigger=PropertyChanged}"/>
+        <Label Grid.Column="0" Grid.Row="8" Margin="0,8,0,8" Content="Opis"/>
+        <TextBox Grid.Column="1" Grid.Row="8" Margin="0,8,0,8" Text="{Binding Path=Opis, UpdateSourceTrigger=PropertyChanged}"/>
     </Grid>
 </local:JedenViewBase>
