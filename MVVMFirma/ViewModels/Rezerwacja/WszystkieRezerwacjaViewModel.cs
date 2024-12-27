@@ -34,11 +34,11 @@ namespace MVVMFirma.ViewModels
                         LiczbaDoroslych = rezerwacja.LiczbaDoroslych,
                         LiczbaDzieci = rezerwacja.LiczbaDzieci,
                         CzyZwierzeta = rezerwacja.CzyZwierzeta,
+                        DataRezerwacji = rezerwacja.DataRezerwacji,
                         DataZameldowania = rezerwacja.DataZameldowania,
                         DataWymeldowania = rezerwacja.DataWymeldowania,
-                        DataRezerwacji = rezerwacja.DataRezerwacji,
+                        Kwota = rezerwacja.Kwota,
                         Uwagi = rezerwacja.Uwagi,
-                        Kwota = rezerwacja.Kwota
                     }
                 );
         }

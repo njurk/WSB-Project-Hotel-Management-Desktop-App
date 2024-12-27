@@ -37,7 +37,7 @@ namespace MVVMFirma.ViewModels
                         VAT = faktura.VAT.Stawka,
                         KwotaBrutto = faktura.KwotaBrutto,
                         TerminPlatnosci = faktura.TerminPlatnosci,
-                        IdPlatnosci = faktura.IdPlatnosci,
+                        IdPlatnosci = faktura.Rezerwacja.IdPlatnosci,
                         Opis = faktura.Opis
                     }
                 );

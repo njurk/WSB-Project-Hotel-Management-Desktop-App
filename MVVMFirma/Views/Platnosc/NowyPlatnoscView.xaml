@@ -18,7 +18,7 @@
             <RowDefinition Height="40"/>
         </Grid.RowDefinitions>
         <Label Grid.Column="0" Grid.Row="0" Margin="0,8,0,8" Content="Numer rezerwacji"/>
-        <ComboBox Grid.Column="1" Grid.Row="0" Margin="0,8,0,8" ItemsSource="{Binding RezerwacjaItems}" DisplayMemberPath="Value" SelectedValuePath="Key" SelectedValue="{Binding Path=IdKlienta, Mode=TwoWay}"/>
+        <ComboBox Grid.Column="1" Grid.Row="0" Margin="0,8,0,8" ItemsSource="{Binding RezerwacjaItems}" DisplayMemberPath="Value" SelectedValuePath="Key" SelectedValue="{Binding Path=IdRezerwacji, Mode=TwoWay}"/>
 
         <Label Grid.Column="0" Grid.Row="1" Margin="0,8,0,8" Content="Sposób płatności"/>
         <ComboBox Grid.Column="1" Grid.Row="1" Margin="0,8,0,8" ItemsSource="{Binding SposobPlatnosciItems}" DisplayMemberPath="Value" SelectedValuePath="Key" SelectedValue="{Binding Path=IdSposobuPlatnosci, Mode=TwoWay}"/>

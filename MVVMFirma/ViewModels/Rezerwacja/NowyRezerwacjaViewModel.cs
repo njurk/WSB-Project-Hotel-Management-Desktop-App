@@ -18,12 +18,12 @@ namespace MVVMFirma.ViewModels
 
         #region Constructor
         public NowyRezerwacjaViewModel()
-            : base("Rezerwacja")
+            :base("Rezerwacja")
         {
             item = new Rezerwacja();
             DataRezerwacji = DateTime.Now;
-            DataZameldowania = DateTime.Now;
-            DataWymeldowania = DateTime.Now.AddDays(1);
+            DataZameldowania = DateTime.Now.AddDays(1);
+            DataWymeldowania = DateTime.Now.AddDays(2);
             db = new HotelEntities();
         }
         #endregion

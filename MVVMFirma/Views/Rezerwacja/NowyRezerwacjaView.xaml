@@ -19,7 +19,7 @@
             <RowDefinition Height="40"/>
             <RowDefinition Height="40"/>
             <RowDefinition Height="40"/>
-            <RowDefinition Height="40"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="40"/>
             <RowDefinition Height="40"/>
         </Grid.RowDefinitions>
@@ -39,7 +39,7 @@
         <TextBox Grid.Column="1" Grid.Row="4" Margin="0,8,0,8" Text="{Binding Path=LiczbaDzieci, UpdateSourceTrigger=PropertyChanged}"/>
 
         <Label Grid.Column="0" Grid.Row="5" Margin="0,8,0,8" Content="Zwierzęta"/>
-        <CheckBox Grid.Column="1" Grid.Row="5" Margin="0,8,0,8" IsChecked="{Binding Path=CzyZwierzeta, UpdateSourceTrigger=PropertyChanged}" />
+        <CheckBox VerticalAlignment="Center" Grid.Column="1" Grid.Row="5" Margin="0,8,0,8" IsChecked="{Binding Path=CzyZwierzeta, UpdateSourceTrigger=PropertyChanged}"/>
         
         <Label Grid.Column="0" Grid.Row="6" Margin="0,8,0,8" Content="Data zameldowania"/>
         <DatePicker Grid.Column="1" Grid.Row="6" Margin="0,8,0,8" SelectedDate="{Binding DataZameldowania}"/>

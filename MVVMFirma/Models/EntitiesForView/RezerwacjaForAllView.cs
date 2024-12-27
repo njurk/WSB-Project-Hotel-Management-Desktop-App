@@ -15,10 +15,10 @@ namespace MVVMFirma.Models.EntitiesForView
         public string LiczbaDoroslych {  get; set; }
         public string LiczbaDzieci { get; set; }
         public bool CzyZwierzeta { get; set; }
+        public DateTime DataRezerwacji { get; set; }
         public DateTime DataZameldowania { get; set; }
         public DateTime DataWymeldowania { get; set; }
-        public DateTime DataRezerwacji { get; set; }
+        public decimal Kwota { get; set; }
         public string Uwagi {  get; set; }
-        public decimal Kwota {  get; set; }
     }
 }

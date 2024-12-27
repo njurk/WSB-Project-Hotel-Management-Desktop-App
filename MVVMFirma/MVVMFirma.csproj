@@ -114,81 +114,6 @@
     <Compile Include="Models\EntitiesForView\RezerwacjaForAllView.cs" />
     <Compile Include="Models\EntitiesForView\UdogodnieniaKlasPokojuForAllView.cs" />
     <Compile Include="Models\EntitiesForView\UslugaForAllView.cs" />
-    <Compile Include="Models\Entities\Faktura.cs">
-      <DependentUpon>HotelEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Entities\HotelEntities.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>HotelEntities.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Entities\HotelEntities.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>HotelEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Entities\HotelEntities.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>HotelEntities.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Entities\KlasaPokoju.cs">
-      <DependentUpon>HotelEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Entities\Klient.cs">
-      <DependentUpon>HotelEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Entities\Kraj.cs">
-      <DependentUpon>HotelEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Entities\Pietro.cs">
-      <DependentUpon>HotelEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Entities\Platnosc.cs">
-      <DependentUpon>HotelEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Entities\Pokoj.cs">
-      <DependentUpon>HotelEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Entities\Pracownik.cs">
-      <DependentUpon>HotelEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Entities\Rezerwacja.cs">
-      <DependentUpon>HotelEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Entities\RodzajPracownika.cs">
-      <DependentUpon>HotelEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Entities\SposobPlatnosci.cs">
-      <DependentUpon>HotelEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Entities\StatusPlatnosci.cs">
-      <DependentUpon>HotelEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Entities\StatusPokoju.cs">
-      <DependentUpon>HotelEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Entities\sysdiagrams.cs">
-      <DependentUpon>HotelEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Entities\TypPokoju.cs">
-      <DependentUpon>HotelEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Entities\TypUslugi.cs">
-      <DependentUpon>HotelEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Entities\UdogodnieniaKlasPokoju.cs">
-      <DependentUpon>HotelEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Entities\Udogodnienie.cs">
-      <DependentUpon>HotelEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Entities\Usluga.cs">
-      <DependentUpon>HotelEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Entities\VAT.cs">
-      <DependentUpon>HotelEntities.tt</DependentUpon>
-    </Compile>
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\CommandViewModel.cs" />
     <Compile Include="ViewModels\Faktura\NowyFakturaViewModel.cs" />
@@ -374,13 +299,6 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="app.config" />
-    <EntityDeploy Include="Models\Entities\HotelEntities.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>HotelEntities.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <None Include="Models\Entities\HotelEntities.edmx.diagram">
-      <DependentUpon>HotelEntities.edmx</DependentUpon>
-    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -558,16 +476,7 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Models\Entities\HotelEntities.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>HotelEntities.edmx</DependentUpon>
-      <LastGenOutput>HotelEntities.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\Entities\HotelEntities.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>HotelEntities.edmx</DependentUpon>
-      <LastGenOutput>HotelEntities.cs</LastGenOutput>
-    </Content>
+    <Folder Include="Models\Entities\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

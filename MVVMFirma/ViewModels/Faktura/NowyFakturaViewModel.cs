@@ -143,11 +143,11 @@ namespace MVVMFirma.ViewModels
             }
         }
 
-        public IQueryable<KeyAndValue> RezerwacjaItems
+        public IQueryable<KeyAndValue> PlatnoscItems
         {
             get
             {
-                return new RezerwacjaB(db).GetRezerwacjaKeyAndValueItems();
+                return new PlatnoscB(db).GetPlatnoscKeyAndValueItems();
             }
         }
 

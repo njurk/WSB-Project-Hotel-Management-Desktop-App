@@ -10,19 +10,17 @@
         <DataGrid CanUserAddRows="False" IsReadOnly="True" CanUserDeleteRows="False" AutoGenerateColumns="False" ItemsSource="{Binding List}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID rezerwacji" Binding="{Binding IdRezerwacji}"/>
-                <DataGridTextColumn Header="Data rezerwacji" Binding="{Binding DataRezerwacji}"/>
-                <DataGridTextColumn Header="Pokój" Binding="{Binding NrPokoju}"/>
                 <DataGridTextColumn Header="Imie klienta" Binding="{Binding KlientImie}"/>
                 <DataGridTextColumn Header="Nazwisko klienta" Binding="{Binding KlientNazwisko}"/>
+                <DataGridTextColumn Header="Pokój" Binding="{Binding NrPokoju}"/>
                 <DataGridTextColumn Header="Liczba dorosłych" Binding="{Binding LiczbaDoroslych}"/>
                 <DataGridTextColumn Header="Liczba dzieci" Binding="{Binding LiczbaDzieci}"/>
                 <DataGridTextColumn Header="Zwierzęta" Binding="{Binding CzyZwierzeta}"/>
-                <DataGridTextColumn Header="Data zameldowania" Binding="{Binding DataZameldowania}"/>
-                <DataGridTextColumn Header="Data wymeldowania" Binding="{Binding DataWymeldowania}"/>
+                <DataGridTextColumn Header="Data rezerwacji" Binding="{Binding DataRezerwacji}"/>
+                <DataGridTextColumn Header="Zameldowanie" Binding="{Binding DataZameldowania}"/>
+                <DataGridTextColumn Header="Wymeldowanie" Binding="{Binding DataWymeldowania}"/>
+                <DataGridTextColumn Header="Kwota" Binding="{Binding Kwota}"/>
                 <DataGridTextColumn Header="Uwagi" Binding="{Binding Uwagi}"/>
-                <DataGridTextColumn Header="Cena" Binding="{Binding Cena}"/>
-                <DataGridTextColumn Header="Status płatności" Binding="{Binding StatusPlatnosci}"/>
-                <DataGridTextColumn Header="Numer płatności" Binding="{Binding NrPlatnosci}"/>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>
