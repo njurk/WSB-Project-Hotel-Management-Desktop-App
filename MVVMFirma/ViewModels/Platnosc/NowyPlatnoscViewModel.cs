@@ -39,7 +39,7 @@ namespace MVVMFirma.ViewModels
             }
         }
 
-        public int? IdSposobuPlatnosci
+        public int IdSposobuPlatnosci
         {
             get
             {
@@ -65,7 +65,7 @@ namespace MVVMFirma.ViewModels
             }
         }
 
-        public DateTime? DataPlatnosci
+        public DateTime DataPlatnosci
         {
             get
             {
@@ -77,6 +77,20 @@ namespace MVVMFirma.ViewModels
                 OnPropertyChanged(() => DataPlatnosci);
             }
         }
+
+        public decimal Kwota
+        {
+            get
+            {
+                return item.Kwota;
+            }
+            set
+            {
+                item.Kwota = value;
+                OnPropertyChanged(() => Kwota);
+            }
+        }
+
         public IQueryable<KeyAndValue> RezerwacjaItems
         {
             get

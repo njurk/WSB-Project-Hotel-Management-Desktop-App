@@ -19,7 +19,7 @@
                 <DataGridTextColumn Header="Kod pocztowy" Binding="{Binding KodPocztowy}"/>
                 <DataGridTextColumn Header="Miasto" Binding="{Binding Miasto}"/>
                 <DataGridTextColumn Header="Kraj" Binding="{Binding Kraj}"/>
-                <DataGridTextColumn Header="Data urodzenia" Binding="{Binding DataUrodzenia}"/>
+                <DataGridTextColumn Header="Data urodzenia" Binding="{Binding DataUrodzenia, StringFormat=yyyy-MM-dd}"/>
                 <DataGridTextColumn Header="Email" Binding="{Binding Email}"/>
                 <DataGridTextColumn Header="Telefon" Binding="{Binding Telefon}"/>
             </DataGrid.Columns>

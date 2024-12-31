@@ -19,38 +19,34 @@
             <RowDefinition Height="40"/>
             <RowDefinition Height="40"/>
             <RowDefinition Height="40"/>
-            <RowDefinition Height="Auto"/>
             <RowDefinition Height="40"/>
             <RowDefinition Height="40"/>
         </Grid.RowDefinitions>
         <Label Grid.Column="0" Grid.Row="0" Margin="0,8,0,8" Content="Klient"/>
-        <ComboBox Grid.Column="1" Grid.Row="0" Margin="0,8,0,8" ItemsSource="{Binding KlientItems}" DisplayMemberPath="Value" SelectedValuePath="Key" SelectedValue="{Binding Path=IdKlienta, Mode=TwoWay}"/>
+        <ComboBox Grid.Column="1" Grid.Row="0" Margin="0,8,0,8" ItemsSource="{Binding KlientItems}" DisplayMemberPath="Value" SelectedValuePath="Key" SelectedValue="{Binding Path=IdKlienta, Mode=TwoWay, ValidatesOnDataErrors=True}"/>
 
         <Label Grid.Column="0" Grid.Row="1" Margin="0,8,0,8" Content="Pokój"/>
-        <ComboBox Grid.Column="1" Grid.Row="1" Margin="0,8,0,8" ItemsSource="{Binding PokojItems}" DisplayMemberPath="Value" SelectedValuePath="Key" SelectedValue="{Binding Path=IdPokoju, Mode=TwoWay}"/>
+        <ComboBox Grid.Column="1" Grid.Row="1" Margin="0,8,0,8" ItemsSource="{Binding PokojItems}" DisplayMemberPath="Value" SelectedValuePath="Key" SelectedValue="{Binding Path=IdPokoju, Mode=TwoWay, ValidatesOnDataErrors=True}"/>
 
-        <Label Grid.Column="0" Grid.Row="2" Margin="0,8,0,8" Content="Pracownik"/>
-        <ComboBox Grid.Column="1" Grid.Row="2" Margin="0,8,0,8" ItemsSource="{Binding PracownikItems}" DisplayMemberPath="Value" SelectedValuePath="Key" SelectedValue="{Binding Path=IdPracownika, Mode=TwoWay}"/>
+        <Label Grid.Column="0" Grid.Row="2" Margin="0,8,0,8" Content="Liczba dorosłych"/>
+        <TextBox Grid.Column="1" Grid.Row="2" Margin="0,8,0,8" Text="{Binding Path=LiczbaDoroslych, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
 
-        <Label Grid.Column="0" Grid.Row="3" Margin="0,8,0,8" Content="Liczba dorosłych"/>
-        <TextBox Grid.Column="1" Grid.Row="3" Margin="0,8,0,8" Text="{Binding Path=LiczbaDoroslych, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+        <Label Grid.Column="0" Grid.Row="3" Margin="0,8,0,8" Content="Liczba dzieci"/>
+        <TextBox Grid.Column="1" Grid.Row="3" Margin="0,8,0,8" Text="{Binding Path=LiczbaDzieci, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
 
-        <Label Grid.Column="0" Grid.Row="4" Margin="0,8,0,8" Content="Liczba dzieci"/>
-        <TextBox Grid.Column="1" Grid.Row="4" Margin="0,8,0,8" Text="{Binding Path=LiczbaDzieci, UpdateSourceTrigger=PropertyChanged}"/>
-
-        <Label Grid.Column="0" Grid.Row="5" Margin="0,8,0,8" Content="Zwierzęta"/>
-        <CheckBox VerticalAlignment="Center" Grid.Column="1" Grid.Row="5" Margin="0,8,0,8" IsChecked="{Binding Path=CzyZwierzeta, UpdateSourceTrigger=PropertyChanged}"/>
+        <Label Grid.Column="0" Grid.Row="4" Margin="0,8,0,8" Content="Zwierzęta"/>
+        <CheckBox VerticalAlignment="Center" Grid.Column="1" Grid.Row="4" Margin="0,8,0,8" IsChecked="{Binding Path=CzyZwierzeta, UpdateSourceTrigger=PropertyChanged}"/>
         
-        <Label Grid.Column="0" Grid.Row="6" Margin="0,8,0,8" Content="Data zameldowania"/>
-        <DatePicker Grid.Column="1" Grid.Row="6" Margin="0,8,0,8" SelectedDate="{Binding DataZameldowania}"/>
+        <Label Grid.Column="0" Grid.Row="5" Margin="0,8,0,8" Content="Data zameldowania"/>
+        <DatePicker Grid.Column="1" Grid.Row="5" Margin="0,8,0,8" SelectedDate="{Binding DataZameldowania, ValidatesOnDataErrors=True}"/>
 
-        <Label Grid.Column="0" Grid.Row="7" Margin="0,8,0,8" Content="Data wymeldowania"/>
-        <DatePicker Grid.Column="1" Grid.Row="7" Margin="0,8,0,8" SelectedDate="{Binding DataWymeldowania}"/>
+        <Label Grid.Column="0" Grid.Row="6" Margin="0,8,0,8" Content="Data wymeldowania"/>
+        <DatePicker Grid.Column="1" Grid.Row="6" Margin="0,8,0,8" SelectedDate="{Binding DataWymeldowania, ValidatesOnDataErrors=True}"/>
 
-        <Label Grid.Column="0" Grid.Row="8" Margin="0,8,0,8" Content="Data rezerwacji"/>
-        <DatePicker Grid.Column="1" Grid.Row="8" Margin="0,8,0,8" SelectedDate="{Binding DataRezerwacji}"/>
+        <Label Grid.Column="0" Grid.Row="7" Margin="0,8,0,8" Content="Data rezerwacji"/>
+        <DatePicker Grid.Column="1" Grid.Row="7" Margin="0,8,0,8" SelectedDate="{Binding DataRezerwacji, ValidatesOnDataErrors=True}"/>
 
-        <Label Grid.Column="0" Grid.Row="9" Margin="0,8,0,8" Content="Uwagi"/>
-        <TextBox Grid.Column="1" Grid.Row="9" Margin="0,8,0,8" Text="{Binding Path=Uwagi, UpdateSourceTrigger=PropertyChanged}"/>
+        <Label Grid.Column="0" Grid.Row="8" Margin="0,8,0,8" Content="Uwagi"/>
+        <TextBox Grid.Column="1" Grid.Row="8" Margin="0,8,0,8" Text="{Binding Path=Uwagi, UpdateSourceTrigger=PropertyChanged}"/>
     </Grid>
 </local:JedenViewBase>

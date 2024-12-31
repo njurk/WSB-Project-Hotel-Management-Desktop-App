@@ -1,16 +1,19 @@
-﻿using MVVMFirma.Models.BusinessLogic;
+﻿using MVVMFirma.Helper;
+using MVVMFirma.Models.BusinessLogic;
 using MVVMFirma.Models.Entities;
 using MVVMFirma.Models.EntitiesForView;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows;
 
 namespace MVVMFirma.ViewModels
 {
     public class NowyFakturaViewModel : JedenViewModel<Faktura>
     {
+        #region Fields
+        private decimal _stawkaVat;
+        #endregion
+
         #region DB
         HotelEntities db;
         #endregion
@@ -23,7 +26,21 @@ namespace MVVMFirma.ViewModels
             DataWystawienia = DateTime.Now;
             DataSprzedazy = DateTime.Now;
             TerminPlatnosci = DateTime.Now.AddDays(14);
+
             db = new HotelEntities();
+            _selectedRezerwacja = new Rezerwacja();
+
+            string szukanyVAT = "23";
+            var domyslnyVAT = VATItems.FirstOrDefault(v => v.Value == szukanyVAT);
+
+            if (domyslnyVAT != null)
+            {
+                IdVat = domyslnyVAT.Key;
+            }
+            else
+            {
+                IdVat = -1;
+            }
         }
         #endregion
 
@@ -49,8 +66,14 @@ namespace MVVMFirma.ViewModels
             }
             set
             {
-                item.IdRezerwacji = value;
-                OnPropertyChanged(() => IdRezerwacji);
+                if (item.IdRezerwacji != value)
+                {
+                    item.IdRezerwacji = value;
+                    OnPropertyChanged(() => IdRezerwacji);
+                    // iteracja przez tabelę z BD w poszukiwaniu odpowiedniego
+                    // IdRezerwacji i przekazanie go do SelectedRezerwacja
+                    SelectedRezerwacja = db.Rezerwacja.FirstOrDefault(r => r.IdRezerwacji == value);
+                }
             }
         }
 
@@ -75,33 +98,11 @@ namespace MVVMFirma.ViewModels
             }
             set
             {
-                item.DataSprzedazy = value;
-                OnPropertyChanged(() => DataSprzedazy);
-            }
-        }
-        public decimal KwotaBrutto
-        {
-            get
-            {
-                return item.KwotaBrutto;
-            }
-            set
-            {
-                item.KwotaBrutto = value;
-                OnPropertyChanged(() => KwotaBrutto);
-            }
-        }
-
-        public int IdVat
-        {
-            get
-            {
-                return item.IdVat;
-            }
-            set
-            {
-                item.IdVat = value;
-                OnPropertyChanged(() => IdVat);
+                if (item.DataSprzedazy != value)
+                {
+                    item.DataSprzedazy = value;
+                    OnPropertyChanged(() => DataSprzedazy);
+                }
             }
         }
 
@@ -117,7 +118,36 @@ namespace MVVMFirma.ViewModels
                 OnPropertyChanged(() => KwotaNetto);
             }
         }
-       
+
+        public int IdVat
+        {
+            get { return item.IdVat; }
+            set
+            {
+                if (item.IdVat != value)
+                {
+                    item.IdVat = value;
+                    OnPropertyChanged(() => IdVat);
+
+                    var vatItem = VATItems.FirstOrDefault(v => v.Key == IdVat);
+                    _stawkaVat = vatItem != null ? Convert.ToDecimal(vatItem.Value) : 0;
+                }
+            }
+        }
+
+        public decimal KwotaBrutto
+        {
+            get
+            {
+                return item.KwotaBrutto;
+            }
+            set
+            {
+                item.KwotaBrutto = value;
+                OnPropertyChanged(() => KwotaBrutto);
+            }
+        }
+
         public DateTime TerminPlatnosci
         {
             get
@@ -143,11 +173,69 @@ namespace MVVMFirma.ViewModels
             }
         }
 
-        public IQueryable<KeyAndValue> PlatnoscItems
+        private Rezerwacja _selectedRezerwacja;
+        // ta właściwość przechowuje wybraną rezerwację i ustawia powiązane z nią informacje 
+        // do odpowiednich pól, wywołując onpropertychanged
+        public Rezerwacja SelectedRezerwacja
+        {
+            get { return _selectedRezerwacja; }
+            set
+            {
+                if (_selectedRezerwacja != value)
+                {
+                    _selectedRezerwacja = value;
+                    OnPropertyChanged(() => SelectedRezerwacja);
+                    if (_selectedRezerwacja != null)
+                    {
+                        // usatwienie daty sprzedaży
+                        DataSprzedazy = _selectedRezerwacja.DataZameldowania;
+                        OnPropertyChanged(() => DataSprzedazy);
+
+                        // usatwienie kwoty brutto
+                        var rezerwacja = db.Rezerwacja.FirstOrDefault(p => p.IdRezerwacji == _selectedRezerwacja.IdRezerwacji);
+                        if (rezerwacja != null)
+                        {
+                            KwotaBrutto = rezerwacja.Kwota;
+                            OnPropertyChanged(() => KwotaBrutto);
+                        }
+
+                        // suma platnosci do wyświetlenia w textblocku
+                        var sumaPlatnosci = db.Platnosc
+                        .Where(p => p.IdRezerwacji == _selectedRezerwacja.IdRezerwacji)
+                        .Sum(p => (decimal?)p.Kwota) ?? 0;
+                        SumaPlatnosci = sumaPlatnosci;
+                    }
+                    else
+                    {
+                        SumaPlatnosci = 0;
+                    }
+                }
+            }
+        }
+
+        private decimal _sumaPlatnosci;
+
+        public decimal SumaPlatnosci
         {
             get
             {
-                return new PlatnoscB(db).GetPlatnoscKeyAndValueItems();
+                return _sumaPlatnosci;
+            }
+            set
+            {
+                if (_sumaPlatnosci != value)
+                {
+                    _sumaPlatnosci = value;
+                    OnPropertyChanged(() => SumaPlatnosci);
+                }
+            }
+        }
+
+        public IQueryable<KeyAndValue> RezerwacjaItems
+        {
+            get
+            {
+                return new RezerwacjaB(db).GetRezerwacjaKeyAndValueItems();
             }
         }
 
@@ -157,6 +245,66 @@ namespace MVVMFirma.ViewModels
             {
                 return new VATB(db).GetVATKeyAndValueItems();
             }
+        }
+        protected override string ValidateProperty(string propertyName)
+        {
+            switch (propertyName)
+            {
+                case nameof(NrFaktury):
+                    return string.IsNullOrEmpty(NrFaktury) ? "Proszę wprowadzić numer faktury" : string.Empty;
+
+                case nameof(IdRezerwacji):
+                    return IdRezerwacji <= 0 ? "Proszę wybrać rezerwację" : string.Empty;
+
+                case nameof(DataWystawienia):
+                    return DataWystawienia == null ? "Data wystawienia nie może być pusta" : string.Empty;
+
+                case nameof(DataSprzedazy):
+                    return DataSprzedazy == null ? "Data sprzedaży nie może być pusta" : string.Empty;
+
+                case nameof(KwotaBrutto):
+                    return KwotaBrutto <= 0 ? "Proszę wprowadzić poprawną kwotę brutto" : string.Empty;
+
+                case nameof(IdVat):
+                    return IdVat <= 0 ? "Proszę wybrać stawkę VAT" : string.Empty;
+
+                case nameof(KwotaNetto):
+                    return KwotaNetto <= 0 ? "Proszę wprowadzić poprawną kwotę netto" : string.Empty;
+
+                case nameof(TerminPlatnosci):
+                    return TerminPlatnosci < DataWystawienia ? "Termin płatności nie może być wcześniej od daty wystawienia faktury" : string.Empty;
+
+                default:
+                    return string.Empty;
+            }
+        }
+        #endregion
+
+        #region Methods
+
+        private BaseCommand _obliczNettoCommand;
+
+        public BaseCommand ObliczNettoCommand
+        {
+            get
+            {
+                if (_obliczNettoCommand == null)
+                {
+                    _obliczNettoCommand = new BaseCommand(ObliczNetto);
+                }
+                return _obliczNettoCommand;
+            }
+        }
+
+        private void ObliczNetto()
+        {
+            if (KwotaBrutto <= 0 || IdVat == -1)
+            {
+                MessageBox.Show("Niepoprawna kwota brutto lub nie wybrano stawki VAT", "Błąd", MessageBoxButton.OK);
+                return;
+            }
+
+            KwotaNetto = Math.Round(_stawkaVat == 0 ? KwotaBrutto : KwotaBrutto / (1 + (_stawkaVat / 100)), 2);
         }
         #endregion
 

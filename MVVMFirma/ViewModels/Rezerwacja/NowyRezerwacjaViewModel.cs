@@ -146,19 +146,6 @@ namespace MVVMFirma.ViewModels
             }
         }
 
-        public decimal Kwota
-        {
-            get
-            {
-                return item.Kwota;
-            }
-            set
-            {
-                item.Kwota = value;
-                OnPropertyChanged(() => Kwota);
-            }
-        }
-
         public IQueryable<KeyAndValue> KlientItems
         {
             get
@@ -179,8 +166,31 @@ namespace MVVMFirma.ViewModels
         {
             switch (propertyName)
             {
+                case nameof(IdKlienta):
+                    return IdKlienta <= 0 ? "Proszę wybrać klienta" : string.Empty;
+
+                case nameof(IdPokoju):
+                    return IdPokoju <= 0 ? "Proszę wybrać pokój" : string.Empty;
+
+                case nameof(DataZameldowania):
+                    return DataZameldowania > DataWymeldowania ? "Data zameldowania nie może być późniejsza od daty wymeldowania" : string.Empty;
+
+                case nameof(DataWymeldowania):
+                    return DataWymeldowania < DataZameldowania ? "Data wymeldowania nie może poprzedzać daty zameldowania" : string.Empty;
+
+                case nameof(DataRezerwacji):
+                    return DataRezerwacji > DataZameldowania ? "Data rezerwacji nie może być późniejsza niż data zameldowania" : string.Empty;
+
                 case nameof(LiczbaDoroslych):
-                    return !Helper.StringValidator.ContainsOnlyNumbers(LiczbaDoroslych) ? "Prosze wprowadz liczbe dorosłych" : string.Empty;
+                    if (string.IsNullOrWhiteSpace(LiczbaDoroslych) || !int.TryParse(LiczbaDoroslych, out int liczbaDoroslych) || liczbaDoroslych <= 0)
+                    {
+                        return "Proszę wprowadź liczbę dorosłych (co najmniej 1)";
+                    }
+                    return string.Empty;
+
+                case nameof(LiczbaDzieci):  
+                    return !Helper.StringValidator.ContainsOnlyNumbers(LiczbaDzieci) ? "Proszę wprowadź liczbę dzieci" : string.Empty;
+                
                 default:
                     return string.Empty;
             }

@@ -9,19 +9,19 @@
     <Grid>
         <DataGrid CanUserAddRows="False" IsReadOnly="True" CanUserDeleteRows="False" AutoGenerateColumns="False" ItemsSource="{Binding List}">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="ID faktury" Binding="{Binding IdFaktury}"/>
+                <DataGridTextColumn Header="ID" Binding="{Binding IdFaktury}"/>
                 <DataGridTextColumn Header="Numer faktury" Binding="{Binding NrFaktury}"/>
                 <DataGridTextColumn Header="Numer rezerwacji" Binding="{Binding IdRezerwacji}"/>
                 <DataGridTextColumn Header="NIP" Binding="{Binding KlientNIP}"/>
                 <DataGridTextColumn Header="Imie klienta" Binding="{Binding KlientImie}"/>
                 <DataGridTextColumn Header="Nazwisko klienta" Binding="{Binding KlientNazwisko}"/>
-                <DataGridTextColumn Header="Data wystawienia" Binding="{Binding DataWystawienia}"/>
-                <DataGridTextColumn Header="Data sprzedaży" Binding="{Binding DataSprzedazy}"/>
-                <DataGridTextColumn Header="Netto" Binding="{Binding KwotaNetto}"/>
-                <DataGridTextColumn Header="VAT" Binding="{Binding VAT}"/>
-                <DataGridTextColumn Header="Brutto" Binding="{Binding KwotaBrutto}"/>
-                <DataGridTextColumn Header="Termin płatności" Binding="{Binding TerminPlatnosci}"/>
-                <DataGridTextColumn Header="Numer płatności" Binding="{Binding IdPlatnosci}"/>
+                <DataGridTextColumn Header="Data wystawienia" Binding="{Binding DataWystawienia, StringFormat=yyyy-MM-dd}"/>
+                <DataGridTextColumn Header="Data sprzedaży" Binding="{Binding DataSprzedazy, StringFormat=yyyy-MM-dd}"/>
+                <DataGridTextColumn Header="Netto" Binding="{Binding KwotaNetto, StringFormat={}{0:C}}"/>
+                <DataGridTextColumn Header="VAT" Binding="{Binding VAT, StringFormat='{}{0}%'}"/>
+                <DataGridTextColumn Header="Brutto" Binding="{Binding KwotaBrutto, StringFormat={}{0:C}}"/>
+                <DataGridTextColumn Header="Termin płatności" Binding="{Binding TerminPlatnosci, StringFormat=yyyy-MM-dd}"/>
+                <DataGridTextColumn Header="Zapłacono" Binding="{Binding Zaplacono, StringFormat={}{0:C}}"/>
                 <DataGridTextColumn Header="Opis" Binding="{Binding Opis}"/>
             </DataGrid.Columns>
         </DataGrid>

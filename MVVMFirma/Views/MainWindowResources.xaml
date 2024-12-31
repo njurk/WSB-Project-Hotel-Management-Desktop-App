@@ -2,7 +2,10 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:vm="clr-namespace:MVVMFirma.ViewModels"
                     xmlns:vw="clr-namespace:MVVMFirma.Views"
+                    xmlns:conv="clr-namespace:MVVMFirma.Helper"
                     >
+
+    <conv:DecimalConverter x:Key="DecimalConverter" />
 
     <Style TargetType="TextBox">
         <Style.Triggers>
@@ -84,14 +87,6 @@
         <vw:NowyTypPokojuView/>
     </DataTemplate>
 
-    <DataTemplate DataType="{x:Type vm:WszystkieTypUslugiViewModel}">
-        <vw:WszystkieTypUslugiView/>
-    </DataTemplate>
-
-    <DataTemplate DataType="{x:Type vm:NowyTypUslugiViewModel}">
-        <vw:NowyTypUslugiView/>
-    </DataTemplate>
-
     <DataTemplate DataType="{x:Type vm:WszystkieUdogodnienieViewModel}">
         <vw:WszystkieUdogodnienieView/>
     </DataTemplate>
@@ -130,14 +125,6 @@
 
     <DataTemplate DataType="{x:Type vm:NowyPracownikViewModel}">
         <vw:NowyPracownikView/>
-    </DataTemplate>
-
-    <DataTemplate DataType="{x:Type vm:WszystkieUslugaViewModel}">
-        <vw:WszystkieUslugaView/>
-    </DataTemplate>
-
-    <DataTemplate DataType="{x:Type vm:NowyUslugaViewModel}">
-        <vw:NowyUslugaView/>
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type vm:WszystkiePokojViewModel}">

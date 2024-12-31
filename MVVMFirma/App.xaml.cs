@@ -6,6 +6,7 @@ using System.Linq;
 using System.Windows;
 using MVVMFirma.Views;
 using MVVMFirma.ViewModels;
+using System.Globalization;
 
 namespace MVVMFirma
 {
@@ -14,9 +15,22 @@ namespace MVVMFirma
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-            MainWindow window = new MainWindow();
-            var viewModel = new MainWindowViewModel();
-            window.DataContext = viewModel;
+
+            CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("pl-PL");
+            CultureInfo.DefaultThreadCurrentUICulture = new CultureInfo("pl-PL");
+
+            FrameworkElement.LanguageProperty.OverrideMetadata(
+                typeof(FrameworkElement),
+                new FrameworkPropertyMetadata(
+                    System.Windows.Markup.XmlLanguage.GetLanguage(CultureInfo.CurrentCulture.IetfLanguageTag)
+                )
+            );
+
+            MainWindow window = new MainWindow
+            {
+                DataContext = new MainWindowViewModel()
+            };
+
             window.Show();
         }
     }

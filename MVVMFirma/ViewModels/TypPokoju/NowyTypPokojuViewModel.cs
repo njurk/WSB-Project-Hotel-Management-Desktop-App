@@ -30,6 +30,19 @@ namespace MVVMFirma.ViewModels
                 OnPropertyChanged(() => Nazwa);
             }
         }
+
+        public decimal Cena
+        {
+            get
+            {
+                return item.Cena;
+            }
+            set
+            {
+                item.Cena = value;
+                OnPropertyChanged(() => Cena);
+            }
+        }
         #endregion
 
         #region Helpers

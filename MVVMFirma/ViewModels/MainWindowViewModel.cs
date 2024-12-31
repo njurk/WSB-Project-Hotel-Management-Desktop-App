@@ -154,14 +154,6 @@ namespace MVVMFirma.ViewModels
                     new BaseCommand(() => this.ShowAllView(new WszystkieTypPokojuViewModel()))),
 
                 /*new CommandViewModel(
-                    "Typ usługi",
-                    new BaseCommand(() => this.CreateView(new NowyTypUslugiViewModel()))),*/
-
-                new CommandViewModel(
-                    "Typy usług",
-                    new BaseCommand(() => this.ShowAllView(new WszystkieTypUslugiViewModel()))),
-
-                /*new CommandViewModel(
                     "Udogodnienie klasy pokoju",
                     new BaseCommand(() => this.CreateView(new NowyUdogodnieniaKlasPokojuViewModel()))),*/
 
@@ -176,14 +168,6 @@ namespace MVVMFirma.ViewModels
                 new CommandViewModel(
                     "Udogodnienia",
                     new BaseCommand(() => this.ShowAllView(new WszystkieUdogodnienieViewModel()))),
-
-                /*new CommandViewModel(
-                    "Usługa",
-                    new BaseCommand(() => this.CreateView(new NowyUslugaViewModel()))),*/
-
-                new CommandViewModel(
-                    "Usługi",
-                    new BaseCommand(() => this.ShowAllView(new WszystkieUslugaViewModel()))),
 
                 /*new CommandViewModel(
                     "Stawka VAT",
@@ -285,14 +269,10 @@ namespace MVVMFirma.ViewModels
                 CreateView(new NowyStatusPokojuViewModel());
             if (name == "Typy pokojówAdd")
                 CreateView(new NowyTypPokojuViewModel()); 
-            if (name == "Typy usługAdd")
-                CreateView(new NowyTypUslugiViewModel());
             if (name == "Udogodnienia klas pokojówAdd")
                 CreateView(new NowyUdogodnieniaKlasPokojuViewModel());
             if (name == "UdogodnieniaAdd")
                 CreateView(new NowyUdogodnienieViewModel());
-            if (name == "UsługiAdd")
-                CreateView(new NowyUslugaViewModel());
             if (name == "KrajeAdd")
                 CreateView(new NowyKrajViewModel());
             if (name == "Stawki VATAdd")

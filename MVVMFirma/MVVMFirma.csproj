@@ -87,6 +87,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Helper\BaseCommand.cs" />
+    <Compile Include="Helper\DecimalConverter.cs" />
     <Compile Include="Helper\StringValidator.cs" />
     <Compile Include="Models\BusinessLogic\DatabaseClass.cs" />
     <Compile Include="Models\BusinessLogic\KlasaPokojuB.cs" />
@@ -102,7 +103,6 @@
     <Compile Include="Models\BusinessLogic\StatusPlatnosciB.cs" />
     <Compile Include="Models\BusinessLogic\StatusPokojuB.cs" />
     <Compile Include="Models\BusinessLogic\TypPokojuB.cs" />
-    <Compile Include="Models\BusinessLogic\TypUslugiB.cs" />
     <Compile Include="Models\BusinessLogic\UdogodnienieB.cs" />
     <Compile Include="Models\BusinessLogic\VATB.cs" />
     <Compile Include="Models\EntitiesForView\FakturaForAllView.cs" />
@@ -113,7 +113,75 @@
     <Compile Include="Models\EntitiesForView\PracownikForAllView.cs" />
     <Compile Include="Models\EntitiesForView\RezerwacjaForAllView.cs" />
     <Compile Include="Models\EntitiesForView\UdogodnieniaKlasPokojuForAllView.cs" />
-    <Compile Include="Models\EntitiesForView\UslugaForAllView.cs" />
+    <Compile Include="Models\Entities\Faktura.cs">
+      <DependentUpon>HotelEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\HotelEntities.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HotelEntities.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\HotelEntities.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HotelEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\HotelEntities.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HotelEntities.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\KlasaPokoju.cs">
+      <DependentUpon>HotelEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\Klient.cs">
+      <DependentUpon>HotelEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\Kraj.cs">
+      <DependentUpon>HotelEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\Pietro.cs">
+      <DependentUpon>HotelEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\Platnosc.cs">
+      <DependentUpon>HotelEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\Pokoj.cs">
+      <DependentUpon>HotelEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\Pracownik.cs">
+      <DependentUpon>HotelEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\Rezerwacja.cs">
+      <DependentUpon>HotelEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\RodzajPracownika.cs">
+      <DependentUpon>HotelEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\SposobPlatnosci.cs">
+      <DependentUpon>HotelEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\StatusPlatnosci.cs">
+      <DependentUpon>HotelEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\StatusPokoju.cs">
+      <DependentUpon>HotelEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\sysdiagrams.cs">
+      <DependentUpon>HotelEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\TypPokoju.cs">
+      <DependentUpon>HotelEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\UdogodnieniaKlasPokoju.cs">
+      <DependentUpon>HotelEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\Udogodnienie.cs">
+      <DependentUpon>HotelEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\VAT.cs">
+      <DependentUpon>HotelEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\CommandViewModel.cs" />
     <Compile Include="ViewModels\Faktura\NowyFakturaViewModel.cs" />
@@ -146,14 +214,10 @@
     <Compile Include="ViewModels\StatusPokoju\WszystkieStatusPokojuViewModel.cs" />
     <Compile Include="ViewModels\TypPokoju\NowyTypPokojuViewModel.cs" />
     <Compile Include="ViewModels\TypPokoju\WszystkieTypPokojuViewModel.cs" />
-    <Compile Include="ViewModels\TypUslugi\NowyTypUslugiViewModel.cs" />
-    <Compile Include="ViewModels\TypUslugi\WszystkieTypUslugiViewModel.cs" />
     <Compile Include="ViewModels\UdogodnieniaKlasPokoju\NowyUdogodnieniaKlasPokojuViewModel.cs" />
     <Compile Include="ViewModels\UdogodnieniaKlasPokoju\WszystkieUdogodnieniaKlasPokojuViewModel.cs" />
     <Compile Include="ViewModels\Udogodnienie\NowyUdogodnienieViewModel.cs" />
     <Compile Include="ViewModels\Udogodnienie\WszystkieUdogodnienieViewModel.cs" />
-    <Compile Include="ViewModels\Usluga\NowyUslugaViewModel.cs" />
-    <Compile Include="ViewModels\Usluga\WszystkieUslugaViewModel.cs" />
     <Compile Include="ViewModels\VAT\NowyVATViewModel.cs" />
     <Compile Include="ViewModels\VAT\WszystkieVATViewModel.cs" />
     <Compile Include="ViewModels\WorkspaceViewModel.cs" />
@@ -248,12 +312,6 @@
     <Compile Include="Views\TypPokoju\WszystkieTypPokojuView.xaml.cs">
       <DependentUpon>WszystkieTypPokojuView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\TypUslugi\NowyTypUslugiView.xaml.cs">
-      <DependentUpon>NowyTypUslugiView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\TypUslugi\WszystkieTypUslugiView.xaml.cs">
-      <DependentUpon>WszystkieTypUslugiView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\UdogodnieniaKlasPokoju\NowyUdogodnieniaKlasPokojuView.xaml.cs">
       <DependentUpon>NowyUdogodnieniaKlasPokojuView.xaml</DependentUpon>
     </Compile>
@@ -265,12 +323,6 @@
     </Compile>
     <Compile Include="Views\Udogodnienie\WszystkieUdogodnienieView.xaml.cs">
       <DependentUpon>WszystkieUdogodnienieView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Usluga\NowyUslugaView.xaml.cs">
-      <DependentUpon>NowyUslugaView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Usluga\WszystkieUslugaView.xaml.cs">
-      <DependentUpon>WszystkieUslugaView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\VAT\NowyVATView.xaml.cs">
       <DependentUpon>NowyVATView.xaml</DependentUpon>
@@ -299,6 +351,13 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="app.config" />
+    <EntityDeploy Include="Models\Entities\HotelEntities.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>HotelEntities.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Models\Entities\HotelEntities.edmx.diagram">
+      <DependentUpon>HotelEntities.edmx</DependentUpon>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -431,14 +490,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\TypUslugi\NowyTypUslugiView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\TypUslugi\WszystkieTypUslugiView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Views\UdogodnieniaKlasPokoju\NowyUdogodnieniaKlasPokojuView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -455,14 +506,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Usluga\NowyUslugaView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\Usluga\WszystkieUslugaView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Views\VAT\NowyVATView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -476,7 +519,16 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Models\Entities\" />
+    <Content Include="Models\Entities\HotelEntities.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>HotelEntities.edmx</DependentUpon>
+      <LastGenOutput>HotelEntities.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\Entities\HotelEntities.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>HotelEntities.edmx</DependentUpon>
+      <LastGenOutput>HotelEntities.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

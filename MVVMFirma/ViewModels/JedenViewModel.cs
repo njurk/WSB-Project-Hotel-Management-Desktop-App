@@ -82,12 +82,12 @@ namespace MVVMFirma.ViewModels
                 }
                 else
                 {
-                    MessageBox.Show("Nie można zapisać", "OK");
+                    MessageBox.Show("Nie można zapisać - błędnie wypełniony formularz", "Błąd");
                 }
             }
             catch
             {
-                MessageBox.Show("Wystąpił błąd", "OK");
+                MessageBox.Show("Wystąpił błąd", "Błąd");
             }
             
         }

@@ -3,7 +3,7 @@ using System.Windows.Input;
 
 namespace MVVMFirma.Helper
 {
-    internal class BaseCommand : ICommand
+    public class BaseCommand : ICommand
     {
         private readonly Action _command;
         private readonly Func<bool> _canExecute;

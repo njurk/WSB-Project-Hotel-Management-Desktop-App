@@ -20,5 +20,7 @@ namespace MVVMFirma.Models.EntitiesForView
         public DateTime DataWymeldowania { get; set; }
         public decimal Kwota { get; set; }
         public string Uwagi {  get; set; }
+        public bool CzyZaplacona {  get; set; } // funkcja
+
     }
 }

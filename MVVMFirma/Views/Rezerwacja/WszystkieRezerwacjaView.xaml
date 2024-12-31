@@ -9,17 +9,18 @@
     <Grid>
         <DataGrid CanUserAddRows="False" IsReadOnly="True" CanUserDeleteRows="False" AutoGenerateColumns="False" ItemsSource="{Binding List}">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="ID rezerwacji" Binding="{Binding IdRezerwacji}"/>
+                <DataGridTextColumn Header="Numer rezerwacji" Binding="{Binding IdRezerwacji}"/>
                 <DataGridTextColumn Header="Imie klienta" Binding="{Binding KlientImie}"/>
                 <DataGridTextColumn Header="Nazwisko klienta" Binding="{Binding KlientNazwisko}"/>
                 <DataGridTextColumn Header="Pokój" Binding="{Binding NrPokoju}"/>
                 <DataGridTextColumn Header="Liczba dorosłych" Binding="{Binding LiczbaDoroslych}"/>
                 <DataGridTextColumn Header="Liczba dzieci" Binding="{Binding LiczbaDzieci}"/>
-                <DataGridTextColumn Header="Zwierzęta" Binding="{Binding CzyZwierzeta}"/>
-                <DataGridTextColumn Header="Data rezerwacji" Binding="{Binding DataRezerwacji}"/>
-                <DataGridTextColumn Header="Zameldowanie" Binding="{Binding DataZameldowania}"/>
-                <DataGridTextColumn Header="Wymeldowanie" Binding="{Binding DataWymeldowania}"/>
+                <DataGridCheckBoxColumn Header="Zwierzęta" Binding="{Binding CzyZwierzeta}"/>
+                <DataGridTextColumn Header="Data rezerwacji" Binding="{Binding DataRezerwacji, StringFormat=yyyy-MM-dd}"/>
+                <DataGridTextColumn Header="Zameldowanie" Binding="{Binding DataZameldowania, StringFormat=yyyy-MM-dd}"/>
+                <DataGridTextColumn Header="Wymeldowanie" Binding="{Binding DataWymeldowania, StringFormat=yyyy-MM-dd}"/>
                 <DataGridTextColumn Header="Kwota" Binding="{Binding Kwota}"/>
+                <DataGridCheckBoxColumn Header="Czy zapłacona" Binding="{Binding CzyZaplacona}"/>
                 <DataGridTextColumn Header="Uwagi" Binding="{Binding Uwagi}"/>
             </DataGrid.Columns>
         </DataGrid>

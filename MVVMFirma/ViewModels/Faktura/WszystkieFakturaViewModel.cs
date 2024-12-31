@@ -1,10 +1,6 @@
 ﻿using MVVMFirma.Models.EntitiesForView;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MVVMFirma.ViewModels
 {
@@ -23,6 +19,9 @@ namespace MVVMFirma.ViewModels
             List = new ObservableCollection<FakturaForAllView>
                 (
                     from faktura in hotelEntities.Faktura
+                    let sumaPlatnosci = hotelEntities.Platnosc
+                        .Where(p => p.IdRezerwacji == faktura.IdRezerwacji)
+                        .Sum(p => (decimal?)p.Kwota) ?? 0 // 0 jeśli brak płatności
                     select new FakturaForAllView
                     {
                         IdFaktury = faktura.IdFaktury,
@@ -37,11 +36,12 @@ namespace MVVMFirma.ViewModels
                         VAT = faktura.VAT.Stawka,
                         KwotaBrutto = faktura.KwotaBrutto,
                         TerminPlatnosci = faktura.TerminPlatnosci,
-                        IdPlatnosci = faktura.Rezerwacja.IdPlatnosci,
+                        Zaplacono = sumaPlatnosci,
                         Opis = faktura.Opis
                     }
                 );
         }
+
         #endregion
     }
 }

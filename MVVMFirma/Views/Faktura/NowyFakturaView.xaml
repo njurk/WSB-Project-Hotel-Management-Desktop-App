@@ -3,13 +3,20 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:MVVMFirma.Views"
-             mc:Ignorable="d" 
-             d:DesignHeight="600"  d:DesignWidth="800">
+             xmlns:local="clr-namespace:MVVMFirma.Views" 
+             xmlns:vm="clr-namespace:MVVMFirma.Helper"
+                     mc:Ignorable="d"
+            d:DesignHeight="600"  d:DesignWidth="800">
+    
+    <local:JedenViewBase.Resources>
+        <vm:DecimalConverter x:Key="DecimalConverter" />
+    </local:JedenViewBase.Resources>
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="150"/>
             <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="100"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
@@ -21,32 +28,38 @@
             <RowDefinition Height="40"/>
             <RowDefinition Height="40"/>
             <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
         </Grid.RowDefinitions>
         <Label Grid.Column="0" Grid.Row="0" Margin="0,8,0,8" Content="Numer faktury"/>
-        <TextBox Grid.Column="1" Grid.Row="0" Margin="0,8,0,8" Text="{Binding Path=NrFaktury, UpdateSourceTrigger=PropertyChanged}"/>
+        <TextBox Grid.Column="1" Grid.Row="0" Margin="0,8,0,8" Text="{Binding Path=NrFaktury, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
 
         <Label Grid.Column="0" Grid.Row="1" Margin="0,8,0,8" Content="Numer rezerwacji"/>
-        <ComboBox Grid.Column="1" Grid.Row="1" Margin="0,8,0,8" ItemsSource="{Binding RezerwacjaItems}" DisplayMemberPath="Value" SelectedValuePath="Key" SelectedValue="{Binding Path=IdRezerwacji, Mode=TwoWay}"/>
+        <ComboBox Grid.Column="1" Grid.Row="1" Margin="0,8,0,8" ItemsSource="{Binding RezerwacjaItems}" DisplayMemberPath="Value" SelectedValuePath="Key" SelectedValue="{Binding Path=IdRezerwacji, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
 
         <Label Grid.Column="0" Grid.Row="2" Margin="0,8,0,8" Content="Data wystawienia"/>
-        <DatePicker Grid.Column="1" Grid.Row="2" Margin="0,8,0,8" SelectedDate="{Binding DataWystawienia}"/>
+        <DatePicker Grid.Column="1" Grid.Row="2" Margin="0,8,0,8" SelectedDate="{Binding DataWystawienia, ValidatesOnDataErrors=True}"/>
 
         <Label Grid.Column="0" Grid.Row="3" Margin="0,8,0,8" Content="Data sprzedaży"/>
-        <DatePicker Grid.Column="1" Grid.Row="3" Margin="0,8,0,8" SelectedDate="{Binding DataSprzedazy}"/>
+        <DatePicker Grid.Column="1" Grid.Row="3" Margin="0,8,0,8" SelectedDate="{Binding DataSprzedazy, ValidatesOnDataErrors=True}"/>
 
         <Label Grid.Column="0" Grid.Row="4" Margin="0,8,0,8" Content="Kwota brutto"/>
-        <TextBox Grid.Column="1" Grid.Row="4" Margin="0,8,0,8" Text="{Binding Path=KwotaBrutto, UpdateSourceTrigger=PropertyChanged}"/>
+        <TextBox Grid.Column="1" Grid.Row="4" Margin="0,8,0,8" Text="{Binding Path=KwotaBrutto, Converter={StaticResource DecimalConverter}, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True}"/>
 
-        <Label Grid.Column="0" Grid.Row="5" Margin="0,8,0,8" Content="VAT"/>
-        <ComboBox Grid.Column="1" Grid.Row="5" Margin="0,8,0,8" ItemsSource="{Binding VATItems}" DisplayMemberPath="Value" SelectedValuePath="Key" SelectedValue="{Binding Path=IdVat, Mode=TwoWay}"/>
+        <Label Grid.Column="0" Grid.Row="5" Margin="0,8,0,8" Content="% VAT"/>
+        <ComboBox Grid.Column="1" Grid.Row="5" Margin="0,8,0,8" ItemsSource="{Binding VATItems}" DisplayMemberPath="Value" SelectedValuePath="Key" SelectedValue="{Binding Path=IdVat, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
 
         <Label Grid.Column="0" Grid.Row="6" Margin="0,8,0,8" Content="Kwota netto"/>
-        <TextBox Grid.Column="1" Grid.Row="6" Margin="0,8,0,8" Text="{Binding Path=KwotaNetto, UpdateSourceTrigger=PropertyChanged}"/>
+        <TextBox Grid.Column="1" Grid.Row="6" Margin="0,8,0,8" Text="{Binding Path=KwotaNetto, Converter={StaticResource DecimalConverter}, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True}"/>
 
+        <Button Grid.Column="2" Grid.Row="6" Margin="15,8,0,8" Content="Oblicz netto" Command="{Binding ObliczNettoCommand}"/>
+        
         <Label Grid.Column="0" Grid.Row="7" Margin="0,8,0,8" Content="Termin płatności"/>
-        <DatePicker Grid.Column="1" Grid.Row="7" Margin="0,8,0,8" SelectedDate="{Binding TerminPlatnosci}"/>
+        <DatePicker Grid.Column="1" Grid.Row="7" Margin="0,8,0,8" SelectedDate="{Binding TerminPlatnosci, ValidatesOnDataErrors=True}"/>
 
         <Label Grid.Column="0" Grid.Row="8" Margin="0,8,0,8" Content="Opis"/>
         <TextBox Grid.Column="1" Grid.Row="8" Margin="0,8,0,8" Text="{Binding Path=Opis, UpdateSourceTrigger=PropertyChanged}"/>
+
+        <Label Grid.Column="0" Grid.Row="9" Margin="0,8,0,8" Content="Zapłacono"/>
+        <TextBlock Grid.Column="1" Grid.Row="9" Margin="0,8,0,8" Text="{Binding SumaPlatnosci, StringFormat={}{0:C}}"/>
     </Grid>
 </local:JedenViewBase>

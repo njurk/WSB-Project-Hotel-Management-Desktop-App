@@ -23,24 +23,28 @@ namespace MVVMFirma.ViewModels
         public override void Load()
         {
             List = new ObservableCollection<RezerwacjaForAllView>
-                (
-                    from rezerwacja in hotelEntities.Rezerwacja
-                    select new RezerwacjaForAllView
-                    {
-                        IdRezerwacji = rezerwacja.IdRezerwacji,
-                        KlientImie = rezerwacja.Klient.Imie,
-                        KlientNazwisko = rezerwacja.Klient.Nazwisko,
-                        NrPokoju = rezerwacja.Pokoj.NrPokoju,
-                        LiczbaDoroslych = rezerwacja.LiczbaDoroslych,
-                        LiczbaDzieci = rezerwacja.LiczbaDzieci,
-                        CzyZwierzeta = rezerwacja.CzyZwierzeta,
-                        DataRezerwacji = rezerwacja.DataRezerwacji,
-                        DataZameldowania = rezerwacja.DataZameldowania,
-                        DataWymeldowania = rezerwacja.DataWymeldowania,
-                        Kwota = rezerwacja.Kwota,
-                        Uwagi = rezerwacja.Uwagi,
-                    }
-                );
+            (
+                from rezerwacja in hotelEntities.Rezerwacja
+                let sumaPlatnosci = hotelEntities.Platnosc
+                    .Where(p => p.IdRezerwacji == rezerwacja.IdRezerwacji)
+                    .Sum(p => (decimal?)p.Kwota) ?? 0.00m
+                select new RezerwacjaForAllView
+                {
+                    IdRezerwacji = rezerwacja.IdRezerwacji,
+                    KlientImie = rezerwacja.Klient.Imie,
+                    KlientNazwisko = rezerwacja.Klient.Nazwisko,
+                    NrPokoju = rezerwacja.Pokoj.NrPokoju,
+                    LiczbaDoroslych = rezerwacja.LiczbaDoroslych,
+                    LiczbaDzieci = rezerwacja.LiczbaDzieci,
+                    CzyZwierzeta = rezerwacja.CzyZwierzeta,
+                    DataRezerwacji = rezerwacja.DataRezerwacji,
+                    DataZameldowania = rezerwacja.DataZameldowania,
+                    DataWymeldowania = rezerwacja.DataWymeldowania,
+                    Kwota = rezerwacja.Kwota,
+                    CzyZaplacona = sumaPlatnosci >= rezerwacja.Kwota,
+                    Uwagi = rezerwacja.Uwagi
+                }
+            );
         }
 
         #endregion

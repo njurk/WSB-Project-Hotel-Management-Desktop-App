@@ -3,7 +3,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="clr-namespace:MVVMFirma.Views">
 
-
     <Style TargetType="{x:Type local:WszystkieViewBase}">
         <Setter Property="Template">
             <Setter.Value>
