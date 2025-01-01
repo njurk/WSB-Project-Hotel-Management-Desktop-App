@@ -16,6 +16,21 @@ namespace MVVMFirma.ViewModels
         {
             base.DisplayName = "Typy pokojów";
         }
+
+        public override void Delete()
+        {
+            if (SelectedItem != null)
+            {
+                hotelEntities.TypPokoju.Remove(hotelEntities.TypPokoju.FirstOrDefault(f => f.IdTypuPokoju == SelectedItem.IdTypuPokoju));
+                hotelEntities.SaveChanges();
+                List.Remove(SelectedItem);
+            }
+        }
+
+        public override void Edit()
+        {
+            throw new NotImplementedException();
+        }
         #endregion
 
         #region Helpers

@@ -4,21 +4,21 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="a94a5c88895446e4bfbfddd0dc9c5fd1" Name="Diagram1">
+      <Diagram DiagramId="d694969d1faa440da70ee9c503d8fe40" Name="Diagram1">
         <EntityTypeShape EntityType="HotelModel.Faktura" Width="1.5" PointX="10.5" PointY="8.625" IsExpanded="true" />
         <EntityTypeShape EntityType="HotelModel.KlasaPokoju" Width="1.5" PointX="0.75" PointY="9.25" IsExpanded="true" />
         <EntityTypeShape EntityType="HotelModel.Klient" Width="1.5" PointX="6" PointY="3.375" IsExpanded="true" />
         <EntityTypeShape EntityType="HotelModel.Kraj" Width="1.5" PointX="3.75" PointY="5.75" IsExpanded="true" />
         <EntityTypeShape EntityType="HotelModel.Pietro" Width="1.5" PointX="0.75" PointY="6" IsExpanded="true" />
-        <EntityTypeShape EntityType="HotelModel.Platnosc" Width="1.5" PointX="13.5" PointY="8.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="HotelModel.Platnosc" Width="1.5" PointX="13.5" PointY="8.75" IsExpanded="true" />
         <EntityTypeShape EntityType="HotelModel.Pokoj" Width="1.5" PointX="3" PointY="8.75" IsExpanded="true" />
         <EntityTypeShape EntityType="HotelModel.Pracownik" Width="1.5" PointX="9" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="HotelModel.Rezerwacja" Width="1.5" PointX="8.25" PointY="8.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="HotelModel.Rezerwacja" Width="1.5" PointX="8.25" PointY="8.25" IsExpanded="true" />
         <EntityTypeShape EntityType="HotelModel.RodzajPracownika" Width="1.5" PointX="6.75" PointY="13.5" IsExpanded="true" />
         <EntityTypeShape EntityType="HotelModel.SposobPlatnosci" Width="1.5" PointX="11.25" PointY="5.25" IsExpanded="true" />
         <EntityTypeShape EntityType="HotelModel.StatusPlatnosci" Width="1.5" PointX="11.25" PointY="13.625" IsExpanded="true" />
         <EntityTypeShape EntityType="HotelModel.StatusPokoju" Width="1.5" PointX="0.75" PointY="12.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="HotelModel.sysdiagrams" Width="1.5" PointX="2.75" PointY="16" IsExpanded="true" />
+        <EntityTypeShape EntityType="HotelModel.sysdiagrams" Width="1.5" PointX="2.75" PointY="15.875" IsExpanded="true" />
         <EntityTypeShape EntityType="HotelModel.TypPokoju" Width="1.5" PointX="0.75" PointY="14.75" IsExpanded="true" />
         <EntityTypeShape EntityType="HotelModel.UdogodnieniaKlasPokoju" Width="1.5" PointX="6" PointY="9.25" IsExpanded="true" />
         <EntityTypeShape EntityType="HotelModel.Udogodnienie" Width="1.5" PointX="3.75" PointY="13.5" IsExpanded="true" />

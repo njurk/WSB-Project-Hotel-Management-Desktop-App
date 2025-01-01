@@ -15,6 +15,19 @@ namespace MVVMFirma.ViewModels
         {
             base.DisplayName = "Pracownicy";
         }
+        public override void Delete()
+        {
+            if (SelectedItem != null)
+            {
+                hotelEntities.Pracownik.Remove(hotelEntities.Pracownik.FirstOrDefault(f => f.IdPracownika == SelectedItem.IdPracownika));
+                hotelEntities.SaveChanges();
+                List.Remove(SelectedItem);
+            }
+        }
+        public override void Edit()
+        {
+            throw new NotImplementedException();
+        }
         #endregion
 
         #region Helpers

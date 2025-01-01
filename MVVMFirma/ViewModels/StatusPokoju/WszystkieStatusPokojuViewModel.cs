@@ -16,6 +16,21 @@ namespace MVVMFirma.ViewModels
         {
             base.DisplayName = "Statusy pokojów";
         }
+
+        public override void Delete()
+        {
+            if (SelectedItem != null)
+            {
+                hotelEntities.StatusPokoju.Remove(hotelEntities.StatusPokoju.FirstOrDefault(f => f.IdStatusuPokoju == SelectedItem.IdStatusuPokoju));
+                hotelEntities.SaveChanges();
+                List.Remove(SelectedItem);
+            }
+        }
+
+        public override void Edit()
+        {
+            throw new NotImplementedException();
+        }
         #endregion
 
         #region Helpers

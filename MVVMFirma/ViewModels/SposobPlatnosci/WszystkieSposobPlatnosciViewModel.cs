@@ -16,6 +16,21 @@ namespace MVVMFirma.ViewModels
         {
             base.DisplayName = "Sposoby płatności";
         }
+
+        public override void Delete()
+        {
+            if (SelectedItem != null)
+            {
+                hotelEntities.SposobPlatnosci.Remove(hotelEntities.SposobPlatnosci.FirstOrDefault(f => f.IdSposobuPlatnosci == SelectedItem.IdSposobuPlatnosci));
+                hotelEntities.SaveChanges();
+                List.Remove(SelectedItem);
+            }
+        }
+
+        public override void Edit()
+        {
+            throw new NotImplementedException();
+        }
         #endregion
 
         #region Helpers

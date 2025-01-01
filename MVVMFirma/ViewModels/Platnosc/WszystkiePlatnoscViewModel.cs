@@ -18,6 +18,21 @@ namespace MVVMFirma.ViewModels
         {
             base.DisplayName = "Płatności";
         }
+
+        public override void Delete()
+        {
+            if (SelectedItem != null)
+            {
+                hotelEntities.Platnosc.Remove(hotelEntities.Platnosc.FirstOrDefault(f => f.IdPlatnosci == SelectedItem.IdPlatnosci));
+                hotelEntities.SaveChanges();
+                List.Remove(SelectedItem);
+            }
+        }
+
+        public override void Edit()
+        {
+            throw new NotImplementedException();
+        }
         #endregion
 
         #region Helpers
@@ -29,6 +44,7 @@ namespace MVVMFirma.ViewModels
                     select new PlatnoscForAllView
                     {
                         IdPlatnosci = platnosc.IdPlatnosci,
+                        NrPlatnosci = platnosc.NrPlatnosci,
                         IdRezerwacji = platnosc.IdRezerwacji,
                         SposobPlatnosciNazwa = platnosc.SposobPlatnosci.Nazwa,
                         StatusPlatnosciNazwa = platnosc.StatusPlatnosci.Nazwa,

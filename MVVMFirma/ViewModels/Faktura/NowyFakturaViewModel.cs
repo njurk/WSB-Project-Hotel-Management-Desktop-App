@@ -3,6 +3,7 @@ using MVVMFirma.Models.BusinessLogic;
 using MVVMFirma.Models.Entities;
 using MVVMFirma.Models.EntitiesForView;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 
@@ -22,12 +23,13 @@ namespace MVVMFirma.ViewModels
         public NowyFakturaViewModel()
             : base("Faktura")
         {
+            db = new HotelEntities();
             item = new Faktura();
             DataWystawienia = DateTime.Now;
             DataSprzedazy = DateTime.Now;
             TerminPlatnosci = DateTime.Now.AddDays(14);
+            NrFaktury = GenerujNumerFaktury();
 
-            db = new HotelEntities();
             _selectedRezerwacja = new Rezerwacja();
 
             string szukanyVAT = "23";
@@ -231,13 +233,20 @@ namespace MVVMFirma.ViewModels
             }
         }
 
-        public IQueryable<KeyAndValue> RezerwacjaItems
+        public List<KeyAndValue> RezerwacjaItems
         {
             get
             {
-                return new RezerwacjaB(db).GetRezerwacjaKeyAndValueItems();
+                return db.Rezerwacja
+                    .Where(r => !db.Faktura.Any(f => f.IdRezerwacji == r.IdRezerwacji))
+                    .Select(r => new KeyAndValue
+                    {
+                        Key = r.IdRezerwacji,
+                        Value = r.NrRezerwacji
+                    }).ToList();
             }
         }
+
 
         public IQueryable<KeyAndValue> VATItems
         {
@@ -306,6 +315,57 @@ namespace MVVMFirma.ViewModels
 
             KwotaNetto = Math.Round(_stawkaVat == 0 ? KwotaBrutto : KwotaBrutto / (1 + (_stawkaVat / 100)), 2);
         }
+
+        private string GenerujNumerFaktury()
+        {
+            // pobranie ostatniej faktury z BD do ustalenia następnego numeru
+            var ostatniaFaktura = db.Faktura
+                                     .OrderByDescending(f => f.DataWystawienia)
+                                     .ThenByDescending(f => f.IdFaktury) // sortowanie po ID jeśli daty są takie same
+                                     .Select(f => f.NrFaktury)
+                                     .FirstOrDefault();
+
+            string numerFaktury;
+
+            if (ostatniaFaktura != null)
+            {
+                string fakturaMiesiac = ostatniaFaktura.Substring(5, 2); // yyyy-MM
+                string obecnyMiesiac = DateTime.Now.ToString("MM");
+
+                if (fakturaMiesiac == obecnyMiesiac)
+                {
+                    int pozycjaF = ostatniaFaktura.IndexOf('F');
+                    if (pozycjaF != -1 && pozycjaF + 1 < ostatniaFaktura.Length)
+                    {
+                        string numer = ostatniaFaktura.Substring(pozycjaF + 1);
+
+                        if (int.TryParse(numer, out int numerInt))
+                        {
+                            numerFaktury = (numerInt + 1).ToString();
+                        }
+                        else
+                        {
+                            numerFaktury = "1";
+                        }
+                    }
+                    else
+                    {
+                        numerFaktury = "1";
+                    }
+                }
+                else
+                {
+                    numerFaktury = "1";
+                }
+            }
+            else
+            {
+                numerFaktury = "1";
+            }
+            // format RRRR-MM-FX
+            return $"{DateTime.Now:yyyy-MM}-F{numerFaktury}";
+        }
+
         #endregion
 
         #region Helpers

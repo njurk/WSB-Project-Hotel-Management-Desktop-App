@@ -17,6 +17,20 @@ namespace MVVMFirma.ViewModels
         {
             base.DisplayName = "Kraje";
         }
+        public override void Delete()
+        {
+            if (SelectedItem != null)
+            {
+                hotelEntities.Kraj.Remove(hotelEntities.Kraj.FirstOrDefault(f => f.IdKraju == SelectedItem.IdKraju));
+                hotelEntities.SaveChanges();
+                List.Remove(SelectedItem);
+            }
+        }
+
+        public override void Edit()
+        {
+            throw new NotImplementedException();
+        }
         #endregion
 
         #region Helpers

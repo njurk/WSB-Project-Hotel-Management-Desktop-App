@@ -17,6 +17,20 @@ namespace MVVMFirma.ViewModels
         {
             base.DisplayName = "Klienci";
         }
+        public override void Delete()
+        {
+            if (SelectedItem != null)
+            {
+                hotelEntities.Klient.Remove(hotelEntities.Klient.FirstOrDefault(f => f.IdKlienta == SelectedItem.IdKlienta));
+                hotelEntities.SaveChanges();
+                List.Remove(SelectedItem);
+            }
+        }
+
+        public override void Edit()
+        {
+            throw new NotImplementedException();
+        }
         #endregion
 
         #region Helpers

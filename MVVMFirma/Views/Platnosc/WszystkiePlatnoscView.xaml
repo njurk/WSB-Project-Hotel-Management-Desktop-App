@@ -9,7 +9,8 @@
     <Grid>
         <DataGrid CanUserAddRows="False" IsReadOnly="True" CanUserDeleteRows="False" AutoGenerateColumns="False" ItemsSource="{Binding List}">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Numer płatności" Binding="{Binding IdPlatnosci}"/>
+                <DataGridTextColumn Header="ID" Binding="{Binding IdPlatnosci}"/>
+                <DataGridTextColumn Header="Numer płatności" Binding="{Binding NrPlatnosci}"/>
                 <DataGridTextColumn Header="Numer rezerwacji" Binding="{Binding IdRezerwacji}"/>
                 <DataGridTextColumn Header="Sposób" Binding="{Binding SposobPlatnosciNazwa}"/>
                 <DataGridTextColumn Header="Status" Binding="{Binding StatusPlatnosciNazwa}"/>

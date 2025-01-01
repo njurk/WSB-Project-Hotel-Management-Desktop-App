@@ -16,6 +16,21 @@ namespace MVVMFirma.ViewModels
         {
             base.DisplayName = "Udogodnienia";
         }
+
+        public override void Delete()
+        {
+            if (SelectedItem != null)
+            {
+                hotelEntities.Udogodnienie.Remove(hotelEntities.Udogodnienie.FirstOrDefault(f => f.IdUdogodnienia == SelectedItem.IdUdogodnienia));
+                hotelEntities.SaveChanges();
+                List.Remove(SelectedItem);
+            }
+        }
+
+        public override void Edit()
+        {
+            throw new NotImplementedException();
+        }
         #endregion
 
         #region Helpers

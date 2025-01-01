@@ -18,6 +18,22 @@ namespace MVVMFirma.ViewModels
         {
             base.DisplayName = "Klasy pokojów";
         }
+
+        public override void Delete()
+        {
+            if (SelectedItem != null)
+            {
+                hotelEntities.KlasaPokoju.Remove(hotelEntities.KlasaPokoju.FirstOrDefault(f => f.IdKlasyPokoju == SelectedItem.IdKlasyPokoju));
+                hotelEntities.SaveChanges();
+                List.Remove(SelectedItem);
+            }
+        }
+
+
+        public override void Edit()
+        {
+            throw new NotImplementedException();
+        }
         #endregion
 
         #region Helpers

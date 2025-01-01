@@ -16,6 +16,21 @@ namespace MVVMFirma.ViewModels
         {
             base.DisplayName = "Rodzaje pracowników";
         }
+
+        public override void Delete()
+        {
+            if (SelectedItem != null)
+            {
+                hotelEntities.RodzajPracownika.Remove(hotelEntities.RodzajPracownika.FirstOrDefault(f => f.IdRodzajuPracownika == SelectedItem.IdRodzajuPracownika));
+                hotelEntities.SaveChanges();
+                List.Remove(SelectedItem);
+            }
+        }
+
+        public override void Edit()
+        {
+            throw new NotImplementedException();
+        }
         #endregion
 
         #region Helpers

@@ -16,6 +16,21 @@ namespace MVVMFirma.ViewModels
         {
             base.DisplayName = "Udogodnienia klas pokojów";
         }
+
+        public override void Delete()
+        {
+            if (SelectedItem != null)
+            {
+                hotelEntities.UdogodnieniaKlasPokoju.Remove(hotelEntities.UdogodnieniaKlasPokoju.FirstOrDefault(f => f.IdPolaczenia == SelectedItem.IdPolaczenia));
+                hotelEntities.SaveChanges();
+                List.Remove(SelectedItem);
+            }
+        }
+
+        public override void Edit()
+        {
+            throw new NotImplementedException();
+        }
         #endregion
 
         #region Helpers

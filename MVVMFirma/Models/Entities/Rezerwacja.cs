@@ -22,6 +22,7 @@ namespace MVVMFirma.Models.Entities
         }
     
         public int IdRezerwacji { get; set; }
+        public string NrRezerwacji { get; set; }
         public int IdKlienta { get; set; }
         public int IdPokoju { get; set; }
         public string LiczbaDoroslych { get; set; }

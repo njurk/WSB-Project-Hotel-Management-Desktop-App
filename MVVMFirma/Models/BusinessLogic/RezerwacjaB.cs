@@ -24,7 +24,7 @@ namespace MVVMFirma.Models.BusinessLogic
                     select new KeyAndValue
                     {
                         Key = rezerwacja.IdRezerwacji,
-                        Value = rezerwacja.IdRezerwacji.ToString()
+                        Value = rezerwacja.NrRezerwacji
                     }
                 ).ToList().AsQueryable();
         }

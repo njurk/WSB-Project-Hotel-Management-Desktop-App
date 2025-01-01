@@ -9,6 +9,7 @@ namespace MVVMFirma.Models.EntitiesForView
     public class RezerwacjaForAllView
     {
         public int IdRezerwacji {  get; set; }
+        public string NrRezerwacji {  get; set; }
         public string KlientImie { get; set; } // z klucza obcego
         public string KlientNazwisko { get; set; } // z klucza obcego
         public string NrPokoju { get; set; } // z klucza obcego

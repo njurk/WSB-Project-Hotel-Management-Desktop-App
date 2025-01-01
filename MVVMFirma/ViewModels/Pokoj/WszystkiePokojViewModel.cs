@@ -17,6 +17,21 @@ namespace MVVMFirma.ViewModels
         {
             base.DisplayName = "Pokoje";
         }
+
+        public override void Delete()
+        {
+            if (SelectedItem != null)
+            {
+                hotelEntities.Pokoj.Remove(hotelEntities.Pokoj.FirstOrDefault(f => f.IdPokoju == SelectedItem.IdPokoju));
+                hotelEntities.SaveChanges();
+                List.Remove(SelectedItem);
+            }
+        }
+
+        public override void Edit()
+        {
+            throw new NotImplementedException();
+        }
         #endregion
 
         #region Helpers

@@ -1,4 +1,5 @@
-﻿using MVVMFirma.Models.EntitiesForView;
+﻿using GalaSoft.MvvmLight.Messaging;
+using MVVMFirma.Models.EntitiesForView;
 using System.Collections.ObjectModel;
 using System.Linq;
 
@@ -21,7 +22,7 @@ namespace MVVMFirma.ViewModels
                     from faktura in hotelEntities.Faktura
                     let sumaPlatnosci = hotelEntities.Platnosc
                         .Where(p => p.IdRezerwacji == faktura.IdRezerwacji)
-                        .Sum(p => (decimal?)p.Kwota) ?? 0 // 0 jeśli brak płatności
+                        .Sum(p => (decimal?)p.Kwota) ?? 0
                     select new FakturaForAllView
                     {
                         IdFaktury = faktura.IdFaktury,
@@ -42,6 +43,20 @@ namespace MVVMFirma.ViewModels
                 );
         }
 
+        public override void Delete()
+        {
+            if (SelectedItem != null)
+            {
+                hotelEntities.Faktura.Remove(hotelEntities.Faktura.FirstOrDefault(f => f.IdFaktury == SelectedItem.IdFaktury));
+                hotelEntities.SaveChanges();
+                List.Remove(SelectedItem);
+            }
+        }
+
+        public override void Edit()
+        {
+            
+        }
         #endregion
     }
 }

@@ -10,10 +10,10 @@
             <PropertyRef Name="IdFaktury" />
           </Key>
           <Property Name="IdFaktury" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="IdRezerwacji" Type="int" Nullable="false" />
           <Property Name="NrFaktury" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="IdRezerwacji" Type="int" Nullable="false" />
           <Property Name="Opis" Type="nvarchar" MaxLength="300" />
-          <Property Name="DataWystawienia" Type="date" Nullable="false" />
+          <Property Name="DataWystawienia" Type="datetime" Nullable="false" />
           <Property Name="DataSprzedazy" Type="date" Nullable="false" />
           <Property Name="KwotaNetto" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="IdVat" Type="int" Nullable="false" />
@@ -64,6 +64,7 @@
             <PropertyRef Name="IdPlatnosci" />
           </Key>
           <Property Name="IdPlatnosci" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NrPlatnosci" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="IdRezerwacji" Type="int" Nullable="false" />
           <Property Name="IdSposobuPlatnosci" Type="int" Nullable="false" />
           <Property Name="IdStatusuPlatnosci" Type="int" Nullable="false" />
@@ -104,6 +105,7 @@
             <PropertyRef Name="IdRezerwacji" />
           </Key>
           <Property Name="IdRezerwacji" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NrRezerwacji" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="IdKlienta" Type="int" Nullable="false" />
           <Property Name="IdPokoju" Type="int" Nullable="false" />
           <Property Name="LiczbaDoroslych" Type="nvarchar" MaxLength="5" Nullable="false" />
@@ -469,10 +471,10 @@
             <PropertyRef Name="IdFaktury" />
           </Key>
           <Property Name="IdFaktury" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IdRezerwacji" Type="Int32" Nullable="false" />
           <Property Name="NrFaktury" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IdRezerwacji" Type="Int32" Nullable="false" />
           <Property Name="Opis" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
-          <Property Name="DataWystawienia" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="DataWystawienia" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="DataSprzedazy" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="KwotaNetto" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="IdVat" Type="Int32" Nullable="false" />
@@ -532,6 +534,7 @@
             <PropertyRef Name="IdPlatnosci" />
           </Key>
           <Property Name="IdPlatnosci" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NrPlatnosci" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="IdRezerwacji" Type="Int32" Nullable="false" />
           <Property Name="IdSposobuPlatnosci" Type="Int32" Nullable="false" />
           <Property Name="IdStatusuPlatnosci" Type="Int32" Nullable="false" />
@@ -582,6 +585,7 @@
             <PropertyRef Name="IdRezerwacji" />
           </Key>
           <Property Name="IdRezerwacji" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NrRezerwacji" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="IdKlienta" Type="Int32" Nullable="false" />
           <Property Name="IdPokoju" Type="Int32" Nullable="false" />
           <Property Name="LiczbaDoroslych" Type="String" MaxLength="5" FixedLength="false" Unicode="true" Nullable="false" />
@@ -960,8 +964,8 @@
             <EntityTypeMapping TypeName="HotelModel.Faktura">
               <MappingFragment StoreEntitySet="Faktura">
                 <ScalarProperty Name="IdFaktury" ColumnName="IdFaktury" />
-                <ScalarProperty Name="IdRezerwacji" ColumnName="IdRezerwacji" />
                 <ScalarProperty Name="NrFaktury" ColumnName="NrFaktury" />
+                <ScalarProperty Name="IdRezerwacji" ColumnName="IdRezerwacji" />
                 <ScalarProperty Name="Opis" ColumnName="Opis" />
                 <ScalarProperty Name="DataWystawienia" ColumnName="DataWystawienia" />
                 <ScalarProperty Name="DataSprzedazy" ColumnName="DataSprzedazy" />
@@ -1019,6 +1023,7 @@
             <EntityTypeMapping TypeName="HotelModel.Platnosc">
               <MappingFragment StoreEntitySet="Platnosc">
                 <ScalarProperty Name="IdPlatnosci" ColumnName="IdPlatnosci" />
+                <ScalarProperty Name="NrPlatnosci" ColumnName="NrPlatnosci" />
                 <ScalarProperty Name="IdRezerwacji" ColumnName="IdRezerwacji" />
                 <ScalarProperty Name="IdSposobuPlatnosci" ColumnName="IdSposobuPlatnosci" />
                 <ScalarProperty Name="IdStatusuPlatnosci" ColumnName="IdStatusuPlatnosci" />
@@ -1062,6 +1067,7 @@
             <EntityTypeMapping TypeName="HotelModel.Rezerwacja">
               <MappingFragment StoreEntitySet="Rezerwacja">
                 <ScalarProperty Name="IdRezerwacji" ColumnName="IdRezerwacji" />
+                <ScalarProperty Name="NrRezerwacji" ColumnName="NrRezerwacji" />
                 <ScalarProperty Name="IdKlienta" ColumnName="IdKlienta" />
                 <ScalarProperty Name="IdPokoju" ColumnName="IdPokoju" />
                 <ScalarProperty Name="LiczbaDoroslych" ColumnName="LiczbaDoroslych" />

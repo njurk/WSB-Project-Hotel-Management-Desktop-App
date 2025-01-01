@@ -16,6 +16,21 @@ namespace MVVMFirma.ViewModels
         {
             base.DisplayName = "Statusy płatności";
         }
+
+        public override void Delete()
+        {
+            if (SelectedItem != null)
+            {
+                hotelEntities.StatusPlatnosci.Remove(hotelEntities.StatusPlatnosci.FirstOrDefault(f => f.IdStatusuPlatnosci == SelectedItem.IdStatusuPlatnosci));
+                hotelEntities.SaveChanges();
+                List.Remove(SelectedItem);
+            }
+        }
+
+        public override void Edit()
+        {
+            throw new NotImplementedException();
+        }
         #endregion
 
         #region Helpers

@@ -20,15 +20,28 @@ namespace MVVMFirma.ViewModels
         public NowyRezerwacjaViewModel()
             :base("Rezerwacja")
         {
+            db = new HotelEntities();
             item = new Rezerwacja();
             DataRezerwacji = DateTime.Now;
             DataZameldowania = DateTime.Now.AddDays(1);
             DataWymeldowania = DateTime.Now.AddDays(2);
-            db = new HotelEntities();
+            NrRezerwacji = GenerujNumerRezerwacji();
         }
         #endregion
 
         #region Properties
+        public string NrRezerwacji
+        {
+            get
+            {
+                return item.NrRezerwacji;
+            }
+            set
+            {
+                item.NrRezerwacji = value;
+                OnPropertyChanged(() => NrRezerwacji);
+            }
+        }
         public int IdKlienta
         {
             get
@@ -133,6 +146,19 @@ namespace MVVMFirma.ViewModels
             }
         }
 
+        public decimal Kwota
+        {
+            get
+            {
+                return item.Kwota;
+            }
+            set
+            {
+                item.Kwota = value;
+                OnPropertyChanged(() => Kwota);
+            }
+        }
+
         public string Uwagi
         {
             get
@@ -195,6 +221,58 @@ namespace MVVMFirma.ViewModels
                     return string.Empty;
             }
         }
+        #endregion
+
+        #region Methods
+        public string GenerujNumerRezerwacji()
+        {
+            var ostatniaRezerwacja = db.Rezerwacja
+                                       .OrderByDescending(r => r.DataRezerwacji) 
+                                       .ThenByDescending(r => r.IdRezerwacji)
+                                       .Select(r => r.NrRezerwacji)
+                                       .FirstOrDefault();
+
+            string numerRezerwacji;
+
+            if (ostatniaRezerwacja != null)
+            {
+                string rezerwacjaMiesiac = ostatniaRezerwacja.Substring(5, 2);
+                string obecnyMiesiac = DateTime.Now.ToString("MM");
+
+                if (rezerwacjaMiesiac == obecnyMiesiac)
+                {
+                    int pozycjaR = ostatniaRezerwacja.IndexOf('R');
+                    if (pozycjaR != -1 && pozycjaR + 1 < ostatniaRezerwacja.Length)
+                    {
+                        string numer = ostatniaRezerwacja.Substring(pozycjaR + 1);
+
+                        if (int.TryParse(numer, out int numerInt))
+                        {
+                            numerRezerwacji = (numerInt + 1).ToString();
+                        }
+                        else
+                        {
+                            numerRezerwacji = "1";
+                        }
+                    }
+                    else
+                    {
+                        numerRezerwacji = "1";
+                    }
+                }
+                else
+                {
+                    numerRezerwacji = "1";
+                }
+            }
+            else
+            {
+                numerRezerwacji = "1";
+            }
+            return $"{DateTime.Now:yyyy-MM}-R{numerRezerwacji}";
+        }
+
+
         #endregion
 
         #region Helpers

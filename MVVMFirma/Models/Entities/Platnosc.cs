@@ -15,6 +15,7 @@ namespace MVVMFirma.Models.Entities
     public partial class Platnosc
     {
         public int IdPlatnosci { get; set; }
+        public string NrPlatnosci { get; set; }
         public int IdRezerwacji { get; set; }
         public int IdSposobuPlatnosci { get; set; }
         public int IdStatusuPlatnosci { get; set; }

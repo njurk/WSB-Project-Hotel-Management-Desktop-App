@@ -31,7 +31,7 @@
             <RowDefinition Height="40"/>
         </Grid.RowDefinitions>
         <Label Grid.Column="0" Grid.Row="0" Margin="0,8,0,8" Content="Numer faktury"/>
-        <TextBox Grid.Column="1" Grid.Row="0" Margin="0,8,0,8" Text="{Binding Path=NrFaktury, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+        <TextBlock Grid.Column="1" Grid.Row="0" Margin="0,12,0,12" Text="{Binding Path=NrFaktury}"/>
 
         <Label Grid.Column="0" Grid.Row="1" Margin="0,8,0,8" Content="Numer rezerwacji"/>
         <ComboBox Grid.Column="1" Grid.Row="1" Margin="0,8,0,8" ItemsSource="{Binding RezerwacjaItems}" DisplayMemberPath="Value" SelectedValuePath="Key" SelectedValue="{Binding Path=IdRezerwacji, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
@@ -60,6 +60,6 @@
         <TextBox Grid.Column="1" Grid.Row="8" Margin="0,8,0,8" Text="{Binding Path=Opis, UpdateSourceTrigger=PropertyChanged}"/>
 
         <Label Grid.Column="0" Grid.Row="9" Margin="0,8,0,8" Content="Zapłacono"/>
-        <TextBlock Grid.Column="1" Grid.Row="9" Margin="0,8,0,8" Text="{Binding SumaPlatnosci, StringFormat={}{0:C}}"/>
+        <TextBlock Grid.Column="1" Grid.Row="9" Margin="0,12,0,12" Text="{Binding SumaPlatnosci, StringFormat={}{0:C}}"/>
     </Grid>
 </local:JedenViewBase>

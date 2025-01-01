@@ -17,6 +17,21 @@ namespace MVVMFirma.ViewModels
         {
             base.DisplayName = "Rezerwacje";
         }
+
+        public override void Delete()
+        {
+            if (SelectedItem != null)
+            {
+                hotelEntities.Rezerwacja.Remove(hotelEntities.Rezerwacja.FirstOrDefault(f => f.IdRezerwacji == SelectedItem.IdRezerwacji));
+                hotelEntities.SaveChanges();
+                List.Remove(SelectedItem);
+            }
+        }
+
+        public override void Edit()
+        {
+            throw new NotImplementedException();
+        }
         #endregion
 
         #region Helpers
@@ -31,6 +46,7 @@ namespace MVVMFirma.ViewModels
                 select new RezerwacjaForAllView
                 {
                     IdRezerwacji = rezerwacja.IdRezerwacji,
+                    NrRezerwacji = rezerwacja.NrRezerwacji,
                     KlientImie = rezerwacja.Klient.Imie,
                     KlientNazwisko = rezerwacja.Klient.Nazwisko,
                     NrPokoju = rezerwacja.Pokoj.NrPokoju,

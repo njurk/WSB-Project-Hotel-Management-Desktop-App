@@ -26,6 +26,18 @@ namespace MVVMFirma.ViewModels
         #endregion
 
         #region Properties
+        public string NrPlatnosci
+        {
+            get
+            {
+                return item.NrPlatnosci;
+            }
+            set
+            {
+                item.NrPlatnosci = value;
+                OnPropertyChanged(() => NrPlatnosci);
+            }
+        }
         public int IdRezerwacji
         {
             get

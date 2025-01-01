@@ -15,8 +15,8 @@
                         </Grid.RowDefinitions>
                         <ToolBar Grid.Row="0" Margin="0,2,0,2">
                             <Button Content="Dodaj" Margin="0,2,0,2" Command="{Binding AddCommand}"/>
-                            <Button Content="Edytuj" Margin="0,2,0,2"/>
-                            <Button Content="Usun" Margin="0,2,0,2"/>
+                            <Button Content="Edytuj" Margin="0,2,0,2" Command="{Binding EditCommand}"/>
+                            <Button Content="Usun" Margin="0,2,0,2" Command="{Binding DeleteCommand}"/>
                             <Button Content="Odswiez" Margin="0,2,0,2" Command="{Binding LoadCommand}"/>
                         </ToolBar>
                         <StackPanel Grid.Row="1" Background="Azure">

@@ -17,7 +17,7 @@ namespace MVVMFirma.ViewModels
         protected readonly HotelEntities hotelEntities;
         #endregion
 
-        #region Command
+        #region Commands
         private BaseCommand _LoadCommand;
         public ICommand LoadCommand
         {
@@ -37,6 +37,28 @@ namespace MVVMFirma.ViewModels
                 if (_AddCommand == null)
                     _AddCommand = new BaseCommand(() => Add());
                 return _AddCommand;
+            }
+        }
+
+        private BaseCommand _DeleteCommand;
+        public ICommand DeleteCommand
+        {
+            get
+            {
+                if (_DeleteCommand == null)
+                    _DeleteCommand = new BaseCommand(() => Delete(), CanDelete);
+                return _DeleteCommand;
+            }
+        }
+
+        private BaseCommand _EditCommand;
+        public ICommand EditCommand
+        {
+            get
+            {
+                if (_EditCommand == null)
+                    _EditCommand = new BaseCommand(() => Edit(), CanEdit);
+                return _EditCommand;
             }
         }
         #endregion
@@ -59,13 +81,38 @@ namespace MVVMFirma.ViewModels
         }
         #endregion
 
+        #region Selected Item
+        private T _SelectedItem;
+        public T SelectedItem
+        {
+            get => _SelectedItem;
+            set
+            {
+                _SelectedItem = value;
+                OnPropertyChanged(() => SelectedItem);
+                (DeleteCommand as BaseCommand)?.RaiseCanExecuteChanged();
+                (EditCommand as BaseCommand)?.RaiseCanExecuteChanged();
+            }
+        }
+        #endregion
+
         #region Helpers
         private void Add()
         {
             Messenger.Default.Send(DisplayName + "Add");
         }
 
-        // Ten komunikat odbierze MainWindowViewModel
+        private bool CanDelete()
+        {
+            return SelectedItem != null;
+        }
+
+        private bool CanEdit()
+        {
+            return SelectedItem != null;
+        }
+        public abstract void Delete();
+        public abstract void Edit();
 
         public abstract void Load();
         #endregion

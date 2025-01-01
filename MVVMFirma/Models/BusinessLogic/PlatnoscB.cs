@@ -24,7 +24,7 @@ namespace MVVMFirma.Models.BusinessLogic
                     select new KeyAndValue
                     {
                         Key = platnosc.IdPlatnosci,
-                        Value = platnosc.IdPlatnosci.ToString()
+                        Value = platnosc.NrPlatnosci
                     }
                 ).ToList().AsQueryable();
         }
