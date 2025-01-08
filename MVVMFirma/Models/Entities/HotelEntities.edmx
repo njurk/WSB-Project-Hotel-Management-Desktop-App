@@ -116,6 +116,7 @@
           <Property Name="DataRezerwacji" Type="date" Nullable="false" />
           <Property Name="Uwagi" Type="nvarchar" MaxLength="300" />
           <Property Name="Kwota" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="IdZnizki" Type="int" />
         </EntityType>
         <EntityType Name="RodzajPracownika">
           <Key>
@@ -184,6 +185,14 @@
           </Key>
           <Property Name="IdVat" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Stawka" Type="nvarchar" MaxLength="5" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Znizka">
+          <Key>
+            <PropertyRef Name="IdZnizki" />
+          </Key>
+          <Property Name="IdZnizki" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nazwa" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Wartosc" Type="nvarchar" MaxLength="5" Nullable="false" />
         </EntityType>
         <Association Name="FK_Faktura_Rezerwacja">
           <End Role="Rezerwacja" Type="Self.Rezerwacja" Multiplicity="1" />
@@ -353,6 +362,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Rezerwacja_Znizka">
+          <End Role="Znizka" Type="Self.Znizka" Multiplicity="0..1" />
+          <End Role="Rezerwacja" Type="Self.Rezerwacja" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Znizka">
+              <PropertyRef Name="IdZnizki" />
+            </Principal>
+            <Dependent Role="Rezerwacja">
+              <PropertyRef Name="IdZnizki" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_UdogodnieniaKlasPokoju_KlasaPokoju">
           <End Role="KlasaPokoju" Type="Self.KlasaPokoju" Multiplicity="1" />
           <End Role="UdogodnieniaKlasPokoju" Type="Self.UdogodnieniaKlasPokoju" Multiplicity="*" />
@@ -396,6 +417,7 @@
           <EntitySet Name="UdogodnieniaKlasPokoju" EntityType="Self.UdogodnieniaKlasPokoju" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Udogodnienie" EntityType="Self.Udogodnienie" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VAT" EntityType="Self.VAT" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Znizka" EntityType="Self.Znizka" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Faktura_Rezerwacja" Association="Self.FK_Faktura_Rezerwacja">
             <End Role="Rezerwacja" EntitySet="Rezerwacja" />
             <End Role="Faktura" EntitySet="Faktura" />
@@ -450,6 +472,10 @@
           </AssociationSet>
           <AssociationSet Name="FK_Rezerwacja_Pokoj" Association="Self.FK_Rezerwacja_Pokoj">
             <End Role="Pokoj" EntitySet="Pokoj" />
+            <End Role="Rezerwacja" EntitySet="Rezerwacja" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rezerwacja_Znizka" Association="Self.FK_Rezerwacja_Znizka">
+            <End Role="Znizka" EntitySet="Znizka" />
             <End Role="Rezerwacja" EntitySet="Rezerwacja" />
           </AssociationSet>
           <AssociationSet Name="FK_UdogodnieniaKlasPokoju_KlasaPokoju" Association="Self.FK_UdogodnieniaKlasPokoju_KlasaPokoju">
@@ -596,10 +622,12 @@
           <Property Name="DataRezerwacji" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="Uwagi" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
           <Property Name="Kwota" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="IdZnizki" Type="Int32" />
           <NavigationProperty Name="Faktura" Relationship="Self.FK_Faktura_Rezerwacja" FromRole="Rezerwacja" ToRole="Faktura" />
           <NavigationProperty Name="Klient" Relationship="Self.FK_Rezerwacja_Klient" FromRole="Rezerwacja" ToRole="Klient" />
           <NavigationProperty Name="Platnosc" Relationship="Self.FK_Platnosc_Rezerwacja" FromRole="Rezerwacja" ToRole="Platnosc" />
           <NavigationProperty Name="Pokoj" Relationship="Self.FK_Rezerwacja_Pokoj" FromRole="Rezerwacja" ToRole="Pokoj" />
+          <NavigationProperty Name="Znizka" Relationship="Self.FK_Rezerwacja_Znizka" FromRole="Rezerwacja" ToRole="Znizka" />
         </EntityType>
         <EntityType Name="RodzajPracownika">
           <Key>
@@ -677,6 +705,15 @@
           <Property Name="IdVat" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Stawka" Type="String" MaxLength="5" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Faktura" Relationship="Self.FK_Faktura_VAT" FromRole="VAT" ToRole="Faktura" />
+        </EntityType>
+        <EntityType Name="Znizka">
+          <Key>
+            <PropertyRef Name="IdZnizki" />
+          </Key>
+          <Property Name="IdZnizki" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nazwa" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Wartosc" Type="String" MaxLength="5" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Rezerwacja" Relationship="Self.FK_Rezerwacja_Znizka" FromRole="Znizka" ToRole="Rezerwacja" />
         </EntityType>
         <Association Name="FK_Faktura_Rezerwacja">
           <End Role="Rezerwacja" Type="Self.Rezerwacja" Multiplicity="1" />
@@ -858,6 +895,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Rezerwacja_Znizka">
+          <End Role="Znizka" Type="Self.Znizka" Multiplicity="0..1" />
+          <End Role="Rezerwacja" Type="Self.Rezerwacja" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Znizka">
+              <PropertyRef Name="IdZnizki" />
+            </Principal>
+            <Dependent Role="Rezerwacja">
+              <PropertyRef Name="IdZnizki" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_UdogodnieniaKlasPokoju_Udogodnienie">
           <End Role="Udogodnienie" Type="Self.Udogodnienie" Multiplicity="1" />
           <End Role="UdogodnieniaKlasPokoju" Type="Self.UdogodnieniaKlasPokoju" Multiplicity="*" />
@@ -889,6 +938,7 @@
           <EntitySet Name="UdogodnieniaKlasPokoju" EntityType="Self.UdogodnieniaKlasPokoju" />
           <EntitySet Name="Udogodnienie" EntityType="Self.Udogodnienie" />
           <EntitySet Name="VAT" EntityType="Self.VAT" />
+          <EntitySet Name="Znizka" EntityType="Self.Znizka" />
           <AssociationSet Name="FK_Faktura_Rezerwacja" Association="Self.FK_Faktura_Rezerwacja">
             <End Role="Rezerwacja" EntitySet="Rezerwacja" />
             <End Role="Faktura" EntitySet="Faktura" />
@@ -948,6 +998,10 @@
           <AssociationSet Name="FK_Pracownik_RodzajPracownika" Association="Self.FK_Pracownik_RodzajPracownika">
             <End Role="RodzajPracownika" EntitySet="RodzajPracownika" />
             <End Role="Pracownik" EntitySet="Pracownik" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rezerwacja_Znizka" Association="Self.FK_Rezerwacja_Znizka">
+            <End Role="Znizka" EntitySet="Znizka" />
+            <End Role="Rezerwacja" EntitySet="Rezerwacja" />
           </AssociationSet>
           <AssociationSet Name="FK_UdogodnieniaKlasPokoju_Udogodnienie" Association="Self.FK_UdogodnieniaKlasPokoju_Udogodnienie">
             <End Role="Udogodnienie" EntitySet="Udogodnienie" />
@@ -1078,6 +1132,7 @@
                 <ScalarProperty Name="DataRezerwacji" ColumnName="DataRezerwacji" />
                 <ScalarProperty Name="Uwagi" ColumnName="Uwagi" />
                 <ScalarProperty Name="Kwota" ColumnName="Kwota" />
+                <ScalarProperty Name="IdZnizki" ColumnName="IdZnizki" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1155,6 +1210,15 @@
               <MappingFragment StoreEntitySet="VAT">
                 <ScalarProperty Name="IdVat" ColumnName="IdVat" />
                 <ScalarProperty Name="Stawka" ColumnName="Stawka" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Znizka">
+            <EntityTypeMapping TypeName="HotelModel.Znizka">
+              <MappingFragment StoreEntitySet="Znizka">
+                <ScalarProperty Name="IdZnizki" ColumnName="IdZnizki" />
+                <ScalarProperty Name="Nazwa" ColumnName="Nazwa" />
+                <ScalarProperty Name="Wartosc" ColumnName="Wartosc" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

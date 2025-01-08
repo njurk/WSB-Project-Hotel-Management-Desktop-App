@@ -195,6 +195,43 @@ namespace MVVMFirma.ViewModels
             }
         }
 
+        public int? IdZnizki
+        {
+            get
+            {
+                return item.IdZnizki;
+            }
+            set
+            {
+                item.IdZnizki = value;
+                OnPropertyChanged(() => IdZnizki);
+            }
+        }
+
+        public bool CzyZnizka
+        {
+            get
+            {
+                return item.IdZnizki.HasValue;  // Zwróci true, jeśli IdZnizki ma wartość
+            }
+            set
+            {
+                if (value)  // Jeśli Checkbox zaznaczony, ustawi wartość zniżki
+                {
+                    // Przykład ustawienia wartości zniżki na wybraną wartość (można to dostosować)
+                    if (IdZnizki == null)
+                    {
+                        IdZnizki = ZnizkaItems.FirstOrDefault()?.Key;  // Wybierz pierwszą dostępną zniżkę, jeśli jest
+                    }
+                }
+                else
+                {
+                    IdZnizki = null;  // Ustawia zniżkę na null, gdy checkbox jest odznaczony
+                }
+                OnPropertyChanged(() => CzyZnizka);
+            }
+        }
+
         public IQueryable<KeyAndValue> KlientItems
         {
             get
@@ -208,6 +245,14 @@ namespace MVVMFirma.ViewModels
             get
             {
                 return new PokojB(db).GetPokojKeyAndValueItems();
+            }
+        }
+
+        public IQueryable<KeyAndValue> ZnizkaItems
+        {
+            get
+            {
+                return new ZnizkaB(db).GetZnizkaKeyAndValueItems();
             }
         }
 

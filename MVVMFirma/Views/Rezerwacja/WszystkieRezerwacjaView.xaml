@@ -4,8 +4,14 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MVVMFirma.Views"
+             xmlns:vm="clr-namespace:MVVMFirma.Helper"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="1400">
+
+    <local:WszystkieViewBase.Resources>
+        <vm:PercentConverter x:Key="PercentConverter"/>
+    </local:WszystkieViewBase.Resources>
+
     <Grid>
         <DataGrid CanUserAddRows="False" IsReadOnly="True" CanUserDeleteRows="False" AutoGenerateColumns="False" ItemsSource="{Binding List}" SelectedItem="{Binding SelectedItem}">
             <DataGrid.Columns>
@@ -23,6 +29,7 @@
                 <DataGridTextColumn Header="Kwota" Binding="{Binding Kwota}"/>
                 <DataGridCheckBoxColumn Header="Czy zapłacona" Binding="{Binding CzyZaplacona}"/>
                 <DataGridTextColumn Header="Uwagi" Binding="{Binding Uwagi}"/>
+                <DataGridTextColumn Header="Zniżka" Binding="{Binding Znizka, Converter={StaticResource PercentConverter}}"/>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

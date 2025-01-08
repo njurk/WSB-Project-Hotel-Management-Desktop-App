@@ -33,6 +33,7 @@ namespace MVVMFirma.Models.Entities
         public System.DateTime DataRezerwacji { get; set; }
         public string Uwagi { get; set; }
         public decimal Kwota { get; set; }
+        public Nullable<int> IdZnizki { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Faktura> Faktura { get; set; }
@@ -40,5 +41,6 @@ namespace MVVMFirma.Models.Entities
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Platnosc> Platnosc { get; set; }
         public virtual Pokoj Pokoj { get; set; }
+        public virtual Znizka Znizka { get; set; }
     }
 }

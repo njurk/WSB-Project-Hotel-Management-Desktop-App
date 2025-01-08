@@ -151,6 +151,14 @@
         <vw:NowyVATView/>
     </DataTemplate>
 
+    <DataTemplate DataType="{x:Type vm:WszystkieZnizkaViewModel}">
+        <vw:WszystkieZnizkaView/>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:NowyZnizkaViewModel}">
+        <vw:NowyZnizkaView/>
+    </DataTemplate>
+
 
     <Style x:Key="MainHCCStyle" TargetType="{x:Type HeaderedContentControl}">
         <Setter Property="HeaderTemplate">

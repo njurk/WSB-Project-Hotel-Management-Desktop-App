@@ -40,7 +40,8 @@ namespace MVVMFirma.ViewModels
                     DataWymeldowania = rezerwacja.DataWymeldowania,
                     Kwota = rezerwacja.Kwota,
                     CzyZaplacona = sumaPlatnosci >= rezerwacja.Kwota,
-                    Uwagi = rezerwacja.Uwagi
+                    Uwagi = rezerwacja.Uwagi,
+                    Znizka = rezerwacja.Znizka.Wartosc
                 }
             );
         }

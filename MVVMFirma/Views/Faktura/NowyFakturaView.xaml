@@ -43,13 +43,13 @@
         <DatePicker Grid.Column="1" Grid.Row="3" Margin="0,8,0,8" SelectedDate="{Binding DataSprzedazy, ValidatesOnDataErrors=True}"/>
 
         <Label Grid.Column="0" Grid.Row="4" Margin="0,8,0,8" Content="Kwota brutto"/>
-        <TextBox Grid.Column="1" Grid.Row="4" Margin="0,8,0,8" Text="{Binding Path=KwotaBrutto, Converter={StaticResource DecimalConverter}, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True}"/>
+        <TextBox Grid.Column="1" Grid.Row="4" Margin="0,8,0,8" Text="{Binding Path=KwotaBrutto, Converter={StaticResource DecimalConverter}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
 
         <Label Grid.Column="0" Grid.Row="5" Margin="0,8,0,8" Content="% VAT"/>
         <ComboBox Grid.Column="1" Grid.Row="5" Margin="0,8,0,8" ItemsSource="{Binding VATItems}" DisplayMemberPath="Value" SelectedValuePath="Key" SelectedValue="{Binding Path=IdVat, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
 
         <Label Grid.Column="0" Grid.Row="6" Margin="0,8,0,8" Content="Kwota netto"/>
-        <TextBox Grid.Column="1" Grid.Row="6" Margin="0,8,0,8" Text="{Binding Path=KwotaNetto, Converter={StaticResource DecimalConverter}, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True}"/>
+        <TextBox Grid.Column="1" Grid.Row="6" Margin="0,8,0,8" Text="{Binding Path=KwotaNetto, Converter={StaticResource DecimalConverter}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
 
         <Button Grid.Column="2" Grid.Row="6" Margin="15,8,0,8" Content="Oblicz netto" Command="{Binding ObliczNettoCommand}"/>
         

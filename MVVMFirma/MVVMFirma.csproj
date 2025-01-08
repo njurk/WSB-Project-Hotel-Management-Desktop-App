@@ -88,6 +88,7 @@
     </Compile>
     <Compile Include="Helper\BaseCommand.cs" />
     <Compile Include="Helper\DecimalConverter.cs" />
+    <Compile Include="Helper\PercentConverter.cs" />
     <Compile Include="Helper\StringValidator.cs" />
     <Compile Include="Models\BusinessLogic\DatabaseClass.cs" />
     <Compile Include="Models\BusinessLogic\KlasaPokojuB.cs" />
@@ -105,6 +106,7 @@
     <Compile Include="Models\BusinessLogic\TypPokojuB.cs" />
     <Compile Include="Models\BusinessLogic\UdogodnienieB.cs" />
     <Compile Include="Models\BusinessLogic\VATB.cs" />
+    <Compile Include="Models\BusinessLogic\ZnizkaB.cs" />
     <Compile Include="Models\EntitiesForView\FakturaForAllView.cs" />
     <Compile Include="Models\EntitiesForView\KeyAndValue.cs" />
     <Compile Include="Models\EntitiesForView\KlasaPokojuForAllView.cs" />
@@ -123,6 +125,7 @@
     <Compile Include="Models\EntitiesForView\UdogodnieniaKlasPokojuForAllView.cs" />
     <Compile Include="Models\EntitiesForView\UdogodnienieForAllView.cs" />
     <Compile Include="Models\EntitiesForView\VATForAllView.cs" />
+    <Compile Include="Models\EntitiesForView\ZnizkaForAllView.cs" />
     <Compile Include="Models\Entities\Faktura.cs">
       <DependentUpon>HotelEntities.tt</DependentUpon>
     </Compile>
@@ -192,6 +195,9 @@
     <Compile Include="Models\Entities\VAT.cs">
       <DependentUpon>HotelEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Entities\Znizka.cs">
+      <DependentUpon>HotelEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\CommandViewModel.cs" />
     <Compile Include="ViewModels\Faktura\NowyFakturaViewModel.cs" />
@@ -232,6 +238,8 @@
     <Compile Include="ViewModels\VAT\WszystkieVATViewModel.cs" />
     <Compile Include="ViewModels\WorkspaceViewModel.cs" />
     <Compile Include="ViewModels\WszystkieViewModel.cs" />
+    <Compile Include="ViewModels\Znizka\NowyZnizkaViewModel.cs" />
+    <Compile Include="ViewModels\Znizka\WszystkieZnizkaViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Compile Include="Views\Faktura\NowyFakturaView.xaml.cs">
@@ -341,6 +349,12 @@
       <DependentUpon>WszystkieVATView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\WszystkieViewBase.cs" />
+    <Compile Include="Views\Znizka\NowyZnizkaView.xaml.cs">
+      <DependentUpon>NowyZnizkaView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Znizka\WszystkieZnizkaView.xaml.cs">
+      <DependentUpon>WszystkieZnizkaView.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -521,6 +535,14 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\VAT\WszystkieVATView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Znizka\NowyZnizkaView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Znizka\WszystkieZnizkaView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

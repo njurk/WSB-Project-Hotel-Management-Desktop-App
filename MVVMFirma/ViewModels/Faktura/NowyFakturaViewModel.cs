@@ -190,9 +190,10 @@ namespace MVVMFirma.ViewModels
         }
 
         private Rezerwacja _selectedRezerwacja;
-        // ta właściwość przechowuje wybraną rezerwację
-        // aby ustawić powiązane z nią informacje w polach na widoku
-        // co usprawni i przyspieszy użytkownikowi proces dodawania faktury
+        // ta właściwość pobiera z wybranej rezerwacji konkretne dane
+        // i ustawia w polach np. data sprzedaży, kwota brutto
+        // celem usprawnienia procesu dodawania faktury
+        
         public Rezerwacja SelectedRezerwacja
         {
             get { return _selectedRezerwacja; }
@@ -215,19 +216,18 @@ namespace MVVMFirma.ViewModels
                             KwotaBrutto = rezerwacja.Kwota;
                             OnPropertyChanged(() => KwotaBrutto);
                         }
-
-                        // suma platnosci do wyświetlenia w textblocku
-                        var sumaPlatnosci = db.Platnosc
-                        .Where(p => p.IdRezerwacji == _selectedRezerwacja.IdRezerwacji)
-                        .Sum(p => (decimal?)p.Kwota) ?? 0;
-                        SumaPlatnosci = sumaPlatnosci;
-                    }
-                    else
-                    {
-                        SumaPlatnosci = 0;
+                        // ustawienie kwoty do zapłacenia
+                        SumaPlatnosci = sumaPlatnosci(_selectedRezerwacja.IdRezerwacji);
                     }
                 }
             }
+        }
+        //metoda do obliczania kwoty pozostałej do zapłacenia dla danej rezerwacji
+        private decimal sumaPlatnosci(int idRezerwacji)
+        {
+            return db.Platnosc
+                     .Where(p => p.IdRezerwacji == idRezerwacji)
+                     .Sum(p => (decimal?)p.Kwota) ?? 0;
         }
 
         private decimal _sumaPlatnosci;

@@ -173,6 +173,14 @@ namespace MVVMFirma.ViewModels
                 new CommandViewModel(
                     "Stawki VAT",
                     new BaseCommand(() => this.ShowAllView(new WszystkieVATViewModel()))),
+
+                 /*new CommandViewModel(
+                    "Zniżka",
+                    new BaseCommand(() => this.CreateView(new NowyZnizkaViewModel()))),*/
+
+                new CommandViewModel(
+                    "Zniżki",
+                    new BaseCommand(() => this.ShowAllView(new WszystkieZnizkaViewModel())))
             };
         }
         #endregion
@@ -281,6 +289,8 @@ namespace MVVMFirma.ViewModels
                     CreateView(new NowyKrajViewModel());
                 if (name == "Stawki VATAdd")
                     CreateView(new NowyVATViewModel());
+                if (name == "ZniżkiAdd")
+                    CreateView(new NowyZnizkaViewModel());
             }
             else if (name.Contains("Edit-"))
             {
@@ -324,6 +334,8 @@ namespace MVVMFirma.ViewModels
                         EditView(new NowyKrajViewModel(itemId));
                     if (splitName == "Stawki VATEdit")
                         EditView(new NowyVATViewModel(itemId));
+                    if (splitName == "ZniżkiEdit")
+                        EditView(new NowyZnizkaViewModel(itemId));
                 }
             }
             #endregion

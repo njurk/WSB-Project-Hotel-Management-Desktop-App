@@ -65,6 +65,7 @@ namespace MVVMFirma.ViewModels
             {
                 item.IdRezerwacji = value;
                 OnPropertyChanged(() => IdRezerwacji);
+                SelectedRezerwacja = db.Rezerwacja.FirstOrDefault(r => r.IdRezerwacji == value);
             }
         }
 
@@ -120,6 +121,21 @@ namespace MVVMFirma.ViewModels
             }
         }
 
+        private decimal _doZaplaty;
+        public decimal DoZaplaty
+        {
+            get { return _doZaplaty; }
+            set
+            {
+                if (_doZaplaty != value)
+                {
+                    _doZaplaty = value;
+                    OnPropertyChanged(() => DoZaplaty);
+                }
+            }
+        }
+
+
         public IQueryable<KeyAndValue> RezerwacjaItems
         {
             get
@@ -142,6 +158,41 @@ namespace MVVMFirma.ViewModels
             {
                 return new StatusPlatnosciB(db).GetStatusPlatnosciKeyAndValueItems();
             }
+        }
+
+        // ustawienie kwoty płatności na podstawie wybranej rezerwacji w combobox
+        private Rezerwacja _selectedRezerwacja;
+        public Rezerwacja SelectedRezerwacja
+        {
+            get { return _selectedRezerwacja; }
+            set
+            {
+                if (_selectedRezerwacja != value)
+                {
+                    _selectedRezerwacja = value;
+                    OnPropertyChanged(() => SelectedRezerwacja);
+
+                    if (_selectedRezerwacja != null)
+                    {
+                        var rezerwacja = db.Rezerwacja.FirstOrDefault(r => r.IdRezerwacji == _selectedRezerwacja.IdRezerwacji);
+                        if (rezerwacja != null)
+                        {
+                            Kwota = rezerwacja.Kwota;
+                            DoZaplaty = Kwota - sumaPlatnosci(rezerwacja.IdRezerwacji);
+
+                            OnPropertyChanged(() => Kwota);
+                            OnPropertyChanged(() => DoZaplaty);
+                        }
+                    }
+                }
+            }
+        }
+        //metoda do obliczania kwoty pozostałej do zapłacenia dla danej rezerwacji
+        private decimal sumaPlatnosci(int idRezerwacji)
+        {
+            return db.Platnosc
+                     .Where(p => p.IdRezerwacji == idRezerwacji)
+                     .Sum(p => (decimal?)p.Kwota) ?? 0;
         }
         #endregion
 

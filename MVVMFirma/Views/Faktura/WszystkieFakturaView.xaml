@@ -4,8 +4,14 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MVVMFirma.Views"
+             xmlns:vm="clr-namespace:MVVMFirma.Helper"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="1100">
+
+    <local:WszystkieViewBase.Resources>
+        <vm:PercentConverter x:Key="PercentConverter"/>
+    </local:WszystkieViewBase.Resources>
+
     <Grid>
         <DataGrid CanUserAddRows="False" IsReadOnly="True" CanUserDeleteRows="False" AutoGenerateColumns="False" ItemsSource="{Binding List}" SelectedItem="{Binding SelectedItem}">
             <DataGrid.Columns>
@@ -18,7 +24,7 @@
                 <DataGridTextColumn Header="Data wystawienia" Binding="{Binding DataWystawienia, StringFormat=yyyy-MM-dd}"/>
                 <DataGridTextColumn Header="Data sprzedaży" Binding="{Binding DataSprzedazy, StringFormat=yyyy-MM-dd}"/>
                 <DataGridTextColumn Header="Netto" Binding="{Binding KwotaNetto, StringFormat={}{0:C}}"/>
-                <DataGridTextColumn Header="VAT" Binding="{Binding VAT, StringFormat='{}{0}%'}"/>
+                <DataGridTextColumn Header="VAT" Binding="{Binding VAT, Converter={StaticResource PercentConverter}}"/>
                 <DataGridTextColumn Header="Brutto" Binding="{Binding KwotaBrutto, StringFormat={}{0:C}}"/>
                 <DataGridTextColumn Header="Termin płatności" Binding="{Binding TerminPlatnosci, StringFormat=yyyy-MM-dd}"/>
                 <DataGridTextColumn Header="Zapłacono" Binding="{Binding Zaplacono, StringFormat={}{0:C}}"/>

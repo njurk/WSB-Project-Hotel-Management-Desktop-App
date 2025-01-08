@@ -43,5 +43,6 @@ namespace MVVMFirma.Models.Entities
         public virtual DbSet<UdogodnieniaKlasPokoju> UdogodnieniaKlasPokoju { get; set; }
         public virtual DbSet<Udogodnienie> Udogodnienie { get; set; }
         public virtual DbSet<VAT> VAT { get; set; }
+        public virtual DbSet<Znizka> Znizka { get; set; }
     }
 }
