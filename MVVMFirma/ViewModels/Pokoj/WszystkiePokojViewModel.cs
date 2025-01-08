@@ -1,11 +1,8 @@
-﻿using MVVMFirma.Models.EntitiesForView;
-using System;
-using System.Collections.Generic;
+﻿using GalaSoft.MvvmLight.Messaging;
+using MVVMFirma.Models.EntitiesForView;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Automation.Peers;
+using System.Windows;
 
 namespace MVVMFirma.ViewModels
 {
@@ -13,24 +10,9 @@ namespace MVVMFirma.ViewModels
     {
         #region Constructor
         public WszystkiePokojViewModel()
-            :base()
+            : base("Pokoje")
         {
-            base.DisplayName = "Pokoje";
-        }
-
-        public override void Delete()
-        {
-            if (SelectedItem != null)
-            {
-                hotelEntities.Pokoj.Remove(hotelEntities.Pokoj.FirstOrDefault(f => f.IdPokoju == SelectedItem.IdPokoju));
-                hotelEntities.SaveChanges();
-                List.Remove(SelectedItem);
-            }
-        }
-
-        public override void Edit()
-        {
-            throw new NotImplementedException();
+            Messenger.Default.Register<string>(this, OnMessageReceived);
         }
         #endregion
 
@@ -50,6 +32,34 @@ namespace MVVMFirma.ViewModels
                         PietroNr = pokoj.Pietro.NrPietra
                     }
                 );
+        }
+        public override void Delete()
+        {
+            MessageBoxResult delete = MessageBox.Show("Czy na pewno chcesz usunąć wybrany pokój:\n" + SelectedItem.NrPokoju, "Usuwanie", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            if (SelectedItem != null && delete == MessageBoxResult.Yes)
+            {
+                hotelEntities.Pokoj.Remove(hotelEntities.Pokoj.FirstOrDefault(f => f.IdPokoju == SelectedItem.IdPokoju));
+                hotelEntities.SaveChanges();
+                List.Remove(SelectedItem);
+            }
+        }
+
+        public override void Edit()
+        {
+            if (SelectedItem != null)
+            {
+                Messenger.Default.Send(DisplayName + "Edit-" + SelectedItem.IdPokoju);
+            }
+        }
+
+        // OnMessageReceived obsługuje otrzymaną wiadomość, w tym przypadku odświeżenie widoku
+        private void OnMessageReceived(string message)
+        {
+            if (message == "PokojRefresh")
+            {
+                Load();
+            }
         }
         #endregion
     }

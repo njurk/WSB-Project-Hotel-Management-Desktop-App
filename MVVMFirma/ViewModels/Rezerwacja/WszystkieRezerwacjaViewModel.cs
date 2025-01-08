@@ -1,12 +1,8 @@
-﻿using MVVMFirma.Models.Entities;
+﻿using GalaSoft.MvvmLight.Messaging;
 using MVVMFirma.Models.EntitiesForView;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Documents;
+using System.Windows;
 
 namespace MVVMFirma.ViewModels
 {
@@ -14,23 +10,9 @@ namespace MVVMFirma.ViewModels
     {
         #region Constructor
         public WszystkieRezerwacjaViewModel()
+            :base("Rezerwacje")
         {
-            base.DisplayName = "Rezerwacje";
-        }
-
-        public override void Delete()
-        {
-            if (SelectedItem != null)
-            {
-                hotelEntities.Rezerwacja.Remove(hotelEntities.Rezerwacja.FirstOrDefault(f => f.IdRezerwacji == SelectedItem.IdRezerwacji));
-                hotelEntities.SaveChanges();
-                List.Remove(SelectedItem);
-            }
-        }
-
-        public override void Edit()
-        {
-            throw new NotImplementedException();
+            Messenger.Default.Register<string>(this, OnMessageReceived);
         }
         #endregion
 
@@ -62,7 +44,34 @@ namespace MVVMFirma.ViewModels
                 }
             );
         }
+        public override void Delete()
+        {
+            MessageBoxResult delete = MessageBox.Show("Czy na pewno chcesz usunąć wybraną rezerwację:\n" + SelectedItem.NrRezerwacji, "Usuwanie", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
+            if (SelectedItem != null && delete == MessageBoxResult.Yes)
+            {
+                hotelEntities.Rezerwacja.Remove(hotelEntities.Rezerwacja.FirstOrDefault(f => f.IdRezerwacji == SelectedItem.IdRezerwacji));
+                hotelEntities.SaveChanges();
+                List.Remove(SelectedItem);
+            }
+        }
+
+        public override void Edit()
+        {
+            if (SelectedItem != null)
+            {
+                Messenger.Default.Send(DisplayName + "Edit-" + SelectedItem.IdRezerwacji);
+            }
+        }
+
+        // OnMessageReceived obsługuje otrzymaną wiadomość, w tym przypadku odświeżenie widoku
+        private void OnMessageReceived(string message)
+        {
+            if (message == "RezerwacjaRefresh")
+            {
+                Load();
+            }
+        }
         #endregion
     }
 }

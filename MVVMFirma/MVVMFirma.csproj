@@ -107,12 +107,22 @@
     <Compile Include="Models\BusinessLogic\VATB.cs" />
     <Compile Include="Models\EntitiesForView\FakturaForAllView.cs" />
     <Compile Include="Models\EntitiesForView\KeyAndValue.cs" />
+    <Compile Include="Models\EntitiesForView\KlasaPokojuForAllView.cs" />
     <Compile Include="Models\EntitiesForView\KlientForAllView.cs" />
+    <Compile Include="Models\EntitiesForView\KrajForAllView.cs" />
+    <Compile Include="Models\EntitiesForView\PietroForAllView.cs" />
     <Compile Include="Models\EntitiesForView\PlatnoscForAllView.cs" />
     <Compile Include="Models\EntitiesForView\PokojForAllView.cs" />
     <Compile Include="Models\EntitiesForView\PracownikForAllView.cs" />
     <Compile Include="Models\EntitiesForView\RezerwacjaForAllView.cs" />
+    <Compile Include="Models\EntitiesForView\RodzajPracownikaForAllView.cs" />
+    <Compile Include="Models\EntitiesForView\SposobPlatnosciForAllView.cs" />
+    <Compile Include="Models\EntitiesForView\StatusPlatnosciForAllView.cs" />
+    <Compile Include="Models\EntitiesForView\StatusPokojuForAllView.cs" />
+    <Compile Include="Models\EntitiesForView\TypPokojuForAllView.cs" />
     <Compile Include="Models\EntitiesForView\UdogodnieniaKlasPokojuForAllView.cs" />
+    <Compile Include="Models\EntitiesForView\UdogodnienieForAllView.cs" />
+    <Compile Include="Models\EntitiesForView\VATForAllView.cs" />
     <Compile Include="Models\Entities\Faktura.cs">
       <DependentUpon>HotelEntities.tt</DependentUpon>
     </Compile>

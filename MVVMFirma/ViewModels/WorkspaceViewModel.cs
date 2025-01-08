@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using MVVMFirma.Helper;
+﻿using MVVMFirma.Helper;
+using System;
 using System.Windows.Input;
 
 namespace MVVMFirma.ViewModels
@@ -39,6 +36,6 @@ namespace MVVMFirma.ViewModels
             if (handler != null)
                 handler(this, EventArgs.Empty);
         }
-        #endregion 
+        #endregion
     }
 }

@@ -1,13 +1,8 @@
-﻿using MVVMFirma.Models.BusinessLogic;
-using MVVMFirma.Models.Entities;
+﻿using GalaSoft.MvvmLight.Messaging;
 using MVVMFirma.Models.EntitiesForView;
-using MVVMFirma.Views;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows;
 
 namespace MVVMFirma.ViewModels
 {
@@ -15,23 +10,9 @@ namespace MVVMFirma.ViewModels
     {
         #region Constructor
         public WszystkiePlatnoscViewModel()
+            :base("Płatności")
         {
-            base.DisplayName = "Płatności";
-        }
-
-        public override void Delete()
-        {
-            if (SelectedItem != null)
-            {
-                hotelEntities.Platnosc.Remove(hotelEntities.Platnosc.FirstOrDefault(f => f.IdPlatnosci == SelectedItem.IdPlatnosci));
-                hotelEntities.SaveChanges();
-                List.Remove(SelectedItem);
-            }
-        }
-
-        public override void Edit()
-        {
-            throw new NotImplementedException();
+            Messenger.Default.Register<string>(this, OnMessageReceived);
         }
         #endregion
 
@@ -52,6 +33,34 @@ namespace MVVMFirma.ViewModels
                         Kwota = platnosc.Kwota
                     }
                 );
+        }
+        public override void Delete()
+        {
+            MessageBoxResult delete = MessageBox.Show("Czy na pewno chcesz usunąć wybraną płatność:\n" + SelectedItem.NrPlatnosci, "Usuwanie", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            if (SelectedItem != null && delete == MessageBoxResult.Yes)
+            {
+                hotelEntities.Platnosc.Remove(hotelEntities.Platnosc.FirstOrDefault(f => f.IdPlatnosci == SelectedItem.IdPlatnosci));
+                hotelEntities.SaveChanges();
+                List.Remove(SelectedItem);
+            }
+        }
+
+        public override void Edit()
+        {
+            if (SelectedItem != null)
+            {
+                Messenger.Default.Send(DisplayName + "Edit-" + SelectedItem.IdPlatnosci);
+            }
+        }
+
+        // OnMessageReceived obsługuje otrzymaną wiadomość, w tym przypadku odświeżenie widoku
+        private void OnMessageReceived(string message)
+        {
+            if (message == "PlatnoscRefresh")
+            {
+                Load();
+            }
         }
         #endregion
     }

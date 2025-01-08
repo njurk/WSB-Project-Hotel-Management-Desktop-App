@@ -1,20 +1,33 @@
-﻿using MVVMFirma.Models.Entities;
-using System;
-using System.Collections.Generic;
+﻿using GalaSoft.MvvmLight.Messaging;
+using MVVMFirma.Models.Entities;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Markup.Localizer;
 
 namespace MVVMFirma.ViewModels
 {
     public class NowyPietroViewModel : JedenViewModel<Pietro>
     {
+        #region DB
+        HotelEntities db;
+        #endregion
+
         #region Constructor
         public NowyPietroViewModel()
             : base("Piętro")
         {
+            db = new HotelEntities();
             item = new Pietro();
+        }
+
+        public NowyPietroViewModel(int itemId)
+            : base("Edycja piętra")
+        {
+            db = new HotelEntities();
+            item = db.Pietro.FirstOrDefault(p => p.IdPietra == itemId);
+
+            if (item != null)
+            {
+                NrPietra = item.NrPietra;
+            }
         }
         #endregion
 
@@ -36,8 +49,22 @@ namespace MVVMFirma.ViewModels
         #region Helpers
         public override void Save()
         {
-            hotelEntities.Pietro.Add(item);
-            hotelEntities.SaveChanges();
+            if (item.IdPietra == 0) // brak ID = insert
+            {
+                db.Pietro.Add(item);
+            }
+            else // istnieje ID = update
+            {
+                var doEdycji = db.Pietro.FirstOrDefault(f => f.IdPietra == item.IdPietra);
+                if (doEdycji != null)
+                {
+                    db.Entry(doEdycji).CurrentValues.SetValues(item);
+                }
+            }
+
+            db.SaveChanges();
+            // automatyczne odświeżenie listy po edycji rekordu
+            Messenger.Default.Send("PietroRefresh");
         }
         #endregion
     }

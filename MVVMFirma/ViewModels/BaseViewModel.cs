@@ -1,9 +1,9 @@
+using MVVMFirma.Helper;
 using System;
 using System.ComponentModel;
 using System.Linq.Expressions;
 using System.Windows;
 using System.Windows.Input;
-using MVVMFirma.Helper;
 
 namespace MVVMFirma.ViewModels
 {

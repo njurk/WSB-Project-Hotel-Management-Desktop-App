@@ -1,4 +1,5 @@
-﻿using MVVMFirma.Models.BusinessLogic;
+﻿using GalaSoft.MvvmLight.Messaging;
+using MVVMFirma.Models.BusinessLogic;
 using MVVMFirma.Models.Entities;
 using MVVMFirma.Models.EntitiesForView;
 using System;
@@ -26,6 +27,28 @@ namespace MVVMFirma.ViewModels
             DataZameldowania = DateTime.Now.AddDays(1);
             DataWymeldowania = DateTime.Now.AddDays(2);
             NrRezerwacji = GenerujNumerRezerwacji();
+        }
+
+        public NowyRezerwacjaViewModel(int itemId)
+            :base("Edycja rezerwacji")
+        {
+            db = new HotelEntities();
+            item = db.Rezerwacja.FirstOrDefault(r => r.IdRezerwacji == itemId);
+
+            if (item != null)
+            {
+                NrRezerwacji = item.NrRezerwacji;
+                IdKlienta = item.IdKlienta;
+                IdPokoju = item.IdPokoju;
+                LiczbaDoroslych = item.LiczbaDoroslych;
+                LiczbaDzieci = item.LiczbaDzieci;
+                CzyZwierzeta = item.CzyZwierzeta;
+                DataZameldowania = item.DataZameldowania;
+                DataWymeldowania = item.DataWymeldowania;
+                DataRezerwacji = item.DataRezerwacji;
+                Kwota = item.Kwota;
+                Uwagi = item.Uwagi;
+            }
         }
         #endregion
 
@@ -226,9 +249,9 @@ namespace MVVMFirma.ViewModels
         #region Methods
         public string GenerujNumerRezerwacji()
         {
+            // pobranie ostatniej rezerwacji z BD do ustalenia następnego numeru
             var ostatniaRezerwacja = db.Rezerwacja
-                                       .OrderByDescending(r => r.DataRezerwacji) 
-                                       .ThenByDescending(r => r.IdRezerwacji)
+                                       .OrderByDescending(r => r.IdRezerwacji) 
                                        .Select(r => r.NrRezerwacji)
                                        .FirstOrDefault();
 
@@ -236,7 +259,7 @@ namespace MVVMFirma.ViewModels
 
             if (ostatniaRezerwacja != null)
             {
-                string rezerwacjaMiesiac = ostatniaRezerwacja.Substring(5, 2);
+                string rezerwacjaMiesiac = ostatniaRezerwacja.Substring(5, 2); // yyyy-MM
                 string obecnyMiesiac = DateTime.Now.ToString("MM");
 
                 if (rezerwacjaMiesiac == obecnyMiesiac)
@@ -278,8 +301,22 @@ namespace MVVMFirma.ViewModels
         #region Helpers
         public override void Save()
         {
-            hotelEntities.Rezerwacja.Add(item);
-            hotelEntities.SaveChanges();
+            if (item.IdRezerwacji == 0) // brak ID = insert
+            {
+                db.Rezerwacja.Add(item);
+            }
+            else // istnieje ID = update
+            {
+                var doEdycji = db.Rezerwacja.FirstOrDefault(f => f.IdRezerwacji == item.IdRezerwacji);
+                if (doEdycji != null)
+                {
+                    db.Entry(doEdycji).CurrentValues.SetValues(item);
+                }
+            }
+
+            db.SaveChanges();
+            // automatyczne odświeżenie listy po edycji rekordu
+            Messenger.Default.Send("RezerwacjaRefresh");
         }
         #endregion
     }

@@ -1,20 +1,35 @@
-﻿using MVVMFirma.Models.Entities;
-using System;
-using System.Collections.Generic;
+﻿using GalaSoft.MvvmLight.Messaging;
+using MVVMFirma.Models.Entities;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MVVMFirma.ViewModels
 {
     public class NowyVATViewModel : JedenViewModel<VAT>
     {
+        #region DB
+        HotelEntities db;
+        #endregion
+
         #region Constructor
-        public NowyVATViewModel() 
-            :base("Stawka VAT")
-        { 
+        public NowyVATViewModel()
+            : base("Stawka VAT")
+        {
+            db = new HotelEntities();
             item = new VAT();
         }
+
+        public NowyVATViewModel(int itemId)
+            : base("Edycja stawki VAT")
+        {
+            db = new HotelEntities();
+            item = db.VAT.FirstOrDefault(v => v.IdVat == itemId);
+
+            if (item != null)
+            {
+                Stawka = item.Stawka;
+            }
+        }
+
         #endregion
 
         #region Properties
@@ -35,8 +50,22 @@ namespace MVVMFirma.ViewModels
         #region Helpers
         public override void Save()
         {
-            hotelEntities.VAT.Add(item);
-            hotelEntities.SaveChanges();
+            if (item.IdVat == 0) // brak ID = insert
+            {
+                db.VAT.Add(item);
+            }
+            else // istnieje ID = update
+            {
+                var doEdycji = db.VAT.FirstOrDefault(f => f.IdVat == item.IdVat);
+                if (doEdycji != null)
+                {
+                    db.Entry(doEdycji).CurrentValues.SetValues(item);
+                }
+            }
+
+            db.SaveChanges();
+            // automatyczne odświeżenie listy po edycji rekordu
+            Messenger.Default.Send("VATRefresh");
         }
         #endregion
     }

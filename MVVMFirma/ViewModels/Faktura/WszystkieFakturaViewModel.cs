@@ -2,6 +2,7 @@
 using MVVMFirma.Models.EntitiesForView;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Windows;
 
 namespace MVVMFirma.ViewModels
 {
@@ -9,8 +10,9 @@ namespace MVVMFirma.ViewModels
     {
         #region Constructor
         public WszystkieFakturaViewModel()
+            :base("Faktury")
         {
-            base.DisplayName = "Faktury";
+            Messenger.Default.Register<string>(this, OnMessageReceived);
         }
         #endregion
 
@@ -45,17 +47,31 @@ namespace MVVMFirma.ViewModels
 
         public override void Delete()
         {
-            if (SelectedItem != null)
+            MessageBoxResult delete = MessageBox.Show("Czy na pewno chcesz usunąć wybraną fakturę:\n" + SelectedItem.NrFaktury, "Usuwanie", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            if (SelectedItem != null && delete == MessageBoxResult.Yes)
             {
                 hotelEntities.Faktura.Remove(hotelEntities.Faktura.FirstOrDefault(f => f.IdFaktury == SelectedItem.IdFaktury));
                 hotelEntities.SaveChanges();
-                List.Remove(SelectedItem);
+                Load();
             }
         }
 
         public override void Edit()
         {
-            
+            if (SelectedItem != null)
+            {
+                Messenger.Default.Send(DisplayName + "Edit-" + SelectedItem.IdFaktury);
+            }
+        }
+
+        // OnMessageReceived obsługuje otrzymaną wiadomość, w tym przypadku odświeżenie widoku
+        private void OnMessageReceived(string message)
+        {
+            if (message == "FakturaRefresh")
+            {
+                Load();
+            }
         }
         #endregion
     }

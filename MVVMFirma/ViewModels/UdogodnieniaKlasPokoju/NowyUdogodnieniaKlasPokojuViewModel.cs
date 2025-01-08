@@ -1,12 +1,8 @@
-﻿using MVVMFirma.Models.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Data.Entity;
-using MVVMFirma.Models.EntitiesForView;
+﻿using GalaSoft.MvvmLight.Messaging;
 using MVVMFirma.Models.BusinessLogic;
+using MVVMFirma.Models.Entities;
+using MVVMFirma.Models.EntitiesForView;
+using System.Linq;
 
 
 
@@ -20,27 +16,28 @@ namespace MVVMFirma.ViewModels
 
         #region Constructor
         public NowyUdogodnieniaKlasPokojuViewModel()
-            :base("Udogodnienie klasy pokoju")
+            : base("Udogodnienie klasy pokoju")
         {
-            item = new UdogodnieniaKlasPokoju();
             db = new HotelEntities();
+            item = new UdogodnieniaKlasPokoju();
         }
+
+        public NowyUdogodnieniaKlasPokojuViewModel(int itemId)
+            : base("Edycja udogodnienia klasy pokoju")
+        {
+            db = new HotelEntities();
+            item = db.UdogodnieniaKlasPokoju.FirstOrDefault(u => u.IdPolaczenia == itemId);
+
+            if (item != null)
+            {
+                IdKlasyPokoju = item.IdKlasyPokoju;
+                IdUdogodnienia = item.IdUdogodnienia;
+            }
+        }
+
         #endregion
 
         #region Properties
-        public int IdPolaczenia
-        {
-            get
-            {
-                return item.IdPolaczenia;
-            }
-            set
-            {
-                item.IdPolaczenia = value;
-                OnPropertyChanged(() => IdPolaczenia);
-            }
-        }
-
         public int IdKlasyPokoju
         {
             get
@@ -87,8 +84,22 @@ namespace MVVMFirma.ViewModels
         #region Helpers
         public override void Save()
         {
-            hotelEntities.UdogodnieniaKlasPokoju.Add(item);
-            hotelEntities.SaveChanges();
+            if (item.IdPolaczenia == 0) // brak ID = insert
+            {
+                db.UdogodnieniaKlasPokoju.Add(item);
+            }
+            else // istnieje ID = update
+            {
+                var doEdycji = db.UdogodnieniaKlasPokoju.FirstOrDefault(f => f.IdPolaczenia == item.IdPolaczenia);
+                if (doEdycji != null)
+                {
+                    db.Entry(doEdycji).CurrentValues.SetValues(item);
+                }
+            }
+
+            db.SaveChanges();
+            // automatyczne odświeżenie listy po edycji rekordu
+            Messenger.Default.Send("UdogodnieniaKlasPokojuRefresh");
         }
         #endregion
     }

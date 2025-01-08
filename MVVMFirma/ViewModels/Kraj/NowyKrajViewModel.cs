@@ -1,19 +1,33 @@
-﻿using MVVMFirma.Models.Entities;
-using System;
-using System.Collections.Generic;
+﻿using GalaSoft.MvvmLight.Messaging;
+using MVVMFirma.Models.Entities;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MVVMFirma.ViewModels
 {
     public class NowyKrajViewModel : JedenViewModel<Kraj>
     {
+        #region DB
+        HotelEntities db;
+        #endregion
+
         #region Constructor
         public NowyKrajViewModel()
-            :base("Kraj")
+            : base("Kraj")
         {
+            db = new HotelEntities();
             item = new Kraj();
+        }
+
+        public NowyKrajViewModel(int itemId)
+            : base("Edycja kraju")
+        {
+            db = new HotelEntities();
+            item = db.Kraj.FirstOrDefault(k => k.IdKraju == itemId);
+
+            if (item != null)
+            {
+                Nazwa = item.Nazwa;
+            }
         }
         #endregion
 
@@ -35,8 +49,22 @@ namespace MVVMFirma.ViewModels
         #region Helpers
         public override void Save()
         {
-            hotelEntities.Kraj.Add(item);
-            hotelEntities.SaveChanges();
+            if (item.IdKraju == 0) // brak ID = insert
+            {
+                db.Kraj.Add(item);
+            }
+            else // istnieje ID = update
+            {
+                var doEdycji = db.Kraj.FirstOrDefault(f => f.IdKraju == item.IdKraju);
+                if (doEdycji != null)
+                {
+                    db.Entry(doEdycji).CurrentValues.SetValues(item);
+                }
+            }
+
+            db.SaveChanges();
+            // automatyczne odświeżenie listy po edycji rekordu
+            Messenger.Default.Send("KrajRefresh");
         }
         #endregion
     }

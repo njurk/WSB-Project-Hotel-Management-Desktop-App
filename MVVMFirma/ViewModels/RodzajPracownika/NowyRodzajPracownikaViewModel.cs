@@ -1,19 +1,33 @@
-﻿using MVVMFirma.Models.Entities;
-using System;
-using System.Collections.Generic;
+﻿using GalaSoft.MvvmLight.Messaging;
+using MVVMFirma.Models.Entities;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MVVMFirma.ViewModels
 {
     public class NowyRodzajPracownikaViewModel : JedenViewModel<RodzajPracownika>
     {
+        #region DB
+        HotelEntities db;
+        #endregion
+
         #region Constructor
         public NowyRodzajPracownikaViewModel()
             : base("Rodzaj pracownika")
         {
+            db = new HotelEntities();
             item = new RodzajPracownika();
+        }
+
+        public NowyRodzajPracownikaViewModel(int itemId)
+            : base("Edycja rodzaju pracownika")
+        {
+            db = new HotelEntities();
+            item = db.RodzajPracownika.FirstOrDefault(r => r.IdRodzajuPracownika == itemId);
+
+            if (item != null)
+            {
+                Nazwa = item.Nazwa;
+            }
         }
         #endregion
 
@@ -35,8 +49,22 @@ namespace MVVMFirma.ViewModels
         #region Helpers
         public override void Save()
         {
-            hotelEntities.RodzajPracownika.Add(item);
-            hotelEntities.SaveChanges();
+            if (item.IdRodzajuPracownika == 0) // brak ID = insert
+            {
+                db.RodzajPracownika.Add(item);
+            }
+            else // istnieje ID = update
+            {
+                var doEdycji = db.RodzajPracownika.FirstOrDefault(f => f.IdRodzajuPracownika == item.IdRodzajuPracownika);
+                if (doEdycji != null)
+                {
+                    db.Entry(doEdycji).CurrentValues.SetValues(item);
+                }
+            }
+
+            db.SaveChanges();
+            // automatyczne odświeżenie listy po edycji rekordu
+            Messenger.Default.Send("RodzajPracownikaRefresh");
         }
         #endregion
     }

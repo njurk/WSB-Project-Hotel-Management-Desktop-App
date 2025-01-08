@@ -40,7 +40,7 @@
                         </Grid.RowDefinitions>
                         <ToolBar Grid.Row="0" Height="30" Margin="0,2,0,2">
                             <Button Content="Zapisz i zamknij" Width="100" Height="30" Command="{Binding SaveCommand}"/>
-                            <Button Content="Anuluj" Width="100" Height="30"/>
+                            <Button Content="Anuluj" Width="100" Height="30"  Command="{Binding CloseCommand}"/>
                         </ToolBar>
                         <ContentPresenter Grid.Row="1" Margin="0,5,0,5"/>
                     </Grid>

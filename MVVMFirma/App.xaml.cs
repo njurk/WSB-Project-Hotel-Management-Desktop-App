@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Windows;
+﻿using MVVMFirma.ViewModels;
 using MVVMFirma.Views;
-using MVVMFirma.ViewModels;
 using System.Globalization;
+using System.Windows;
 
 namespace MVVMFirma
 {

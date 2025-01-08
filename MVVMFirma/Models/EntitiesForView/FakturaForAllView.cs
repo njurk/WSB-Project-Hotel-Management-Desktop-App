@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MVVMFirma.Models.EntitiesForView
 {
@@ -13,8 +9,8 @@ namespace MVVMFirma.Models.EntitiesForView
         public int IdRezerwacji { get; set; } // klucz obcy
         public string Opis { get; set; }
         public string KlientNIP { get; set; } // z klucza obcego
-        public string KlientImie {  get; set; } // z klucza obcego
-        public string KlientNazwisko {  get; set; } // z klucza obcego
+        public string KlientImie { get; set; } // z klucza obcego
+        public string KlientNazwisko { get; set; } // z klucza obcego
         public DateTime DataWystawienia { get; set; }
         public DateTime DataSprzedazy { get; set; }
         public decimal KwotaNetto { get; set; }

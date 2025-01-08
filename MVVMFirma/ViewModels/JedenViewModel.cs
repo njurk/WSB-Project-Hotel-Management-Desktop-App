@@ -82,12 +82,12 @@ namespace MVVMFirma.ViewModels
                 }
                 else
                 {
-                    MessageBox.Show("Nie można zapisać - błędnie wypełniony formularz", "Błąd");
+                    MessageBox.Show("Nie można zapisać - błędnie wypełniony formularz!", "Błąd");
                 }
             }
             catch
             {
-                MessageBox.Show("Wystąpił błąd", "Błąd");
+                MessageBox.Show("Wystąpił błąd!", "Błąd");
             }
             
         }
@@ -97,6 +97,7 @@ namespace MVVMFirma.ViewModels
         {
             Save();
             OnRequestClose();
+            MessageBox.Show("Zmiany dokonane pomyślnie.", "Sukces");
         }
         #endregion
     }

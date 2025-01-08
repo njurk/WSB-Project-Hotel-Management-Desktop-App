@@ -1,11 +1,9 @@
-﻿using MVVMFirma.Models.BusinessLogic;
+﻿using GalaSoft.MvvmLight.Messaging;
+using MVVMFirma.Models.BusinessLogic;
 using MVVMFirma.Models.Entities;
 using MVVMFirma.Models.EntitiesForView;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MVVMFirma.ViewModels
 {
@@ -17,11 +15,34 @@ namespace MVVMFirma.ViewModels
 
         #region Constructor
         public NowyPracownikViewModel()
-            :base("Pracownik")
+            : base("Pracownik")
         {
+            db = new HotelEntities();
             item = new Pracownik();
             DataUrodzenia = DateTime.Now;
+        }
+
+        public NowyPracownikViewModel(int itemId)
+            : base("Edycja pracownika")
+        {
             db = new HotelEntities();
+            item = db.Pracownik.FirstOrDefault(p => p.IdPracownika == itemId);
+
+            if (item != null)
+            {
+                IdRodzajuPracownika = item.IdRodzajuPracownika;
+                Imie = item.Imie;
+                Nazwisko = item.Nazwisko;
+                Ulica = item.Ulica;
+                NrDomu = item.NrDomu;
+                NrLokalu = item.NrLokalu;
+                KodPocztowy = item.KodPocztowy;
+                Miasto = item.Miasto;
+                IdKraju = item.IdKraju;
+                DataUrodzenia = item.DataUrodzenia;
+                Email = item.Email;
+                Telefon = item.Telefon;
+            }
         }
         #endregion
 
@@ -202,8 +223,22 @@ namespace MVVMFirma.ViewModels
         #region Helpers
         public override void Save()
         {
-            hotelEntities.Pracownik.Add(item);
-            hotelEntities.SaveChanges();
+            if (item.IdPracownika == 0) // brak ID = insert
+            {
+                db.Pracownik.Add(item);
+            }
+            else // istnieje ID = update
+            {
+                var doEdycji = db.Pracownik.FirstOrDefault(f => f.IdPracownika == item.IdPracownika);
+                if (doEdycji != null)
+                {
+                    db.Entry(doEdycji).CurrentValues.SetValues(item);
+                }
+            }
+
+            db.SaveChanges();
+            // automatyczne odświeżenie listy po edycji rekordu
+            Messenger.Default.Send("PracownikRefresh");
         }
         #endregion
     }

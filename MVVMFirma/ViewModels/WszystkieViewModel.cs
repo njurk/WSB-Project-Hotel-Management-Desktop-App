@@ -113,13 +113,13 @@ namespace MVVMFirma.ViewModels
         }
         public abstract void Delete();
         public abstract void Edit();
-
         public abstract void Load();
         #endregion
 
         #region Constructor
-        public WszystkieViewModel()
+        public WszystkieViewModel(string displayName)
         {
+            base.DisplayName = displayName;
             hotelEntities = new HotelEntities();
         }
         #endregion

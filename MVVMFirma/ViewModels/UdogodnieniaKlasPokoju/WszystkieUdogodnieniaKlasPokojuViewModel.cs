@@ -1,11 +1,8 @@
-﻿using MVVMFirma.Models.Entities;
+﻿using GalaSoft.MvvmLight.Messaging;
 using MVVMFirma.Models.EntitiesForView;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows;
 
 namespace MVVMFirma.ViewModels
 {
@@ -13,23 +10,9 @@ namespace MVVMFirma.ViewModels
     {
         #region Constructor
         public WszystkieUdogodnieniaKlasPokojuViewModel()
+            :base("Udogodnienia klas pokojów")
         {
-            base.DisplayName = "Udogodnienia klas pokojów";
-        }
-
-        public override void Delete()
-        {
-            if (SelectedItem != null)
-            {
-                hotelEntities.UdogodnieniaKlasPokoju.Remove(hotelEntities.UdogodnieniaKlasPokoju.FirstOrDefault(f => f.IdPolaczenia == SelectedItem.IdPolaczenia));
-                hotelEntities.SaveChanges();
-                List.Remove(SelectedItem);
-            }
-        }
-
-        public override void Edit()
-        {
-            throw new NotImplementedException();
+            Messenger.Default.Register<string>(this, OnMessageReceived);
         }
         #endregion
 
@@ -46,6 +29,35 @@ namespace MVVMFirma.ViewModels
                         NazwaUdogodnienia = udogodnieniaKlas.Udogodnienie.Nazwa
                     }
                 );
+        }
+
+        public override void Delete()
+        {
+            MessageBoxResult delete = MessageBox.Show("Czy na pewno chcesz usunąć wybrane udogodnienie klasy pokoju:\n" + SelectedItem.NazwaKlasyPokoju + " - " + SelectedItem.NazwaUdogodnienia, "Usuwanie", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            if (SelectedItem != null && delete == MessageBoxResult.Yes)
+            {
+                hotelEntities.UdogodnieniaKlasPokoju.Remove(hotelEntities.UdogodnieniaKlasPokoju.FirstOrDefault(f => f.IdPolaczenia == SelectedItem.IdPolaczenia));
+                hotelEntities.SaveChanges();
+                List.Remove(SelectedItem);
+            }
+        }
+
+        public override void Edit()
+        {
+            if (SelectedItem != null)
+            {
+                Messenger.Default.Send(DisplayName + "Edit-" + SelectedItem.IdPolaczenia);
+            }
+        }
+
+        // OnMessageReceived obsługuje otrzymaną wiadomość, w tym przypadku odświeżenie widoku
+        private void OnMessageReceived(string message)
+        {
+            if (message == "UdogodnieniaKlasPokojuRefresh")
+            {
+                Load();
+            }
         }
         #endregion
     }

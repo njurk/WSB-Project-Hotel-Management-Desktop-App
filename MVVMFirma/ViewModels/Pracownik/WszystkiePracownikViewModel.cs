@@ -1,10 +1,12 @@
-﻿using MVVMFirma.Models.EntitiesForView;
+﻿using GalaSoft.MvvmLight.Messaging;
+using MVVMFirma.Models.EntitiesForView;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace MVVMFirma.ViewModels
 {
@@ -12,21 +14,9 @@ namespace MVVMFirma.ViewModels
     {
         #region Constructor
         public WszystkiePracownikViewModel()
+            :base("Pracownicy")
         {
-            base.DisplayName = "Pracownicy";
-        }
-        public override void Delete()
-        {
-            if (SelectedItem != null)
-            {
-                hotelEntities.Pracownik.Remove(hotelEntities.Pracownik.FirstOrDefault(f => f.IdPracownika == SelectedItem.IdPracownika));
-                hotelEntities.SaveChanges();
-                List.Remove(SelectedItem);
-            }
-        }
-        public override void Edit()
-        {
-            throw new NotImplementedException();
+            Messenger.Default.Register<string>(this, OnMessageReceived);
         }
         #endregion
 
@@ -54,7 +44,33 @@ namespace MVVMFirma.ViewModels
                     }
                 );
         }
-        #endregion
+        public override void Delete()
+        {
+            MessageBoxResult delete = MessageBox.Show("Czy na pewno chcesz usunąć wybranego pracownika:\n" + SelectedItem.Imie + " " + SelectedItem.Nazwisko, "Usuwanie", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
+            if (SelectedItem != null && delete == MessageBoxResult.Yes)
+            {
+                hotelEntities.Pracownik.Remove(hotelEntities.Pracownik.FirstOrDefault(f => f.IdPracownika == SelectedItem.IdPracownika));
+                hotelEntities.SaveChanges();
+                List.Remove(SelectedItem);
+            }
+        }
+        public override void Edit()
+        {
+            if (SelectedItem != null)
+            {
+                Messenger.Default.Send(DisplayName + "Edit-" + SelectedItem.IdPracownika);
+            }
+        }
+
+        // OnMessageReceived obsługuje otrzymaną wiadomość, w tym przypadku odświeżenie widoku
+        private void OnMessageReceived(string message)
+        {
+            if (message == "PracownikRefresh")
+            {
+                Load();
+            }
+        }
+        #endregion
     }
 }

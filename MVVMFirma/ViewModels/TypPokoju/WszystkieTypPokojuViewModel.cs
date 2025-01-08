@@ -1,25 +1,41 @@
-﻿using MVVMFirma.Models.Entities;
-using System;
-using System.Collections.Generic;
+﻿using GalaSoft.MvvmLight.Messaging;
+using MVVMFirma.Models.Entities;
+using MVVMFirma.Models.EntitiesForView;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows;
 
 namespace MVVMFirma.ViewModels
 {
-    public class WszystkieTypPokojuViewModel : WszystkieViewModel<TypPokoju>
+    public class WszystkieTypPokojuViewModel : WszystkieViewModel<TypPokojuForAllView>
     {
         #region Constructor
         public WszystkieTypPokojuViewModel()
-            : base()
+            : base("Typy pokojów")
         {
-            base.DisplayName = "Typy pokojów";
+            Messenger.Default.Register<string>(this, OnMessageReceived);
         }
+        #endregion
 
+        #region Helpers
+        public override void Load()
+        {
+            List = new ObservableCollection<TypPokojuForAllView>
+            (
+                from typpokoju in hotelEntities.TypPokoju
+                select new TypPokojuForAllView
+                {
+                    IdTypuPokoju = typpokoju.IdTypuPokoju,
+                    Nazwa = typpokoju.Nazwa,
+                    Cena = typpokoju.Cena
+                }
+            );
+        }
         public override void Delete()
         {
-            if (SelectedItem != null)
+            MessageBoxResult delete = MessageBox.Show("Czy na pewno chcesz usunąć wybrany typ pokoju:\n" + SelectedItem.Nazwa, "Usuwanie", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            if (SelectedItem != null && delete == MessageBoxResult.Yes)
             {
                 hotelEntities.TypPokoju.Remove(hotelEntities.TypPokoju.FirstOrDefault(f => f.IdTypuPokoju == SelectedItem.IdTypuPokoju));
                 hotelEntities.SaveChanges();
@@ -29,17 +45,19 @@ namespace MVVMFirma.ViewModels
 
         public override void Edit()
         {
-            throw new NotImplementedException();
+            if (SelectedItem != null)
+            {
+                Messenger.Default.Send(DisplayName + "Edit-" + SelectedItem.IdTypuPokoju);
+            }
         }
-        #endregion
 
-        #region Helpers
-        public override void Load()
+        // OnMessageReceived obsługuje otrzymaną wiadomość, w tym przypadku odświeżenie widoku
+        private void OnMessageReceived(string message)
         {
-            List = new ObservableCollection<TypPokoju>
-            (
-                hotelEntities.TypPokoju.ToList()
-            );
+            if (message == "TypPokojuRefresh")
+            {
+                Load();
+            }
         }
         #endregion
     }

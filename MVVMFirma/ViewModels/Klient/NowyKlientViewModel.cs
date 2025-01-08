@@ -1,11 +1,8 @@
-﻿using MVVMFirma.Models.BusinessLogic;
+﻿using GalaSoft.MvvmLight.Messaging;
+using MVVMFirma.Models.BusinessLogic;
 using MVVMFirma.Models.Entities;
 using MVVMFirma.Models.EntitiesForView;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MVVMFirma.ViewModels
 {
@@ -19,8 +16,30 @@ namespace MVVMFirma.ViewModels
         public NowyKlientViewModel()
             : base("Klient")
         {
-            item = new Klient();
             db = new HotelEntities();
+            item = new Klient();
+        }
+
+        public NowyKlientViewModel(int itemId)
+            : base("Edycja klienta")
+        {
+            db = new HotelEntities();
+            item = db.Klient.FirstOrDefault(k => k.IdKlienta == itemId);
+
+            if (item != null)
+            {
+                Imie = item.Imie;
+                Nazwisko = item.Nazwisko;
+                Ulica = item.Ulica;
+                NrDomu = item.NrDomu;
+                NrLokalu = item.NrLokalu;
+                KodPocztowy = item.KodPocztowy;
+                Miasto = item.Miasto;
+                IdKraju = item.IdKraju;
+                Email = item.Email;
+                Telefon = item.Telefon;
+                NIP = item.NIP;
+            }
         }
         #endregion
 
@@ -180,8 +199,22 @@ namespace MVVMFirma.ViewModels
         #region Helpers
         public override void Save()
         {
-            hotelEntities.Klient.Add(item);
-            hotelEntities.SaveChanges();
+            if (item.IdKlienta == 0) // brak ID = insert
+            {
+                db.Klient.Add(item);
+            }
+            else // istnieje ID = update
+            {
+                var doEdycji = db.Klient.FirstOrDefault(f => f.IdKlienta == item.IdKlienta);
+                if (doEdycji != null)
+                {
+                    db.Entry(doEdycji).CurrentValues.SetValues(item);
+                }
+            }
+
+            db.SaveChanges();
+            // automatyczne odświeżenie listy po edycji rekordu
+            Messenger.Default.Send("KlientRefresh");
         }
         #endregion
     }

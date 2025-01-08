@@ -1,4 +1,5 @@
-﻿using MVVMFirma.Helper;
+﻿using GalaSoft.MvvmLight.Messaging;
+using MVVMFirma.Helper;
 using MVVMFirma.Models.BusinessLogic;
 using MVVMFirma.Models.Entities;
 using MVVMFirma.Models.EntitiesForView;
@@ -29,19 +30,30 @@ namespace MVVMFirma.ViewModels
             DataSprzedazy = DateTime.Now;
             TerminPlatnosci = DateTime.Now.AddDays(14);
             NrFaktury = GenerujNumerFaktury();
+            IdVat = DomyslnyVAT("23");
 
-            _selectedRezerwacja = new Rezerwacja();
+            SelectedRezerwacja = new Rezerwacja();
+        }
 
-            string szukanyVAT = "23";
-            var domyslnyVAT = VATItems.FirstOrDefault(v => v.Value == szukanyVAT);
+        public NowyFakturaViewModel(int itemId)
+            : base("Edycja faktury")
+        {
+            db = new HotelEntities();
+            item = db.Faktura.FirstOrDefault(f => f.IdFaktury == itemId);
 
-            if (domyslnyVAT != null)
+            if (item != null)
             {
-                IdVat = domyslnyVAT.Key;
-            }
-            else
-            {
-                IdVat = -1;
+                NrFaktury = item.NrFaktury;
+                IdRezerwacji = item.IdRezerwacji;
+                DataWystawienia = item.DataWystawienia;
+                DataSprzedazy = item.DataSprzedazy;
+                KwotaBrutto = item.KwotaBrutto;
+                IdVat = item.IdVat;
+                KwotaNetto = item.KwotaNetto;
+                TerminPlatnosci = item.TerminPlatnosci;
+                Opis = item.Opis;
+
+                SelectedRezerwacja = db.Rezerwacja.FirstOrDefault(r => r.IdRezerwacji == item.IdRezerwacji);
             }
         }
         #endregion
@@ -72,8 +84,8 @@ namespace MVVMFirma.ViewModels
                 {
                     item.IdRezerwacji = value;
                     OnPropertyChanged(() => IdRezerwacji);
-                    // iteracja przez tabelę z BD w poszukiwaniu odpowiedniego
-                    // IdRezerwacji i przekazanie go do SelectedRezerwacja
+                    // wybrana rezerwacja przekazywana do metody aby odczytać i wstawić
+                    // jej dane do pól - usprawnienie procesu dodawania
                     SelectedRezerwacja = db.Rezerwacja.FirstOrDefault(r => r.IdRezerwacji == value);
                 }
             }
@@ -131,6 +143,8 @@ namespace MVVMFirma.ViewModels
                     item.IdVat = value;
                     OnPropertyChanged(() => IdVat);
 
+                    // konwersja wybranej stawki vat na decimal jest potrzebna
+                    // dla metody ObliczNetto
                     var vatItem = VATItems.FirstOrDefault(v => v.Key == IdVat);
                     _stawkaVat = vatItem != null ? Convert.ToDecimal(vatItem.Value) : 0;
                 }
@@ -176,8 +190,9 @@ namespace MVVMFirma.ViewModels
         }
 
         private Rezerwacja _selectedRezerwacja;
-        // ta właściwość przechowuje wybraną rezerwację i ustawia powiązane z nią informacje 
-        // do odpowiednich pól, wywołując onpropertychanged
+        // ta właściwość przechowuje wybraną rezerwację
+        // aby ustawić powiązane z nią informacje w polach na widoku
+        // co usprawni i przyspieszy użytkownikowi proces dodawania faktury
         public Rezerwacja SelectedRezerwacja
         {
             get { return _selectedRezerwacja; }
@@ -237,16 +252,49 @@ namespace MVVMFirma.ViewModels
         {
             get
             {
-                return db.Rezerwacja
-                    .Where(r => !db.Faktura.Any(f => f.IdRezerwacji == r.IdRezerwacji))
-                    .Select(r => new KeyAndValue
+                // sprawdzenie czy jesteśmy w edycji
+                if (item.IdFaktury > 0)
+                {
+                    // dodanie do combobox numeru rezerwacji z faktury która jest aktualnie edytowana
+                    var rezerwacja = db.Rezerwacja
+                                       .FirstOrDefault(r => r.IdRezerwacji == item.IdRezerwacji);
+
+                    // dodanie do combobox wszystkich rezerwacji bez faktury
+                    var rezerwacjeBezFaktury = db.Rezerwacja
+                        .Where(r => !db.Faktura.Any(f => f.IdRezerwacji == r.IdRezerwacji))
+                        .Select(r => new KeyAndValue
+                        {
+                            Key = r.IdRezerwacji,
+                            Value = r.NrRezerwacji
+                        }).ToList();
+
+                    if (rezerwacja != null)
                     {
-                        Key = r.IdRezerwacji,
-                        Value = r.NrRezerwacji
-                    }).ToList();
+                        var selectedRezerwacja = new KeyAndValue
+                        {
+                            Key = rezerwacja.IdRezerwacji,
+                            Value = rezerwacja.NrRezerwacji
+                        };
+                        // numer rezerwacji z faktury aktualnie edytowanej jako pierwszy na liście
+                        rezerwacjeBezFaktury.Insert(0, selectedRezerwacja);
+                    }
+
+                    return rezerwacjeBezFaktury;
+                }
+                else
+                {
+                    // jesteśmy w dodawaniu nowej faktury
+                    // w combobox znajdą się do wyboru tylko rezerwacje bez faktury
+                    return db.Rezerwacja
+                        .Where(r => !db.Faktura.Any(f => f.IdRezerwacji == r.IdRezerwacji))
+                        .Select(r => new KeyAndValue
+                        {
+                            Key = r.IdRezerwacji,
+                            Value = r.NrRezerwacji
+                        }).ToList();
+                }
             }
         }
-
 
         public IQueryable<KeyAndValue> VATItems
         {
@@ -290,6 +338,19 @@ namespace MVVMFirma.ViewModels
         #endregion
 
         #region Methods
+        private int DomyslnyVAT(string szukanyVAT)
+        {
+            var domyslnyVAT = VATItems.FirstOrDefault(v => v.Value == szukanyVAT);
+
+            if (domyslnyVAT != null)
+            {
+                return domyslnyVAT.Key;
+            }
+            else
+            {
+                return -1;
+            }
+        }
 
         private BaseCommand _obliczNettoCommand;
 
@@ -320,8 +381,7 @@ namespace MVVMFirma.ViewModels
         {
             // pobranie ostatniej faktury z BD do ustalenia następnego numeru
             var ostatniaFaktura = db.Faktura
-                                     .OrderByDescending(f => f.DataWystawienia)
-                                     .ThenByDescending(f => f.IdFaktury) // sortowanie po ID jeśli daty są takie same
+                                     .OrderByDescending(f => f.IdFaktury)
                                      .Select(f => f.NrFaktury)
                                      .FirstOrDefault();
 
@@ -362,7 +422,6 @@ namespace MVVMFirma.ViewModels
             {
                 numerFaktury = "1";
             }
-            // format RRRR-MM-FX
             return $"{DateTime.Now:yyyy-MM}-F{numerFaktury}";
         }
 
@@ -371,8 +430,22 @@ namespace MVVMFirma.ViewModels
         #region Helpers
         public override void Save()
         {
-            hotelEntities.Faktura.Add(item);
-            hotelEntities.SaveChanges();
+            if (item.IdFaktury == 0) // brak ID = insert
+            {
+                db.Faktura.Add(item);
+            }
+            else // istnieje ID = update
+            {
+                var doEdycji = db.Faktura.FirstOrDefault(f => f.IdFaktury == item.IdFaktury);
+                if (doEdycji != null)
+                {
+                    db.Entry(doEdycji).CurrentValues.SetValues(item);
+                }
+            }
+
+            db.SaveChanges();
+            // automatyczne odświeżenie listy po edycji rekordu
+            Messenger.Default.Send("FakturaRefresh");
         }
         #endregion
     }

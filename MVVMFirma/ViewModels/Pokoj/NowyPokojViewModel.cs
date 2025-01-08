@@ -1,11 +1,8 @@
-﻿using MVVMFirma.Models.BusinessLogic;
+﻿using GalaSoft.MvvmLight.Messaging;
+using MVVMFirma.Models.BusinessLogic;
 using MVVMFirma.Models.Entities;
 using MVVMFirma.Models.EntitiesForView;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MVVMFirma.ViewModels
 {
@@ -17,11 +14,28 @@ namespace MVVMFirma.ViewModels
 
         #region Constructor
         public NowyPokojViewModel()
-            :base("Pokój")
+            : base("Pokój")
         {
-            item = new Pokoj();
             db = new HotelEntities();
+            item = new Pokoj();
         }
+
+        public NowyPokojViewModel(int itemId)
+            : base("Edycja pokoju")
+        {
+            db = new HotelEntities();
+            item = db.Pokoj.FirstOrDefault(p => p.IdPokoju == itemId);
+
+            if (item != null)
+            {
+                IdPietra = item.IdPietra;
+                NrPokoju = item.NrPokoju;
+                IdTypuPokoju = item.IdTypuPokoju;
+                IdKlasyPokoju = item.IdKlasyPokoju;
+                IdStatusuPokoju = item.IdStatusuPokoju;
+            }
+        }
+
         #endregion
 
         #region Properties
@@ -126,8 +140,22 @@ namespace MVVMFirma.ViewModels
         #region Helpers
         public override void Save()
         {
-            hotelEntities.Pokoj.Add(item);
-            hotelEntities.SaveChanges();
+            if (item.IdPokoju == 0) // brak ID = insert
+            {
+                db.Pokoj.Add(item);
+            }
+            else // istnieje ID = update
+            {
+                var doEdycji = db.Pokoj.FirstOrDefault(f => f.IdPokoju == item.IdPokoju);
+                if (doEdycji != null)
+                {
+                    db.Entry(doEdycji).CurrentValues.SetValues(item);
+                }
+            }
+
+            db.SaveChanges();
+            // automatyczne odświeżenie listy po edycji rekordu
+            Messenger.Default.Send("PokojRefresh");
         }
         #endregion
     }
