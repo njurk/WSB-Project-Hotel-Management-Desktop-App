@@ -27,6 +27,7 @@ namespace MVVMFirma.ViewModels
             if (item != null)
             {
                 Nazwa = item.Nazwa;
+                MaxLiczbaOsob = item.MaxLiczbaOsob;
             }
         }
 
@@ -43,6 +44,19 @@ namespace MVVMFirma.ViewModels
             {
                 item.Nazwa = value;
                 OnPropertyChanged(() => Nazwa);
+            }
+        }
+
+        public string MaxLiczbaOsob
+        {
+            get
+            {
+                return item.MaxLiczbaOsob;
+            }
+            set
+            {
+                item.MaxLiczbaOsob = value;
+                OnPropertyChanged(() => MaxLiczbaOsob);
             }
         }
         #endregion

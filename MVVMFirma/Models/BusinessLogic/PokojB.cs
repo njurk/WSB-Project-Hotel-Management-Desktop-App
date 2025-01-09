@@ -20,7 +20,7 @@ namespace MVVMFirma.Models.BusinessLogic
                     select new KeyAndValue
                     {
                         Key = pokoj.IdPokoju,
-                        Value = pokoj.NrPokoju
+                        Value = pokoj.NrPokoju + " - " + pokoj.TypPokoju.Nazwa + " " + pokoj.KlasaPokoju.Nazwa
                     }
                 ).ToList().AsQueryable();
         }

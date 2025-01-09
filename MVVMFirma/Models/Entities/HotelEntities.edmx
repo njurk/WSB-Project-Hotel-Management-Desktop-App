@@ -156,6 +156,7 @@
           </Key>
           <Property Name="IdTypuPokoju" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Nazwa" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="MaxLiczbaOsob" Type="nvarchar" MaxLength="5" Nullable="false" />
         </EntityType>
         <EntityType Name="UdogodnieniaKlasPokoju">
           <Key>
@@ -662,6 +663,7 @@
           </Key>
           <Property Name="IdTypuPokoju" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Nazwa" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MaxLiczbaOsob" Type="String" MaxLength="5" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Cennik" Relationship="Self.FK_Cennik_TypPokoju" FromRole="TypPokoju" ToRole="Cennik" />
           <NavigationProperty Name="Pokoj" Relationship="Self.FK_Pokoj_TypPokoju" FromRole="TypPokoju" ToRole="Pokoj" />
         </EntityType>
@@ -1161,6 +1163,7 @@
               <MappingFragment StoreEntitySet="TypPokoju">
                 <ScalarProperty Name="IdTypuPokoju" ColumnName="IdTypuPokoju" />
                 <ScalarProperty Name="Nazwa" ColumnName="Nazwa" />
+                <ScalarProperty Name="MaxLiczbaOsob" ColumnName="MaxLiczbaOsob" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

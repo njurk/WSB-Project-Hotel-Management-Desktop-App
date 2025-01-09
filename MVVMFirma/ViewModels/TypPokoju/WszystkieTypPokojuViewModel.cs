@@ -26,7 +26,8 @@ namespace MVVMFirma.ViewModels
                 select new TypPokojuForAllView
                 {
                     IdTypuPokoju = typpokoju.IdTypuPokoju,
-                    Nazwa = typpokoju.Nazwa
+                    Nazwa = typpokoju.Nazwa,
+                    MaxLiczbaOsob = typpokoju.MaxLiczbaOsob
                 }
             );
         }

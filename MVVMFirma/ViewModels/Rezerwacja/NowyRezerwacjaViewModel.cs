@@ -256,7 +256,7 @@ namespace MVVMFirma.ViewModels
         {
             get
             {
-                var dostępnePokoje = db.Pokoj.Where(p =>
+                var dostepnePokoje = db.Pokoj.Where(p =>
                     !db.Rezerwacja.Any(r =>
                         r.IdPokoju == p.IdPokoju &&
                         r.DataZameldowania < DataWymeldowania &&
@@ -264,23 +264,23 @@ namespace MVVMFirma.ViewModels
                     .Select(p => new KeyAndValue
                     {
                         Key = p.IdPokoju,
-                        Value = p.NrPokoju
+                        Value = p.NrPokoju + " - " + p.TypPokoju.Nazwa + " " + p.KlasaPokoju.Nazwa
                     }).ToList();
 
                 if (item.IdRezerwacji != 0)  // tryb edycji - pobranie pokoju do comboboxa
                 {
-                    var currentPokoj = db.Rezerwacja.FirstOrDefault(r => r.IdRezerwacji == item.IdRezerwacji)?.IdPokoju;
-                    if (currentPokoj.HasValue)
+                    var aktualnyPokoj = db.Rezerwacja.FirstOrDefault(r => r.IdRezerwacji == item.IdRezerwacji)?.IdPokoju;
+                    if (aktualnyPokoj.HasValue)
                     {
-                        var pokoj = db.Pokoj.FirstOrDefault(p => p.IdPokoju == currentPokoj.Value);
+                        var pokoj = db.Pokoj.FirstOrDefault(p => p.IdPokoju == aktualnyPokoj.Value);
                         if (pokoj != null)
                         {
-                            dostępnePokoje.Insert(0, new KeyAndValue { Key = pokoj.IdPokoju, Value = pokoj.NrPokoju });
+                            dostepnePokoje.Insert(0, new KeyAndValue { Key = pokoj.IdPokoju, Value = pokoj.NrPokoju + " - " + pokoj.TypPokoju.Nazwa + " " + pokoj.KlasaPokoju.Nazwa });
                         }
                     }
                 }
 
-                return new ObservableCollection<KeyAndValue>(dostępnePokoje);
+                return new ObservableCollection<KeyAndValue>(dostepnePokoje);
             }
         }
 
@@ -309,7 +309,6 @@ namespace MVVMFirma.ViewModels
                 return new ZnizkaB(db).GetZnizkaKeyAndValueItems();
             }
         }
-
         protected override string ValidateProperty(string propertyName)
         {
             switch (propertyName)
@@ -318,7 +317,9 @@ namespace MVVMFirma.ViewModels
                     return IdKlienta <= 0 ? "Wybierz klienta" : string.Empty;
 
                 case nameof(IdPokoju):
-                    return IdPokoju <= 0 ? "Wybierz pokój" : string.Empty;
+                case nameof(LiczbaDoroslych):
+                case nameof(LiczbaDzieci):
+                    return ValidateMaxLiczbaOsob();
 
                 case nameof(DataZameldowania):
                     return DataZameldowania > DataWymeldowania ? "Data zameldowania nie może być późniejsza od daty wymeldowania" : string.Empty;
@@ -329,20 +330,31 @@ namespace MVVMFirma.ViewModels
                 case nameof(DataRezerwacji):
                     return DataRezerwacji > DataZameldowania ? "Data rezerwacji nie może być późniejsza niż data zameldowania" : string.Empty;
 
-                case nameof(LiczbaDoroslych):
-                    if (string.IsNullOrWhiteSpace(LiczbaDoroslych) || !int.TryParse(LiczbaDoroslych, out int liczbaDoroslych) || liczbaDoroslych <= 0)
-                    {
-                        return "Wprowadź liczbę dorosłych";
-                    }
-                    return string.Empty;
-
-                case nameof(LiczbaDzieci):  
-                    return !Helper.StringValidator.ContainsOnlyNumbers(LiczbaDzieci) ? "Wprowadź liczbę dzieci" : string.Empty;
-                
                 default:
                     return string.Empty;
             }
         }
+
+        private string ValidateMaxLiczbaOsob()
+        {
+            if (!int.TryParse(LiczbaDoroslych, out int dorosli) || dorosli <= 0)
+                return "Wprowadź poprawną liczbę dorosłych";
+
+            if (!int.TryParse(LiczbaDzieci, out int dzieci) || dzieci < 0)
+                return "Wprowadź poprawną liczbę dzieci";
+
+            if (IdPokoju > 0)
+            {
+                var pokoj = db.Pokoj.FirstOrDefault(p => p.IdPokoju == IdPokoju);
+                if (pokoj != null && dorosli + dzieci > Convert.ToInt32(pokoj.TypPokoju.MaxLiczbaOsob))
+                {
+                    return $"Łączna liczba osób ({dorosli + dzieci}) przekracza maksymalny limit, wybrany pokój jest " + pokoj.TypPokoju.Nazwa;
+                }
+            }
+
+            return string.Empty;
+        }
+
         #endregion
 
         #region Methods

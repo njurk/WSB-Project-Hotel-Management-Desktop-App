@@ -23,6 +23,7 @@ namespace MVVMFirma.Models.Entities
     
         public int IdTypuPokoju { get; set; }
         public string Nazwa { get; set; }
+        public string MaxLiczbaOsob { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Cennik> Cennik { get; set; }

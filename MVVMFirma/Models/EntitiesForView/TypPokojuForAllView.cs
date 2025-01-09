@@ -10,5 +10,6 @@ namespace MVVMFirma.Models.EntitiesForView
     {
         public int IdTypuPokoju { get; set; }
         public string Nazwa { get; set; }
+        public string MaxLiczbaOsob {  get; set; }
     }
 }
