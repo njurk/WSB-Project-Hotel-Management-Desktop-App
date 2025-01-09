@@ -24,12 +24,8 @@ namespace MVVMFirma.Models.Entities
         public string NrPokoju { get; set; }
         public int IdTypuPokoju { get; set; }
         public int IdKlasyPokoju { get; set; }
-        public int IdStatusuPokoju { get; set; }
-        public int IdPietra { get; set; }
     
         public virtual KlasaPokoju KlasaPokoju { get; set; }
-        public virtual Pietro Pietro { get; set; }
-        public virtual StatusPokoju StatusPokoju { get; set; }
         public virtual TypPokoju TypPokoju { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Rezerwacja> Rezerwacja { get; set; }

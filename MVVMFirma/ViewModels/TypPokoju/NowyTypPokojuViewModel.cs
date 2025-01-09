@@ -27,7 +27,6 @@ namespace MVVMFirma.ViewModels
             if (item != null)
             {
                 Nazwa = item.Nazwa;
-                Cena = item.Cena;
             }
         }
 
@@ -44,19 +43,6 @@ namespace MVVMFirma.ViewModels
             {
                 item.Nazwa = value;
                 OnPropertyChanged(() => Nazwa);
-            }
-        }
-
-        public decimal Cena
-        {
-            get
-            {
-                return item.Cena;
-            }
-            set
-            {
-                item.Cena = value;
-                OnPropertyChanged(() => Cena);
             }
         }
         #endregion

@@ -17,13 +17,15 @@ namespace MVVMFirma.Models.Entities
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public TypPokoju()
         {
+            this.Cennik = new HashSet<Cennik>();
             this.Pokoj = new HashSet<Pokoj>();
         }
     
         public int IdTypuPokoju { get; set; }
         public string Nazwa { get; set; }
-        public decimal Cena { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Cennik> Cennik { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Pokoj> Pokoj { get; set; }
     }

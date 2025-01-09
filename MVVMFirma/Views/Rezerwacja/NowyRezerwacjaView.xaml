@@ -10,7 +10,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="150"/>
             <ColumnDefinition Width="200"/>
-            <ColumnDefinition Width="50"/>
+            <ColumnDefinition Width="100"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
@@ -35,37 +35,33 @@
         <Label Grid.Column="0" Grid.Row="2" Margin="0,8,0,8" Content="Klient"/>
         <ComboBox Grid.Column="1" Grid.Row="2" Margin="0,8,0,8" ItemsSource="{Binding KlientItems}" DisplayMemberPath="Value" SelectedValuePath="Key" SelectedValue="{Binding Path=IdKlienta, Mode=TwoWay, ValidatesOnDataErrors=True}"/>
 
-        <Label Grid.Column="0" Grid.Row="3" Margin="0,8,0,8" Content="Pokój"/>
-        <ComboBox Grid.Column="1" Grid.Row="3" Margin="0,8,0,8" ItemsSource="{Binding PokojItems}" DisplayMemberPath="Value" SelectedValuePath="Key" SelectedValue="{Binding Path=IdPokoju, Mode=TwoWay, ValidatesOnDataErrors=True}"/>
+        <Label Grid.Column="0" Grid.Row="3" Margin="0,8,0,8" Content="Liczba dorosłych"/>
+        <TextBox Grid.Column="1" Grid.Row="3" Margin="0,8,0,8" Text="{Binding Path=LiczbaDoroslych, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
 
-        <Label Grid.Column="0" Grid.Row="4" Margin="0,8,0,8" Content="Liczba dorosłych"/>
-        <TextBox Grid.Column="1" Grid.Row="4" Margin="0,8,0,8" Text="{Binding Path=LiczbaDoroslych, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+        <Label Grid.Column="0" Grid.Row="4" Margin="0,8,0,8" Content="Liczba dzieci"/>
+        <TextBox Grid.Column="1" Grid.Row="4" Margin="0,8,0,8" Text="{Binding Path=LiczbaDzieci, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
 
-        <Label Grid.Column="0" Grid.Row="5" Margin="0,8,0,8" Content="Liczba dzieci"/>
-        <TextBox Grid.Column="1" Grid.Row="5" Margin="0,8,0,8" Text="{Binding Path=LiczbaDzieci, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
-
-        <Label Grid.Column="0" Grid.Row="6" Margin="0,8,0,8" Content="Zwierzęta"/>
-        <CheckBox VerticalAlignment="Center" Grid.Column="1" Grid.Row="6" Margin="0,8,0,8" IsChecked="{Binding Path=CzyZwierzeta, UpdateSourceTrigger=PropertyChanged}"/>
+        <Label Grid.Column="0" Grid.Row="5" Margin="0,8,0,8" Content="Zwierzęta"/>
+        <CheckBox VerticalAlignment="Center" Grid.Column="1" Grid.Row="5" Margin="0,8,0,8" IsChecked="{Binding Path=CzyZwierzeta, UpdateSourceTrigger=PropertyChanged}"/>
         
-        <Label Grid.Column="0" Grid.Row="7" Margin="0,8,0,8" Content="Data zameldowania"/>
-        <DatePicker Grid.Column="1" Grid.Row="7" Margin="0,8,0,8" SelectedDate="{Binding DataZameldowania, ValidatesOnDataErrors=True}"/>
+        <Label Grid.Column="0" Grid.Row="6" Margin="0,8,0,8" Content="Data zameldowania"/>
+        <DatePicker Grid.Column="1" Grid.Row="6" Margin="0,8,0,8" SelectedDate="{Binding DataZameldowania, ValidatesOnDataErrors=True}"/>
 
-        <Label Grid.Column="0" Grid.Row="8" Margin="0,8,0,8" Content="Data wymeldowania"/>
-        <DatePicker Grid.Column="1" Grid.Row="8" Margin="0,8,0,8" SelectedDate="{Binding DataWymeldowania, ValidatesOnDataErrors=True}"/>
+        <Label Grid.Column="0" Grid.Row="7" Margin="0,8,0,8" Content="Data wymeldowania"/>
+        <DatePicker Grid.Column="1" Grid.Row="7" Margin="0,8,0,8" SelectedDate="{Binding DataWymeldowania, ValidatesOnDataErrors=True}"/>
+
+        <Label Grid.Column="0" Grid.Row="8" Margin="0,8,0,8" Content="Pokój"/>
+        <ComboBox Grid.Column="1" Grid.Row="8" Margin="0,8,0,8" ItemsSource="{Binding PokojItems}" DisplayMemberPath="Value" SelectedValuePath="Key" SelectedValue="{Binding Path=IdPokoju, Mode=TwoWay, ValidatesOnDataErrors=True}" />
 
         <Label Grid.Column="0" Grid.Row="9" Margin="0,8,0,8" Content="Uwagi"/>
         <TextBox Grid.Column="1" Grid.Row="9" Margin="0,8,0,8" Text="{Binding Path=Uwagi, UpdateSourceTrigger=PropertyChanged}"/>
 
         <Label Grid.Column="0" Grid.Row="10" Margin="0,8,0,8" Content="Zniżka"/>
-        <ComboBox Grid.Column="1" Grid.Row="10" Margin="0,8,0,8" 
-          ItemsSource="{Binding ZnizkaItems}" 
-          DisplayMemberPath="Value" 
-          SelectedValuePath="Key" 
-          SelectedValue="{Binding Path=IdZnizki, Mode=TwoWay, ValidatesOnDataErrors=True}" 
-          IsEnabled="{Binding CzyZnizka}" />
+        <ComboBox Grid.Column="1" Grid.Row="10" Margin="0,8,0,8" ItemsSource="{Binding ZnizkaItems}" DisplayMemberPath="Value" SelectedValuePath="Key" SelectedValue="{Binding Path=IdZnizki, Mode=TwoWay, ValidatesOnDataErrors=True}" IsEnabled="{Binding CzyZnizka}" />
         <CheckBox VerticalAlignment="Center" Grid.Column="2" Grid.Row="10" Margin="12,8,0,8" IsChecked="{Binding Path=CzyZnizka, UpdateSourceTrigger=PropertyChanged}"/>
         
-        <Label Grid.Column="0" Grid.Row="11" Margin="0,8,0,8" Content="Cena"/>
-        <TextBlock Grid.Column="1" Grid.Row="11" Margin="0,8,0,8" Text="{Binding Path=Cena, UpdateSourceTrigger=PropertyChanged}"/>
+        <Label Grid.Column="0" Grid.Row="11" Margin="0,8,0,8" Content="Kwota"/>
+        <TextBlock Grid.Column="1" Grid.Row="11" Margin="0,12,0,12" Text="{Binding Path=Kwota, StringFormat={}{0:C}}"/>
+        <Button Grid.Column="2" Grid.Row="11" Margin="12,8,0,8" Content="Oblicz cenę" Command="{Binding ObliczKwoteCommand}"/>
     </Grid>
 </local:JedenViewBase>

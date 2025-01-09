@@ -10,6 +10,5 @@ namespace MVVMFirma.Models.EntitiesForView
     {
         public int IdKlasyPokoju { get; set; }
         public string Nazwa { get; set; }
-        public decimal Doplata { get; set; }
     }
 }

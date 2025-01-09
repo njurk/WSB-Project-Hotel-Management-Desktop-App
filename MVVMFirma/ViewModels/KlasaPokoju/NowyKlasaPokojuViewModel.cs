@@ -27,7 +27,6 @@ namespace MVVMFirma.ViewModels
             if (item != null)
             {
                 Nazwa = item.Nazwa;
-                Doplata = item.Doplata;
             }
         }
         #endregion
@@ -43,19 +42,6 @@ namespace MVVMFirma.ViewModels
             {
                 item.Nazwa = value;
                 OnPropertyChanged(() => Nazwa);
-            }
-        }
-
-        public decimal Doplata
-        {
-            get
-            {
-                return item.Doplata;
-            }
-            set
-            {
-                item.Doplata = value;
-                OnPropertyChanged(() => Doplata);
             }
         }
         #endregion

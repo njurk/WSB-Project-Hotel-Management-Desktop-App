@@ -39,6 +39,14 @@ namespace MVVMFirma.ViewModels
             return new List<CommandViewModel>
             {
                 /*new CommandViewModel(
+                    "Cennik",
+                    new BaseCommand(() => this.CreateView(new NowyCennikViewModel()))),*/
+
+                new CommandViewModel(
+                    "Cenniki",
+                    new BaseCommand(() => this.ShowAllView(new WszystkieCennikViewModel()))),
+
+                /*new CommandViewModel(
                     "Faktura",
                     new BaseCommand(() => this.CreateView(new NowyFakturaViewModel()))),*/
 
@@ -69,14 +77,6 @@ namespace MVVMFirma.ViewModels
                 new CommandViewModel(
                     "Kraje",
                     new BaseCommand(() => this.ShowAllView(new WszystkieKrajViewModel()))),
-
-                /*new CommandViewModel(
-                    "Piętro",
-                    new BaseCommand(() => this.CreateView(new NowyPietroViewModel()))),*/
-
-                new CommandViewModel(
-                    "Piętra",
-                    new BaseCommand(() => this.ShowAllView(new WszystkiePietroViewModel()))),
 
                 /*new CommandViewModel(
                     "Płatność",
@@ -133,14 +133,6 @@ namespace MVVMFirma.ViewModels
                 new CommandViewModel(
                     "Statusy płatności",
                     new BaseCommand(() => this.ShowAllView(new WszystkieStatusPlatnosciViewModel()))),
-
-                /*new CommandViewModel(
-                    "Status pokoju",
-                    new BaseCommand(() => this.CreateView(new NowyStatusPokojuViewModel()))),*/
-
-                new CommandViewModel(
-                    "Statusy pokojów",
-                    new BaseCommand(() => this.ShowAllView(new WszystkieStatusPokojuViewModel()))),
 
                 /*new CommandViewModel(
                     "Typ pokoju",
@@ -255,14 +247,14 @@ namespace MVVMFirma.ViewModels
         {
             if (name.EndsWith("Add"))
             {
+                if (name == "CennikiAdd")
+                    CreateView(new NowyCennikViewModel());
                 if (name == "FakturyAdd")
                     CreateView(new NowyFakturaViewModel());
                 if (name == "Klasy pokojówAdd")
                     CreateView(new NowyKlasaPokojuViewModel());
                 if (name == "KlienciAdd")
                     CreateView(new NowyKlientViewModel());
-                if (name == "PiętraAdd")
-                    CreateView(new NowyPietroViewModel());
                 if (name == "PłatnościAdd")
                     CreateView(new NowyPlatnoscViewModel());
                 if (name == "PokojeAdd")
@@ -277,8 +269,6 @@ namespace MVVMFirma.ViewModels
                     CreateView(new NowySposobPlatnosciViewModel());
                 if (name == "Statusy płatnościAdd")
                     CreateView(new NowyStatusPlatnosciViewModel());
-                if (name == "Statusy pokojówAdd")
-                    CreateView(new NowyStatusPokojuViewModel());
                 if (name == "Typy pokojówAdd")
                     CreateView(new NowyTypPokojuViewModel());
                 if (name == "Udogodnienia klas pokojówAdd")
@@ -300,14 +290,14 @@ namespace MVVMFirma.ViewModels
 
                 if (int.TryParse(splitMessage[1], out int itemId))
                 {
+                    if (splitName == "CennikiEdit")
+                        EditView(new NowyCennikViewModel(itemId));
                     if (splitName == "FakturyEdit")
                         EditView(new NowyFakturaViewModel(itemId));
                     if (splitName == "Klasy pokojówEdit")
                         EditView(new NowyKlasaPokojuViewModel(itemId));
                     if (splitName == "KlienciEdit")
                         EditView(new NowyKlientViewModel(itemId));
-                    if (splitName == "PiętraEdit")
-                        EditView(new NowyPietroViewModel(itemId));
                     if (splitName == "PłatnościEdit")
                         EditView(new NowyPlatnoscViewModel(itemId));
                     if (splitName == "PokojeEdit")
@@ -322,8 +312,6 @@ namespace MVVMFirma.ViewModels
                         EditView(new NowySposobPlatnosciViewModel(itemId));
                     if (splitName == "Statusy płatnościEdit")
                         EditView(new NowyStatusPlatnosciViewModel(itemId));
-                    if (splitName == "Statusy pokojówEdit")
-                        EditView(new NowyStatusPokojuViewModel(itemId));
                     if (splitName == "Typy pokojówEdit")
                         EditView(new NowyTypPokojuViewModel(itemId));
                     if (splitName == "Udogodnienia klas pokojówEdit")

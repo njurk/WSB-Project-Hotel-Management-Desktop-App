@@ -12,18 +12,16 @@ namespace MVVMFirma.Models.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class Pietro
+    public partial class Cennik
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Pietro()
-        {
-            this.Pokoj = new HashSet<Pokoj>();
-        }
+        public int IdCennika { get; set; }
+        public int IdKlasyPokoju { get; set; }
+        public int IdTypuPokoju { get; set; }
+        public decimal CenaDorosly { get; set; }
+        public decimal CenaDziecko { get; set; }
+        public decimal CenaZwierzeta { get; set; }
     
-        public int IdPietra { get; set; }
-        public string NrPietra { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Pokoj> Pokoj { get; set; }
+        public virtual KlasaPokoju KlasaPokoju { get; set; }
+        public virtual TypPokoju TypPokoju { get; set; }
     }
 }

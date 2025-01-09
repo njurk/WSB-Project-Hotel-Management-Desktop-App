@@ -9,9 +9,10 @@
     <Grid Background="White">
         <DataGrid CanUserAddRows="False" IsReadOnly="True" CanUserDeleteRows="False" AutoGenerateColumns="False" ItemsSource="{Binding List}" SelectedItem="{Binding SelectedItem}">
             <DataGrid.Columns>
+                
                 <DataGridTextColumn Header="ID" Binding="{Binding IdKlasyPokoju}"/>
                 <DataGridTextColumn Header="Nazwa" Binding="{Binding Nazwa}"/>
-                <DataGridTextColumn Header="Dopłata" Binding="{Binding Doplata}"/>
+
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

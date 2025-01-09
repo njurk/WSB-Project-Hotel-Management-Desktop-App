@@ -50,7 +50,6 @@
 
         <Label Grid.Column="0" Grid.Row="6" Margin="0,8,0,8" Content="Kwota netto"/>
         <TextBox Grid.Column="1" Grid.Row="6" Margin="0,8,0,8" Text="{Binding Path=KwotaNetto, Converter={StaticResource DecimalConverter}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
-
         <Button Grid.Column="2" Grid.Row="6" Margin="15,8,0,8" Content="Oblicz netto" Command="{Binding ObliczNettoCommand}"/>
         
         <Label Grid.Column="0" Grid.Row="7" Margin="0,8,0,8" Content="Termin płatności"/>

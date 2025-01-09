@@ -94,7 +94,6 @@
     <Compile Include="Models\BusinessLogic\KlasaPokojuB.cs" />
     <Compile Include="Models\BusinessLogic\KlientB.cs" />
     <Compile Include="Models\BusinessLogic\KrajB.cs" />
-    <Compile Include="Models\BusinessLogic\PietroB.cs" />
     <Compile Include="Models\BusinessLogic\PlatnoscB.cs" />
     <Compile Include="Models\BusinessLogic\PokojB.cs" />
     <Compile Include="Models\BusinessLogic\PracownikB.cs" />
@@ -102,17 +101,16 @@
     <Compile Include="Models\BusinessLogic\RodzajPracownikaB.cs" />
     <Compile Include="Models\BusinessLogic\SposobPlatnosciB.cs" />
     <Compile Include="Models\BusinessLogic\StatusPlatnosciB.cs" />
-    <Compile Include="Models\BusinessLogic\StatusPokojuB.cs" />
     <Compile Include="Models\BusinessLogic\TypPokojuB.cs" />
     <Compile Include="Models\BusinessLogic\UdogodnienieB.cs" />
     <Compile Include="Models\BusinessLogic\VATB.cs" />
     <Compile Include="Models\BusinessLogic\ZnizkaB.cs" />
+    <Compile Include="Models\EntitiesForView\CennikForAllView.cs" />
     <Compile Include="Models\EntitiesForView\FakturaForAllView.cs" />
     <Compile Include="Models\EntitiesForView\KeyAndValue.cs" />
     <Compile Include="Models\EntitiesForView\KlasaPokojuForAllView.cs" />
     <Compile Include="Models\EntitiesForView\KlientForAllView.cs" />
     <Compile Include="Models\EntitiesForView\KrajForAllView.cs" />
-    <Compile Include="Models\EntitiesForView\PietroForAllView.cs" />
     <Compile Include="Models\EntitiesForView\PlatnoscForAllView.cs" />
     <Compile Include="Models\EntitiesForView\PokojForAllView.cs" />
     <Compile Include="Models\EntitiesForView\PracownikForAllView.cs" />
@@ -120,12 +118,14 @@
     <Compile Include="Models\EntitiesForView\RodzajPracownikaForAllView.cs" />
     <Compile Include="Models\EntitiesForView\SposobPlatnosciForAllView.cs" />
     <Compile Include="Models\EntitiesForView\StatusPlatnosciForAllView.cs" />
-    <Compile Include="Models\EntitiesForView\StatusPokojuForAllView.cs" />
     <Compile Include="Models\EntitiesForView\TypPokojuForAllView.cs" />
     <Compile Include="Models\EntitiesForView\UdogodnieniaKlasPokojuForAllView.cs" />
     <Compile Include="Models\EntitiesForView\UdogodnienieForAllView.cs" />
     <Compile Include="Models\EntitiesForView\VATForAllView.cs" />
     <Compile Include="Models\EntitiesForView\ZnizkaForAllView.cs" />
+    <Compile Include="Models\Entities\Cennik.cs">
+      <DependentUpon>HotelEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Entities\Faktura.cs">
       <DependentUpon>HotelEntities.tt</DependentUpon>
     </Compile>
@@ -153,9 +153,6 @@
     <Compile Include="Models\Entities\Kraj.cs">
       <DependentUpon>HotelEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Entities\Pietro.cs">
-      <DependentUpon>HotelEntities.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Entities\Platnosc.cs">
       <DependentUpon>HotelEntities.tt</DependentUpon>
     </Compile>
@@ -177,9 +174,6 @@
     <Compile Include="Models\Entities\StatusPlatnosci.cs">
       <DependentUpon>HotelEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Entities\StatusPokoju.cs">
-      <DependentUpon>HotelEntities.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Entities\sysdiagrams.cs">
       <DependentUpon>HotelEntities.tt</DependentUpon>
     </Compile>
@@ -199,6 +193,8 @@
       <DependentUpon>HotelEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\BaseViewModel.cs" />
+    <Compile Include="ViewModels\Cennik\NowyCennikViewModel.cs" />
+    <Compile Include="ViewModels\Cennik\WszystkieCennikViewModel.cs" />
     <Compile Include="ViewModels\CommandViewModel.cs" />
     <Compile Include="ViewModels\Faktura\NowyFakturaViewModel.cs" />
     <Compile Include="ViewModels\Faktura\WszystkieFakturaViewModel.cs" />
@@ -210,8 +206,6 @@
     <Compile Include="ViewModels\Kraj\NowyKrajViewModel.cs" />
     <Compile Include="ViewModels\Kraj\WszystkieKrajViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
-    <Compile Include="ViewModels\Pietro\NowyPietroViewModel.cs" />
-    <Compile Include="ViewModels\Pietro\WszystkiePietroViewModel.cs" />
     <Compile Include="ViewModels\Platnosc\NowyPlatnoscViewModel.cs" />
     <Compile Include="ViewModels\Platnosc\WszystkiePlatnoscViewModel.cs" />
     <Compile Include="ViewModels\Pokoj\NowyPokojViewModel.cs" />
@@ -226,8 +220,6 @@
     <Compile Include="ViewModels\SposobPlatnosci\WszystkieSposobPlatnosciViewModel.cs" />
     <Compile Include="ViewModels\StatusPlatnosci\NowyStatusPlatnosciViewModel.cs" />
     <Compile Include="ViewModels\StatusPlatnosci\WszystkieStatusPlatnosciViewModel.cs" />
-    <Compile Include="ViewModels\StatusPokoju\NowyStatusPokojuViewModel.cs" />
-    <Compile Include="ViewModels\StatusPokoju\WszystkieStatusPokojuViewModel.cs" />
     <Compile Include="ViewModels\TypPokoju\NowyTypPokojuViewModel.cs" />
     <Compile Include="ViewModels\TypPokoju\WszystkieTypPokojuViewModel.cs" />
     <Compile Include="ViewModels\UdogodnieniaKlasPokoju\NowyUdogodnieniaKlasPokojuViewModel.cs" />
@@ -242,6 +234,12 @@
     <Compile Include="ViewModels\Znizka\WszystkieZnizkaViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
+    <Compile Include="Views\Cennik\NowyCennikView.xaml.cs">
+      <DependentUpon>NowyCennikView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Cennik\WszystkieCennikView.xaml.cs">
+      <DependentUpon>WszystkieCennikView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Faktura\NowyFakturaView.xaml.cs">
       <DependentUpon>NowyFakturaView.xaml</DependentUpon>
     </Compile>
@@ -269,12 +267,6 @@
     </Compile>
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Pietro\NowyPietroView.xaml.cs">
-      <DependentUpon>NowyPietroView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Pietro\WszystkiePietroView.xaml.cs">
-      <DependentUpon>WszystkiePietroView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Platnosc\NowyPlatnoscView.xaml.cs">
       <DependentUpon>NowyPlatnoscView.xaml</DependentUpon>
@@ -317,12 +309,6 @@
     </Compile>
     <Compile Include="Views\StatusPlatnosci\WszystkieStatusPlatnosciView.xaml.cs">
       <DependentUpon>WszystkieStatusPlatnosciView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\StatusPokoju\NowyStatusPokojuView.xaml.cs">
-      <DependentUpon>NowyStatusPokojuView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\StatusPokoju\WszystkieStatusPokojuView.xaml.cs">
-      <DependentUpon>WszystkieStatusPokojuView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\TypPokoju\NowyTypPokojuView.xaml.cs">
       <DependentUpon>NowyTypPokojuView.xaml</DependentUpon>
@@ -394,6 +380,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\Cennik\NowyCennikView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Cennik\WszystkieCennikView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\Faktura\NowyFakturaView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -433,14 +427,6 @@
     <Page Include="Views\MainWindowResources.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Pietro\NowyPietroView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\Pietro\WszystkiePietroView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Platnosc\NowyPlatnoscView.xaml">
       <SubType>Designer</SubType>
@@ -495,14 +481,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\StatusPlatnosci\WszystkieStatusPlatnosciView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\StatusPokoju\NowyStatusPokojuView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\StatusPokoju\WszystkieStatusPokojuView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -562,6 +540,7 @@
       <LastGenOutput>HotelEntities.cs</LastGenOutput>
     </Content>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

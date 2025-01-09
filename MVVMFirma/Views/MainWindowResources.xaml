@@ -39,14 +39,6 @@
         <vw:NowyKrajView/>
     </DataTemplate>
 
-    <DataTemplate DataType="{x:Type vm:WszystkiePietroViewModel}">
-        <vw:WszystkiePietroView/>
-    </DataTemplate>
-
-    <DataTemplate DataType="{x:Type vm:NowyPietroViewModel}">
-        <vw:NowyPietroView/>
-    </DataTemplate>
-
     <DataTemplate DataType="{x:Type vm:WszystkieRodzajPracownikaViewModel}">
         <vw:WszystkieRodzajPracownikaView/>
     </DataTemplate>
@@ -69,14 +61,6 @@
 
     <DataTemplate DataType="{x:Type vm:NowyStatusPlatnosciViewModel}">
         <vw:NowyStatusPlatnosciView/>
-    </DataTemplate>
-
-    <DataTemplate DataType="{x:Type vm:WszystkieStatusPokojuViewModel}">
-        <vw:WszystkieStatusPokojuView/>
-    </DataTemplate>
-
-    <DataTemplate DataType="{x:Type vm:NowyStatusPokojuViewModel}">
-        <vw:NowyStatusPokojuView/>
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type vm:WszystkieTypPokojuViewModel}">
@@ -157,6 +141,14 @@
 
     <DataTemplate DataType="{x:Type vm:NowyZnizkaViewModel}">
         <vw:NowyZnizkaView/>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:WszystkieCennikViewModel}">
+        <vw:WszystkieCennikView/>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:NowyCennikViewModel}">
+        <vw:NowyCennikView/>
     </DataTemplate>
 
 

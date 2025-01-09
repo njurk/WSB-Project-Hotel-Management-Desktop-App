@@ -1,5 +1,6 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
 using MVVMFirma.Models.EntitiesForView;
+using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
@@ -28,11 +29,28 @@ namespace MVVMFirma.ViewModels
                         NrPokoju = pokoj.NrPokoju,
                         TypPokojuNazwa = pokoj.TypPokoju.Nazwa,
                         KlasaPokojuNazwa = pokoj.KlasaPokoju.Nazwa,
-                        StatusPokojuNazwa = pokoj.StatusPokoju.Nazwa,
-                        PietroNr = pokoj.Pietro.NrPietra
                     }
                 );
+
+            UpdateStatus();
         }
+        private void UpdateStatus()
+        {
+            var dzisiaj = DateTime.Now;
+
+            foreach (var pokoj in List)
+            {
+                bool isOccupied = hotelEntities.Rezerwacja.Any(r =>
+                    r.IdPokoju == pokoj.IdPokoju &&
+                    r.DataZameldowania <= dzisiaj &&
+                    r.DataWymeldowania >= dzisiaj);
+
+                pokoj.CzyZajety = isOccupied;
+                pokoj.Status = isOccupied ? "Zajęty" : "Wolny";
+            }
+        }
+
+
         public override void Delete()
         {
             MessageBoxResult delete = MessageBox.Show("Czy na pewno chcesz usunąć wybrany pokój:\n" + SelectedItem.NrPokoju, "Usuwanie", MessageBoxButton.YesNo, MessageBoxImage.Question);

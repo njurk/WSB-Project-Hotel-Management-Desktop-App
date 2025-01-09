@@ -32,8 +32,7 @@ namespace MVVMFirma.ViewModels
                 select new KlasaPokojuForAllView
                 {
                     IdKlasyPokoju = klasapokoju.IdKlasyPokoju,
-                    Nazwa = klasapokoju.Nazwa,
-                    Doplata = klasapokoju.Doplata
+                    Nazwa = klasapokoju.Nazwa
                 }
             );
         }

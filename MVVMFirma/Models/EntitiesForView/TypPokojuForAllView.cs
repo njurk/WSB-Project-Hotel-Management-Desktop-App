@@ -10,6 +10,5 @@ namespace MVVMFirma.Models.EntitiesForView
     {
         public int IdTypuPokoju { get; set; }
         public string Nazwa { get; set; }
-        public decimal Cena { get; set; }
     }
 }

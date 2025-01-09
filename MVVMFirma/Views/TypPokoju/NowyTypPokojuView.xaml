@@ -8,10 +8,6 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
-    <local:JedenViewBase.Resources>
-        <vm:DecimalConverter x:Key="DecimalConverter" />
-    </local:JedenViewBase.Resources>
-
     <Grid Background="White">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="150"/>
@@ -19,12 +15,10 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
-            <RowDefinition Height="40"/>
         </Grid.RowDefinitions>
+        
         <Label Grid.Column="0" Grid.Row="0" Margin="0,8,0,8" Content="Nazwa"/>
         <TextBox Grid.Column="1" Grid.Row="0" Margin="0,8,0,8" Text="{Binding Path=Nazwa, UpdateSourceTrigger=PropertyChanged}"/>
-
-        <Label Grid.Column="0" Grid.Row="1" Margin="0,8,0,8" Content="Cena"/>
-        <TextBox Grid.Column="1" Grid.Row="1" Margin="0,8,0,8" Text="{Binding Path=Cena, Converter={StaticResource DecimalConverter}, UpdateSourceTrigger=LostFocus}"/>
+        
     </Grid>
 </local:JedenViewBase>

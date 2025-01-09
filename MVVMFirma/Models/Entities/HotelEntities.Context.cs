@@ -25,11 +25,11 @@ namespace MVVMFirma.Models.Entities
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<Cennik> Cennik { get; set; }
         public virtual DbSet<Faktura> Faktura { get; set; }
         public virtual DbSet<KlasaPokoju> KlasaPokoju { get; set; }
         public virtual DbSet<Klient> Klient { get; set; }
         public virtual DbSet<Kraj> Kraj { get; set; }
-        public virtual DbSet<Pietro> Pietro { get; set; }
         public virtual DbSet<Platnosc> Platnosc { get; set; }
         public virtual DbSet<Pokoj> Pokoj { get; set; }
         public virtual DbSet<Pracownik> Pracownik { get; set; }
@@ -37,7 +37,6 @@ namespace MVVMFirma.Models.Entities
         public virtual DbSet<RodzajPracownika> RodzajPracownika { get; set; }
         public virtual DbSet<SposobPlatnosci> SposobPlatnosci { get; set; }
         public virtual DbSet<StatusPlatnosci> StatusPlatnosci { get; set; }
-        public virtual DbSet<StatusPokoju> StatusPokoju { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<TypPokoju> TypPokoju { get; set; }
         public virtual DbSet<UdogodnieniaKlasPokoju> UdogodnieniaKlasPokoju { get; set; }

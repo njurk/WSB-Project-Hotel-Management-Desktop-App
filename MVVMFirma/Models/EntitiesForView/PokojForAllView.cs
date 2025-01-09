@@ -6,8 +6,9 @@
         public string NrPokoju { get; set; }
         public string TypPokojuNazwa { get; set; }
         public string KlasaPokojuNazwa { get; set; }
-        public string StatusPokojuNazwa { get; set; }
         public string PietroNr { get; set; }
+        public bool CzyZajety { get; set; }
+        public string Status { get; set; }
 
     }
 }

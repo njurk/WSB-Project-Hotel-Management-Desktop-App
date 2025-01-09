@@ -28,30 +28,15 @@ namespace MVVMFirma.ViewModels
 
             if (item != null)
             {
-                IdPietra = item.IdPietra;
                 NrPokoju = item.NrPokoju;
                 IdTypuPokoju = item.IdTypuPokoju;
                 IdKlasyPokoju = item.IdKlasyPokoju;
-                IdStatusuPokoju = item.IdStatusuPokoju;
             }
         }
 
         #endregion
 
         #region Properties
-        public int IdPietra
-        {
-            get
-            {
-                return item.IdPietra;
-            }
-            set
-            {
-                item.IdPietra = value;
-                OnPropertyChanged(() => IdPietra);
-            }
-        }
-
         public string NrPokoju
         {
             get
@@ -91,27 +76,6 @@ namespace MVVMFirma.ViewModels
             }
         }
 
-        public int IdStatusuPokoju
-        {
-            get
-            {
-                return item.IdStatusuPokoju;
-            }
-            set
-            {
-                item.IdStatusuPokoju = value;
-                OnPropertyChanged(() => IdStatusuPokoju);
-            }
-        }
-
-        public IQueryable<KeyAndValue> PietroItems
-        {
-            get
-            {
-                return new PietroB(db).GetPietroKeyAndValueItems();
-            }
-        }
-
         public IQueryable<KeyAndValue> TypPokojuItems
         {
             get
@@ -125,14 +89,6 @@ namespace MVVMFirma.ViewModels
             get
             {
                 return new KlasaPokojuB(db).GetKlasaPokojuKeyAndValueItems();
-            }
-        }
-
-        public IQueryable<KeyAndValue> StatusPokojuItems
-        {
-            get
-            {
-                return new StatusPokojuB(db).GetStatusPokojuKeyAndValueItems();
             }
         }
         #endregion
