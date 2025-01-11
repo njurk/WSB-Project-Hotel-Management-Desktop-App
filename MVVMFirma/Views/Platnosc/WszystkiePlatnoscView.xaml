@@ -15,7 +15,7 @@
                 <DataGridTextColumn Header="Sposób" Binding="{Binding SposobPlatnosciNazwa}"/>
                 <DataGridTextColumn Header="Status" Binding="{Binding StatusPlatnosciNazwa}"/>
                 <DataGridTextColumn Header="Data płatności" Binding="{Binding DataPlatnosci, StringFormat=yyyy-MM-dd}"/>
-                <DataGridTextColumn Header="Kwota" Binding="{Binding Kwota}"/>
+                <DataGridTextColumn Header="Kwota" Binding="{Binding Kwota, StringFormat={}{0:C}}"/>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

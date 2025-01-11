@@ -31,6 +31,8 @@ namespace MVVMFirma.ViewModels
                 return _Commands;
             }
         }
+
+        // komendy odpowiadające za otwieranie widoków tworzących i dodających z listy bocznej
         private List<CommandViewModel> CreateCommands()
         {
             Messenger.Default.Register<string>(this, open);
@@ -203,14 +205,13 @@ namespace MVVMFirma.ViewModels
         private void OnWorkspaceRequestClose(object sender, EventArgs e)
         {
             WorkspaceViewModel workspace = sender as WorkspaceViewModel;
-            //workspace.Dispos();
             this.Workspaces.Remove(workspace);
         }
 
-        #endregion // Workspaces
+        #endregion
 
         #region Private Helpers
-        // uniwersalne metody wyświetlania widoków
+        // uniwersalne metody wyświetlania widoków Nowy, Edycji oraz Wszystkie 
         private void CreateView(WorkspaceViewModel nowy)
         {
             this.Workspaces.Add(nowy);
@@ -245,6 +246,7 @@ namespace MVVMFirma.ViewModels
 
         private void open(string name) // name - wysyłany komunikat
         {
+            // dodawanie
             if (name.EndsWith("Add"))
             {
                 if (name == "CennikiAdd")
@@ -282,7 +284,8 @@ namespace MVVMFirma.ViewModels
                 if (name == "ZniżkiAdd")
                     CreateView(new NowyZnizkaViewModel());
             }
-            else if (name.Contains("Edit-"))
+            // edycja - z komunikatu wyodrębniane jest ID a następnie wysyłane do specjalnego konstruktora klasy Nowy..ViewModel
+            else if (name.Contains("Edit-")) 
             {
                 string[] splitMessage = name.Split('-');
                 string splitName = splitMessage[0];

@@ -22,6 +22,7 @@ namespace MVVMFirma.ViewModels
             : base("Edycja kraju")
         {
             db = new HotelEntities();
+            // inicjalizacja pól danymi z rekordu o ID przekazanym w argumencie (itemId)
             item = db.Kraj.FirstOrDefault(k => k.IdKraju == itemId);
 
             if (item != null)
@@ -49,11 +50,11 @@ namespace MVVMFirma.ViewModels
         #region Helpers
         public override void Save()
         {
-            if (item.IdKraju == 0) // brak ID = insert
+            if (item.IdKraju == 0) // Dodawanie rekordu = brak ID = insert
             {
                 db.Kraj.Add(item);
             }
-            else // istnieje ID = update
+            else // Edycja rekordu = istnieje ID = update
             {
                 var doEdycji = db.Kraj.FirstOrDefault(f => f.IdKraju == item.IdKraju);
                 if (doEdycji != null)
@@ -63,7 +64,7 @@ namespace MVVMFirma.ViewModels
             }
 
             db.SaveChanges();
-            // automatyczne odświeżenie listy po edycji rekordu
+            // wysłanie prośby o odświeżenie listy po zapisie
             Messenger.Default.Send("KrajRefresh");
         }
         #endregion

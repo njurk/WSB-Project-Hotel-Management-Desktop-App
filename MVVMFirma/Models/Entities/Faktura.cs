@@ -17,6 +17,7 @@ namespace MVVMFirma.Models.Entities
         public int IdFaktury { get; set; }
         public string NrFaktury { get; set; }
         public int IdRezerwacji { get; set; }
+        public string NIP { get; set; }
         public string Opis { get; set; }
         public System.DateTime DataWystawienia { get; set; }
         public System.DateTime DataSprzedazy { get; set; }

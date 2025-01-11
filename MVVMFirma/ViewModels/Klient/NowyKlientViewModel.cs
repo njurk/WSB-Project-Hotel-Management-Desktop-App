@@ -24,6 +24,7 @@ namespace MVVMFirma.ViewModels
             : base("Edycja klienta")
         {
             db = new HotelEntities();
+            // inicjalizacja pól danymi z rekordu o ID przekazanym w argumencie (itemId)
             item = db.Klient.FirstOrDefault(k => k.IdKlienta == itemId);
 
             if (item != null)
@@ -186,7 +187,9 @@ namespace MVVMFirma.ViewModels
                 OnPropertyChanged(() => NIP);
             }
         }
+        #endregion
 
+        #region Items
         public IQueryable<KeyAndValue> KrajItems
         {
             get
@@ -199,11 +202,11 @@ namespace MVVMFirma.ViewModels
         #region Helpers
         public override void Save()
         {
-            if (item.IdKlienta == 0) // brak ID = insert
+            if (item.IdKlienta == 0) // Dodawanie rekordu = brak ID = insert
             {
                 db.Klient.Add(item);
             }
-            else // istnieje ID = update
+            else // Edycja rekordu = istnieje ID = update
             {
                 var doEdycji = db.Klient.FirstOrDefault(f => f.IdKlienta == item.IdKlienta);
                 if (doEdycji != null)
@@ -213,7 +216,7 @@ namespace MVVMFirma.ViewModels
             }
 
             db.SaveChanges();
-            // automatyczne odświeżenie listy po edycji rekordu
+            // wysłanie prośby o odświeżenie listy po zapisie
             Messenger.Default.Send("KlientRefresh");
         }
         #endregion

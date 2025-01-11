@@ -12,6 +12,7 @@ namespace MVVMFirma.ViewModels
         public WszystkieRezerwacjaViewModel()
             :base("Rezerwacje")
         {
+            // odbieranie wiadomości odświeżenia listy
             Messenger.Default.Register<string>(this, OnMessageReceived);
         }
         #endregion
@@ -53,10 +54,12 @@ namespace MVVMFirma.ViewModels
             {
                 hotelEntities.Rezerwacja.Remove(hotelEntities.Rezerwacja.FirstOrDefault(f => f.IdRezerwacji == SelectedItem.IdRezerwacji));
                 hotelEntities.SaveChanges();
-                List.Remove(SelectedItem);
+                Load();
             }
         }
 
+        // w celu edycji wybranego rekordu wysyłana jest wiadomość zawierająca jego ID
+        // odbiera i obsługuje ją metoda open() w klasie MainWindowViewModel
         public override void Edit()
         {
             if (SelectedItem != null)
@@ -65,7 +68,7 @@ namespace MVVMFirma.ViewModels
             }
         }
 
-        // OnMessageReceived obsługuje otrzymaną wiadomość, w tym przypadku odświeżenie widoku
+        // OnMessageReceived obsługuje wiadomość dotyczącą odświeżenia listy w widoku Wszystkie..View, wysłaną przy zapisie edytowanego rekordu 
         private void OnMessageReceived(string message)
         {
             if (message == "RezerwacjaRefresh")

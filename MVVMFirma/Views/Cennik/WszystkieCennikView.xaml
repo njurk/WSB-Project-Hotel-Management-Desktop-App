@@ -14,9 +14,9 @@
                 <DataGridTextColumn Header="ID" Binding="{Binding IdCennika}"/>
                 <DataGridTextColumn Header="Klasa" Binding="{Binding KlasaPokojuNazwa}"/>
                 <DataGridTextColumn Header="Typ" Binding="{Binding TypPokojuNazwa}"/>
-                <DataGridTextColumn Header="Dorosły" Binding="{Binding CenaDorosly}"/>
-                <DataGridTextColumn Header="Dziecko" Binding="{Binding CenaDziecko}"/>
-                <DataGridTextColumn Header="Zwierzęta" Binding="{Binding CenaZwierzeta}"/>
+                <DataGridTextColumn Header="Dorosły" Binding="{Binding CenaDorosly, StringFormat={}{0:C}}"/>
+                <DataGridTextColumn Header="Dziecko" Binding="{Binding CenaDziecko, StringFormat={}{0:C}}"/>
+                <DataGridTextColumn Header="Zwierzęta" Binding="{Binding CenaZwierzeta, StringFormat={}{0:C}}"/>
                 
             </DataGrid.Columns>
         </DataGrid>

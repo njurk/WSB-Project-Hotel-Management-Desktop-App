@@ -6,9 +6,9 @@ namespace MVVMFirma.Models.EntitiesForView
     {
         public int IdFaktury { get; set; }
         public string NrFaktury { get; set; }
-        public int IdRezerwacji { get; set; } // klucz obcy
+        public string NrRezerwacji { get; set; } // z klucza obcego
+        public string NIP {  get; set; }
         public string Opis { get; set; }
-        public string KlientNIP { get; set; } // z klucza obcego
         public string KlientImie { get; set; } // z klucza obcego
         public string KlientNazwisko { get; set; } // z klucza obcego
         public DateTime DataWystawienia { get; set; }

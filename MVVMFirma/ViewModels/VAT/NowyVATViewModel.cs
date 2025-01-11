@@ -22,6 +22,7 @@ namespace MVVMFirma.ViewModels
             : base("Edycja stawki VAT")
         {
             db = new HotelEntities();
+            // inicjalizacja pól danymi z rekordu o ID przekazanym w argumencie (itemId)
             item = db.VAT.FirstOrDefault(v => v.IdVat == itemId);
 
             if (item != null)
@@ -50,11 +51,11 @@ namespace MVVMFirma.ViewModels
         #region Helpers
         public override void Save()
         {
-            if (item.IdVat == 0) // brak ID = insert
+            if (item.IdVat == 0) // Dodawanie rekordu = brak ID = insert
             {
                 db.VAT.Add(item);
             }
-            else // istnieje ID = update
+            else // Edycja rekordu = istnieje ID = update
             {
                 var doEdycji = db.VAT.FirstOrDefault(f => f.IdVat == item.IdVat);
                 if (doEdycji != null)
@@ -64,7 +65,7 @@ namespace MVVMFirma.ViewModels
             }
 
             db.SaveChanges();
-            // automatyczne odświeżenie listy po edycji rekordu
+            // wysłanie prośby o odświeżenie listy po zapisie
             Messenger.Default.Send("VATRefresh");
         }
         #endregion

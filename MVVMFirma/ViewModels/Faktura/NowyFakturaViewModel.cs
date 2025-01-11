@@ -13,7 +13,10 @@ namespace MVVMFirma.ViewModels
     public class NowyFakturaViewModel : JedenViewModel<Faktura>
     {
         #region Fields
+        private Rezerwacja _selectedRezerwacja;
+        private BaseCommand _obliczNettoCommand;
         private decimal _stawkaVat;
+        private decimal _sumaPlatnosci;
         #endregion
 
         #region DB
@@ -39,12 +42,14 @@ namespace MVVMFirma.ViewModels
             : base("Edycja faktury")
         {
             db = new HotelEntities();
+            // inicjalizacja pól danymi z rekordu o ID przekazanym w argumencie (itemId)
             item = db.Faktura.FirstOrDefault(f => f.IdFaktury == itemId);
 
             if (item != null)
             {
                 NrFaktury = item.NrFaktury;
                 IdRezerwacji = item.IdRezerwacji;
+                NIP = item.NIP;
                 DataWystawienia = item.DataWystawienia;
                 DataSprzedazy = item.DataSprzedazy;
                 KwotaBrutto = item.KwotaBrutto;
@@ -85,12 +90,23 @@ namespace MVVMFirma.ViewModels
                     item.IdRezerwacji = value;
                     OnPropertyChanged(() => IdRezerwacji);
                     // wybrana rezerwacja przekazywana do metody aby odczytać i wstawić
-                    // jej dane do pól - usprawnienie procesu dodawania
+                    // dane do pól - usprawnienie procesu dodawania
                     SelectedRezerwacja = db.Rezerwacja.FirstOrDefault(r => r.IdRezerwacji == value);
                 }
             }
         }
-
+        public string NIP
+        {
+            get
+            {
+                return item.NIP;
+            }
+            set
+            {
+                item.NIP = value;
+                OnPropertyChanged(() => NIP);
+            }
+        }
         public DateTime DataWystawienia
         {
             get
@@ -189,11 +205,8 @@ namespace MVVMFirma.ViewModels
             }
         }
 
-        private Rezerwacja _selectedRezerwacja;
         // ta właściwość pobiera z wybranej rezerwacji konkretne dane
-        // i ustawia w polach np. data sprzedaży, kwota brutto
-        // celem usprawnienia procesu dodawania faktury
-        
+        // i ustawia w polach celem usprawnienia procesu dodawania faktury
         public Rezerwacja SelectedRezerwacja
         {
             get { return _selectedRezerwacja; }
@@ -218,19 +231,13 @@ namespace MVVMFirma.ViewModels
                         }
                         // ustawienie kwoty do zapłacenia
                         SumaPlatnosci = sumaPlatnosci(_selectedRezerwacja.IdRezerwacji);
+
+                        NIP = _selectedRezerwacja.Klient?.NIP ?? string.Empty;
+                        OnPropertyChanged(() => NIP);
                     }
                 }
             }
         }
-        //metoda do obliczania kwoty pozostałej do zapłacenia dla danej rezerwacji
-        private decimal sumaPlatnosci(int idRezerwacji)
-        {
-            return db.Platnosc
-                     .Where(p => p.IdRezerwacji == idRezerwacji)
-                     .Sum(p => (decimal?)p.Kwota) ?? 0;
-        }
-
-        private decimal _sumaPlatnosci;
 
         public decimal SumaPlatnosci
         {
@@ -247,7 +254,17 @@ namespace MVVMFirma.ViewModels
                 }
             }
         }
+        
+        //metoda do obliczania kwoty pozostałej do zapłacenia dla danej rezerwacji
+        private decimal sumaPlatnosci(int idRezerwacji)
+        {
+            return db.Platnosc
+                     .Where(p => p.IdRezerwacji == idRezerwacji)
+                     .Sum(p => (decimal?)p.Kwota) ?? 0;
+        }
+        #endregion
 
+        #region Items
         public List<KeyAndValue> RezerwacjaItems
         {
             get
@@ -303,6 +320,9 @@ namespace MVVMFirma.ViewModels
                 return new VATB(db).GetVATKeyAndValueItems();
             }
         }
+        #endregion
+
+        #region Validation
         protected override string ValidateProperty(string propertyName)
         {
             switch (propertyName)
@@ -352,8 +372,7 @@ namespace MVVMFirma.ViewModels
             }
         }
 
-        private BaseCommand _obliczNettoCommand;
-
+        // komenda wywołująca metodę ObliczNetto(), aby na widoku można było aktywować ją buttonem
         public BaseCommand ObliczNettoCommand
         {
             get
@@ -366,6 +385,7 @@ namespace MVVMFirma.ViewModels
             }
         }
 
+        // metoda obliczająca kwotę netto na podstawie kwoty rezerwacji i wybranego VAT
         private void ObliczNetto()
         {
             if (KwotaBrutto <= 0 || IdVat == -1)
@@ -430,11 +450,11 @@ namespace MVVMFirma.ViewModels
         #region Helpers
         public override void Save()
         {
-            if (item.IdFaktury == 0) // brak ID = insert
+            if (item.IdFaktury == 0) // Dodawanie rekordu = brak ID = insert
             {
                 db.Faktura.Add(item);
             }
-            else // istnieje ID = update
+            else // Edycja rekordu = istnieje ID = update
             {
                 var doEdycji = db.Faktura.FirstOrDefault(f => f.IdFaktury == item.IdFaktury);
                 if (doEdycji != null)
@@ -444,7 +464,7 @@ namespace MVVMFirma.ViewModels
             }
 
             db.SaveChanges();
-            // automatyczne odświeżenie listy po edycji rekordu
+            // wysłanie prośby o odświeżenie listy po zapisie
             Messenger.Default.Send("FakturaRefresh");
         }
         #endregion

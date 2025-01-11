@@ -28,6 +28,7 @@ namespace MVVMFirma.ViewModels
             : base("Edycja cennika")
         {
             db = new HotelEntities();
+            // inicjalizacja pól danymi z rekordu o ID przekazanym w argumencie (itemId)
             item = db.Cennik.FirstOrDefault(p => p.IdCennika == itemId);
 
             if (item != null)
@@ -105,7 +106,9 @@ namespace MVVMFirma.ViewModels
                 OnPropertyChanged(() => CenaZwierzeta);
             }
         }
+        #endregion
 
+        #region Items
         public IQueryable<KeyAndValue> KlasaPokojuItems
         {
             get
@@ -126,11 +129,11 @@ namespace MVVMFirma.ViewModels
         #region Helpers
         public override void Save()
         {
-            if (item.IdCennika == 0) // brak ID = insert
+            if (item.IdCennika == 0) // Dodawanie rekordu = brak ID = insert
             {
                 db.Cennik.Add(item);
             }
-            else // istnieje ID = update
+            else // Edycja rekordu = istnieje ID = update
             {
                 var doEdycji = db.Cennik.FirstOrDefault(f => f.IdCennika == item.IdCennika);
                 if (doEdycji != null)
@@ -140,7 +143,7 @@ namespace MVVMFirma.ViewModels
             }
 
             db.SaveChanges();
-            // automatyczne odświeżenie listy po edycji rekordu
+            // wysłanie prośby o odświeżenie listy po zapisie
             Messenger.Default.Send("CennikRefresh");
         }
         #endregion

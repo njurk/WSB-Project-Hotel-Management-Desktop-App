@@ -17,6 +17,7 @@ namespace MVVMFirma.ViewModels
         public WszystkieSposobPlatnosciViewModel()
             : base("Sposoby płatności")
         {
+            // odbieranie wiadomości odświeżenia listy
             Messenger.Default.Register<string>(this, OnMessageReceived);
         }
         #endregion
@@ -42,10 +43,12 @@ namespace MVVMFirma.ViewModels
             {
                 hotelEntities.SposobPlatnosci.Remove(hotelEntities.SposobPlatnosci.FirstOrDefault(f => f.IdSposobuPlatnosci == SelectedItem.IdSposobuPlatnosci));
                 hotelEntities.SaveChanges();
-                List.Remove(SelectedItem);
+                Load();
             }
         }
 
+        // w celu edycji wybranego rekordu wysyłana jest wiadomość zawierająca jego ID
+        // odbiera i obsługuje ją metoda open() w klasie MainWindowViewModel
         public override void Edit()
         {
             if (SelectedItem != null)
@@ -53,7 +56,8 @@ namespace MVVMFirma.ViewModels
                 Messenger.Default.Send(DisplayName + "Edit-" + SelectedItem.IdSposobuPlatnosci);
             }
         }
-        // OnMessageReceived obsługuje otrzymaną wiadomość, w tym przypadku odświeżenie widoku
+
+        // OnMessageReceived obsługuje wiadomość dotyczącą odświeżenia listy w widoku Wszystkie..View, wysłaną przy zapisie edytowanego rekordu 
         private void OnMessageReceived(string message)
         {
             if (message == "SposobPlatnosciRefresh")

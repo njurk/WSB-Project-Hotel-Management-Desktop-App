@@ -22,6 +22,7 @@ namespace MVVMFirma.ViewModels
             : base("Edycja sposobu płatności")
         {
             db = new HotelEntities();
+            // inicjalizacja pól danymi z rekordu o ID przekazanym w argumencie (itemId)
             item = db.SposobPlatnosci.FirstOrDefault(s => s.IdSposobuPlatnosci == itemId);
 
             if (item != null)
@@ -50,11 +51,11 @@ namespace MVVMFirma.ViewModels
         #region Helpers
         public override void Save()
         {
-            if (item.IdSposobuPlatnosci == 0) // brak ID = insert
+            if (item.IdSposobuPlatnosci == 0) // Dodawanie rekordu = brak ID = insert
             {
                 db.SposobPlatnosci.Add(item);
             }
-            else // istnieje ID = update
+            else // Edycja rekordu = istnieje ID = update
             {
                 var doEdycji = db.SposobPlatnosci.FirstOrDefault(f => f.IdSposobuPlatnosci == item.IdSposobuPlatnosci);
                 if (doEdycji != null)
@@ -64,7 +65,7 @@ namespace MVVMFirma.ViewModels
             }
 
             db.SaveChanges();
-            // automatyczne odświeżenie listy po edycji rekordu
+            // wysłanie prośby o odświeżenie listy po zapisie
             Messenger.Default.Send("SposobPlatnosciRefresh");
         }
         #endregion

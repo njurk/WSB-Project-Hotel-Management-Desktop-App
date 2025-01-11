@@ -23,6 +23,7 @@
           <Property Name="IdFaktury" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="NrFaktury" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="IdRezerwacji" Type="int" Nullable="false" />
+          <Property Name="NIP" Type="nvarchar" MaxLength="10" Nullable="false" />
           <Property Name="Opis" Type="nvarchar" MaxLength="300" />
           <Property Name="DataWystawienia" Type="datetime" Nullable="false" />
           <Property Name="DataSprzedazy" Type="date" Nullable="false" />
@@ -505,6 +506,7 @@
           <Property Name="IdFaktury" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="NrFaktury" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="IdRezerwacji" Type="Int32" Nullable="false" />
+          <Property Name="NIP" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Opis" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
           <Property Name="DataWystawienia" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="DataSprzedazy" Type="DateTime" Nullable="false" Precision="0" />
@@ -1018,6 +1020,7 @@
                 <ScalarProperty Name="IdFaktury" ColumnName="IdFaktury" />
                 <ScalarProperty Name="NrFaktury" ColumnName="NrFaktury" />
                 <ScalarProperty Name="IdRezerwacji" ColumnName="IdRezerwacji" />
+                <ScalarProperty Name="NIP" ColumnName="NIP" />
                 <ScalarProperty Name="Opis" ColumnName="Opis" />
                 <ScalarProperty Name="DataWystawienia" ColumnName="DataWystawienia" />
                 <ScalarProperty Name="DataSprzedazy" ColumnName="DataSprzedazy" />

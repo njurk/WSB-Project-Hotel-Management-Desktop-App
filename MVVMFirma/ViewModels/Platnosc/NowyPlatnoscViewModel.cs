@@ -13,6 +13,11 @@ namespace MVVMFirma.ViewModels
         HotelEntities db;
         #endregion
 
+        #region Fields
+        private decimal _doZaplaty;
+        private Rezerwacja _selectedRezerwacja;
+        #endregion
+
         #region Constructor
         public NowyPlatnoscViewModel()
             : base("Płatność")
@@ -28,6 +33,7 @@ namespace MVVMFirma.ViewModels
             : base("Edycja płatności")
         {
             db = new HotelEntities();
+            // inicjalizacja pól danymi z rekordu o ID przekazanym w argumencie (itemId)
             item = db.Platnosc.FirstOrDefault(p => p.IdPlatnosci == itemId);
 
             if (item != null)
@@ -65,6 +71,8 @@ namespace MVVMFirma.ViewModels
             {
                 item.IdRezerwacji = value;
                 OnPropertyChanged(() => IdRezerwacji);
+                // wybrana rezerwacja przekazywana do metody aby odczytać i wstawić
+                // dane do pól - usprawnienie procesu dodawania
                 SelectedRezerwacja = db.Rezerwacja.FirstOrDefault(r => r.IdRezerwacji == value);
             }
         }
@@ -121,7 +129,6 @@ namespace MVVMFirma.ViewModels
             }
         }
 
-        private decimal _doZaplaty;
         public decimal DoZaplaty
         {
             get { return _doZaplaty; }
@@ -135,33 +142,15 @@ namespace MVVMFirma.ViewModels
             }
         }
 
-
-        public IQueryable<KeyAndValue> RezerwacjaItems
+        // metoda obliczająca kwote pozostałą do zapłacenia dla danej rezerwacji
+        private decimal sumaPlatnosci(int idRezerwacji)
         {
-            get
-            {
-                return new RezerwacjaB(db).GetRezerwacjaKeyAndValueItems();
-            }
+            return db.Platnosc
+                     .Where(p => p.IdRezerwacji == idRezerwacji)
+                     .Sum(p => (decimal?)p.Kwota) ?? 0;
         }
 
-        public IQueryable<KeyAndValue> SposobPlatnosciItems
-        {
-            get
-            {
-                return new SposobPlatnosciB(db).GetSposobPlatnosciKeyAndValueItems();
-            }
-        }
-
-        public IQueryable<KeyAndValue> StatusPlatnosciItems
-        {
-            get
-            {
-                return new StatusPlatnosciB(db).GetStatusPlatnosciKeyAndValueItems();
-            }
-        }
-
-        // ustawienie kwoty płatności na podstawie wybranej rezerwacji w combobox
-        private Rezerwacja _selectedRezerwacja;
+        // właściwość odpowiadająca za ustawienie kwoty oraz wartości do zapłaty na podstawie wybranej rezerwacji w combobox
         public Rezerwacja SelectedRezerwacja
         {
             get { return _selectedRezerwacja; }
@@ -187,12 +176,31 @@ namespace MVVMFirma.ViewModels
                 }
             }
         }
-        //metoda do obliczania kwoty pozostałej do zapłacenia dla danej rezerwacji
-        private decimal sumaPlatnosci(int idRezerwacji)
+        #endregion
+
+        #region Items
+        public IQueryable<KeyAndValue> RezerwacjaItems
         {
-            return db.Platnosc
-                     .Where(p => p.IdRezerwacji == idRezerwacji)
-                     .Sum(p => (decimal?)p.Kwota) ?? 0;
+            get
+            {
+                return new RezerwacjaB(db).GetRezerwacjaKeyAndValueItems();
+            }
+        }
+
+        public IQueryable<KeyAndValue> SposobPlatnosciItems
+        {
+            get
+            {
+                return new SposobPlatnosciB(db).GetSposobPlatnosciKeyAndValueItems();
+            }
+        }
+
+        public IQueryable<KeyAndValue> StatusPlatnosciItems
+        {
+            get
+            {
+                return new StatusPlatnosciB(db).GetStatusPlatnosciKeyAndValueItems();
+            }
         }
         #endregion
 
@@ -205,8 +213,10 @@ namespace MVVMFirma.ViewModels
                                      .Select(f => f.NrPlatnosci)
                                      .FirstOrDefault();
 
+            // deklaracja zmiennej która otrzyma i na końcu ustawi odpowiedni numer aktualnie tworzonej płatności
             string numerPlatnosci;
 
+            // jeśli istnieje jakakolwiek płatność w bazie
             if (ostatniaPlatnosc != null)
             {
                 string platnoscMiesiac = ostatniaPlatnosc.Substring(5, 2); // yyyy-MM
@@ -214,31 +224,33 @@ namespace MVVMFirma.ViewModels
 
                 if (platnoscMiesiac == obecnyMiesiac)
                 {
+                    // ustalenie pozycji "P" w stringu aby wyodrębnić numer do inkrementacji
                     int pozycjaP = ostatniaPlatnosc.IndexOf('P');
                     if (pozycjaP != -1 && pozycjaP + 1 < ostatniaPlatnosc.Length)
                     {
                         string numer = ostatniaPlatnosc.Substring(pozycjaP + 1);
 
+                        // próba konwersji stringu z numerem na int aby zwiększyć o 1
                         if (int.TryParse(numer, out int numerInt))
                         {
                             numerPlatnosci = (numerInt + 1).ToString();
                         }
-                        else
+                        else // jeśli nie udało się zamienić na int
                         {
                             numerPlatnosci = "1";
                         }
                     }
-                    else
+                    else // jeśli P nie znaleziona lub nie ma za nią żadnych cyfr
                     {
                         numerPlatnosci = "1";
                     }
                 }
-                else
+                else // jeśli jest nowy miesiąc
                 {
                     numerPlatnosci = "1";
                 }
             }
-            else
+            else // jeśli w bazie nie ma jeszcze ani jednej płatności
             {
                 numerPlatnosci = "1";
             }
@@ -249,11 +261,11 @@ namespace MVVMFirma.ViewModels
         #region Helpers
         public override void Save()
         {
-            if (item.IdPlatnosci == 0) // brak ID = insert
+            if (item.IdPlatnosci == 0) // Dodawanie rekordu = brak ID = insert
             {
                 db.Platnosc.Add(item);
             }
-            else // istnieje ID = update
+            else // Edycja rekordu = istnieje ID = update
             {
                 var doEdycji = db.Platnosc.FirstOrDefault(f => f.IdPlatnosci == item.IdPlatnosci);
                 if (doEdycji != null)
@@ -263,7 +275,7 @@ namespace MVVMFirma.ViewModels
             }
 
             db.SaveChanges();
-            // automatyczne odświeżenie listy po edycji rekordu
+            // wysłanie prośby o odświeżenie listy po zapisie
             Messenger.Default.Send("PlatnoscRefresh");
         }
         #endregion

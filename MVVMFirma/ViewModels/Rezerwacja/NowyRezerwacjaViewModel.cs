@@ -20,6 +20,14 @@ namespace MVVMFirma.ViewModels
         HotelEntities db;
         #endregion
 
+        #region Fields
+        private DateTime _dataZameldowania;
+        private DateTime _dataWymeldowania;
+        private Pokoj _selectedPokoj;
+        private BaseCommand _obliczKwoteCommand;
+
+        #endregion
+
         #region Constructor
         public NowyRezerwacjaViewModel()
             :base("Rezerwacja")
@@ -36,6 +44,7 @@ namespace MVVMFirma.ViewModels
             :base("Edycja rezerwacji")
         {
             db = new HotelEntities();
+            // inicjalizacja pól danymi z rekordu o ID przekazanym w argumencie (itemId)
             item = db.Rezerwacja.FirstOrDefault(r => r.IdRezerwacji == itemId);
 
             if (item != null)
@@ -51,6 +60,7 @@ namespace MVVMFirma.ViewModels
                 DataRezerwacji = item.DataRezerwacji;
                 Kwota = item.Kwota;
                 Uwagi = item.Uwagi;
+                // przekazanie pokoju do właściwości, która odpowiada za do ustawienie jej w comboboxie
                 SelectedPokoj = db.Pokoj.FirstOrDefault(p => p.IdPokoju == item.IdPokoju);
             }
         }
@@ -91,7 +101,7 @@ namespace MVVMFirma.ViewModels
                 {
                     item.IdPokoju = value;
                     OnPropertyChanged(() => IdPokoju);
-
+                    // po każdej zmianie pokoju aktualizacja zaznaczenia
                     SelectedPokoj = db.Pokoj.FirstOrDefault(p => p.IdPokoju == value);
                 }
             }
@@ -135,8 +145,6 @@ namespace MVVMFirma.ViewModels
                 OnPropertyChanged(() => CzyZwierzeta);
             }
         }
-
-        private DateTime _dataZameldowania;
         public DateTime DataZameldowania
         {
             get { return _dataZameldowania; }
@@ -148,7 +156,6 @@ namespace MVVMFirma.ViewModels
                 OnDataChanged();
             }
         }
-        private DateTime _dataWymeldowania;
         public DateTime DataWymeldowania
         {
             get { return _dataWymeldowania; }
@@ -245,6 +252,27 @@ namespace MVVMFirma.ViewModels
             }
         }
 
+        // poniższa właściwość ustawia pokój jako wybrany element w comboboxie przy edycji, dzięki czemu jest widoczny od razu
+        public Pokoj SelectedPokoj
+        {
+            get { return _selectedPokoj; }
+            set
+            {
+                if (_selectedPokoj != value)
+                {
+                    _selectedPokoj = value;
+                    OnPropertyChanged(() => SelectedPokoj);
+
+                    if (_selectedPokoj != null)
+                    {
+                        IdPokoju = _selectedPokoj.IdPokoju;
+                    }
+                }
+            }
+        }
+        #endregion
+
+        #region Items
         public IQueryable<KeyAndValue> KlientItems
         {
             get
@@ -284,24 +312,6 @@ namespace MVVMFirma.ViewModels
             }
         }
 
-        private Pokoj _selectedPokoj;
-        public Pokoj SelectedPokoj
-        {
-            get { return _selectedPokoj; }
-            set
-            {
-                if (_selectedPokoj != value)
-                {
-                    _selectedPokoj = value;
-                    OnPropertyChanged(() => SelectedPokoj);
-
-                    if (_selectedPokoj != null)
-                    {
-                        IdPokoju = _selectedPokoj.IdPokoju;
-                    }
-                }
-            }
-        }
         public IQueryable<KeyAndValue> ZnizkaItems
         {
             get
@@ -309,6 +319,9 @@ namespace MVVMFirma.ViewModels
                 return new ZnizkaB(db).GetZnizkaKeyAndValueItems();
             }
         }
+        #endregion
+
+        #region Validation
         protected override string ValidateProperty(string propertyName)
         {
             switch (propertyName)
@@ -319,7 +332,21 @@ namespace MVVMFirma.ViewModels
                 case nameof(IdPokoju):
                 case nameof(LiczbaDoroslych):
                 case nameof(LiczbaDzieci):
-                    return ValidateMaxLiczbaOsob();
+                    if (!int.TryParse(LiczbaDoroslych, out int dorosli) || dorosli <= 0)
+                        return "Wprowadź poprawną liczbę dorosłych";
+
+                    if (!int.TryParse(LiczbaDzieci, out int dzieci) || dzieci < 0)
+                        return "Wprowadź poprawną liczbę dzieci";
+
+                    if (IdPokoju > 0)
+                    {
+                        var pokoj = db.Pokoj.FirstOrDefault(p => p.IdPokoju == IdPokoju);
+                        if (pokoj != null && dorosli + dzieci > Convert.ToInt32(pokoj.TypPokoju.MaxLiczbaOsob))
+                        {
+                            return "Łączna liczba osób przekracza maksymalny limit dla wybranego pokoju.";
+                        }
+                    }
+                    return string.Empty;
 
                 case nameof(DataZameldowania):
                     return DataZameldowania > DataWymeldowania ? "Data zameldowania nie może być późniejsza od daty wymeldowania" : string.Empty;
@@ -334,40 +361,21 @@ namespace MVVMFirma.ViewModels
                     return string.Empty;
             }
         }
-
-        private string ValidateMaxLiczbaOsob()
-        {
-            if (!int.TryParse(LiczbaDoroslych, out int dorosli) || dorosli <= 0)
-                return "Wprowadź poprawną liczbę dorosłych";
-
-            if (!int.TryParse(LiczbaDzieci, out int dzieci) || dzieci < 0)
-                return "Wprowadź poprawną liczbę dzieci";
-
-            if (IdPokoju > 0)
-            {
-                var pokoj = db.Pokoj.FirstOrDefault(p => p.IdPokoju == IdPokoju);
-                if (pokoj != null && dorosli + dzieci > Convert.ToInt32(pokoj.TypPokoju.MaxLiczbaOsob))
-                {
-                    return $"Łączna liczba osób ({dorosli + dzieci}) przekracza maksymalny limit, wybrany pokój jest " + pokoj.TypPokoju.Nazwa;
-                }
-            }
-
-            return string.Empty;
-        }
-
         #endregion
 
         #region Methods
         public string GenerujNumerRezerwacji()
         {
-            // pobranie ostatniej rezerwacji z BD do ustalenia następnego numeru
+            // pobranie ostatniego numeru rezerwacji z BD jako punkt odniesienia
             var ostatniaRezerwacja = db.Rezerwacja
-                                       .OrderByDescending(r => r.IdRezerwacji) 
-                                       .Select(r => r.NrRezerwacji)
-                                       .FirstOrDefault();
+                .OrderByDescending(r => r.IdRezerwacji) 
+                .Select(r => r.NrRezerwacji)
+                .FirstOrDefault();
 
-            string numerRezerwacji;
+            // deklaracja zmiennej która otrzyma i na końcu ustawi odpowiedni numer aktualnie tworzonej rezerwacji
+            string nrRezerwacji;
 
+            // jeśli istnieje jakakolwiek rezerwacja w bazie
             if (ostatniaRezerwacja != null)
             {
                 string rezerwacjaMiesiac = ostatniaRezerwacja.Substring(5, 2); // yyyy-MM
@@ -375,39 +383,40 @@ namespace MVVMFirma.ViewModels
 
                 if (rezerwacjaMiesiac == obecnyMiesiac)
                 {
+                    // ustalenie pozycji "R" w stringu aby wyodrębnić numer do inkrementacji
                     int pozycjaR = ostatniaRezerwacja.IndexOf('R');
                     if (pozycjaR != -1 && pozycjaR + 1 < ostatniaRezerwacja.Length)
                     {
-                        string numer = ostatniaRezerwacja.Substring(pozycjaR + 1);
+                        string nr = ostatniaRezerwacja.Substring(pozycjaR + 1);
 
-                        if (int.TryParse(numer, out int numerInt))
+                        // próba konwersji stringu z numerem na int aby zwiększyć o 1
+                        if (int.TryParse(nr, out int numerInt))
                         {
-                            numerRezerwacji = (numerInt + 1).ToString();
+                            nrRezerwacji = (numerInt + 1).ToString();
                         }
-                        else
+                        else // jeśli nie udało się zamienić na int
                         {
-                            numerRezerwacji = "1";
+                            nrRezerwacji = "1";
                         }
                     }
-                    else
+                    else // jeśli R nie znaleziona lub nie ma za nią żadnych cyfr
                     {
-                        numerRezerwacji = "1";
+                        nrRezerwacji = "1";
                     }
                 }
-                else
+                else // jeśli jest nowy miesiąc
                 {
-                    numerRezerwacji = "1";
+                    nrRezerwacji = "1";
                 }
             }
-            else
+            else // jeśli w bazie nie ma jeszcze ani jednej rezerwacji
             {
-                numerRezerwacji = "1";
+                nrRezerwacji = "1";
             }
-            return $"{DateTime.Now:yyyy-MM}-R{numerRezerwacji}";
+            return $"{DateTime.Now:yyyy-MM}-R{nrRezerwacji}";
         }
 
-        private BaseCommand _obliczKwoteCommand;
-
+        // komenda wywołująca metodę ObliczKwote(), aby na widoku można było aktywować ją buttonem
         public BaseCommand ObliczKwoteCommand
         {
             get
@@ -420,6 +429,7 @@ namespace MVVMFirma.ViewModels
             }
         }
 
+        // metoda do obliczania całkowitej kwoty rezerwacji na podstawie długości pobytu i wybranego pokoju oraz ewentualnej zniżki
         private void ObliczKwote()
         {
             if (SelectedPokoj == null || !int.TryParse(LiczbaDoroslych, out int liczbaDoroslych))
@@ -428,36 +438,47 @@ namespace MVVMFirma.ViewModels
                 return;
             }
 
+            // liczba dzieci może być pusta lub 0 i będzie to poprawne
+            // konwersja inputu na int
             int liczbaDzieci = string.IsNullOrEmpty(LiczbaDzieci) ? 0 : int.Parse(LiczbaDzieci);
+            // długość pobytu obliczana przy użyciu wbudowanej funkcji Days()
             int liczbaNocy = (DataWymeldowania - DataZameldowania).Days;
 
-            if (liczbaNocy <= 0)
-            {
-                MessageBox.Show("Data wymeldowania musi być późniejsza niż data zameldowania.", "Błąd", MessageBoxButton.OK);
-                return;
-            }
+            // pobranie odpowiedniego rekordu z tabeli Cennik (wg dwóch kluczy - klasy i typu pokoju) 
+            var cennik = db.Cennik.FirstOrDefault(c => c.IdKlasyPokoju == SelectedPokoj.IdKlasyPokoju && c.IdTypuPokoju == SelectedPokoj.IdTypuPokoju);
 
-            var cennik = new HotelEntities().Cennik
-                .FirstOrDefault(c => c.IdKlasyPokoju == SelectedPokoj.IdKlasyPokoju && c.IdTypuPokoju == SelectedPokoj.IdTypuPokoju);
-
+            // jeśli brak cennika dla wybranych parametrów
             if (cennik == null)
             {
-                MessageBox.Show("Nie znaleziono odpowiedniego cennika.", "Błąd", MessageBoxButton.OK);
+                MessageBox.Show("Nie znaleziono odpowiedniego cennika, dodaj go w zakładce Cenniki.", "Błąd", MessageBoxButton.OK);
                 return;
             }
 
-            Kwota = ((liczbaDoroslych * cennik.CenaDorosly) + (liczbaDzieci * cennik.CenaDziecko) + (CzyZwierzeta ? cennik.CenaZwierzeta : 0)) * liczbaNocy;
+            decimal calkowitaKwota = ((liczbaDoroslych * cennik.CenaDorosly) + (liczbaDzieci * cennik.CenaDziecko) + (CzyZwierzeta ? cennik.CenaZwierzeta : 0)) * liczbaNocy;
+
+            // używając funkcji HasValue sprawdzamy czy została wybrana zniżka, jeśli tak, to uwzględniamy w kwocie całkowitej
+            if (IdZnizki.HasValue)
+            {
+                var znizka = db.Znizka.FirstOrDefault(z => z.IdZnizki == IdZnizki.Value);
+                if (znizka != null)
+                {
+                    decimal wartoscZnizki = Convert.ToInt32(znizka.Wartosc) / 100m;
+                    calkowitaKwota -= calkowitaKwota * wartoscZnizki;
+                }
+            }
+
+            Kwota = calkowitaKwota;
         }
         #endregion
 
         #region Helpers
         public override void Save()
         {
-            if (item.IdRezerwacji == 0) // brak ID = insert
+            if (item.IdRezerwacji == 0) // Dodawanie rekordu = brak ID = insert
             {
                 db.Rezerwacja.Add(item);
             }
-            else // istnieje ID = update
+            else // Edycja rekordu = istnieje ID = update
             {
                 var doEdycji = db.Rezerwacja.FirstOrDefault(f => f.IdRezerwacji == item.IdRezerwacji);
                 if (doEdycji != null)
@@ -467,7 +488,7 @@ namespace MVVMFirma.ViewModels
             }
 
             db.SaveChanges();
-            // automatyczne odświeżenie listy po edycji rekordu
+            // wysłanie prośby o odświeżenie listy po zapisie
             Messenger.Default.Send("RezerwacjaRefresh");
         }
         #endregion

@@ -17,8 +17,8 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID" Binding="{Binding IdFaktury}"/>
                 <DataGridTextColumn Header="Numer faktury" Binding="{Binding NrFaktury}"/>
-                <DataGridTextColumn Header="Numer rezerwacji" Binding="{Binding IdRezerwacji}"/>
-                <DataGridTextColumn Header="NIP" Binding="{Binding KlientNIP}"/>
+                <DataGridTextColumn Header="Numer rezerwacji" Binding="{Binding NrRezerwacji}"/>
+                <DataGridTextColumn Header="NIP" Binding="{Binding NIP}"/>
                 <DataGridTextColumn Header="Imie klienta" Binding="{Binding KlientImie}"/>
                 <DataGridTextColumn Header="Nazwisko klienta" Binding="{Binding KlientNazwisko}"/>
                 <DataGridTextColumn Header="Data wystawienia" Binding="{Binding DataWystawienia, StringFormat=yyyy-MM-dd}"/>

@@ -26,6 +26,7 @@ namespace MVVMFirma.ViewModels
             : base("Edycja udogodnienia klasy pokoju")
         {
             db = new HotelEntities();
+            // inicjalizacja pól danymi z rekordu o ID przekazanym w argumencie (itemId)
             item = db.UdogodnieniaKlasPokoju.FirstOrDefault(u => u.IdPolaczenia == itemId);
 
             if (item != null)
@@ -63,7 +64,9 @@ namespace MVVMFirma.ViewModels
                 OnPropertyChanged(() => IdUdogodnienia);
             }
         }
+        #endregion
 
+        #region Items
         public IQueryable<KeyAndValue> KlasaPokojuItems
         {
             get
@@ -84,11 +87,11 @@ namespace MVVMFirma.ViewModels
         #region Helpers
         public override void Save()
         {
-            if (item.IdPolaczenia == 0) // brak ID = insert
+            if (item.IdPolaczenia == 0) // Dodawanie rekordu = brak ID = insert
             {
                 db.UdogodnieniaKlasPokoju.Add(item);
             }
-            else // istnieje ID = update
+            else // Edycja rekordu = istnieje ID = update
             {
                 var doEdycji = db.UdogodnieniaKlasPokoju.FirstOrDefault(f => f.IdPolaczenia == item.IdPolaczenia);
                 if (doEdycji != null)
@@ -98,7 +101,7 @@ namespace MVVMFirma.ViewModels
             }
 
             db.SaveChanges();
-            // automatyczne odświeżenie listy po edycji rekordu
+            // wysłanie prośby o odświeżenie listy po zapisie
             Messenger.Default.Send("UdogodnieniaKlasPokojuRefresh");
         }
         #endregion

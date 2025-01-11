@@ -26,10 +26,11 @@
                 <DataGridTextColumn Header="Data rezerwacji" Binding="{Binding DataRezerwacji, StringFormat=yyyy-MM-dd}"/>
                 <DataGridTextColumn Header="Zameldowanie" Binding="{Binding DataZameldowania, StringFormat=yyyy-MM-dd}"/>
                 <DataGridTextColumn Header="Wymeldowanie" Binding="{Binding DataWymeldowania, StringFormat=yyyy-MM-dd}"/>
-                <DataGridTextColumn Header="Kwota" Binding="{Binding Kwota}"/>
+                <DataGridTextColumn Header="Kwota" Binding="{Binding Kwota, StringFormat={}{0:C}}"/>
+                <DataGridTextColumn Header="Zniżka" Binding="{Binding Znizka, Converter={StaticResource PercentConverter}}"/>
                 <DataGridCheckBoxColumn Header="Czy zapłacona" Binding="{Binding CzyZaplacona}"/>
                 <DataGridTextColumn Header="Uwagi" Binding="{Binding Uwagi}"/>
-                <DataGridTextColumn Header="Zniżka" Binding="{Binding Znizka, Converter={StaticResource PercentConverter}}"/>
+                
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

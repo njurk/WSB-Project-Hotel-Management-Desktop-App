@@ -22,6 +22,7 @@ namespace MVVMFirma.ViewModels
             : base("Edycja rodzaju pracownika")
         {
             db = new HotelEntities();
+            // inicjalizacja pól danymi z rekordu o ID przekazanym w argumencie (itemId)
             item = db.RodzajPracownika.FirstOrDefault(r => r.IdRodzajuPracownika == itemId);
 
             if (item != null)
@@ -49,11 +50,11 @@ namespace MVVMFirma.ViewModels
         #region Helpers
         public override void Save()
         {
-            if (item.IdRodzajuPracownika == 0) // brak ID = insert
+            if (item.IdRodzajuPracownika == 0) // Dodawanie rekordu = brak ID = insert
             {
                 db.RodzajPracownika.Add(item);
             }
-            else // istnieje ID = update
+            else // Edycja rekordu = istnieje ID = update
             {
                 var doEdycji = db.RodzajPracownika.FirstOrDefault(f => f.IdRodzajuPracownika == item.IdRodzajuPracownika);
                 if (doEdycji != null)
@@ -63,7 +64,7 @@ namespace MVVMFirma.ViewModels
             }
 
             db.SaveChanges();
-            // automatyczne odświeżenie listy po edycji rekordu
+            // wysłanie prośby o odświeżenie listy po zapisie
             Messenger.Default.Send("RodzajPracownikaRefresh");
         }
         #endregion

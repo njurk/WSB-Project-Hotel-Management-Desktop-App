@@ -14,17 +14,20 @@ namespace MVVMFirma.Helper
             _canExecute = canExecute;
         }
 
+        // wykonuje komendê
         public void Execute(object parameter)
         {
             _command();
         }
 
+        // sprawdza, czy mo¿na ju¿ wykonaæ komendê
         public bool CanExecute(object parameter)
         {
             return _canExecute == null || _canExecute();
         }
 
         public event EventHandler CanExecuteChanged;
+        // wywo³ywane gdy wartoœæ zwracana przez CanExecute mo¿e sie zmienic
         public void RaiseCanExecuteChanged()
         {
             CanExecuteChanged?.Invoke(this, EventArgs.Empty);

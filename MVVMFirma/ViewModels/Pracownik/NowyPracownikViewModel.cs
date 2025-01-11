@@ -26,6 +26,7 @@ namespace MVVMFirma.ViewModels
             : base("Edycja pracownika")
         {
             db = new HotelEntities();
+            // inicjalizacja pól danymi z rekordu o ID przekazanym w argumencie (itemId)
             item = db.Pracownik.FirstOrDefault(p => p.IdPracownika == itemId);
 
             if (item != null)
@@ -202,7 +203,9 @@ namespace MVVMFirma.ViewModels
                 OnPropertyChanged(() => Telefon);
             }
         }
+        #endregion
 
+        #region Items
         public IQueryable<KeyAndValue> RodzajPracownikaItems
         {
             get
@@ -223,11 +226,11 @@ namespace MVVMFirma.ViewModels
         #region Helpers
         public override void Save()
         {
-            if (item.IdPracownika == 0) // brak ID = insert
+            if (item.IdPracownika == 0) // Dodawanie rekordu = brak ID = insert
             {
                 db.Pracownik.Add(item);
             }
-            else // istnieje ID = update
+            else // Edycja rekordu = istnieje ID = update
             {
                 var doEdycji = db.Pracownik.FirstOrDefault(f => f.IdPracownika == item.IdPracownika);
                 if (doEdycji != null)
@@ -237,7 +240,7 @@ namespace MVVMFirma.ViewModels
             }
 
             db.SaveChanges();
-            // automatyczne odświeżenie listy po edycji rekordu
+            // wysłanie prośby o odświeżenie listy po zapisie
             Messenger.Default.Send("PracownikRefresh");
         }
         #endregion
