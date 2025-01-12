@@ -71,6 +71,7 @@ namespace MVVMFirma.ViewModels
             if (SelectedItem != null)
             {
                 Messenger.Default.Send(DisplayName + "Edit-" + SelectedItem.IdPokoju);
+                SelectedItem = null;
             }
         }
 

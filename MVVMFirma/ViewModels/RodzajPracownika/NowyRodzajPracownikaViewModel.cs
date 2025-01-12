@@ -10,28 +10,6 @@ namespace MVVMFirma.ViewModels
         HotelEntities db;
         #endregion
 
-        #region Constructor
-        public NowyRodzajPracownikaViewModel()
-            : base("Rodzaj pracownika")
-        {
-            db = new HotelEntities();
-            item = new RodzajPracownika();
-        }
-
-        public NowyRodzajPracownikaViewModel(int itemId)
-            : base("Edycja rodzaju pracownika")
-        {
-            db = new HotelEntities();
-            // inicjalizacja pól danymi z rekordu o ID przekazanym w argumencie (itemId)
-            item = db.RodzajPracownika.FirstOrDefault(r => r.IdRodzajuPracownika == itemId);
-
-            if (item != null)
-            {
-                Nazwa = item.Nazwa;
-            }
-        }
-        #endregion
-
         #region Properties
         public string Nazwa
         {
@@ -66,6 +44,28 @@ namespace MVVMFirma.ViewModels
             db.SaveChanges();
             // wysłanie prośby o odświeżenie listy po zapisie
             Messenger.Default.Send("RodzajPracownikaRefresh");
+        }
+        #endregion
+
+        #region Constructor
+        public NowyRodzajPracownikaViewModel()
+            : base("Rodzaj pracownika")
+        {
+            db = new HotelEntities();
+            item = new RodzajPracownika();
+        }
+
+        public NowyRodzajPracownikaViewModel(int itemId)
+            : base("Edycja rodzaju pracownika")
+        {
+            db = new HotelEntities();
+            // inicjalizacja pól danymi z rekordu o ID przekazanym w argumencie (itemId)
+            item = db.RodzajPracownika.FirstOrDefault(r => r.IdRodzajuPracownika == itemId);
+
+            if (item != null)
+            {
+                Nazwa = item.Nazwa;
+            }
         }
         #endregion
     }

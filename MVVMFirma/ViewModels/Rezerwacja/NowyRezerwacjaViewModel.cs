@@ -28,44 +28,6 @@ namespace MVVMFirma.ViewModels
 
         #endregion
 
-        #region Constructor
-        public NowyRezerwacjaViewModel()
-            :base("Rezerwacja")
-        {
-            db = new HotelEntities();
-            item = new Rezerwacja();
-            DataRezerwacji = DateTime.Now;
-            DataZameldowania = DateTime.Now.AddDays(1);
-            DataWymeldowania = DateTime.Now.AddDays(2);
-            NrRezerwacji = GenerujNumerRezerwacji();
-        }
-
-        public NowyRezerwacjaViewModel(int itemId)
-            :base("Edycja rezerwacji")
-        {
-            db = new HotelEntities();
-            // inicjalizacja pól danymi z rekordu o ID przekazanym w argumencie (itemId)
-            item = db.Rezerwacja.FirstOrDefault(r => r.IdRezerwacji == itemId);
-
-            if (item != null)
-            {
-                NrRezerwacji = item.NrRezerwacji;
-                IdKlienta = item.IdKlienta;
-                IdPokoju = item.IdPokoju;
-                LiczbaDoroslych = item.LiczbaDoroslych;
-                LiczbaDzieci = item.LiczbaDzieci;
-                CzyZwierzeta = item.CzyZwierzeta;
-                DataZameldowania = item.DataZameldowania;
-                DataWymeldowania = item.DataWymeldowania;
-                DataRezerwacji = item.DataRezerwacji;
-                Kwota = item.Kwota;
-                Uwagi = item.Uwagi;
-                // przekazanie pokoju do właściwości, która odpowiada za do ustawienie jej w comboboxie
-                SelectedPokoj = db.Pokoj.FirstOrDefault(p => p.IdPokoju == item.IdPokoju);
-            }
-        }
-        #endregion
-
         #region Properties
         public string NrRezerwacji
         {
@@ -94,16 +56,16 @@ namespace MVVMFirma.ViewModels
 
         public int IdPokoju
         {
-            get { return item.IdPokoju; }
+            get 
+            { 
+                return item.IdPokoju; 
+            }
             set
             {
-                if (item.IdPokoju != value)
-                {
-                    item.IdPokoju = value;
-                    OnPropertyChanged(() => IdPokoju);
-                    // po każdej zmianie pokoju aktualizacja zaznaczenia
-                    SelectedPokoj = db.Pokoj.FirstOrDefault(p => p.IdPokoju == value);
-                }
+                item.IdPokoju = value;
+                OnPropertyChanged(() => IdPokoju);
+                // po każdej zmianie pokoju aktualizacja zaznaczenia
+                SelectedPokoj = db.Pokoj.FirstOrDefault(p => p.IdPokoju == value);
             }
         }
 
@@ -147,7 +109,10 @@ namespace MVVMFirma.ViewModels
         }
         public DateTime DataZameldowania
         {
-            get { return _dataZameldowania; }
+            get 
+            { 
+                return _dataZameldowania; 
+            }
             set
             {
                 item.DataZameldowania = value;
@@ -158,7 +123,10 @@ namespace MVVMFirma.ViewModels
         }
         public DateTime DataWymeldowania
         {
-            get { return _dataWymeldowania; }
+            get 
+            { 
+                return _dataWymeldowania; 
+            }
             set
             {
                 item.DataWymeldowania = value;
@@ -187,19 +155,6 @@ namespace MVVMFirma.ViewModels
             {
                 item.DataRezerwacji = value;
                 OnPropertyChanged(() => DataRezerwacji);
-            }
-        }
-
-        public decimal Kwota
-        {
-            get
-            {
-                return item.Kwota;
-            }
-            set
-            {
-                item.Kwota = value;
-                OnPropertyChanged(() => Kwota);
             }
         }
 
@@ -251,6 +206,18 @@ namespace MVVMFirma.ViewModels
                 OnPropertyChanged(() => CzyZnizka);
             }
         }
+        public decimal Kwota
+        {
+            get
+            {
+                return item.Kwota;
+            }
+            set
+            {
+                item.Kwota = value;
+                OnPropertyChanged(() => Kwota);
+            }
+        }
 
         // poniższa właściwość ustawia pokój jako wybrany element w comboboxie przy edycji, dzięki czemu jest widoczny od razu
         public Pokoj SelectedPokoj
@@ -273,14 +240,14 @@ namespace MVVMFirma.ViewModels
         #endregion
 
         #region Items
-        public IQueryable<KeyAndValue> KlientItems
+        public IEnumerable<KeyAndValue> KlientItems
         {
             get
             {
                 return new KlientB(db).GetKlientKeyAndValueItems();
             }
         }
-        public ObservableCollection<KeyAndValue> PokojItems
+        public IEnumerable<KeyAndValue> PokojItems
         {
             get
             {
@@ -312,7 +279,7 @@ namespace MVVMFirma.ViewModels
             }
         }
 
-        public IQueryable<KeyAndValue> ZnizkaItems
+        public IEnumerable<KeyAndValue> ZnizkaItems
         {
             get
             {
@@ -329,34 +296,46 @@ namespace MVVMFirma.ViewModels
                 case nameof(IdKlienta):
                     return IdKlienta <= 0 ? "Wybierz klienta" : string.Empty;
 
-                case nameof(IdPokoju):
                 case nameof(LiczbaDoroslych):
-                case nameof(LiczbaDzieci):
                     if (!int.TryParse(LiczbaDoroslych, out int dorosli) || dorosli <= 0)
-                        return "Wprowadź poprawną liczbę dorosłych";
+                        return "Wprowadź poprawną liczbę dorosłych.";
+                    return string.Empty;
 
-                    if (!int.TryParse(LiczbaDzieci, out int dzieci) || dzieci < 0)
-                        return "Wprowadź poprawną liczbę dzieci";
+                case nameof(LiczbaDzieci):
+                    if (!string.IsNullOrWhiteSpace(LiczbaDzieci) && (!int.TryParse(LiczbaDzieci, out int dzieci) || dzieci < 0))
+                        return "Wprowadź poprawną liczbę dzieci (lub pozostaw puste).";
+                    return string.Empty;
 
+                case nameof(IdPokoju):
                     if (IdPokoju > 0)
                     {
+                        int liczbaDoroslych = 0, liczbaDzieci = 0;
+                        // pobranie danych pokoju
                         var pokoj = db.Pokoj.FirstOrDefault(p => p.IdPokoju == IdPokoju);
-                        if (pokoj != null && dorosli + dzieci > Convert.ToInt32(pokoj.TypPokoju.MaxLiczbaOsob))
+
+                        // sprawdzenie max liczby osób
+                        if (pokoj != null && (liczbaDoroslych + liczbaDzieci) > Convert.ToInt32(pokoj.TypPokoju.MaxLiczbaOsob))
                         {
-                            return "Łączna liczba osób przekracza maksymalny limit dla wybranego pokoju.";
+                            return $"Łączna liczba osób ({liczbaDoroslych + liczbaDzieci}) przekracza maksymalny limit ({pokoj.TypPokoju.MaxLiczbaOsob}) dla wybranego pokoju.";
                         }
+                    }
+                    else
+                    {
+                        return "Wybierz pokój.";
                     }
                     return string.Empty;
 
                 case nameof(DataZameldowania):
-                    return DataZameldowania > DataWymeldowania ? "Data zameldowania nie może być późniejsza od daty wymeldowania" : string.Empty;
+                    return DataZameldowania > DataWymeldowania ? "Data zameldowania nie może być późniejsza od daty wymeldowania." : string.Empty;
 
                 case nameof(DataWymeldowania):
-                    return DataWymeldowania < DataZameldowania ? "Data wymeldowania nie może poprzedzać daty zameldowania" : string.Empty;
+                    return DataWymeldowania < DataZameldowania ? "Data wymeldowania nie może poprzedzać daty zameldowania." : string.Empty;
 
                 case nameof(DataRezerwacji):
-                    return DataRezerwacji > DataZameldowania ? "Data rezerwacji nie może być późniejsza niż data zameldowania" : string.Empty;
-
+                    return DataRezerwacji > DataZameldowania ? "Data rezerwacji nie może być późniejsza niż data zameldowania." : string.Empty;
+                
+                case nameof(Kwota):
+                    return Kwota == 0 ? "Proszę obliczyć kwotę." : string.Empty;
                 default:
                     return string.Empty;
             }
@@ -490,6 +469,44 @@ namespace MVVMFirma.ViewModels
             db.SaveChanges();
             // wysłanie prośby o odświeżenie listy po zapisie
             Messenger.Default.Send("RezerwacjaRefresh");
+        }
+        #endregion
+
+        #region Constructor
+        public NowyRezerwacjaViewModel()
+            : base("Rezerwacja")
+        {
+            db = new HotelEntities();
+            item = new Rezerwacja();
+            DataRezerwacji = DateTime.Now;
+            DataZameldowania = DateTime.Now.AddDays(1);
+            DataWymeldowania = DateTime.Now.AddDays(2);
+            NrRezerwacji = GenerujNumerRezerwacji();
+        }
+
+        public NowyRezerwacjaViewModel(int itemId)
+            : base("Edycja rezerwacji")
+        {
+            db = new HotelEntities();
+            // inicjalizacja pól danymi z rekordu o ID przekazanym w argumencie (itemId)
+            item = db.Rezerwacja.FirstOrDefault(r => r.IdRezerwacji == itemId);
+
+            if (item != null)
+            {
+                NrRezerwacji = item.NrRezerwacji;
+                IdKlienta = item.IdKlienta;
+                IdPokoju = item.IdPokoju;
+                LiczbaDoroslych = item.LiczbaDoroslych;
+                LiczbaDzieci = item.LiczbaDzieci;
+                CzyZwierzeta = item.CzyZwierzeta;
+                DataZameldowania = item.DataZameldowania;
+                DataWymeldowania = item.DataWymeldowania;
+                DataRezerwacji = item.DataRezerwacji;
+                Kwota = item.Kwota;
+                Uwagi = item.Uwagi;
+                // przekazanie pokoju do właściwości, która odpowiada za do ustawienie jej w comboboxie
+                SelectedPokoj = db.Pokoj.FirstOrDefault(p => p.IdPokoju == item.IdPokoju);
+            }
         }
         #endregion
     }

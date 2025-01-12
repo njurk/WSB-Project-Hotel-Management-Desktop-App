@@ -10,28 +10,6 @@ namespace MVVMFirma.ViewModels
         HotelEntities db;
         #endregion
 
-        #region Constructor
-        public NowyKrajViewModel()
-            : base("Kraj")
-        {
-            db = new HotelEntities();
-            item = new Kraj();
-        }
-
-        public NowyKrajViewModel(int itemId)
-            : base("Edycja kraju")
-        {
-            db = new HotelEntities();
-            // inicjalizacja pól danymi z rekordu o ID przekazanym w argumencie (itemId)
-            item = db.Kraj.FirstOrDefault(k => k.IdKraju == itemId);
-
-            if (item != null)
-            {
-                Nazwa = item.Nazwa;
-            }
-        }
-        #endregion
-
         #region Properties
         public string Nazwa
         {
@@ -66,6 +44,28 @@ namespace MVVMFirma.ViewModels
             db.SaveChanges();
             // wysłanie prośby o odświeżenie listy po zapisie
             Messenger.Default.Send("KrajRefresh");
+        }
+        #endregion
+
+        #region Constructor
+        public NowyKrajViewModel()
+            : base("Kraj")
+        {
+            db = new HotelEntities();
+            item = new Kraj();
+        }
+
+        public NowyKrajViewModel(int itemId)
+            : base("Edycja kraju")
+        {
+            db = new HotelEntities();
+            // inicjalizacja pól danymi z rekordu o ID przekazanym w argumencie (itemId)
+            item = db.Kraj.FirstOrDefault(k => k.IdKraju == itemId);
+
+            if (item != null)
+            {
+                Nazwa = item.Nazwa;
+            }
         }
         #endregion
     }

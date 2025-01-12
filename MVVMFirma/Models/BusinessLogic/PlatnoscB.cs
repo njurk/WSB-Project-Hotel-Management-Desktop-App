@@ -1,5 +1,6 @@
 ﻿using MVVMFirma.Models.Entities;
 using MVVMFirma.Models.EntitiesForView;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace MVVMFirma.Models.BusinessLogic
@@ -12,7 +13,7 @@ namespace MVVMFirma.Models.BusinessLogic
         #endregion
 
         #region Funkcje biznesowe
-        public IQueryable<KeyAndValue> GetPlatnoscKeyAndValueItems()
+        public IEnumerable<KeyAndValue> GetPlatnoscKeyAndValueItems()
         {
             return
                 (
@@ -22,7 +23,7 @@ namespace MVVMFirma.Models.BusinessLogic
                         Key = platnosc.IdPlatnosci,
                         Value = platnosc.NrPlatnosci
                     }
-                ).ToList().AsQueryable();
+                ).ToList();
         }
         #endregion
     }

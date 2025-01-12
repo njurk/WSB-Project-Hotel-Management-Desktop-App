@@ -16,32 +16,6 @@ namespace MVVMFirma.ViewModels
         HotelEntities db;
         #endregion
 
-        #region Constructor
-        public NowyCennikViewModel()
-            : base("Cennik")
-        {
-            db = new HotelEntities();
-            item = new Cennik();
-        }
-
-        public NowyCennikViewModel(int itemId)
-            : base("Edycja cennika")
-        {
-            db = new HotelEntities();
-            // inicjalizacja pól danymi z rekordu o ID przekazanym w argumencie (itemId)
-            item = db.Cennik.FirstOrDefault(p => p.IdCennika == itemId);
-
-            if (item != null)
-            {
-                IdKlasyPokoju = item.IdKlasyPokoju;
-                IdTypuPokoju = item.IdTypuPokoju;
-                CenaDorosly = item.CenaDorosly;
-                CenaDziecko = item.CenaDziecko;
-                CenaZwierzeta = item.CenaZwierzeta;
-            }
-        }
-        #endregion
-
         #region Properties
         public int IdKlasyPokoju
         {
@@ -109,7 +83,7 @@ namespace MVVMFirma.ViewModels
         #endregion
 
         #region Items
-        public IQueryable<KeyAndValue> KlasaPokojuItems
+        public IEnumerable<KeyAndValue> KlasaPokojuItems
         {
             get
             {
@@ -117,7 +91,7 @@ namespace MVVMFirma.ViewModels
             }
         }
 
-        public IQueryable<KeyAndValue> TypPokojuItems
+        public IEnumerable<KeyAndValue> TypPokojuItems
         {
             get
             {
@@ -145,6 +119,32 @@ namespace MVVMFirma.ViewModels
             db.SaveChanges();
             // wysłanie prośby o odświeżenie listy po zapisie
             Messenger.Default.Send("CennikRefresh");
+        }
+        #endregion
+
+        #region Constructor
+        public NowyCennikViewModel()
+            : base("Cennik")
+        {
+            db = new HotelEntities();
+            item = new Cennik();
+        }
+
+        public NowyCennikViewModel(int itemId)
+            : base("Edycja cennika")
+        {
+            db = new HotelEntities();
+            // inicjalizacja pól danymi z rekordu o ID przekazanym w argumencie (itemId)
+            item = db.Cennik.FirstOrDefault(p => p.IdCennika == itemId);
+
+            if (item != null)
+            {
+                IdKlasyPokoju = item.IdKlasyPokoju;
+                IdTypuPokoju = item.IdTypuPokoju;
+                CenaDorosly = item.CenaDorosly;
+                CenaDziecko = item.CenaDziecko;
+                CenaZwierzeta = item.CenaZwierzeta;
+            }
         }
         #endregion
     }

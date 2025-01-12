@@ -3,6 +3,7 @@ using MVVMFirma.Models.BusinessLogic;
 using MVVMFirma.Models.Entities;
 using MVVMFirma.Models.EntitiesForView;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace MVVMFirma.ViewModels
@@ -11,40 +12,6 @@ namespace MVVMFirma.ViewModels
     {
         #region DB
         HotelEntities db;
-        #endregion
-
-        #region Constructor
-        public NowyPracownikViewModel()
-            : base("Pracownik")
-        {
-            db = new HotelEntities();
-            item = new Pracownik();
-            DataUrodzenia = DateTime.Now;
-        }
-
-        public NowyPracownikViewModel(int itemId)
-            : base("Edycja pracownika")
-        {
-            db = new HotelEntities();
-            // inicjalizacja pól danymi z rekordu o ID przekazanym w argumencie (itemId)
-            item = db.Pracownik.FirstOrDefault(p => p.IdPracownika == itemId);
-
-            if (item != null)
-            {
-                IdRodzajuPracownika = item.IdRodzajuPracownika;
-                Imie = item.Imie;
-                Nazwisko = item.Nazwisko;
-                Ulica = item.Ulica;
-                NrDomu = item.NrDomu;
-                NrLokalu = item.NrLokalu;
-                KodPocztowy = item.KodPocztowy;
-                Miasto = item.Miasto;
-                IdKraju = item.IdKraju;
-                DataUrodzenia = item.DataUrodzenia;
-                Email = item.Email;
-                Telefon = item.Telefon;
-            }
-        }
         #endregion
 
         #region Properties
@@ -206,7 +173,7 @@ namespace MVVMFirma.ViewModels
         #endregion
 
         #region Items
-        public IQueryable<KeyAndValue> RodzajPracownikaItems
+        public IEnumerable<KeyAndValue> RodzajPracownikaItems
         {
             get
             {
@@ -214,7 +181,7 @@ namespace MVVMFirma.ViewModels
             }
         }
 
-        public IQueryable<KeyAndValue> KrajItems
+        public IEnumerable<KeyAndValue> KrajItems
         {
             get
             {
@@ -242,6 +209,40 @@ namespace MVVMFirma.ViewModels
             db.SaveChanges();
             // wysłanie prośby o odświeżenie listy po zapisie
             Messenger.Default.Send("PracownikRefresh");
+        }
+        #endregion
+
+        #region Constructor
+        public NowyPracownikViewModel()
+            : base("Pracownik")
+        {
+            db = new HotelEntities();
+            item = new Pracownik();
+            DataUrodzenia = DateTime.Now;
+        }
+
+        public NowyPracownikViewModel(int itemId)
+            : base("Edycja pracownika")
+        {
+            db = new HotelEntities();
+            // inicjalizacja pól danymi z rekordu o ID przekazanym w argumencie (itemId)
+            item = db.Pracownik.FirstOrDefault(p => p.IdPracownika == itemId);
+
+            if (item != null)
+            {
+                IdRodzajuPracownika = item.IdRodzajuPracownika;
+                Imie = item.Imie;
+                Nazwisko = item.Nazwisko;
+                Ulica = item.Ulica;
+                NrDomu = item.NrDomu;
+                NrLokalu = item.NrLokalu;
+                KodPocztowy = item.KodPocztowy;
+                Miasto = item.Miasto;
+                IdKraju = item.IdKraju;
+                DataUrodzenia = item.DataUrodzenia;
+                Email = item.Email;
+                Telefon = item.Telefon;
+            }
         }
         #endregion
     }

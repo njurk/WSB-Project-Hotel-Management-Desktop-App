@@ -10,29 +10,6 @@ namespace MVVMFirma.ViewModels
         HotelEntities db;
         #endregion
 
-        #region Constructor
-        public NowyUdogodnienieViewModel()
-            : base("Udogodnienie")
-        {
-            db = new HotelEntities();
-            item = new Udogodnienie();
-        }
-
-        public NowyUdogodnienieViewModel(int itemId)
-            : base("Edycja udogodnienia")
-        {
-            db = new HotelEntities();
-            // inicjalizacja pól danymi z rekordu o ID przekazanym w argumencie (itemId)
-            item = db.Udogodnienie.FirstOrDefault(u => u.IdUdogodnienia == itemId);
-
-            if (item != null)
-            {
-                Nazwa = item.Nazwa;
-            }
-        }
-
-        #endregion
-
         #region Properties
         public string Nazwa
         {
@@ -68,6 +45,29 @@ namespace MVVMFirma.ViewModels
             // wysłanie prośby o odświeżenie listy po zapisie
             Messenger.Default.Send("UdogodnienieRefresh");
         }
+        #endregion
+
+        #region Constructor
+        public NowyUdogodnienieViewModel()
+            : base("Udogodnienie")
+        {
+            db = new HotelEntities();
+            item = new Udogodnienie();
+        }
+
+        public NowyUdogodnienieViewModel(int itemId)
+            : base("Edycja udogodnienia")
+        {
+            db = new HotelEntities();
+            // inicjalizacja pól danymi z rekordu o ID przekazanym w argumencie (itemId)
+            item = db.Udogodnienie.FirstOrDefault(u => u.IdUdogodnienia == itemId);
+
+            if (item != null)
+            {
+                Nazwa = item.Nazwa;
+            }
+        }
+
         #endregion
     }
 }

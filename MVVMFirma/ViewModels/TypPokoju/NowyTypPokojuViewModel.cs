@@ -10,30 +10,6 @@ namespace MVVMFirma.ViewModels
         HotelEntities db;
         #endregion
 
-        #region Constructor
-        public NowyTypPokojuViewModel()
-            : base("Typ pokoju")
-        {
-            db = new HotelEntities();
-            item = new TypPokoju();
-        }
-
-        public NowyTypPokojuViewModel(int itemId)
-            : base("Edycja typu pokoju")
-        {
-            db = new HotelEntities();
-            // inicjalizacja pól danymi z rekordu o ID przekazanym w argumencie (itemId)
-            item = db.TypPokoju.FirstOrDefault(s => s.IdTypuPokoju == itemId);
-
-            if (item != null)
-            {
-                Nazwa = item.Nazwa;
-                MaxLiczbaOsob = item.MaxLiczbaOsob;
-            }
-        }
-
-        #endregion
-
         #region Properties
         public string Nazwa
         {
@@ -82,6 +58,30 @@ namespace MVVMFirma.ViewModels
             // wysłanie prośby o odświeżenie listy po zapisie
             Messenger.Default.Send("TypPokojuRefresh");
         }
+        #endregion
+
+        #region Constructor
+        public NowyTypPokojuViewModel()
+            : base("Typ pokoju")
+        {
+            db = new HotelEntities();
+            item = new TypPokoju();
+        }
+
+        public NowyTypPokojuViewModel(int itemId)
+            : base("Edycja typu pokoju")
+        {
+            db = new HotelEntities();
+            // inicjalizacja pól danymi z rekordu o ID przekazanym w argumencie (itemId)
+            item = db.TypPokoju.FirstOrDefault(s => s.IdTypuPokoju == itemId);
+
+            if (item != null)
+            {
+                Nazwa = item.Nazwa;
+                MaxLiczbaOsob = item.MaxLiczbaOsob;
+            }
+        }
+
         #endregion
     }
 }

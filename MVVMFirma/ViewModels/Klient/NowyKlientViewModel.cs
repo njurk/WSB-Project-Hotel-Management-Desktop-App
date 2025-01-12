@@ -2,6 +2,7 @@
 using MVVMFirma.Models.BusinessLogic;
 using MVVMFirma.Models.Entities;
 using MVVMFirma.Models.EntitiesForView;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace MVVMFirma.ViewModels
@@ -10,38 +11,6 @@ namespace MVVMFirma.ViewModels
     {
         #region DB
         HotelEntities db;
-        #endregion
-
-        #region Constructor
-        public NowyKlientViewModel()
-            : base("Klient")
-        {
-            db = new HotelEntities();
-            item = new Klient();
-        }
-
-        public NowyKlientViewModel(int itemId)
-            : base("Edycja klienta")
-        {
-            db = new HotelEntities();
-            // inicjalizacja pól danymi z rekordu o ID przekazanym w argumencie (itemId)
-            item = db.Klient.FirstOrDefault(k => k.IdKlienta == itemId);
-
-            if (item != null)
-            {
-                Imie = item.Imie;
-                Nazwisko = item.Nazwisko;
-                Ulica = item.Ulica;
-                NrDomu = item.NrDomu;
-                NrLokalu = item.NrLokalu;
-                KodPocztowy = item.KodPocztowy;
-                Miasto = item.Miasto;
-                IdKraju = item.IdKraju;
-                Email = item.Email;
-                Telefon = item.Telefon;
-                NIP = item.NIP;
-            }
-        }
         #endregion
 
         #region Properties
@@ -190,7 +159,7 @@ namespace MVVMFirma.ViewModels
         #endregion
 
         #region Items
-        public IQueryable<KeyAndValue> KrajItems
+        public IEnumerable<KeyAndValue> KrajItems
         {
             get
             {
@@ -218,6 +187,38 @@ namespace MVVMFirma.ViewModels
             db.SaveChanges();
             // wysłanie prośby o odświeżenie listy po zapisie
             Messenger.Default.Send("KlientRefresh");
+        }
+        #endregion
+
+        #region Constructor
+        public NowyKlientViewModel()
+            : base("Klient")
+        {
+            db = new HotelEntities();
+            item = new Klient();
+        }
+
+        public NowyKlientViewModel(int itemId)
+            : base("Edycja klienta")
+        {
+            db = new HotelEntities();
+            // inicjalizacja pól danymi z rekordu o ID przekazanym w argumencie (itemId)
+            item = db.Klient.FirstOrDefault(k => k.IdKlienta == itemId);
+
+            if (item != null)
+            {
+                Imie = item.Imie;
+                Nazwisko = item.Nazwisko;
+                Ulica = item.Ulica;
+                NrDomu = item.NrDomu;
+                NrLokalu = item.NrLokalu;
+                KodPocztowy = item.KodPocztowy;
+                Miasto = item.Miasto;
+                IdKraju = item.IdKraju;
+                Email = item.Email;
+                Telefon = item.Telefon;
+                NIP = item.NIP;
+            }
         }
         #endregion
     }

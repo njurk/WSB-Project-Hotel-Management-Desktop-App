@@ -27,7 +27,7 @@
             <RowDefinition Height="40"/>
         </Grid.RowDefinitions>
         <Label Grid.Column="0" Grid.Row="0" Margin="0,8,0,8" Content="Numer rezerwacji"/>
-        <TextBlock Grid.Column="1" Grid.Row="0" Margin="0,12,0,12" Text="{Binding Path=NrRezerwacji}"/>
+        <TextBlock Grid.Column="1" Grid.Row="0" Margin="0,12,0,12" Text="{Binding Path=NrRezerwacji, ValidatesOnDataErrors=True}"/>
 
         <Label Grid.Column="0" Grid.Row="1" Margin="0,8,0,8" Content="Data rezerwacji"/>
         <DatePicker Grid.Column="1" Grid.Row="1" Margin="0,8,0,8" SelectedDate="{Binding DataRezerwacji, ValidatesOnDataErrors=True}"/>
@@ -54,7 +54,7 @@
         <ComboBox Grid.Column="1" Grid.Row="8" Margin="0,8,0,8" ItemsSource="{Binding PokojItems}" DisplayMemberPath="Value" SelectedValuePath="Key" SelectedValue="{Binding Path=IdPokoju, Mode=TwoWay, ValidatesOnDataErrors=True}" />
 
         <Label Grid.Column="0" Grid.Row="9" Margin="0,8,0,8" Content="Uwagi"/>
-        <TextBox Grid.Column="1" Grid.Row="9" Margin="0,8,0,8" Text="{Binding Path=Uwagi, UpdateSourceTrigger=PropertyChanged}"/>
+        <TextBox Grid.Column="1" Grid.Row="9" Margin="0,8,0,8" Text="{Binding Path=Uwagi, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
 
         <Label Grid.Column="0" Grid.Row="10" Margin="0,8,0,8" Content="Zniżka"/>
         <ComboBox Grid.Column="1" Grid.Row="10" Margin="0,8,0,8" ItemsSource="{Binding ZnizkaItems}" DisplayMemberPath="Value" SelectedValuePath="Key" SelectedValue="{Binding Path=IdZnizki, Mode=TwoWay, ValidatesOnDataErrors=True}" IsEnabled="{Binding CzyZnizka}" />

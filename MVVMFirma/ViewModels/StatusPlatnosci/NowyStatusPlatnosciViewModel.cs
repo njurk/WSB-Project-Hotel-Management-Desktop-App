@@ -14,29 +14,6 @@ namespace MVVMFirma.ViewModels
         HotelEntities db;
         #endregion
 
-        #region Constructor
-        public NowyStatusPlatnosciViewModel()
-            : base("Status płatności")
-        {
-            db = new HotelEntities();
-            item = new StatusPlatnosci();
-        }
-
-        public NowyStatusPlatnosciViewModel(int itemId)
-            :base("Edycja statusu płatności")
-        {
-            db = new HotelEntities();
-            // inicjalizacja pól danymi z rekordu o ID przekazanym w argumencie (itemId)
-            item = db.StatusPlatnosci.FirstOrDefault(s => s.IdStatusuPlatnosci == itemId);
-
-            if (item != null)
-            {
-                Nazwa = item.Nazwa;
-            }
-        }
-
-        #endregion
-
         #region Properties
         public string Nazwa
         {
@@ -72,6 +49,29 @@ namespace MVVMFirma.ViewModels
             // wysłanie prośby o odświeżenie listy po zapisie
             Messenger.Default.Send("StatusPlatnosciRefresh");
         }
+        #endregion
+
+        #region Constructor
+        public NowyStatusPlatnosciViewModel()
+            : base("Status płatności")
+        {
+            db = new HotelEntities();
+            item = new StatusPlatnosci();
+        }
+
+        public NowyStatusPlatnosciViewModel(int itemId)
+            : base("Edycja statusu płatności")
+        {
+            db = new HotelEntities();
+            // inicjalizacja pól danymi z rekordu o ID przekazanym w argumencie (itemId)
+            item = db.StatusPlatnosci.FirstOrDefault(s => s.IdStatusuPlatnosci == itemId);
+
+            if (item != null)
+            {
+                Nazwa = item.Nazwa;
+            }
+        }
+
         #endregion
     }
 }

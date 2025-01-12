@@ -16,7 +16,7 @@ namespace MVVMFirma.Models.BusinessLogic
         #endregion
 
         #region Funkcje biznesowe
-        public IQueryable<KeyAndValue> GetZnizkaKeyAndValueItems()
+        public IEnumerable<KeyAndValue> GetZnizkaKeyAndValueItems()
         {
             return
                 (
@@ -26,7 +26,7 @@ namespace MVVMFirma.Models.BusinessLogic
                         Key = znizka.IdZnizki,
                         Value = znizka.Nazwa + " - " + znizka.Wartosc + "%"
                     }
-                ).ToList().AsQueryable();
+                ).ToList();
         }
         #endregion
     }

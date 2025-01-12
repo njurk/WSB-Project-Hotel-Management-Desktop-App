@@ -2,6 +2,7 @@
 using MVVMFirma.Models.BusinessLogic;
 using MVVMFirma.Models.Entities;
 using MVVMFirma.Models.EntitiesForView;
+using System.Collections.Generic;
 using System.Linq;
 
 
@@ -12,30 +13,6 @@ namespace MVVMFirma.ViewModels
     {
         #region DB
         HotelEntities db;
-        #endregion
-
-        #region Constructor
-        public NowyUdogodnieniaKlasPokojuViewModel()
-            : base("Udogodnienie klasy pokoju")
-        {
-            db = new HotelEntities();
-            item = new UdogodnieniaKlasPokoju();
-        }
-
-        public NowyUdogodnieniaKlasPokojuViewModel(int itemId)
-            : base("Edycja udogodnienia klasy pokoju")
-        {
-            db = new HotelEntities();
-            // inicjalizacja pól danymi z rekordu o ID przekazanym w argumencie (itemId)
-            item = db.UdogodnieniaKlasPokoju.FirstOrDefault(u => u.IdPolaczenia == itemId);
-
-            if (item != null)
-            {
-                IdKlasyPokoju = item.IdKlasyPokoju;
-                IdUdogodnienia = item.IdUdogodnienia;
-            }
-        }
-
         #endregion
 
         #region Properties
@@ -67,7 +44,7 @@ namespace MVVMFirma.ViewModels
         #endregion
 
         #region Items
-        public IQueryable<KeyAndValue> KlasaPokojuItems
+        public IEnumerable<KeyAndValue> KlasaPokojuItems
         {
             get
             {
@@ -75,7 +52,7 @@ namespace MVVMFirma.ViewModels
             }
         }
 
-        public IQueryable<KeyAndValue> UdogodnienieItems
+        public IEnumerable<KeyAndValue> UdogodnienieItems
         {
             get
             {
@@ -104,6 +81,30 @@ namespace MVVMFirma.ViewModels
             // wysłanie prośby o odświeżenie listy po zapisie
             Messenger.Default.Send("UdogodnieniaKlasPokojuRefresh");
         }
+        #endregion
+
+        #region Constructor
+        public NowyUdogodnieniaKlasPokojuViewModel()
+            : base("Udogodnienie klasy pokoju")
+        {
+            db = new HotelEntities();
+            item = new UdogodnieniaKlasPokoju();
+        }
+
+        public NowyUdogodnieniaKlasPokojuViewModel(int itemId)
+            : base("Edycja udogodnienia klasy pokoju")
+        {
+            db = new HotelEntities();
+            // inicjalizacja pól danymi z rekordu o ID przekazanym w argumencie (itemId)
+            item = db.UdogodnieniaKlasPokoju.FirstOrDefault(u => u.IdPolaczenia == itemId);
+
+            if (item != null)
+            {
+                IdKlasyPokoju = item.IdKlasyPokoju;
+                IdUdogodnienia = item.IdUdogodnienia;
+            }
+        }
+
         #endregion
     }
 }

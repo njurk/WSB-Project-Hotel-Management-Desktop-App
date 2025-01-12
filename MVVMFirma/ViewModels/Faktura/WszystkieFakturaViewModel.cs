@@ -65,6 +65,7 @@ namespace MVVMFirma.ViewModels
             if (SelectedItem != null)
             {
                 Messenger.Default.Send(DisplayName + "Edit-" + SelectedItem.IdFaktury);
+                SelectedItem = null;
             }
         }
 

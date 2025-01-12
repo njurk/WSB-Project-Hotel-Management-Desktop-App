@@ -16,7 +16,7 @@ namespace MVVMFirma.Models.BusinessLogic
         #endregion
 
         #region Funkcje biznesowe
-        public IQueryable<KeyAndValue> GetSposobPlatnosciKeyAndValueItems()
+        public IEnumerable<KeyAndValue> GetSposobPlatnosciKeyAndValueItems()
         {
             return
                 (
@@ -26,7 +26,7 @@ namespace MVVMFirma.Models.BusinessLogic
                         Key = sposobplatnosci.IdSposobuPlatnosci,
                         Value = sposobplatnosci.Nazwa
                     }
-                ).ToList().AsQueryable();
+                ).ToList();
         }
         #endregion
     }

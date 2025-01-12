@@ -54,6 +54,7 @@ namespace MVVMFirma.ViewModels
             if (SelectedItem != null)
             {
                 Messenger.Default.Send(DisplayName + "Edit-" + SelectedItem.IdSposobuPlatnosci);
+                SelectedItem = null;
             }
         }
 

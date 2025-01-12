@@ -1,5 +1,6 @@
 ﻿using MVVMFirma.Models.Entities;
 using MVVMFirma.Models.EntitiesForView;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace MVVMFirma.Models.BusinessLogic
@@ -12,7 +13,7 @@ namespace MVVMFirma.Models.BusinessLogic
         #endregion
 
         #region Funkcje biznesowe
-        public IQueryable<KeyAndValue> GetPracownikKeyAndValueItems()
+        public IEnumerable<KeyAndValue> GetPracownikKeyAndValueItems()
         {
             return
                 (
@@ -22,7 +23,7 @@ namespace MVVMFirma.Models.BusinessLogic
                         Key = pracownik.IdPracownika,
                         Value = pracownik.Imie + " " + pracownik.Nazwisko
                     }
-                ).ToList().AsQueryable();
+                ).ToList();
         }
         #endregion
     }

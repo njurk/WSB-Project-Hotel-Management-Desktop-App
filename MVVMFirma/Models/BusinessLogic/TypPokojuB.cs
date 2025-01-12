@@ -16,7 +16,7 @@ namespace MVVMFirma.Models.BusinessLogic
         #endregion
 
         #region Funkcje biznesowe
-        public IQueryable<KeyAndValue> GetTypPokojuKeyAndValueItems()
+        public IEnumerable<KeyAndValue> GetTypPokojuKeyAndValueItems()
         {
             return
                 (
@@ -26,7 +26,7 @@ namespace MVVMFirma.Models.BusinessLogic
                         Key = typpokoju.IdTypuPokoju,
                         Value = typpokoju.Nazwa
                     }
-                ).ToList().AsQueryable();
+                ).ToList();
         }
         #endregion
     }

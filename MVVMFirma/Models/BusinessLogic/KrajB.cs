@@ -1,5 +1,6 @@
 ﻿using MVVMFirma.Models.Entities;
 using MVVMFirma.Models.EntitiesForView;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace MVVMFirma.Models.BusinessLogic
@@ -12,7 +13,7 @@ namespace MVVMFirma.Models.BusinessLogic
         #endregion
 
         #region Funkcje biznesowe
-        public IQueryable<KeyAndValue> GetKrajKeyAndValueItems()
+        public IEnumerable<KeyAndValue> GetKrajKeyAndValueItems()
         {
             return
                 (
@@ -22,7 +23,7 @@ namespace MVVMFirma.Models.BusinessLogic
                         Key = kraj.IdKraju,
                         Value = kraj.Nazwa
                     }
-                ).ToList().AsQueryable();
+                ).ToList();
         }
         #endregion
     }

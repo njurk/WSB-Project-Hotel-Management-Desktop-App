@@ -10,29 +10,6 @@ namespace MVVMFirma.ViewModels
         HotelEntities db;
         #endregion
 
-        #region Constructor
-        public NowyVATViewModel()
-            : base("Stawka VAT")
-        {
-            db = new HotelEntities();
-            item = new VAT();
-        }
-
-        public NowyVATViewModel(int itemId)
-            : base("Edycja stawki VAT")
-        {
-            db = new HotelEntities();
-            // inicjalizacja pól danymi z rekordu o ID przekazanym w argumencie (itemId)
-            item = db.VAT.FirstOrDefault(v => v.IdVat == itemId);
-
-            if (item != null)
-            {
-                Stawka = item.Stawka;
-            }
-        }
-
-        #endregion
-
         #region Properties
         public string Stawka
         {
@@ -68,6 +45,29 @@ namespace MVVMFirma.ViewModels
             // wysłanie prośby o odświeżenie listy po zapisie
             Messenger.Default.Send("VATRefresh");
         }
+        #endregion
+
+        #region Constructor
+        public NowyVATViewModel()
+            : base("Stawka VAT")
+        {
+            db = new HotelEntities();
+            item = new VAT();
+        }
+
+        public NowyVATViewModel(int itemId)
+            : base("Edycja stawki VAT")
+        {
+            db = new HotelEntities();
+            // inicjalizacja pól danymi z rekordu o ID przekazanym w argumencie (itemId)
+            item = db.VAT.FirstOrDefault(v => v.IdVat == itemId);
+
+            if (item != null)
+            {
+                Stawka = item.Stawka;
+            }
+        }
+
         #endregion
     }
 }

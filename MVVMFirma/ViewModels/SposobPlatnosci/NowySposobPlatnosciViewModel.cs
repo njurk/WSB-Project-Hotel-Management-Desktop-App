@@ -10,29 +10,6 @@ namespace MVVMFirma.ViewModels
         HotelEntities db;
         #endregion
 
-        #region Constructor
-        public NowySposobPlatnosciViewModel()
-            : base("Sposób płatności")
-        {
-            db = new HotelEntities();
-            item = new SposobPlatnosci();
-        }
-
-        public NowySposobPlatnosciViewModel(int itemId)
-            : base("Edycja sposobu płatności")
-        {
-            db = new HotelEntities();
-            // inicjalizacja pól danymi z rekordu o ID przekazanym w argumencie (itemId)
-            item = db.SposobPlatnosci.FirstOrDefault(s => s.IdSposobuPlatnosci == itemId);
-
-            if (item != null)
-            {
-                Nazwa = item.Nazwa;
-            }
-        }
-
-        #endregion
-
         #region Properties
         public string Nazwa
         {
@@ -68,6 +45,29 @@ namespace MVVMFirma.ViewModels
             // wysłanie prośby o odświeżenie listy po zapisie
             Messenger.Default.Send("SposobPlatnosciRefresh");
         }
+        #endregion
+
+        #region Constructor
+        public NowySposobPlatnosciViewModel()
+            : base("Sposób płatności")
+        {
+            db = new HotelEntities();
+            item = new SposobPlatnosci();
+        }
+
+        public NowySposobPlatnosciViewModel(int itemId)
+            : base("Edycja sposobu płatności")
+        {
+            db = new HotelEntities();
+            // inicjalizacja pól danymi z rekordu o ID przekazanym w argumencie (itemId)
+            item = db.SposobPlatnosci.FirstOrDefault(s => s.IdSposobuPlatnosci == itemId);
+
+            if (item != null)
+            {
+                Nazwa = item.Nazwa;
+            }
+        }
+
         #endregion
     }
 }

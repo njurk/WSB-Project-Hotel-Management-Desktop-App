@@ -2,6 +2,7 @@
 using MVVMFirma.Models.BusinessLogic;
 using MVVMFirma.Models.Entities;
 using MVVMFirma.Models.EntitiesForView;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace MVVMFirma.ViewModels
@@ -10,31 +11,6 @@ namespace MVVMFirma.ViewModels
     {
         #region DB
         HotelEntities db;
-        #endregion
-
-        #region Constructor
-        public NowyPokojViewModel()
-            : base("Pokój")
-        {
-            db = new HotelEntities();
-            item = new Pokoj();
-        }
-
-        public NowyPokojViewModel(int itemId)
-            : base("Edycja pokoju")
-        {
-            db = new HotelEntities();
-            // inicjalizacja pól danymi z rekordu o ID przekazanym w argumencie (itemId)
-            item = db.Pokoj.FirstOrDefault(p => p.IdPokoju == itemId);
-
-            if (item != null)
-            {
-                NrPokoju = item.NrPokoju;
-                IdTypuPokoju = item.IdTypuPokoju;
-                IdKlasyPokoju = item.IdKlasyPokoju;
-            }
-        }
-
         #endregion
 
         #region Properties
@@ -79,7 +55,7 @@ namespace MVVMFirma.ViewModels
         #endregion
 
         #region Items
-        public IQueryable<KeyAndValue> TypPokojuItems
+        public IEnumerable<KeyAndValue> TypPokojuItems
         {
             get
             {
@@ -87,7 +63,7 @@ namespace MVVMFirma.ViewModels
             }
         }
 
-        public IQueryable<KeyAndValue> KlasaPokojuItems
+        public IEnumerable<KeyAndValue> KlasaPokojuItems
         {
             get
             {
@@ -116,6 +92,31 @@ namespace MVVMFirma.ViewModels
             // wysłanie prośby o odświeżenie listy po zapisie
             Messenger.Default.Send("PokojRefresh");
         }
+        #endregion
+
+        #region Constructor
+        public NowyPokojViewModel()
+            : base("Pokój")
+        {
+            db = new HotelEntities();
+            item = new Pokoj();
+        }
+
+        public NowyPokojViewModel(int itemId)
+            : base("Edycja pokoju")
+        {
+            db = new HotelEntities();
+            // inicjalizacja pól danymi z rekordu o ID przekazanym w argumencie (itemId)
+            item = db.Pokoj.FirstOrDefault(p => p.IdPokoju == itemId);
+
+            if (item != null)
+            {
+                NrPokoju = item.NrPokoju;
+                IdTypuPokoju = item.IdTypuPokoju;
+                IdKlasyPokoju = item.IdKlasyPokoju;
+            }
+        }
+
         #endregion
     }
 }

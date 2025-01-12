@@ -23,46 +23,6 @@ namespace MVVMFirma.ViewModels
         HotelEntities db;
         #endregion
 
-        #region Constructor
-        public NowyFakturaViewModel()
-            : base("Faktura")
-        {
-            db = new HotelEntities();
-            item = new Faktura();
-            DataWystawienia = DateTime.Now;
-            DataSprzedazy = DateTime.Now;
-            TerminPlatnosci = DateTime.Now.AddDays(14);
-            NrFaktury = GenerujNumerFaktury();
-            IdVat = DomyslnyVAT("23");
-
-            SelectedRezerwacja = new Rezerwacja();
-        }
-
-        public NowyFakturaViewModel(int itemId)
-            : base("Edycja faktury")
-        {
-            db = new HotelEntities();
-            // inicjalizacja pól danymi z rekordu o ID przekazanym w argumencie (itemId)
-            item = db.Faktura.FirstOrDefault(f => f.IdFaktury == itemId);
-
-            if (item != null)
-            {
-                NrFaktury = item.NrFaktury;
-                IdRezerwacji = item.IdRezerwacji;
-                NIP = item.NIP;
-                DataWystawienia = item.DataWystawienia;
-                DataSprzedazy = item.DataSprzedazy;
-                KwotaBrutto = item.KwotaBrutto;
-                IdVat = item.IdVat;
-                KwotaNetto = item.KwotaNetto;
-                TerminPlatnosci = item.TerminPlatnosci;
-                Opis = item.Opis;
-
-                SelectedRezerwacja = db.Rezerwacja.FirstOrDefault(r => r.IdRezerwacji == item.IdRezerwacji);
-            }
-        }
-        #endregion
-
         #region Properties
         public string NrFaktury
         {
@@ -265,7 +225,7 @@ namespace MVVMFirma.ViewModels
         #endregion
 
         #region Items
-        public List<KeyAndValue> RezerwacjaItems
+        public IEnumerable<KeyAndValue> RezerwacjaItems
         {
             get
             {
@@ -313,7 +273,7 @@ namespace MVVMFirma.ViewModels
             }
         }
 
-        public IQueryable<KeyAndValue> VATItems
+        public IEnumerable<KeyAndValue> VATItems
         {
             get
             {
@@ -466,6 +426,46 @@ namespace MVVMFirma.ViewModels
             db.SaveChanges();
             // wysłanie prośby o odświeżenie listy po zapisie
             Messenger.Default.Send("FakturaRefresh");
+        }
+        #endregion
+
+        #region Constructor
+        public NowyFakturaViewModel()
+            : base("Faktura")
+        {
+            db = new HotelEntities();
+            item = new Faktura();
+            DataWystawienia = DateTime.Now;
+            DataSprzedazy = DateTime.Now;
+            TerminPlatnosci = DateTime.Now.AddDays(14);
+            NrFaktury = GenerujNumerFaktury();
+            IdVat = DomyslnyVAT("23");
+
+            SelectedRezerwacja = new Rezerwacja();
+        }
+
+        public NowyFakturaViewModel(int itemId)
+            : base("Edycja faktury")
+        {
+            db = new HotelEntities();
+            // inicjalizacja pól danymi z rekordu o ID przekazanym w argumencie (itemId)
+            item = db.Faktura.FirstOrDefault(f => f.IdFaktury == itemId);
+
+            if (item != null)
+            {
+                NrFaktury = item.NrFaktury;
+                IdRezerwacji = item.IdRezerwacji;
+                NIP = item.NIP;
+                DataWystawienia = item.DataWystawienia;
+                DataSprzedazy = item.DataSprzedazy;
+                KwotaBrutto = item.KwotaBrutto;
+                IdVat = item.IdVat;
+                KwotaNetto = item.KwotaNetto;
+                TerminPlatnosci = item.TerminPlatnosci;
+                Opis = item.Opis;
+
+                SelectedRezerwacja = db.Rezerwacja.FirstOrDefault(r => r.IdRezerwacji == item.IdRezerwacji);
+            }
         }
         #endregion
     }

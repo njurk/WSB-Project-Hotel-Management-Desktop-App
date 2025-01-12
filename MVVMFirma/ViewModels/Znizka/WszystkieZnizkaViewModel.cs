@@ -51,6 +51,7 @@ namespace MVVMFirma.ViewModels
             if (SelectedItem != null)
             {
                 Messenger.Default.Send(DisplayName + "Edit-" + SelectedItem.IdZnizki);
+                SelectedItem = null;
             }
         }
 

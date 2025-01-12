@@ -10,30 +10,6 @@ namespace MVVMFirma.ViewModels
         HotelEntities db;
         #endregion
 
-        #region Constructor
-        public NowyZnizkaViewModel()
-            : base("Zniżka")
-        {
-            db = new HotelEntities();
-            item = new Znizka();
-        }
-
-        public NowyZnizkaViewModel(int itemId)
-            : base("Edycja zniżki")
-        {
-            db = new HotelEntities();
-            // inicjalizacja pól danymi z rekordu o ID przekazanym przez klasę MainWindowViewModel
-            item = db.Znizka.FirstOrDefault(v => v.IdZnizki == itemId);
-
-            if (item != null)
-            {
-                Nazwa = item.Nazwa;
-                Wartosc = item.Wartosc;
-            }
-        }
-
-        #endregion
-
         #region Properties
         public string Nazwa
         {
@@ -82,6 +58,30 @@ namespace MVVMFirma.ViewModels
             // wysłanie prośby o odświeżenie listy po zapisie
             Messenger.Default.Send("ZnizkaRefresh");
         }
+        #endregion
+
+        #region Constructor
+        public NowyZnizkaViewModel()
+            : base("Zniżka")
+        {
+            db = new HotelEntities();
+            item = new Znizka();
+        }
+
+        public NowyZnizkaViewModel(int itemId)
+            : base("Edycja zniżki")
+        {
+            db = new HotelEntities();
+            // inicjalizacja pól danymi z rekordu o ID przekazanym przez klasę MainWindowViewModel
+            item = db.Znizka.FirstOrDefault(v => v.IdZnizki == itemId);
+
+            if (item != null)
+            {
+                Nazwa = item.Nazwa;
+                Wartosc = item.Wartosc;
+            }
+        }
+
         #endregion
     }
 }

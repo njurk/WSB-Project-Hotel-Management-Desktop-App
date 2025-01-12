@@ -3,6 +3,7 @@ using MVVMFirma.Models.BusinessLogic;
 using MVVMFirma.Models.Entities;
 using MVVMFirma.Models.EntitiesForView;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace MVVMFirma.ViewModels
@@ -16,36 +17,6 @@ namespace MVVMFirma.ViewModels
         #region Fields
         private decimal _doZaplaty;
         private Rezerwacja _selectedRezerwacja;
-        #endregion
-
-        #region Constructor
-        public NowyPlatnoscViewModel()
-            : base("Płatność")
-        {
-            db = new HotelEntities();
-            item = new Platnosc();
-
-            DataPlatnosci = DateTime.Now;
-            NrPlatnosci = GenerujNumerPlatnosci();
-        }
-
-        public NowyPlatnoscViewModel(int itemId)
-            : base("Edycja płatności")
-        {
-            db = new HotelEntities();
-            // inicjalizacja pól danymi z rekordu o ID przekazanym w argumencie (itemId)
-            item = db.Platnosc.FirstOrDefault(p => p.IdPlatnosci == itemId);
-
-            if (item != null)
-            {
-                NrPlatnosci = item.NrPlatnosci;
-                IdRezerwacji = item.IdRezerwacji;
-                IdSposobuPlatnosci = item.IdSposobuPlatnosci;
-                IdStatusuPlatnosci = item.IdStatusuPlatnosci;
-                DataPlatnosci = item.DataPlatnosci;
-                Kwota = item.Kwota;
-            }
-        }
         #endregion
 
         #region Properties
@@ -179,7 +150,7 @@ namespace MVVMFirma.ViewModels
         #endregion
 
         #region Items
-        public IQueryable<KeyAndValue> RezerwacjaItems
+        public IEnumerable<KeyAndValue> RezerwacjaItems
         {
             get
             {
@@ -187,7 +158,7 @@ namespace MVVMFirma.ViewModels
             }
         }
 
-        public IQueryable<KeyAndValue> SposobPlatnosciItems
+        public IEnumerable<KeyAndValue> SposobPlatnosciItems
         {
             get
             {
@@ -195,7 +166,7 @@ namespace MVVMFirma.ViewModels
             }
         }
 
-        public IQueryable<KeyAndValue> StatusPlatnosciItems
+        public IEnumerable<KeyAndValue> StatusPlatnosciItems
         {
             get
             {
@@ -280,5 +251,34 @@ namespace MVVMFirma.ViewModels
         }
         #endregion
 
+        #region Constructor
+        public NowyPlatnoscViewModel()
+            : base("Płatność")
+        {
+            db = new HotelEntities();
+            item = new Platnosc();
+
+            DataPlatnosci = DateTime.Now;
+            NrPlatnosci = GenerujNumerPlatnosci();
+        }
+
+        public NowyPlatnoscViewModel(int itemId)
+            : base("Edycja płatności")
+        {
+            db = new HotelEntities();
+            // inicjalizacja pól danymi z rekordu o ID przekazanym w argumencie (itemId)
+            item = db.Platnosc.FirstOrDefault(p => p.IdPlatnosci == itemId);
+
+            if (item != null)
+            {
+                NrPlatnosci = item.NrPlatnosci;
+                IdRezerwacji = item.IdRezerwacji;
+                IdSposobuPlatnosci = item.IdSposobuPlatnosci;
+                IdStatusuPlatnosci = item.IdStatusuPlatnosci;
+                DataPlatnosci = item.DataPlatnosci;
+                Kwota = item.Kwota;
+            }
+        }
+        #endregion
     }
 }

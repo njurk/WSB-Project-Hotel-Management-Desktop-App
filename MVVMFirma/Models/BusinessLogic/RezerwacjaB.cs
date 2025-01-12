@@ -16,7 +16,7 @@ namespace MVVMFirma.Models.BusinessLogic
         #endregion
 
         #region Funkcje biznesowe
-        public IQueryable<KeyAndValue> GetRezerwacjaKeyAndValueItems()
+        public IEnumerable<KeyAndValue> GetRezerwacjaKeyAndValueItems()
         {
             return
                 (
@@ -26,7 +26,7 @@ namespace MVVMFirma.Models.BusinessLogic
                         Key = rezerwacja.IdRezerwacji,
                         Value = rezerwacja.NrRezerwacji
                     }
-                ).ToList().AsQueryable();
+                ).ToList();
         }
         #endregion
     }

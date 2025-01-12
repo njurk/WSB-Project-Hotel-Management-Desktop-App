@@ -10,28 +10,6 @@ namespace MVVMFirma.ViewModels
         HotelEntities db;
         #endregion
 
-        #region Constructor
-        public NowyKlasaPokojuViewModel()
-            : base("Klasa pokoju")
-        {
-            db = new HotelEntities();
-            item = new KlasaPokoju();
-        }
-
-        public NowyKlasaPokojuViewModel(int itemId)
-            : base("Edycja klasy pokoju")
-        {
-            db = new HotelEntities();
-            // inicjalizacja pól danymi z rekordu o ID przekazanym w argumencie (itemId)
-            item = db.KlasaPokoju.FirstOrDefault(k => k.IdKlasyPokoju == itemId);
-
-            if (item != null)
-            {
-                Nazwa = item.Nazwa;
-            }
-        }
-        #endregion
-
         #region Properties
         public string Nazwa
         {
@@ -65,6 +43,28 @@ namespace MVVMFirma.ViewModels
             db.SaveChanges();
             // wysłanie prośby o odświeżenie listy po zapisie
             Messenger.Default.Send("KlasaPokojuRefresh");
+        }
+        #endregion
+
+        #region Constructor
+        public NowyKlasaPokojuViewModel()
+            : base("Klasa pokoju")
+        {
+            db = new HotelEntities();
+            item = new KlasaPokoju();
+        }
+
+        public NowyKlasaPokojuViewModel(int itemId)
+            : base("Edycja klasy pokoju")
+        {
+            db = new HotelEntities();
+            // inicjalizacja pól danymi z rekordu o ID przekazanym w argumencie (itemId)
+            item = db.KlasaPokoju.FirstOrDefault(k => k.IdKlasyPokoju == itemId);
+
+            if (item != null)
+            {
+                Nazwa = item.Nazwa;
+            }
         }
         #endregion
     }

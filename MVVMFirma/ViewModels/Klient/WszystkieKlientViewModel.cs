@@ -60,6 +60,7 @@ namespace MVVMFirma.ViewModels
             if (SelectedItem != null)
             {
                 Messenger.Default.Send(DisplayName + "Edit-" + SelectedItem.IdKlienta);
+                SelectedItem = null;
             }
         }
 
