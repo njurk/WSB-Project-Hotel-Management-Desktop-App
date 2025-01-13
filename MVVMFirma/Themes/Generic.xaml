@@ -9,20 +9,32 @@
                 <ControlTemplate TargetType="{x:Type local:WszystkieViewBase}">
                     <Grid Margin="0,10,0,0">
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="34"/>
-                            <RowDefinition Height="60"/>
-                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="34" />
+                            <RowDefinition Height="60" />
+                            <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
                         <ToolBar Grid.Row="0" Margin="0,2,0,2">
-                            <Button Content="Dodaj" Margin="0,2,0,2" Command="{Binding AddCommand}"/>
-                            <Button Content="Edytuj" Margin="0,2,0,2" Command="{Binding EditCommand}"/>
-                            <Button Content="Usun" Margin="0,2,0,2" Command="{Binding DeleteCommand}"/>
-                            <Button Content="Odswiez" Margin="0,2,0,2" Command="{Binding LoadCommand}"/>
+                            <Button
+                                Margin="0,2,0,2"
+                                Command="{Binding AddCommand}"
+                                Content="Dodaj" />
+                            <Button
+                                Margin="0,2,0,2"
+                                Command="{Binding EditCommand}"
+                                Content="Edytuj" />
+                            <Button
+                                Margin="0,2,0,2"
+                                Command="{Binding DeleteCommand}"
+                                Content="Usun" />
+                            <Button
+                                Margin="0,2,0,2"
+                                Command="{Binding LoadCommand}"
+                                Content="Odswiez" />
                         </ToolBar>
                         <StackPanel Grid.Row="1" Background="Azure">
                             <Label>Sortowanie i filtrowanie</Label>
                         </StackPanel>
-                        <ContentPresenter Grid.Row="2" Margin="0,5,0,5"/>
+                        <ContentPresenter Grid.Row="2" Margin="0,5,0,5" />
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
@@ -35,14 +47,25 @@
                 <ControlTemplate TargetType="{x:Type local:JedenViewBase}">
                     <Grid Margin="0,10,0,0">
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="34"/>
-                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="34" />
+                            <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
-                        <ToolBar Grid.Row="0" Height="30" Margin="0,2,0,2">
-                            <Button Content="Zapisz i zamknij" Width="100" Height="30" Command="{Binding SaveCommand}"/>
-                            <Button Content="Anuluj" Width="100" Height="30"  Command="{Binding CloseCommand}"/>
+                        <ToolBar
+                            Grid.Row="0"
+                            Height="30"
+                            Margin="0,2,0,2">
+                            <Button
+                                Width="100"
+                                Height="30"
+                                Command="{Binding SaveCommand}"
+                                Content="Zapisz i zamknij" />
+                            <Button
+                                Width="100"
+                                Height="30"
+                                Command="{Binding CloseCommand}"
+                                Content="Anuluj" />
                         </ToolBar>
-                        <ContentPresenter Grid.Row="1" Margin="0,5,0,5"/>
+                        <ContentPresenter Grid.Row="1" Margin="0,5,0,5" />
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>

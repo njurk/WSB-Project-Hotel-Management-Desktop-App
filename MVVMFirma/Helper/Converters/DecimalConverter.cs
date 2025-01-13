@@ -10,7 +10,7 @@ namespace MVVMFirma.Helper
         {
             if (value is decimal decimalValue)
             {
-                return decimalValue.ToString(culture); // konwersja liczby na tekst wg regionu
+                return decimalValue.ToString(culture); // konwersja liczby na tekst wg regionu (kwestia przecinka lub kropki)
             }
             return value?.ToString(); // jeśli wartosc nie jest decimal to zwraca tekst
         }

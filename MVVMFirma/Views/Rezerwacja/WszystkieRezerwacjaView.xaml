@@ -1,36 +1,44 @@
-﻿<local:WszystkieViewBase x:Class="MVVMFirma.Views.WszystkieRezerwacjaView"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:MVVMFirma.Views"
-             xmlns:vm="clr-namespace:MVVMFirma.Helper"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="1400">
+﻿<local:WszystkieViewBase
+    x:Class="MVVMFirma.Views.WszystkieRezerwacjaView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:MVVMFirma.Views"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="clr-namespace:MVVMFirma.Helper"
+    d:DesignHeight="450"
+    d:DesignWidth="1400"
+    mc:Ignorable="d">
 
     <local:WszystkieViewBase.Resources>
-        <vm:PercentConverter x:Key="PercentConverter"/>
+        <vm:PercentFormatter x:Key="PercentFormatter" />
     </local:WszystkieViewBase.Resources>
 
     <Grid>
-        <DataGrid CanUserAddRows="False" IsReadOnly="True" CanUserDeleteRows="False" AutoGenerateColumns="False" ItemsSource="{Binding List}" SelectedItem="{Binding SelectedItem}">
+        <DataGrid
+            AutoGenerateColumns="False"
+            CanUserAddRows="False"
+            CanUserDeleteRows="False"
+            IsReadOnly="True"
+            ItemsSource="{Binding List}"
+            SelectedItem="{Binding SelectedItem}">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="ID" Binding="{Binding IdRezerwacji}"/>
-                <DataGridTextColumn Header="Numer rezerwacji" Binding="{Binding NrRezerwacji}"/>
-                <DataGridTextColumn Header="Imie klienta" Binding="{Binding KlientImie}"/>
-                <DataGridTextColumn Header="Nazwisko klienta" Binding="{Binding KlientNazwisko}"/>
-                <DataGridTextColumn Header="Pokój" Binding="{Binding NrPokoju}"/>
-                <DataGridTextColumn Header="Liczba dorosłych" Binding="{Binding LiczbaDoroslych}"/>
-                <DataGridTextColumn Header="Liczba dzieci" Binding="{Binding LiczbaDzieci}"/>
-                <DataGridCheckBoxColumn Header="Zwierzęta" Binding="{Binding CzyZwierzeta}"/>
-                <DataGridTextColumn Header="Data rezerwacji" Binding="{Binding DataRezerwacji, StringFormat=yyyy-MM-dd}"/>
-                <DataGridTextColumn Header="Zameldowanie" Binding="{Binding DataZameldowania, StringFormat=yyyy-MM-dd}"/>
-                <DataGridTextColumn Header="Wymeldowanie" Binding="{Binding DataWymeldowania, StringFormat=yyyy-MM-dd}"/>
-                <DataGridTextColumn Header="Kwota" Binding="{Binding Kwota, StringFormat={}{0:C}}"/>
-                <DataGridTextColumn Header="Zniżka" Binding="{Binding Znizka, Converter={StaticResource PercentConverter}}"/>
-                <DataGridCheckBoxColumn Header="Czy zapłacona" Binding="{Binding CzyZaplacona}"/>
-                <DataGridTextColumn Header="Uwagi" Binding="{Binding Uwagi}"/>
-                
+                <DataGridTextColumn Binding="{Binding IdRezerwacji}" Header="ID" />
+                <DataGridTextColumn Binding="{Binding NrRezerwacji}" Header="Numer rezerwacji" />
+                <DataGridTextColumn Binding="{Binding KlientImie}" Header="Imie klienta" />
+                <DataGridTextColumn Binding="{Binding KlientNazwisko}" Header="Nazwisko klienta" />
+                <DataGridTextColumn Binding="{Binding NrPokoju}" Header="Pokój" />
+                <DataGridTextColumn Binding="{Binding LiczbaDoroslych}" Header="Liczba dorosłych" />
+                <DataGridTextColumn Binding="{Binding LiczbaDzieci}" Header="Liczba dzieci" />
+                <DataGridCheckBoxColumn Binding="{Binding CzyZwierzeta}" Header="Zwierzęta" />
+                <DataGridTextColumn Binding="{Binding DataRezerwacji, StringFormat=yyyy-MM-dd}" Header="Data rezerwacji" />
+                <DataGridTextColumn Binding="{Binding DataZameldowania, StringFormat=yyyy-MM-dd}" Header="Zameldowanie" />
+                <DataGridTextColumn Binding="{Binding DataWymeldowania, StringFormat=yyyy-MM-dd}" Header="Wymeldowanie" />
+                <DataGridTextColumn Binding="{Binding Kwota, StringFormat={}{0:C}}" Header="Kwota" />
+                <DataGridTextColumn Binding="{Binding Znizka, Converter={StaticResource PercentFormatter}}" Header="Zniżka" />
+                <DataGridCheckBoxColumn Binding="{Binding CzyZaplacona}" Header="Czy zapłacona" />
+                <DataGridTextColumn Binding="{Binding Uwagi}" Header="Uwagi" />
+
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

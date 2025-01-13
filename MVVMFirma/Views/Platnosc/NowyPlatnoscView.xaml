@@ -1,12 +1,14 @@
-﻿<local:JedenViewBase x:Class="MVVMFirma.Views.NowyPlatnoscView"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:MVVMFirma.Views"
-             xmlns:vm="clr-namespace:MVVMFirma.Helper"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+﻿<local:JedenViewBase
+    x:Class="MVVMFirma.Views.NowyPlatnoscView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:MVVMFirma.Views"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="clr-namespace:MVVMFirma.Helper"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
 
     <local:JedenViewBase.Resources>
         <vm:DecimalConverter x:Key="DecimalConverter" />
@@ -14,38 +16,103 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="150"/>
-            <ColumnDefinition Width="200"/>
-            <ColumnDefinition Width="80"/>
-            <ColumnDefinition Width="80"/>
+            <ColumnDefinition Width="150" />
+            <ColumnDefinition Width="200" />
+            <ColumnDefinition Width="80" />
+            <ColumnDefinition Width="80" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="40"/>
-            <RowDefinition Height="40"/>
-            <RowDefinition Height="40"/>
-            <RowDefinition Height="40"/>
-            <RowDefinition Height="40"/>
-            <RowDefinition Height="40"/>
+            <RowDefinition Height="40" />
+            <RowDefinition Height="40" />
+            <RowDefinition Height="40" />
+            <RowDefinition Height="40" />
+            <RowDefinition Height="40" />
+            <RowDefinition Height="40" />
         </Grid.RowDefinitions>
-        <Label Grid.Column="0" Grid.Row="0" Margin="0,8,0,8" Content="Numer płatności"/>
-        <TextBlock Grid.Column="1" Grid.Row="0" Margin="0,12,0,12" Text="{Binding Path=NrPlatnosci}"/>
+        <Label
+            Grid.Row="0"
+            Grid.Column="0"
+            Margin="0,8,0,8"
+            Content="Numer płatności" />
+        <TextBlock
+            Grid.Row="0"
+            Grid.Column="1"
+            Margin="0,12,0,12"
+            Text="{Binding Path=NrPlatnosci}" />
 
-        <Label Grid.Column="0" Grid.Row="1" Margin="0,8,0,8" Content="Numer rezerwacji"/>
-        <ComboBox Grid.Column="1" Grid.Row="1" Margin="0,8,0,8" ItemsSource="{Binding RezerwacjaItems}" DisplayMemberPath="Value" SelectedValuePath="Key" SelectedValue="{Binding Path=IdRezerwacji, Mode=TwoWay}"/>
+        <Label
+            Grid.Row="1"
+            Grid.Column="0"
+            Margin="0,8,0,8"
+            Content="Numer rezerwacji" />
+        <ComboBox
+            Grid.Row="1"
+            Grid.Column="1"
+            Margin="0,8,0,8"
+            DisplayMemberPath="Value"
+            ItemsSource="{Binding RezerwacjaItems}"
+            SelectedValue="{Binding Path=IdRezerwacji, Mode=TwoWay}"
+            SelectedValuePath="Key" />
 
-        <Label Grid.Column="2" Grid.Row="1" Margin="4,8,0,8" Content="Do zapłaty:"/>
-        <TextBlock Grid.Column="3" Grid.Row="1" Margin="0,12,0,12" Text="{Binding Path=DoZaplaty}"/>
+        <Label
+            Grid.Row="1"
+            Grid.Column="2"
+            Margin="4,8,0,8"
+            Content="Do zapłaty:" />
+        <TextBlock
+            Grid.Row="1"
+            Grid.Column="3"
+            Margin="0,12,0,12"
+            Text="{Binding Path=DoZaplaty}" />
 
-        <Label Grid.Column="0" Grid.Row="2" Margin="0,8,0,8" Content="Kwota"/>
-        <TextBox Grid.Column="1" Grid.Row="2" Margin="0,8,0,8" Text="{Binding Path=Kwota, Converter={StaticResource DecimalConverter}, UpdateSourceTrigger=PropertyChanged}"/>
+        <Label
+            Grid.Row="2"
+            Grid.Column="0"
+            Margin="0,8,0,8"
+            Content="Kwota" />
+        <TextBox
+            Grid.Row="2"
+            Grid.Column="1"
+            Margin="0,8,0,8"
+            Text="{Binding Path=Kwota, Converter={StaticResource DecimalConverter}, UpdateSourceTrigger=PropertyChanged}" />
 
-        <Label Grid.Column="0" Grid.Row="3" Margin="0,8,0,8" Content="Sposób płatności"/>
-        <ComboBox Grid.Column="1" Grid.Row="3" Margin="0,8,0,8" ItemsSource="{Binding SposobPlatnosciItems}" DisplayMemberPath="Value" SelectedValuePath="Key" SelectedValue="{Binding Path=IdSposobuPlatnosci, Mode=TwoWay}"/>
+        <Label
+            Grid.Row="3"
+            Grid.Column="0"
+            Margin="0,8,0,8"
+            Content="Sposób płatności" />
+        <ComboBox
+            Grid.Row="3"
+            Grid.Column="1"
+            Margin="0,8,0,8"
+            DisplayMemberPath="Value"
+            ItemsSource="{Binding SposobPlatnosciItems}"
+            SelectedValue="{Binding Path=IdSposobuPlatnosci, Mode=TwoWay}"
+            SelectedValuePath="Key" />
 
-        <Label Grid.Column="0" Grid.Row="4" Margin="0,8,0,8" Content="Status płatności"/>
-        <ComboBox Grid.Column="1" Grid.Row="4" Margin="0,8,0,8" ItemsSource="{Binding StatusPlatnosciItems}" DisplayMemberPath="Value" SelectedValuePath="Key" SelectedValue="{Binding Path=IdStatusuPlatnosci, Mode=TwoWay}"/>
+        <Label
+            Grid.Row="4"
+            Grid.Column="0"
+            Margin="0,8,0,8"
+            Content="Status płatności" />
+        <ComboBox
+            Grid.Row="4"
+            Grid.Column="1"
+            Margin="0,8,0,8"
+            DisplayMemberPath="Value"
+            ItemsSource="{Binding StatusPlatnosciItems}"
+            SelectedValue="{Binding Path=IdStatusuPlatnosci, Mode=TwoWay}"
+            SelectedValuePath="Key" />
 
-        <Label Grid.Column="0" Grid.Row="5" Margin="0,8,0,8" Content="Data płatności"/>
-        <DatePicker Grid.Column="1" Grid.Row="5" Margin="0,8,0,8" SelectedDate="{Binding DataPlatnosci}"/>
+        <Label
+            Grid.Row="5"
+            Grid.Column="0"
+            Margin="0,8,0,8"
+            Content="Data płatności" />
+        <DatePicker
+            Grid.Row="5"
+            Grid.Column="1"
+            Margin="0,8,0,8"
+            SelectedDate="{Binding DataPlatnosci}" />
     </Grid>
 </local:JedenViewBase>

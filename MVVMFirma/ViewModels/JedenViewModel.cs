@@ -32,35 +32,6 @@ namespace MVVMFirma.ViewModels
                 return _SaveCommand;
             }
         }
-
-        protected bool IsValid()
-        {
-            foreach (System.Reflection.PropertyInfo item in this.GetType().GetProperties())
-            { 
-                if (!string.IsNullOrEmpty(ValidateProperty(item.Name)))
-                {
-                    return false;
-                }
-            }
-            return true;
-        }
-
-        public string Error { get; }
-
-        // tą metodę (property) implementujemy w każdej klasie gdzie będzie walidacja
-        public string this[string columnName] 
-        { 
-            get
-            {
-                return ValidateProperty(columnName);
-            }
-        }
-
-        protected virtual string ValidateProperty(string propertyName)
-        {
-            return string.Empty;
-        }
-
         #endregion
 
         #region Constructor
@@ -71,26 +42,66 @@ namespace MVVMFirma.ViewModels
         }
         #endregion
 
-        #region Helpers
+        #region Helpers and Validation
+
+        public string Error { get; }
+
+        public string this[string columnName]
+        {
+            get
+            {
+                return ValidateProperty(columnName);
+            }
+        }
+
+        // tą metodę (property) implementujemy w każdej klasie gdzie będzie walidacja
+        protected virtual string ValidateProperty(string propertyName)
+        {
+            return string.Empty;
+        }
+
+        protected List<string> GetValidationErrors()
+        {
+            var allErrors = new List<string>();
+
+            foreach (System.Reflection.PropertyInfo item in this.GetType().GetProperties())
+            {
+                string error = ValidateProperty(item.Name);
+                if (!string.IsNullOrEmpty(error))
+                {
+                    allErrors.Add(error);
+                }
+            }
+            return allErrors;
+        }
+
+        protected bool IsValid()
+        {
+            return GetValidationErrors().Count == 0; // true jeśli formularz nie ma błędów
+        }
+
         private void ValidateAndSave()
         {
             try
             {
-                if (IsValid())
+                var validationErrors = GetValidationErrors();
+
+                if (validationErrors.Count > 0)
                 {
-                    SaveAndClose();
+                    string errorMessages = string.Join(Environment.NewLine + "- ", validationErrors);
+                    MessageBox.Show("Proszę prawidłowo wypełnić pola!\n- " + errorMessages, "Błędy formularza", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
                 else
                 {
-                    MessageBox.Show("Nie można zapisać - błędnie wypełniony formularz!", "Błąd");
+                    SaveAndClose();
                 }
             }
-            catch
+            catch (Exception ex)
             {
-                MessageBox.Show("Wystąpił błąd!", "Błąd");
+                MessageBox.Show("Nieoczekiwany błąd:\n" + ex.Message, "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            
         }
+
 
         public abstract void Save();
         public void SaveAndClose()

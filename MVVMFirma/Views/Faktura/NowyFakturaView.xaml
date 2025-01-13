@@ -1,68 +1,169 @@
-﻿<local:JedenViewBase x:Class="MVVMFirma.Views.NowyFakturaView"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:MVVMFirma.Views" 
-             xmlns:vm="clr-namespace:MVVMFirma.Helper"
-                     mc:Ignorable="d"
-            d:DesignHeight="600"  d:DesignWidth="800">
-    
+﻿<local:JedenViewBase
+    x:Class="MVVMFirma.Views.NowyFakturaView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:MVVMFirma.Views"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="clr-namespace:MVVMFirma.Helper"
+    d:DesignHeight="600"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+
     <local:JedenViewBase.Resources>
         <vm:DecimalConverter x:Key="DecimalConverter" />
     </local:JedenViewBase.Resources>
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="150"/>
-            <ColumnDefinition Width="200"/>
-            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="150" />
+            <ColumnDefinition Width="200" />
+            <ColumnDefinition Width="100" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="40"/>
-            <RowDefinition Height="40"/>
-            <RowDefinition Height="40"/>
-            <RowDefinition Height="40"/>
-            <RowDefinition Height="40"/>
-            <RowDefinition Height="40"/>
-            <RowDefinition Height="40"/>
-            <RowDefinition Height="40"/>
-            <RowDefinition Height="40"/>
-            <RowDefinition Height="40"/>
-            <RowDefinition Height="40"/>
+            <RowDefinition Height="40" />
+            <RowDefinition Height="40" />
+            <RowDefinition Height="40" />
+            <RowDefinition Height="40" />
+            <RowDefinition Height="40" />
+            <RowDefinition Height="40" />
+            <RowDefinition Height="40" />
+            <RowDefinition Height="40" />
+            <RowDefinition Height="40" />
+            <RowDefinition Height="40" />
+            <RowDefinition Height="40" />
         </Grid.RowDefinitions>
-        <Label Grid.Column="0" Grid.Row="0" Margin="0,8,0,8" Content="Numer faktury"/>
-        <TextBlock Grid.Column="1" Grid.Row="0" Margin="0,12,0,12" Text="{Binding Path=NrFaktury}"/>
+        <Label
+            Grid.Row="0"
+            Grid.Column="0"
+            Margin="0,8,0,8"
+            Content="Numer faktury" />
+        <TextBlock
+            Grid.Row="0"
+            Grid.Column="1"
+            Margin="0,12,0,12"
+            Text="{Binding Path=NrFaktury}" />
 
-        <Label Grid.Column="0" Grid.Row="1" Margin="0,8,0,8" Content="Numer rezerwacji"/>
-        <ComboBox Grid.Column="1" Grid.Row="1" Margin="0,8,0,8" ItemsSource="{Binding RezerwacjaItems}" DisplayMemberPath="Value" SelectedValuePath="Key" SelectedValue="{Binding Path=IdRezerwacji, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+        <Label
+            Grid.Row="1"
+            Grid.Column="0"
+            Margin="0,8,0,8"
+            Content="Numer rezerwacji" />
+        <ComboBox
+            Grid.Row="1"
+            Grid.Column="1"
+            Margin="0,8,0,8"
+            DisplayMemberPath="Value"
+            ItemsSource="{Binding RezerwacjaItems}"
+            SelectedValue="{Binding Path=IdRezerwacji, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+            SelectedValuePath="Key" />
 
-        <Label Grid.Column="0" Grid.Row="2" Margin="0,8,0,8" Content="NIP"/>
-        <TextBox Grid.Column="1" Grid.Row="2" Margin="0,8,0,8" Text="{Binding Path=NIP, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+        <Label
+            Grid.Row="2"
+            Grid.Column="0"
+            Margin="0,8,0,8"
+            Content="NIP" />
+        <TextBox
+            Grid.Row="2"
+            Grid.Column="1"
+            Margin="0,8,0,8"
+            Text="{Binding Path=NIP, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
 
-        <Label Grid.Column="0" Grid.Row="3" Margin="0,8,0,8" Content="Data wystawienia"/>
-        <DatePicker Grid.Column="1" Grid.Row="3" Margin="0,8,0,8" SelectedDate="{Binding DataWystawienia, ValidatesOnDataErrors=True}"/>
+        <Label
+            Grid.Row="3"
+            Grid.Column="0"
+            Margin="0,8,0,8"
+            Content="Data wystawienia" />
+        <DatePicker
+            Grid.Row="3"
+            Grid.Column="1"
+            Margin="0,8,0,8"
+            SelectedDate="{Binding DataWystawienia, ValidatesOnDataErrors=True}" />
 
-        <Label Grid.Column="0" Grid.Row="4" Margin="0,8,0,8" Content="Data sprzedaży"/>
-        <DatePicker Grid.Column="1" Grid.Row="4" Margin="0,8,0,8" SelectedDate="{Binding DataSprzedazy, ValidatesOnDataErrors=True}"/>
+        <Label
+            Grid.Row="4"
+            Grid.Column="0"
+            Margin="0,8,0,8"
+            Content="Data sprzedaży" />
+        <DatePicker
+            Grid.Row="4"
+            Grid.Column="1"
+            Margin="0,8,0,8"
+            SelectedDate="{Binding DataSprzedazy, ValidatesOnDataErrors=True}" />
 
-        <Label Grid.Column="0" Grid.Row="5" Margin="0,8,0,8" Content="Kwota brutto"/>
-        <TextBox Grid.Column="1" Grid.Row="5" Margin="0,8,0,8" Text="{Binding Path=KwotaBrutto, Converter={StaticResource DecimalConverter}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+        <Label
+            Grid.Row="5"
+            Grid.Column="0"
+            Margin="0,8,0,8"
+            Content="Kwota brutto" />
+        <TextBox
+            Grid.Row="5"
+            Grid.Column="1"
+            Margin="0,8,0,8"
+            Text="{Binding Path=KwotaBrutto, Converter={StaticResource DecimalConverter}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
 
-        <Label Grid.Column="0" Grid.Row="6" Margin="0,8,0,8" Content="% VAT"/>
-        <ComboBox Grid.Column="1" Grid.Row="6" Margin="0,8,0,8" ItemsSource="{Binding VATItems}" DisplayMemberPath="Value" SelectedValuePath="Key" SelectedValue="{Binding Path=IdVat, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+        <Label
+            Grid.Row="6"
+            Grid.Column="0"
+            Margin="0,8,0,8"
+            Content="% VAT" />
+        <ComboBox
+            Grid.Row="6"
+            Grid.Column="1"
+            Margin="0,8,0,8"
+            DisplayMemberPath="Value"
+            ItemsSource="{Binding VATItems}"
+            SelectedValue="{Binding Path=IdVat, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+            SelectedValuePath="Key" />
 
-        <Label Grid.Column="0" Grid.Row="7" Margin="0,8,0,8" Content="Kwota netto"/>
-        <TextBox Grid.Column="1" Grid.Row="7" Margin="0,8,0,8" Text="{Binding Path=KwotaNetto, Converter={StaticResource DecimalConverter}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
-        <Button Grid.Column="2" Grid.Row="7" Margin="15,8,0,8" Content="Oblicz netto" Command="{Binding ObliczNettoCommand}"/>
-        
-        <Label Grid.Column="0" Grid.Row="8" Margin="0,8,0,8" Content="Termin płatności"/>
-        <DatePicker Grid.Column="1" Grid.Row="8" Margin="0,8,0,8" SelectedDate="{Binding TerminPlatnosci, ValidatesOnDataErrors=True}"/>
+        <Label
+            Grid.Row="7"
+            Grid.Column="0"
+            Margin="0,8,0,8"
+            Content="Kwota netto" />
+        <TextBox
+            Grid.Row="7"
+            Grid.Column="1"
+            Margin="0,8,0,8"
+            Text="{Binding Path=KwotaNetto, Converter={StaticResource DecimalConverter}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+        <Button
+            Grid.Row="7"
+            Grid.Column="2"
+            Margin="15,8,0,8"
+            Command="{Binding ObliczNettoCommand}"
+            Content="Oblicz netto" />
 
-        <Label Grid.Column="0" Grid.Row="9" Margin="0,8,0,8" Content="Opis"/>
-        <TextBox Grid.Column="1" Grid.Row="9" Margin="0,8,0,8" Text="{Binding Path=Opis, UpdateSourceTrigger=PropertyChanged}"/>
+        <Label
+            Grid.Row="8"
+            Grid.Column="0"
+            Margin="0,8,0,8"
+            Content="Termin płatności" />
+        <DatePicker
+            Grid.Row="8"
+            Grid.Column="1"
+            Margin="0,8,0,8"
+            SelectedDate="{Binding TerminPlatnosci, ValidatesOnDataErrors=True}" />
 
-        <Label Grid.Column="0" Grid.Row="10" Margin="0,8,0,8" Content="Zapłacono"/>
-        <TextBlock Grid.Column="1" Grid.Row="10" Margin="0,12,0,12" Text="{Binding SumaPlatnosci, StringFormat={}{0:C}}"/>
+        <Label
+            Grid.Row="9"
+            Grid.Column="0"
+            Margin="0,8,0,8"
+            Content="Opis" />
+        <TextBox
+            Grid.Row="9"
+            Grid.Column="1"
+            Margin="0,8,0,8"
+            Text="{Binding Path=Opis, UpdateSourceTrigger=PropertyChanged}" />
+
+        <Label
+            Grid.Row="10"
+            Grid.Column="0"
+            Margin="0,8,0,8"
+            Content="Zapłacono" />
+        <TextBlock
+            Grid.Row="10"
+            Grid.Column="1"
+            Margin="0,12,0,12"
+            Text="{Binding SumaPlatnosci, StringFormat={}{0:C}}" />
     </Grid>
 </local:JedenViewBase>

@@ -4,7 +4,7 @@ using System.Windows.Data;
 
 namespace MVVMFirma.Helper
 {
-    public class PercentConverter : IValueConverter
+    public class PercentFormatter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

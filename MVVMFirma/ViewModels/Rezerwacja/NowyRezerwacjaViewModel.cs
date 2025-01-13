@@ -25,7 +25,6 @@ namespace MVVMFirma.ViewModels
         private DateTime _dataWymeldowania;
         private Pokoj _selectedPokoj;
         private BaseCommand _obliczKwoteCommand;
-
         #endregion
 
         #region Properties
@@ -64,7 +63,7 @@ namespace MVVMFirma.ViewModels
             {
                 item.IdPokoju = value;
                 OnPropertyChanged(() => IdPokoju);
-                // po każdej zmianie pokoju aktualizacja zaznaczenia
+                // po każdej zmianie pokoju aktualizacja
                 SelectedPokoj = db.Pokoj.FirstOrDefault(p => p.IdPokoju == value);
             }
         }
@@ -136,7 +135,7 @@ namespace MVVMFirma.ViewModels
             }
         }
 
-        // aktualizacja listy pokoi przy wybraniu dat
+        // aktualizacja listy dostępnych pokoi przy wybraniu dat
         private void OnDataChanged()
         {
             if (DataZameldowania != null && DataWymeldowania != null)
@@ -294,48 +293,43 @@ namespace MVVMFirma.ViewModels
             switch (propertyName)
             {
                 case nameof(IdKlienta):
-                    return IdKlienta <= 0 ? "Wybierz klienta" : string.Empty;
+                    return IdKlienta <= 0 ? "wybierz klienta" : string.Empty;
 
                 case nameof(LiczbaDoroslych):
                     if (!int.TryParse(LiczbaDoroslych, out int dorosli) || dorosli <= 0)
-                        return "Wprowadź poprawną liczbę dorosłych.";
+                        return "wprowadź poprawną liczbę dorosłych";
                     return string.Empty;
 
                 case nameof(LiczbaDzieci):
-                    if (!string.IsNullOrWhiteSpace(LiczbaDzieci) && (!int.TryParse(LiczbaDzieci, out int dzieci) || dzieci < 0))
-                        return "Wprowadź poprawną liczbę dzieci (lub pozostaw puste).";
+                    if (!string.IsNullOrWhiteSpace(LiczbaDzieci) && (!int.TryParse(LiczbaDzieci, out int dzieci) || dzieci <= 0))
+                        return "wprowadź poprawną liczbę dzieci (lub zostaw puste).";
                     return string.Empty;
 
                 case nameof(IdPokoju):
-                    if (IdPokoju > 0)
-                    {
-                        int liczbaDoroslych = 0, liczbaDzieci = 0;
-                        // pobranie danych pokoju
-                        var pokoj = db.Pokoj.FirstOrDefault(p => p.IdPokoju == IdPokoju);
-
-                        // sprawdzenie max liczby osób
-                        if (pokoj != null && (liczbaDoroslych + liczbaDzieci) > Convert.ToInt32(pokoj.TypPokoju.MaxLiczbaOsob))
-                        {
-                            return $"Łączna liczba osób ({liczbaDoroslych + liczbaDzieci}) przekracza maksymalny limit ({pokoj.TypPokoju.MaxLiczbaOsob}) dla wybranego pokoju.";
-                        }
-                    }
-                    else
-                    {
-                        return "Wybierz pokój.";
-                    }
-                    return string.Empty;
+                    if (!int.TryParse(LiczbaDoroslych, out var liczbaDoroslych) || liczbaDoroslych <= 0)
+                        return string.Empty;
+                    if (!int.TryParse(LiczbaDzieci, out var liczbaDzieci))
+                        liczbaDzieci = 0; // dla obliczeń, jeśli brak to zero
+                    return new MaxGuestsValidator(db).Validate(IdPokoju, liczbaDoroslych, liczbaDzieci);
 
                 case nameof(DataZameldowania):
-                    return DataZameldowania > DataWymeldowania ? "Data zameldowania nie może być późniejsza od daty wymeldowania." : string.Empty;
+                    if (DataZameldowania >= DataWymeldowania)
+                        return "data zameldowania musi być wcześniej od daty wymeldowania";
+                    if (DataZameldowania < DateTime.Now.Date)
+                        return "data zameldowania nie może być w przeszłości";
+                    return string.Empty;
 
                 case nameof(DataWymeldowania):
-                    return DataWymeldowania < DataZameldowania ? "Data wymeldowania nie może poprzedzać daty zameldowania." : string.Empty;
+                    if (DataWymeldowania <= DataZameldowania)
+                        return "data wymeldowania musi być później od daty zameldowania";
+                    return string.Empty;
 
                 case nameof(DataRezerwacji):
-                    return DataRezerwacji > DataZameldowania ? "Data rezerwacji nie może być późniejsza niż data zameldowania." : string.Empty;
-                
-                case nameof(Kwota):
-                    return Kwota == 0 ? "Proszę obliczyć kwotę." : string.Empty;
+                    return DataRezerwacji > DateTime.Now ? "data rezerwacji nie może być w przyszłości" : string.Empty;
+
+                case nameof(SelectedPokoj):
+                    return SelectedPokoj == null ? "wybierz pokój" : string.Empty;
+
                 default:
                     return string.Empty;
             }
@@ -395,64 +389,51 @@ namespace MVVMFirma.ViewModels
             return $"{DateTime.Now:yyyy-MM}-R{nrRezerwacji}";
         }
 
-        // komenda wywołująca metodę ObliczKwote(), aby na widoku można było aktywować ją buttonem
-        public BaseCommand ObliczKwoteCommand
-        {
-            get
-            {
-                if (_obliczKwoteCommand == null)
-                {
-                    _obliczKwoteCommand = new BaseCommand(ObliczKwote);
-                }
-                return _obliczKwoteCommand;
-            }
-        }
-
         // metoda do obliczania całkowitej kwoty rezerwacji na podstawie długości pobytu i wybranego pokoju oraz ewentualnej zniżki
         private void ObliczKwote()
         {
-            if (SelectedPokoj == null || !int.TryParse(LiczbaDoroslych, out int liczbaDoroslych))
-            {
-                MessageBox.Show("Proszę wprowadzić poprawne dane we wszystkich polach.", "Błąd", MessageBoxButton.OK);
-                return;
-            }
+            // pobranie liczby dorosłych i dzieci
+            int dorosli = int.Parse(LiczbaDoroslych);
+            int dzieci = string.IsNullOrEmpty(LiczbaDzieci) ? 0 : int.Parse(LiczbaDzieci);
 
-            // liczba dzieci może być pusta lub 0 i będzie to poprawne
-            // konwersja inputu na int
-            int liczbaDzieci = string.IsNullOrEmpty(LiczbaDzieci) ? 0 : int.Parse(LiczbaDzieci);
-            // długość pobytu obliczana przy użyciu wbudowanej funkcji Days()
+            // długość pobytu
             int liczbaNocy = (DataWymeldowania - DataZameldowania).Days;
 
-            // pobranie odpowiedniego rekordu z tabeli Cennik (wg dwóch kluczy - klasy i typu pokoju) 
             var cennik = db.Cennik.FirstOrDefault(c => c.IdKlasyPokoju == SelectedPokoj.IdKlasyPokoju && c.IdTypuPokoju == SelectedPokoj.IdTypuPokoju);
-
-            // jeśli brak cennika dla wybranych parametrów
+            // sprawdzenie czy istnieje cennik dla parametrów wybranego pokoju
             if (cennik == null)
             {
-                MessageBox.Show("Nie znaleziono odpowiedniego cennika, dodaj go w zakładce Cenniki.", "Błąd", MessageBoxButton.OK);
+                MessageBox.Show("Nie znaleziono odpowiedniego cennika.", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
-            decimal calkowitaKwota = ((liczbaDoroslych * cennik.CenaDorosly) + (liczbaDzieci * cennik.CenaDziecko) + (CzyZwierzeta ? cennik.CenaZwierzeta : 0)) * liczbaNocy;
+            // kwota podstawowa za pokój, za jedną noc
+            decimal kwota = Convert.ToInt32(SelectedPokoj.TypPokoju.MaxLiczbaOsob) * cennik.CenaDorosly;
 
-            // używając funkcji HasValue sprawdzamy czy została wybrana zniżka, jeśli tak, to uwzględniamy w kwocie całkowitej
+            // Obliczanie kwoty z uwzględnieniem dzieci
+            kwota -= (dzieci * cennik.CenaDorosly);
+            kwota += (dzieci * cennik.CenaDziecko);
+
+            // cała kwota z doliczeniem ewentualnej opłaty za zwierzęta
+            decimal kwotaCalkowita = kwota * liczbaNocy + (CzyZwierzeta ? cennik.CenaZwierzeta * liczbaNocy : 0);
+
+            // zastosowanie zniżki jeśli ją wybrano
             if (IdZnizki.HasValue)
             {
                 var znizka = db.Znizka.FirstOrDefault(z => z.IdZnizki == IdZnizki.Value);
-                if (znizka != null)
-                {
-                    decimal wartoscZnizki = Convert.ToInt32(znizka.Wartosc) / 100m;
-                    calkowitaKwota -= calkowitaKwota * wartoscZnizki;
-                }
+                if (znizka != null) kwotaCalkowita *= 1 - Convert.ToInt32(znizka.Wartosc) / 100m;
             }
 
-            Kwota = calkowitaKwota;
+            // kwota finalna
+            Kwota = kwotaCalkowita;
         }
         #endregion
 
         #region Helpers
         public override void Save()
         {
+            ObliczKwote();
+
             if (item.IdRezerwacji == 0) // Dodawanie rekordu = brak ID = insert
             {
                 db.Rezerwacja.Add(item);

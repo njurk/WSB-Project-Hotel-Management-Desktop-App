@@ -1,27 +1,35 @@
-﻿<local:WszystkieViewBase x:Class="MVVMFirma.Views.WszystkiePracownikView"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:MVVMFirma.Views"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+﻿<local:WszystkieViewBase
+    x:Class="MVVMFirma.Views.WszystkiePracownikView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:MVVMFirma.Views"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
     <Grid>
-        <DataGrid CanUserAddRows="False" IsReadOnly="True" CanUserDeleteRows="False" AutoGenerateColumns="False" ItemsSource="{Binding List}"  SelectedItem="{Binding SelectedItem}">
+        <DataGrid
+            AutoGenerateColumns="False"
+            CanUserAddRows="False"
+            CanUserDeleteRows="False"
+            IsReadOnly="True"
+            ItemsSource="{Binding List}"
+            SelectedItem="{Binding SelectedItem}">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="ID" Binding="{Binding IdPracownika}"/>
-                <DataGridTextColumn Header="Rodzaj pracownika" Binding="{Binding RodzajPracownikaNazwa}"/>
-                <DataGridTextColumn Header="Imie" Binding="{Binding Imie}"/>
-                <DataGridTextColumn Header="Nazwisko" Binding="{Binding Nazwisko}"/>
-                <DataGridTextColumn Header="Ulica" Binding="{Binding Ulica}"/>
-                <DataGridTextColumn Header="Nr domu" Binding="{Binding NrDomu}"/>
-                <DataGridTextColumn Header="Nr lokalu" Binding="{Binding NrLokalu}"/>
-                <DataGridTextColumn Header="Kod pocztowy" Binding="{Binding KodPocztowy}"/>
-                <DataGridTextColumn Header="Miasto" Binding="{Binding Miasto}"/>
-                <DataGridTextColumn Header="Kraj" Binding="{Binding Kraj}"/>
-                <DataGridTextColumn Header="Data urodzenia" Binding="{Binding DataUrodzenia, StringFormat=yyyy-MM-dd}"/>
-                <DataGridTextColumn Header="Email" Binding="{Binding Email}"/>
-                <DataGridTextColumn Header="Telefon" Binding="{Binding Telefon}"/>
+                <DataGridTextColumn Binding="{Binding IdPracownika}" Header="ID" />
+                <DataGridTextColumn Binding="{Binding RodzajPracownikaNazwa}" Header="Rodzaj pracownika" />
+                <DataGridTextColumn Binding="{Binding Imie}" Header="Imie" />
+                <DataGridTextColumn Binding="{Binding Nazwisko}" Header="Nazwisko" />
+                <DataGridTextColumn Binding="{Binding Ulica}" Header="Ulica" />
+                <DataGridTextColumn Binding="{Binding NrDomu}" Header="Nr domu" />
+                <DataGridTextColumn Binding="{Binding NrLokalu}" Header="Nr lokalu" />
+                <DataGridTextColumn Binding="{Binding KodPocztowy}" Header="Kod pocztowy" />
+                <DataGridTextColumn Binding="{Binding Miasto}" Header="Miasto" />
+                <DataGridTextColumn Binding="{Binding Kraj}" Header="Kraj" />
+                <DataGridTextColumn Binding="{Binding DataUrodzenia, StringFormat=yyyy-MM-dd}" Header="Data urodzenia" />
+                <DataGridTextColumn Binding="{Binding Email}" Header="Email" />
+                <DataGridTextColumn Binding="{Binding Telefon}" Header="Telefon" />
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

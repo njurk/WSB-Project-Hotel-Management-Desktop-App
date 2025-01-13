@@ -87,9 +87,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Helper\BaseCommand.cs" />
-    <Compile Include="Helper\DecimalConverter.cs" />
-    <Compile Include="Helper\PercentConverter.cs" />
-    <Compile Include="Helper\StringValidator.cs" />
+    <Compile Include="Helper\Converters\DecimalConverter.cs" />
+    <Compile Include="Helper\Formatters\PercentFormatter.cs" />
+    <Compile Include="Helper\Validators\MaxGuestsValidator.cs" />
+    <Compile Include="Helper\Validators\StringValidator.cs" />
     <Compile Include="Models\BusinessLogic\DatabaseClass.cs" />
     <Compile Include="Models\BusinessLogic\KlasaPokojuB.cs" />
     <Compile Include="Models\BusinessLogic\KlientB.cs" />
@@ -379,6 +380,10 @@
     <Page Include="Themes\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Styles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Cennik\NowyCennikView.xaml">
       <Generator>MSBuild:Compile</Generator>

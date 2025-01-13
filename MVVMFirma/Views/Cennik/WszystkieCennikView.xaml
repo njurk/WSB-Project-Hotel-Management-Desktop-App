@@ -1,23 +1,31 @@
-﻿<local:WszystkieViewBase x:Class="MVVMFirma.Views.WszystkieCennikView"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:MVVMFirma.Views"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    
-    <Grid Background="White">
-        <DataGrid CanUserAddRows="False" IsReadOnly="True" CanUserDeleteRows="False" AutoGenerateColumns="False" ItemsSource="{Binding List}" SelectedItem="{Binding SelectedItem}">
+﻿<local:WszystkieViewBase
+    x:Class="MVVMFirma.Views.WszystkieCennikView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:MVVMFirma.Views"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+
+    <Grid>
+        <DataGrid
+            AutoGenerateColumns="False"
+            CanUserAddRows="False"
+            CanUserDeleteRows="False"
+            IsReadOnly="True"
+            ItemsSource="{Binding List}"
+            SelectedItem="{Binding SelectedItem}">
             <DataGrid.Columns>
-                
-                <DataGridTextColumn Header="ID" Binding="{Binding IdCennika}"/>
-                <DataGridTextColumn Header="Klasa" Binding="{Binding KlasaPokojuNazwa}"/>
-                <DataGridTextColumn Header="Typ" Binding="{Binding TypPokojuNazwa}"/>
-                <DataGridTextColumn Header="Dorosły" Binding="{Binding CenaDorosly, StringFormat={}{0:C}}"/>
-                <DataGridTextColumn Header="Dziecko" Binding="{Binding CenaDziecko, StringFormat={}{0:C}}"/>
-                <DataGridTextColumn Header="Zwierzęta" Binding="{Binding CenaZwierzeta, StringFormat={}{0:C}}"/>
-                
+
+                <DataGridTextColumn Binding="{Binding IdCennika}" Header="ID" />
+                <DataGridTextColumn Binding="{Binding KlasaPokojuNazwa}" Header="Klasa" />
+                <DataGridTextColumn Binding="{Binding TypPokojuNazwa}" Header="Typ" />
+                <DataGridTextColumn Binding="{Binding CenaDorosly, StringFormat={}{0:C}}" Header="Dorosły" />
+                <DataGridTextColumn Binding="{Binding CenaDziecko, StringFormat={}{0:C}}" Header="Dziecko" />
+                <DataGridTextColumn Binding="{Binding CenaZwierzeta, StringFormat={}{0:C}}" Header="Zwierzęta" />
+
             </DataGrid.Columns>
         </DataGrid>
     </Grid>
