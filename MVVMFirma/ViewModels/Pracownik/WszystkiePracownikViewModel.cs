@@ -30,7 +30,7 @@ namespace MVVMFirma.ViewModels
                     select new PracownikForAllView
                     {
                         IdPracownika = pracownik.IdPracownika,
-                        RodzajPracownikaNazwa = pracownik.RodzajPracownika.Nazwa,
+                        StanowiskoNazwa = pracownik.Stanowisko.Nazwa,
                         Imie = pracownik.Imie,
                         Nazwisko = pracownik.Nazwisko,
                         Ulica = pracownik.Ulica,

@@ -51,7 +51,7 @@
             Margin="0,8,0,8"
             DisplayMemberPath="Value"
             ItemsSource="{Binding RezerwacjaItems}"
-            SelectedValue="{Binding Path=IdRezerwacji, Mode=TwoWay}"
+            SelectedValue="{Binding Path=IdRezerwacji, Mode=TwoWay, ValidatesOnDataErrors=True}"
             SelectedValuePath="Key" />
 
         <Label
@@ -74,7 +74,7 @@
             Grid.Row="2"
             Grid.Column="1"
             Margin="0,8,0,8"
-            Text="{Binding Path=Kwota, Converter={StaticResource DecimalConverter}, UpdateSourceTrigger=PropertyChanged}" />
+            Text="{Binding Path=Kwota, Converter={StaticResource DecimalConverter}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
 
         <Label
             Grid.Row="3"
@@ -87,7 +87,7 @@
             Margin="0,8,0,8"
             DisplayMemberPath="Value"
             ItemsSource="{Binding SposobPlatnosciItems}"
-            SelectedValue="{Binding Path=IdSposobuPlatnosci, Mode=TwoWay}"
+            SelectedValue="{Binding Path=IdSposobuPlatnosci, Mode=TwoWay, ValidatesOnDataErrors=True}"
             SelectedValuePath="Key" />
 
         <Label
@@ -101,7 +101,7 @@
             Margin="0,8,0,8"
             DisplayMemberPath="Value"
             ItemsSource="{Binding StatusPlatnosciItems}"
-            SelectedValue="{Binding Path=IdStatusuPlatnosci, Mode=TwoWay}"
+            SelectedValue="{Binding Path=IdStatusuPlatnosci, Mode=TwoWay, ValidatesOnDataErrors=True}"
             SelectedValuePath="Key" />
 
         <Label
@@ -113,6 +113,6 @@
             Grid.Row="5"
             Grid.Column="1"
             Margin="0,8,0,8"
-            SelectedDate="{Binding DataPlatnosci}" />
+            SelectedDate="{Binding DataPlatnosci, ValidatesOnDataErrors=True}" />
     </Grid>
 </local:JedenViewBase>

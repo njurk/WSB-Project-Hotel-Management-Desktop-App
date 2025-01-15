@@ -282,41 +282,6 @@ namespace MVVMFirma.ViewModels
         }
         #endregion
 
-        #region Validation
-        protected override string ValidateProperty(string propertyName)
-        {
-            switch (propertyName)
-            {
-                case nameof(NrFaktury):
-                    return string.IsNullOrEmpty(NrFaktury) ? "Proszę wprowadzić numer faktury" : string.Empty;
-
-                case nameof(IdRezerwacji):
-                    return IdRezerwacji <= 0 ? "Proszę wybrać rezerwację" : string.Empty;
-
-                case nameof(DataWystawienia):
-                    return DataWystawienia == null ? "Data wystawienia nie może być pusta" : string.Empty;
-
-                case nameof(DataSprzedazy):
-                    return DataSprzedazy == null ? "Data sprzedaży nie może być pusta" : string.Empty;
-
-                case nameof(KwotaBrutto):
-                    return KwotaBrutto <= 0 ? "Proszę wprowadzić poprawną kwotę brutto" : string.Empty;
-
-                case nameof(IdVat):
-                    return IdVat <= 0 ? "Proszę wybrać stawkę VAT" : string.Empty;
-
-                case nameof(KwotaNetto):
-                    return KwotaNetto <= 0 ? "Proszę wprowadzić poprawną kwotę netto" : string.Empty;
-
-                case nameof(TerminPlatnosci):
-                    return TerminPlatnosci < DataWystawienia ? "Termin płatności nie może być wcześniej od daty wystawienia faktury" : string.Empty;
-
-                default:
-                    return string.Empty;
-            }
-        }
-        #endregion
-
         #region Methods
         private int DomyslnyVAT(string szukanyVAT)
         {
@@ -465,6 +430,48 @@ namespace MVVMFirma.ViewModels
                 Opis = item.Opis;
 
                 SelectedRezerwacja = db.Rezerwacja.FirstOrDefault(r => r.IdRezerwacji == item.IdRezerwacji);
+            }
+        }
+        #endregion
+
+        #region Validation
+        protected override string ValidateProperty(string propertyName)
+        {
+            switch (propertyName)
+            {
+                case nameof(IdRezerwacji):
+                    return IdRezerwacji <= 0 ? "wybierz rezerwację" : string.Empty;
+
+                case nameof(NIP):
+                    if (string.IsNullOrEmpty(NIP))
+                    {
+                        return string.Empty;
+                    }
+                    else
+                    {
+                        return StringValidator.IsValidNIP(NIP) ? "wprowadź poprawny NIP (10 cyfr) lub zostaw puste" : string.Empty;
+                    }
+
+                case nameof(DataWystawienia):
+                    return (DataWystawienia == null || DataWystawienia > DateTime.Now) ? "data wystawienia faktury nie może być pusta ani w przyszłości" : string.Empty;
+
+                case nameof(DataSprzedazy):
+                    return DataSprzedazy == null ? "wybierz poprawną datę sprzedaży faktury" : string.Empty;
+
+                case nameof(KwotaBrutto):
+                    return (KwotaBrutto == null || KwotaBrutto <= 0) ? "wprowadź poprawną kwotę brutto" : string.Empty;
+
+                case nameof(IdVat):
+                    return IdVat <= 0 ? "wybierz stawkę VAT" : string.Empty;
+
+                case nameof(KwotaNetto):
+                    return (KwotaNetto == null || KwotaNetto <= 0) ? "wprowadź poprawną kwotę netto" : string.Empty;
+
+                case nameof(TerminPlatnosci):
+                    return (TerminPlatnosci == null || TerminPlatnosci < DataWystawienia) ? "termin płatności musi być poźniej od daty wystawienia" : string.Empty;
+
+                default:
+                    return string.Empty;
             }
         }
         #endregion

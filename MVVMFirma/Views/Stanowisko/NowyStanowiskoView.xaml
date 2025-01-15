@@ -1,5 +1,5 @@
 ﻿<local:JedenViewBase
-    x:Class="MVVMFirma.Views.NowyRodzajPracownikaView"
+    x:Class="MVVMFirma.Views.NowyStanowiskoView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -25,6 +25,6 @@
             Grid.Row="0"
             Grid.Column="1"
             Margin="0,8,0,8"
-            Text="{Binding Path=Nazwa, UpdateSourceTrigger=PropertyChanged}" />
+            Text="{Binding Path=Nazwa, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
     </Grid>
 </local:JedenViewBase>

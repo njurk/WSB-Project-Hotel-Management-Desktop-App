@@ -21,7 +21,7 @@
                 <DataGridTextColumn Binding="{Binding NrPokoju}" Header="Numer" />
                 <DataGridTextColumn Binding="{Binding TypPokojuNazwa}" Header="Typ" />
                 <DataGridTextColumn Binding="{Binding KlasaPokojuNazwa}" Header="Klasa" />
-                <DataGridTextColumn Binding="{Binding Status}" Header="Aktualny status" />
+                <DataGridCheckBoxColumn Binding="{Binding CzyZajety}" Header="Aktualnie zajęte" />
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

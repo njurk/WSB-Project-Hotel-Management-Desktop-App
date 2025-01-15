@@ -31,14 +31,14 @@
             Grid.Row="0"
             Grid.Column="0"
             Margin="0,8,0,8"
-            Content="Rodzaj pracownika" />
+            Content="Stanowisko" />
         <ComboBox
             Grid.Row="0"
             Grid.Column="1"
             Margin="0,8,0,8"
             DisplayMemberPath="Value"
-            ItemsSource="{Binding RodzajPracownikaItems}"
-            SelectedValue="{Binding Path=IdRodzajuPracownika, Mode=TwoWay}"
+            ItemsSource="{Binding StanowiskoItems}"
+            SelectedValue="{Binding Path=IdStanowiska, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
             SelectedValuePath="Key" />
 
         <Label
@@ -50,7 +50,7 @@
             Grid.Row="1"
             Grid.Column="1"
             Margin="0,8,0,8"
-            Text="{Binding Path=Imie, UpdateSourceTrigger=PropertyChanged}" />
+            Text="{Binding Path=Imie, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
 
         <Label
             Grid.Row="2"
@@ -61,7 +61,7 @@
             Grid.Row="2"
             Grid.Column="1"
             Margin="0,8,0,8"
-            Text="{Binding Path=Nazwisko, UpdateSourceTrigger=PropertyChanged}" />
+            Text="{Binding Path=Nazwisko, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
 
         <Label
             Grid.Row="3"
@@ -72,7 +72,7 @@
             Grid.Row="3"
             Grid.Column="1"
             Margin="0,8,0,8"
-            Text="{Binding Path=Ulica, UpdateSourceTrigger=PropertyChanged}" />
+            Text="{Binding Path=Ulica, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
 
         <Label
             Grid.Row="4"
@@ -83,7 +83,7 @@
             Grid.Row="4"
             Grid.Column="1"
             Margin="0,8,0,8"
-            Text="{Binding Path=NrDomu, UpdateSourceTrigger=PropertyChanged}" />
+            Text="{Binding Path=NrDomu, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
 
         <Label
             Grid.Row="5"
@@ -94,7 +94,7 @@
             Grid.Row="5"
             Grid.Column="1"
             Margin="0,8,0,8"
-            Text="{Binding Path=NrLokalu, UpdateSourceTrigger=PropertyChanged}" />
+            Text="{Binding Path=NrLokalu, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
 
         <Label
             Grid.Row="6"
@@ -105,7 +105,7 @@
             Grid.Row="6"
             Grid.Column="1"
             Margin="0,8,0,8"
-            Text="{Binding Path=KodPocztowy, UpdateSourceTrigger=PropertyChanged}" />
+            Text="{Binding Path=KodPocztowy, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
 
         <Label
             Grid.Row="7"
@@ -116,7 +116,7 @@
             Grid.Row="7"
             Grid.Column="1"
             Margin="0,8,0,8"
-            Text="{Binding Path=Miasto, UpdateSourceTrigger=PropertyChanged}" />
+            Text="{Binding Path=Miasto, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
 
         <Label
             Grid.Row="8"
@@ -129,7 +129,7 @@
             Margin="0,8,0,8"
             DisplayMemberPath="Value"
             ItemsSource="{Binding KrajItems}"
-            SelectedValue="{Binding Path=IdKraju, Mode=TwoWay}"
+            SelectedValue="{Binding Path=IdKraju, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
             SelectedValuePath="Key" />
 
         <Label
@@ -141,7 +141,7 @@
             Grid.Row="9"
             Grid.Column="1"
             Margin="0,8,0,8"
-            SelectedDate="{Binding DataUrodzenia}" />
+            SelectedDate="{Binding DataUrodzenia, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
 
         <Label
             Grid.Row="10"
@@ -152,7 +152,7 @@
             Grid.Row="10"
             Grid.Column="1"
             Margin="0,8,0,8"
-            Text="{Binding Path=Email, UpdateSourceTrigger=PropertyChanged}" />
+            Text="{Binding Path=Email, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
 
         <Label
             Grid.Row="11"
@@ -163,6 +163,6 @@
             Grid.Row="11"
             Grid.Column="1"
             Margin="0,8,0,8"
-            Text="{Binding Path=Telefon, UpdateSourceTrigger=PropertyChanged}" />
+            Text="{Binding Path=Telefon, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
     </Grid>
 </local:JedenViewBase>

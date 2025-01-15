@@ -39,7 +39,7 @@
             Margin="0,8,0,8"
             DisplayMemberPath="Value"
             ItemsSource="{Binding KlasaPokojuItems}"
-            SelectedValue="{Binding Path=IdKlasyPokoju, Mode=TwoWay}"
+            SelectedValue="{Binding Path=IdKlasyPokoju, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
             SelectedValuePath="Key" />
 
         <Label
@@ -53,7 +53,7 @@
             Margin="0,8,0,8"
             DisplayMemberPath="Value"
             ItemsSource="{Binding TypPokojuItems}"
-            SelectedValue="{Binding Path=IdTypuPokoju, Mode=TwoWay}"
+            SelectedValue="{Binding Path=IdTypuPokoju, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
             SelectedValuePath="Key" />
 
         <Label
@@ -65,7 +65,7 @@
             Grid.Row="2"
             Grid.Column="1"
             Margin="0,8,0,8"
-            Text="{Binding Path=CenaDorosly, Converter={StaticResource DecimalConverter}, UpdateSourceTrigger=PropertyChanged}" />
+            Text="{Binding Path=CenaDorosly, Converter={StaticResource DecimalConverter}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
 
         <Label
             Grid.Row="3"
@@ -76,7 +76,7 @@
             Grid.Row="3"
             Grid.Column="1"
             Margin="0,8,0,8"
-            Text="{Binding Path=CenaDziecko, Converter={StaticResource DecimalConverter}, UpdateSourceTrigger=PropertyChanged}" />
+            Text="{Binding Path=CenaDziecko, Converter={StaticResource DecimalConverter}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
 
         <Label
             Grid.Row="4"
@@ -87,6 +87,6 @@
             Grid.Row="4"
             Grid.Column="1"
             Margin="0,8,0,8"
-            Text="{Binding Path=CenaZwierzeta, Converter={StaticResource DecimalConverter}, UpdateSourceTrigger=PropertyChanged}" />
+            Text="{Binding Path=CenaZwierzeta, Converter={StaticResource DecimalConverter}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
     </Grid>
 </local:JedenViewBase>

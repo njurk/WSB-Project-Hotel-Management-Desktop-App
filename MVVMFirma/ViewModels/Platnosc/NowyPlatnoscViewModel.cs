@@ -1,4 +1,5 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
+using MVVMFirma.Helper;
 using MVVMFirma.Models.BusinessLogic;
 using MVVMFirma.Models.Entities;
 using MVVMFirma.Models.EntitiesForView;
@@ -137,8 +138,8 @@ namespace MVVMFirma.ViewModels
                         var rezerwacja = db.Rezerwacja.FirstOrDefault(r => r.IdRezerwacji == _selectedRezerwacja.IdRezerwacji);
                         if (rezerwacja != null)
                         {
-                            Kwota = rezerwacja.Kwota;
-                            DoZaplaty = Kwota - sumaPlatnosci(rezerwacja.IdRezerwacji);
+                            DoZaplaty = rezerwacja.Kwota - sumaPlatnosci(rezerwacja.IdRezerwacji);
+                            Kwota = DoZaplaty;
 
                             OnPropertyChanged(() => Kwota);
                             OnPropertyChanged(() => DoZaplaty);
@@ -277,6 +278,32 @@ namespace MVVMFirma.ViewModels
                 IdStatusuPlatnosci = item.IdStatusuPlatnosci;
                 DataPlatnosci = item.DataPlatnosci;
                 Kwota = item.Kwota;
+            }
+        }
+        #endregion
+
+        #region Validation
+        protected override string ValidateProperty(string propertyName)
+        {
+            switch (propertyName)
+            {
+                case nameof(IdRezerwacji):
+                    return IdRezerwacji <= 0 ? "wybierz rezerwację" : string.Empty;
+
+                case nameof(IdSposobuPlatnosci):
+                    return IdSposobuPlatnosci <= 0 ? "wybierz sposób płatności" : string.Empty;
+
+                case nameof(IdStatusuPlatnosci):
+                    return IdStatusuPlatnosci <= 0 ? "wybierz status płatności" : string.Empty;
+
+                case nameof(DataPlatnosci):
+                    return DataPlatnosci == null || DataPlatnosci > DateTime.Now ? "wybierz poprawną datę płatności" : string.Empty;
+
+                case nameof(Kwota):
+                    return (Kwota == null || Kwota <= 0) ? "wprowadź poprawną kwotę" : string.Empty;
+
+                default:
+                    return string.Empty;
             }
         }
         #endregion

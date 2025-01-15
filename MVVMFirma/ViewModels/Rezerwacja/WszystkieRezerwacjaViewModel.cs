@@ -25,7 +25,7 @@ namespace MVVMFirma.ViewModels
                 from rezerwacja in hotelEntities.Rezerwacja
                 let sumaPlatnosci = hotelEntities.Platnosc
                     .Where(p => p.IdRezerwacji == rezerwacja.IdRezerwacji)
-                    .Sum(p => (decimal?)p.Kwota) ?? 0.00m
+                    .Sum(p => (decimal?)p.Kwota) ?? -1m // jeśli brak płatności, suma ustawiana jest na -1 typu decimal, aby nie liczyło rezerwacji o kwocie 0 jako zapłaconej (jeśli taka sytuacja się zdarzy np. przez zniżkę)
                 select new RezerwacjaForAllView
                 {
                     IdRezerwacji = rezerwacja.IdRezerwacji,

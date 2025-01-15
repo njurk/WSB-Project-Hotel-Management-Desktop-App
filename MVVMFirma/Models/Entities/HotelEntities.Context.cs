@@ -34,8 +34,8 @@ namespace MVVMFirma.Models.Entities
         public virtual DbSet<Pokoj> Pokoj { get; set; }
         public virtual DbSet<Pracownik> Pracownik { get; set; }
         public virtual DbSet<Rezerwacja> Rezerwacja { get; set; }
-        public virtual DbSet<RodzajPracownika> RodzajPracownika { get; set; }
         public virtual DbSet<SposobPlatnosci> SposobPlatnosci { get; set; }
+        public virtual DbSet<Stanowisko> Stanowisko { get; set; }
         public virtual DbSet<StatusPlatnosci> StatusPlatnosci { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<TypPokoju> TypPokoju { get; set; }

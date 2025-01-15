@@ -1,4 +1,5 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
+using MVVMFirma.Helper;
 using MVVMFirma.Models.BusinessLogic;
 using MVVMFirma.Models.Entities;
 using MVVMFirma.Models.EntitiesForView;
@@ -15,16 +16,16 @@ namespace MVVMFirma.ViewModels
         #endregion
 
         #region Properties
-        public int IdRodzajuPracownika
+        public int IdStanowiska
         {
             get
             {
-                return item.IdRodzajuPracownika;
+                return item.IdStanowiska;
             }
             set
             {
-                item.IdRodzajuPracownika = value;
-                OnPropertyChanged(() => IdRodzajuPracownika);
+                item.IdStanowiska = value;
+                OnPropertyChanged(() => IdStanowiska);
             }
         }
 
@@ -173,11 +174,11 @@ namespace MVVMFirma.ViewModels
         #endregion
 
         #region Items
-        public IEnumerable<KeyAndValue> RodzajPracownikaItems
+        public IEnumerable<KeyAndValue> StanowiskoItems
         {
             get
             {
-                return new RodzajPracownikaB(db).GetRodzajPracownikaKeyAndValueItems();
+                return new StanowiskoB(db).GetStanowiskoKeyAndValueItems();
             }
         }
 
@@ -218,7 +219,7 @@ namespace MVVMFirma.ViewModels
         {
             db = new HotelEntities();
             item = new Pracownik();
-            DataUrodzenia = DateTime.Now;
+            DataUrodzenia = DateTime.Now.AddYears(-30); // domyślna data 30 lat wstecz, aby ułatwić wybór
         }
 
         public NowyPracownikViewModel(int itemId)
@@ -230,7 +231,7 @@ namespace MVVMFirma.ViewModels
 
             if (item != null)
             {
-                IdRodzajuPracownika = item.IdRodzajuPracownika;
+                IdStanowiska = item.IdStanowiska;
                 Imie = item.Imie;
                 Nazwisko = item.Nazwisko;
                 Ulica = item.Ulica;
@@ -242,6 +243,70 @@ namespace MVVMFirma.ViewModels
                 DataUrodzenia = item.DataUrodzenia;
                 Email = item.Email;
                 Telefon = item.Telefon;
+            }
+        }
+        #endregion
+
+        #region Validation
+        protected override string ValidateProperty(string propertyName)
+        {
+            switch (propertyName)
+            {
+                case nameof(IdStanowiska):
+                    return IdStanowiska <= 0 ? "wybierz stanowisko pracownika" : string.Empty;
+
+                case nameof(Imie):
+                    return StringValidator.ContainsOnlyLettersWithSpaces(Imie) ? "wprowadź poprawne imie (nie używaj cyfr ani znaków specjalnych)" : string.Empty;
+
+                case nameof(Nazwisko):
+                    return StringValidator.ContainsOnlyLettersWithSpaces(Nazwisko) ? "wprowadź poprawne nazwisko (nie używaj cyfr ani znaków specjalnych)" : string.Empty;
+
+                case nameof(Ulica):
+                    return StringValidator.IsValidStreet(Ulica) ? "wprowadź poprawną nazwę ulicy" : string.Empty;
+
+                case nameof(NrDomu):
+                    return StringValidator.IsValidHouseNumber(NrDomu) ? "wprowadź poprawny numer domu" : string.Empty;
+
+                case nameof(NrLokalu):
+                    // lokal jest opcjonalny
+                    if (string.IsNullOrEmpty(NrLokalu))
+                    {
+                        return string.Empty;
+                    }
+                    else
+                    {
+                        return !StringValidator.IsPositiveNumber(NrLokalu) ? "wprowadź poprawny numer lokalu lub zostaw puste" : string.Empty;
+                    }
+
+                case nameof(KodPocztowy):
+                    return StringValidator.IsValidPostalCode(KodPocztowy) ? "wprowadź poprawny kod pocztowy w formacie XX-XXX" : string.Empty;
+
+                case nameof(Miasto):
+                    return StringValidator.IsValidCity(Miasto) ? "wprowadź poprawną nazwę miasta" : string.Empty;
+
+                case nameof(IdKraju):
+                    return IdKraju <= 0 ? "wybierz kraj" : string.Empty;
+
+                case nameof(DataUrodzenia):
+                    return StringValidator.IsValidDateOfBirth(DataUrodzenia) ? "wybierz poprawną datę urodzenia" : string.Empty;
+
+                case nameof(Email):
+                    // email jest opcjonalny
+                    if (string.IsNullOrEmpty(Email))
+                    {
+                        return string.Empty;
+                    }
+                    else
+                    {
+                        return StringValidator.IsValidEmail(Email) ? "wprowadź poprawny adres email lub zostaw puste" : string.Empty;
+                    }
+
+                case nameof(Telefon):
+                    return StringValidator.IsValidPhoneNumber(Telefon) ? "wprowadź poprawny numer telefonu (bez numeru kierunkowego)" : string.Empty;
+
+                default:
+                    return string.Empty;
+            
             }
         }
         #endregion

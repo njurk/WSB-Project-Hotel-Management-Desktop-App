@@ -5,23 +5,23 @@ using System.Linq;
 
 namespace MVVMFirma.Models.BusinessLogic
 {
-    public class RodzajPracownikaB : DatabaseClass
+    public class StanowiskoB : DatabaseClass
     {
         #region Constructor
-        public RodzajPracownikaB(HotelEntities db)
+        public StanowiskoB(HotelEntities db)
             : base(db) { }
         #endregion
 
         #region Funkcje biznesowe
-        public IEnumerable<KeyAndValue> GetRodzajPracownikaKeyAndValueItems()
+        public IEnumerable<KeyAndValue> GetStanowiskoKeyAndValueItems()
         {
             return
                 (
-                    from rodzajpracownika in db.RodzajPracownika
+                    from stanowisko in db.Stanowisko
                     select new KeyAndValue
                     {
-                        Key = rodzajpracownika.IdRodzajuPracownika,
-                        Value = rodzajpracownika.Nazwa
+                        Key = stanowisko.IdStanowiska,
+                        Value = stanowisko.Nazwa
                     }
                 ).ToList();
         }

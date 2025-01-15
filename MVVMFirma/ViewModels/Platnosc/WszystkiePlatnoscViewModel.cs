@@ -27,7 +27,7 @@ namespace MVVMFirma.ViewModels
                     {
                         IdPlatnosci = platnosc.IdPlatnosci,
                         NrPlatnosci = platnosc.NrPlatnosci,
-                        IdRezerwacji = platnosc.IdRezerwacji,
+                        NrRezerwacji = platnosc.Rezerwacja.NrRezerwacji,
                         SposobPlatnosciNazwa = platnosc.SposobPlatnosci.Nazwa,
                         StatusPlatnosciNazwa = platnosc.StatusPlatnosci.Nazwa,
                         DataPlatnosci = platnosc.DataPlatnosci,

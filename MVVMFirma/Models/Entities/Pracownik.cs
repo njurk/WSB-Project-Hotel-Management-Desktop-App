@@ -15,7 +15,7 @@ namespace MVVMFirma.Models.Entities
     public partial class Pracownik
     {
         public int IdPracownika { get; set; }
-        public int IdRodzajuPracownika { get; set; }
+        public int IdStanowiska { get; set; }
         public string Imie { get; set; }
         public string Nazwisko { get; set; }
         public string Ulica { get; set; }
@@ -29,6 +29,6 @@ namespace MVVMFirma.Models.Entities
         public string Telefon { get; set; }
     
         public virtual Kraj Kraj { get; set; }
-        public virtual RodzajPracownika RodzajPracownika { get; set; }
+        public virtual Stanowisko Stanowisko { get; set; }
     }
 }

@@ -1,5 +1,5 @@
 ﻿<local:WszystkieViewBase
-    x:Class="MVVMFirma.Views.WszystkieRodzajPracownikaView"
+    x:Class="MVVMFirma.Views.WszystkieStanowiskoView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -17,7 +17,7 @@
             ItemsSource="{Binding List}"
             SelectedItem="{Binding SelectedItem}">
             <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding IdRodzajuPracownika}" Header="ID" />
+                <DataGridTextColumn Binding="{Binding IdStanowiska}" Header="ID" />
                 <DataGridTextColumn Binding="{Binding Nazwa}" Header="Nazwa" />
             </DataGrid.Columns>
         </DataGrid>

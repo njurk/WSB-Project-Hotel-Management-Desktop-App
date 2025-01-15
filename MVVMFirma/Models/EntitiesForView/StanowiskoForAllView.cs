@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace MVVMFirma.Models.EntitiesForView
 {
-    public class RodzajPracownikaForAllView
+    public class StanowiskoForAllView
     {
-        public int IdRodzajuPracownika {  get; set; }
+        public int IdStanowiska {  get; set; }
         public string Nazwa {  get; set; }
     }
 }

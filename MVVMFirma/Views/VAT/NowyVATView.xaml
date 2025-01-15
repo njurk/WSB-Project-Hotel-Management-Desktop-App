@@ -25,6 +25,6 @@
             Grid.Row="0"
             Grid.Column="1"
             Margin="0,8,0,8"
-            Text="{Binding Path=Stawka, UpdateSourceTrigger=PropertyChanged}" />
+            Text="{Binding Path=Stawka, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
     </Grid>
 </local:JedenViewBase>

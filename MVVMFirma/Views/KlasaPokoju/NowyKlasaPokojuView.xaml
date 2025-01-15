@@ -28,7 +28,7 @@
             Grid.Row="0"
             Grid.Column="1"
             Margin="0,8,0,8"
-            Text="{Binding Path=Nazwa, UpdateSourceTrigger=PropertyChanged}" />
+            Text="{Binding Path=Nazwa, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
 
     </Grid>
 </local:JedenViewBase>

@@ -1,1 +1,15 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" />
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Style x:Key="Validation" TargetType="FrameworkElement">
+        <Style.Triggers>
+            <Trigger Property="Validation.HasError" Value="true">
+                <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)[0].ErrorContent}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style BasedOn="{StaticResource Validation}" TargetType="TextBox" />
+    <Style BasedOn="{StaticResource Validation}" TargetType="ComboBox" />
+    <Style BasedOn="{StaticResource Validation}" TargetType="DatePicker" />
+
+</ResourceDictionary>

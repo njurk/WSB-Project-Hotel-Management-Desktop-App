@@ -1,4 +1,5 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
+using MVVMFirma.Helper;
 using MVVMFirma.Models.BusinessLogic;
 using MVVMFirma.Models.Entities;
 using MVVMFirma.Models.EntitiesForView;
@@ -105,6 +106,23 @@ namespace MVVMFirma.ViewModels
             }
         }
 
+        #endregion
+
+        #region Validation
+        protected override string ValidateProperty(string propertyName)
+        {
+            switch (propertyName)
+            {
+                case nameof(IdKlasyPokoju):
+                    return IdKlasyPokoju <= 0 ? "wybierz klasę pokoju" : string.Empty;
+
+                case nameof(IdUdogodnienia):
+                    return IdUdogodnienia <= 0 ? "wybierz udogodnienie" : string.Empty;
+
+                default:
+                    return string.Empty;
+            }
+        }
         #endregion
     }
 }

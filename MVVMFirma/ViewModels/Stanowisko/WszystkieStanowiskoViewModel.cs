@@ -7,11 +7,11 @@ using System.Windows;
 
 namespace MVVMFirma.ViewModels
 {
-    public class WszystkieRodzajPracownikaViewModel : WszystkieViewModel<RodzajPracownikaForAllView>
+    public class WszystkieStanowiskoViewModel : WszystkieViewModel<StanowiskoForAllView>
     {
         #region Constructor
-        public WszystkieRodzajPracownikaViewModel()
-            : base("Rodzaje pracowników")
+        public WszystkieStanowiskoViewModel()
+            : base("Stanowiska")
         {
             // odbieranie wiadomości odświeżenia listy
             Messenger.Default.Register<string>(this, OnMessageReceived);
@@ -21,23 +21,23 @@ namespace MVVMFirma.ViewModels
         #region Helpers
         public override void Load()
         {
-            List = new ObservableCollection<RodzajPracownikaForAllView>
+            List = new ObservableCollection<StanowiskoForAllView>
             (
-                from rodzajpracownika in hotelEntities.RodzajPracownika
-                select new RodzajPracownikaForAllView
+                from stanowisko in hotelEntities.Stanowisko
+                select new StanowiskoForAllView
                 {
-                    IdRodzajuPracownika = rodzajpracownika.IdRodzajuPracownika,
-                    Nazwa = rodzajpracownika.Nazwa
+                    IdStanowiska = stanowisko.IdStanowiska,
+                    Nazwa = stanowisko.Nazwa
                 }
             );
         }
         public override void Delete()
         {
-            MessageBoxResult delete = MessageBox.Show("Czy na pewno chcesz usunąć wybrany rodzaj pracownika:\n" + SelectedItem.Nazwa, "Usuwanie", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            MessageBoxResult delete = MessageBox.Show("Czy na pewno chcesz usunąć wybrane stanowisko:\n" + SelectedItem.Nazwa, "Usuwanie", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
             if (SelectedItem != null && delete == MessageBoxResult.Yes)
             {
-                hotelEntities.RodzajPracownika.Remove(hotelEntities.RodzajPracownika.FirstOrDefault(f => f.IdRodzajuPracownika == SelectedItem.IdRodzajuPracownika));
+                hotelEntities.Stanowisko.Remove(hotelEntities.Stanowisko.FirstOrDefault(f => f.IdStanowiska == SelectedItem.IdStanowiska));
                 hotelEntities.SaveChanges();
                 Load();
             }
@@ -49,7 +49,7 @@ namespace MVVMFirma.ViewModels
         {
             if (SelectedItem != null)
             {
-                Messenger.Default.Send(DisplayName + "Edit-" + SelectedItem.IdRodzajuPracownika);
+                Messenger.Default.Send(DisplayName + "Edit-" + SelectedItem.IdStanowiska);
                 SelectedItem = null;
             }
         }
@@ -57,7 +57,7 @@ namespace MVVMFirma.ViewModels
         // OnMessageReceived obsługuje wiadomość dotyczącą odświeżenia listy w widoku Wszystkie..View, wysłaną przy zapisie edytowanego rekordu 
         private void OnMessageReceived(string message)
         {
-            if (message == "RodzajPracownikaRefresh")
+            if (message == "StanowiskoRefresh")
             {
                 Load();
             }

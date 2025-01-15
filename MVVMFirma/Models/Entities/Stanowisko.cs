@@ -12,15 +12,15 @@ namespace MVVMFirma.Models.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class RodzajPracownika
+    public partial class Stanowisko
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public RodzajPracownika()
+        public Stanowisko()
         {
             this.Pracownik = new HashSet<Pracownik>();
         }
     
-        public int IdRodzajuPracownika { get; set; }
+        public int IdStanowiska { get; set; }
         public string Nazwa { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

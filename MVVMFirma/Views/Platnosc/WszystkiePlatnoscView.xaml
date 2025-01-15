@@ -19,7 +19,7 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding IdPlatnosci}" Header="ID" />
                 <DataGridTextColumn Binding="{Binding NrPlatnosci}" Header="Numer płatności" />
-                <DataGridTextColumn Binding="{Binding IdRezerwacji}" Header="Numer rezerwacji" />
+                <DataGridTextColumn Binding="{Binding NrRezerwacji}" Header="Numer rezerwacji" />
                 <DataGridTextColumn Binding="{Binding SposobPlatnosciNazwa}" Header="Sposób" />
                 <DataGridTextColumn Binding="{Binding StatusPlatnosciNazwa}" Header="Status" />
                 <DataGridTextColumn Binding="{Binding DataPlatnosci, StringFormat=yyyy-MM-dd}" Header="Data płatności" />

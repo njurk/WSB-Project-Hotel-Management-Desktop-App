@@ -1,9 +1,11 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
+using MVVMFirma.Helper;
 using MVVMFirma.Models.BusinessLogic;
 using MVVMFirma.Models.Entities;
 using MVVMFirma.Models.EntitiesForView;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Navigation;
 
 namespace MVVMFirma.ViewModels
 {
@@ -218,6 +220,74 @@ namespace MVVMFirma.ViewModels
                 Email = item.Email;
                 Telefon = item.Telefon;
                 NIP = item.NIP;
+            }
+        }
+        #endregion
+
+        #region Validation
+        protected override string ValidateProperty(string propertyName)
+        {
+            switch (propertyName)
+            {
+                case nameof(Imie):
+                    return StringValidator.ContainsOnlyLettersWithSpaces(Imie) ? "wprowadź poprawne imie (nie używaj cyfr ani znaków specjalnych)" : string.Empty;
+
+                case nameof(Nazwisko):
+                    return StringValidator.ContainsOnlyLettersWithSpaces(Nazwisko) ? "wprowadź poprawne nazwisko (nie używaj cyfr ani znaków specjalnych)" : string.Empty;
+
+                case nameof(Ulica):
+                    return StringValidator.IsValidStreet(Ulica) ? "wprowadź poprawną nazwę ulicy" : string.Empty;
+
+                case nameof(NrDomu):
+                    return StringValidator.IsValidHouseNumber(NrDomu) ? "wprowadź poprawny numer domu" : string.Empty;
+
+                case nameof(NrLokalu):
+                    // lokal jest opcjonalny
+                    if (string.IsNullOrEmpty(NrLokalu))
+                    {
+                        return string.Empty;
+                    }
+                    else
+                    {
+                        return !StringValidator.IsPositiveNumber(NrLokalu) ? "wprowadź poprawny numer lokalu lub zostaw puste" : string.Empty;
+                    }
+
+                case nameof(KodPocztowy):
+                    return StringValidator.IsValidPostalCode(KodPocztowy) ? "wprowadź poprawny kod pocztowy w formacie XX-XXX" : string.Empty;
+
+                case nameof(Miasto):
+                    return StringValidator.IsValidCity(Miasto) ? "wprowadź poprawną nazwę miasta" : string.Empty;
+
+                case nameof(IdKraju):
+                    return IdKraju <= 0 ? "wybierz kraj" : string.Empty;
+
+                case nameof(Email):
+                    // email jest opcjonalny
+                    if (string.IsNullOrEmpty(Email))
+                    {
+                        return string.Empty;
+                    }
+                    else
+                    {
+                        return StringValidator.IsValidEmail(Email) ? "wprowadź poprawny adres email lub zostaw puste" : string.Empty;
+                    }
+
+                case nameof(Telefon):
+                    return StringValidator.IsValidPhoneNumber(Telefon) ? "wprowadź poprawny numer telefonu (bez numeru kierunkowego)" : string.Empty;
+
+                case nameof(NIP):
+                    if (string.IsNullOrEmpty(NIP))
+                    {
+                        return string.Empty;
+                    }
+                    else
+                    {
+                        return StringValidator.IsValidNIP(NIP) ? "wprowadź poprawny NIP (10 cyfr) lub zostaw puste" : string.Empty;
+                    }
+
+                default:
+                    return string.Empty;
+
             }
         }
         #endregion

@@ -113,12 +113,12 @@ namespace MVVMFirma.ViewModels
                     new BaseCommand(() => this.ShowAllView(new WszystkieRezerwacjaViewModel()))),
 
                 /*new CommandViewModel(
-                    "Rodzaj pracownika",
-                    new BaseCommand(() => this.CreateView(new NowyRodzajPracownikaViewModel()))),*/
+                    "Stanowisko",
+                    new BaseCommand(() => this.CreateView(new NowyStanowiskoViewModel()))),*/
 
                 new CommandViewModel(
-                    "Rodzaje pracowników",
-                    new BaseCommand(() => this.ShowAllView(new WszystkieRodzajPracownikaViewModel()))),
+                    "Stanowiska",
+                    new BaseCommand(() => this.ShowAllView(new WszystkieStanowiskoViewModel()))),
 
                 /*new CommandViewModel(
                     "Sposób płatności",
@@ -265,8 +265,8 @@ namespace MVVMFirma.ViewModels
                     CreateView(new NowyPracownikViewModel());
                 if (name == "RezerwacjeAdd")
                     CreateView(new NowyRezerwacjaViewModel());
-                if (name == "Rodzaje pracownikówAdd")
-                    CreateView(new NowyRodzajPracownikaViewModel());
+                if (name == "StanowiskaAdd")
+                    CreateView(new NowyStanowiskoViewModel());
                 if (name == "Sposoby płatnościAdd")
                     CreateView(new NowySposobPlatnosciViewModel());
                 if (name == "Statusy płatnościAdd")
@@ -309,8 +309,8 @@ namespace MVVMFirma.ViewModels
                         EditView(new NowyPracownikViewModel(itemId));
                     if (splitName == "RezerwacjeEdit")
                         EditView(new NowyRezerwacjaViewModel(itemId));
-                    if (splitName == "Rodzaje pracownikówEdit")
-                        EditView(new NowyRodzajPracownikaViewModel(itemId));
+                    if (splitName == "StanowiskaEdit")
+                        EditView(new NowyStanowiskoViewModel(itemId));
                     if (splitName == "Sposoby płatnościEdit")
                         EditView(new NowySposobPlatnosciViewModel(itemId));
                     if (splitName == "Statusy płatnościEdit")

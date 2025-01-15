@@ -24,7 +24,6 @@ namespace MVVMFirma.ViewModels
         private DateTime _dataZameldowania;
         private DateTime _dataWymeldowania;
         private Pokoj _selectedPokoj;
-        private BaseCommand _obliczKwoteCommand;
         #endregion
 
         #region Properties
@@ -78,6 +77,10 @@ namespace MVVMFirma.ViewModels
             {
                 item.LiczbaDoroslych = value;
                 OnPropertyChanged(() => LiczbaDoroslych);
+                // należy wywołać walidacje pokoju przy każdej zmianie w liczbie dorosłych i dzieci
+                // inaczej MaxGuestsValidator nie dowie się o zmianach w tych polach jeśli pokój był wybrany najpierw
+                OnPropertyChanged(() => IdPokoju);
+                OnPropertyChanged(() => SelectedPokoj);
             }
         }
 
@@ -91,6 +94,10 @@ namespace MVVMFirma.ViewModels
             {
                 item.LiczbaDzieci = value;
                 OnPropertyChanged(() => LiczbaDzieci);
+                // należy wywołać walidacje pokoju przy każdej zmianie w liczbie dorosłych i dzieci
+                // inaczej MaxGuestsValidator nie dowie się o zmianach w tych polach jeśli pokój był wybrany najpierw
+                OnPropertyChanged(() => IdPokoju);
+                OnPropertyChanged(() => SelectedPokoj);
             }
         }
 
@@ -218,7 +225,6 @@ namespace MVVMFirma.ViewModels
             }
         }
 
-        // poniższa właściwość ustawia pokój jako wybrany element w comboboxie przy edycji, dzięki czemu jest widoczny od razu
         public Pokoj SelectedPokoj
         {
             get { return _selectedPokoj; }
@@ -287,55 +293,6 @@ namespace MVVMFirma.ViewModels
         }
         #endregion
 
-        #region Validation
-        protected override string ValidateProperty(string propertyName)
-        {
-            switch (propertyName)
-            {
-                case nameof(IdKlienta):
-                    return IdKlienta <= 0 ? "wybierz klienta" : string.Empty;
-
-                case nameof(LiczbaDoroslych):
-                    if (!int.TryParse(LiczbaDoroslych, out int dorosli) || dorosli <= 0)
-                        return "wprowadź poprawną liczbę dorosłych";
-                    return string.Empty;
-
-                case nameof(LiczbaDzieci):
-                    if (!string.IsNullOrWhiteSpace(LiczbaDzieci) && (!int.TryParse(LiczbaDzieci, out int dzieci) || dzieci <= 0))
-                        return "wprowadź poprawną liczbę dzieci (lub zostaw puste).";
-                    return string.Empty;
-
-                case nameof(IdPokoju):
-                    if (!int.TryParse(LiczbaDoroslych, out var liczbaDoroslych) || liczbaDoroslych <= 0)
-                        return string.Empty;
-                    if (!int.TryParse(LiczbaDzieci, out var liczbaDzieci))
-                        liczbaDzieci = 0; // dla obliczeń, jeśli brak to zero
-                    return new MaxGuestsValidator(db).Validate(IdPokoju, liczbaDoroslych, liczbaDzieci);
-
-                case nameof(DataZameldowania):
-                    if (DataZameldowania >= DataWymeldowania)
-                        return "data zameldowania musi być wcześniej od daty wymeldowania";
-                    if (DataZameldowania < DateTime.Now.Date)
-                        return "data zameldowania nie może być w przeszłości";
-                    return string.Empty;
-
-                case nameof(DataWymeldowania):
-                    if (DataWymeldowania <= DataZameldowania)
-                        return "data wymeldowania musi być później od daty zameldowania";
-                    return string.Empty;
-
-                case nameof(DataRezerwacji):
-                    return DataRezerwacji > DateTime.Now ? "data rezerwacji nie może być w przyszłości" : string.Empty;
-
-                case nameof(SelectedPokoj):
-                    return SelectedPokoj == null ? "wybierz pokój" : string.Empty;
-
-                default:
-                    return string.Empty;
-            }
-        }
-        #endregion
-
         #region Methods
         public string GenerujNumerRezerwacji()
         {
@@ -389,7 +346,7 @@ namespace MVVMFirma.ViewModels
             return $"{DateTime.Now:yyyy-MM}-R{nrRezerwacji}";
         }
 
-        // metoda do obliczania całkowitej kwoty rezerwacji na podstawie długości pobytu i wybranego pokoju oraz ewentualnej zniżki
+        // metoda do obliczania całkowitej kwoty rezerwacji na podstawie długości pobytu, liczby gości, posiadania zwierząt, wybranego pokoju oraz ewentualnej zniżki
         private void ObliczKwote()
         {
             // pobranie liczby dorosłych i dzieci
@@ -403,7 +360,7 @@ namespace MVVMFirma.ViewModels
             // sprawdzenie czy istnieje cennik dla parametrów wybranego pokoju
             if (cennik == null)
             {
-                MessageBox.Show("Nie znaleziono odpowiedniego cennika.", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("nie znaleziono cennika dla parametrów wybranego pokoju, utwórz go w zakładce Cenniki", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
@@ -487,6 +444,56 @@ namespace MVVMFirma.ViewModels
                 Uwagi = item.Uwagi;
                 // przekazanie pokoju do właściwości, która odpowiada za do ustawienie jej w comboboxie
                 SelectedPokoj = db.Pokoj.FirstOrDefault(p => p.IdPokoju == item.IdPokoju);
+            }
+        }
+        #endregion
+
+        #region Validation
+        protected override string ValidateProperty(string propertyName)
+        {
+            switch (propertyName)
+            {
+                case nameof(IdKlienta):
+                    return IdKlienta <= 0 ? "wybierz klienta" : string.Empty;
+
+                case nameof(LiczbaDoroslych):
+                    return !StringValidator.IsPositiveNumber(LiczbaDoroslych) ? "wprowadź poprawną liczbę dorosłych" : string.Empty;
+
+                case nameof(LiczbaDzieci):
+                    return !(string.IsNullOrWhiteSpace(LiczbaDzieci) || StringValidator.IsPositiveNumber(LiczbaDzieci)) ? "wprowadź poprawną liczbę dzieci (lub zostaw puste)" : string.Empty;
+
+                case nameof(DataZameldowania):
+                    if (DataZameldowania >= DataWymeldowania)
+                        return "data zameldowania musi być wcześniej od daty wymeldowania";
+                    if (DataZameldowania < DateTime.Now.Date)
+                        return "data zameldowania nie może być w przeszłości";
+                    return string.Empty;
+
+                case nameof(DataWymeldowania):
+                    return DataWymeldowania <= DataZameldowania ? "data wymeldowania musi być później od daty zameldowania" : string.Empty;
+
+                case nameof(DataRezerwacji):
+                    return DataRezerwacji > DateTime.Now ? "data rezerwacji nie może być w przyszłości" : string.Empty;
+
+                case nameof(IdPokoju):
+                    if (IdPokoju == 0)
+                    {
+                        return "wybierz pokój";
+                    }
+
+                    if (!int.TryParse(LiczbaDoroslych, out int dorosli) || dorosli <= 0)
+                    {
+                        return "wprowadź poprawną liczbę dorosłych";
+                    }
+
+                    // dzieci są opcjonalne w rezerwacji więc sprawdzamy tylko gdy wartość nie jest null
+                    int liczbaDzieci = string.IsNullOrWhiteSpace(LiczbaDzieci) ? 0 : int.Parse(LiczbaDzieci);
+
+                    string maxGuestsError = new MaxGuestsValidator(db).Validate(IdPokoju, dorosli, liczbaDzieci);
+                    return !string.IsNullOrEmpty(maxGuestsError) ? maxGuestsError : string.Empty;
+
+                default:
+                    return string.Empty;
             }
         }
         #endregion

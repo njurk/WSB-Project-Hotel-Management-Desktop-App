@@ -18,7 +18,7 @@
             SelectedItem="{Binding SelectedItem}">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding IdPracownika}" Header="ID" />
-                <DataGridTextColumn Binding="{Binding RodzajPracownikaNazwa}" Header="Rodzaj pracownika" />
+                <DataGridTextColumn Binding="{Binding StanowiskoNazwa}" Header="Stanowisko" />
                 <DataGridTextColumn Binding="{Binding Imie}" Header="Imie" />
                 <DataGridTextColumn Binding="{Binding Nazwisko}" Header="Nazwisko" />
                 <DataGridTextColumn Binding="{Binding Ulica}" Header="Ulica" />

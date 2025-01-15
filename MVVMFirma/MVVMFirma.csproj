@@ -99,7 +99,7 @@
     <Compile Include="Models\BusinessLogic\PokojB.cs" />
     <Compile Include="Models\BusinessLogic\PracownikB.cs" />
     <Compile Include="Models\BusinessLogic\RezerwacjaB.cs" />
-    <Compile Include="Models\BusinessLogic\RodzajPracownikaB.cs" />
+    <Compile Include="Models\BusinessLogic\StanowiskoB.cs" />
     <Compile Include="Models\BusinessLogic\SposobPlatnosciB.cs" />
     <Compile Include="Models\BusinessLogic\StatusPlatnosciB.cs" />
     <Compile Include="Models\BusinessLogic\TypPokojuB.cs" />
@@ -116,7 +116,7 @@
     <Compile Include="Models\EntitiesForView\PokojForAllView.cs" />
     <Compile Include="Models\EntitiesForView\PracownikForAllView.cs" />
     <Compile Include="Models\EntitiesForView\RezerwacjaForAllView.cs" />
-    <Compile Include="Models\EntitiesForView\RodzajPracownikaForAllView.cs" />
+    <Compile Include="Models\EntitiesForView\StanowiskoForAllView.cs" />
     <Compile Include="Models\EntitiesForView\SposobPlatnosciForAllView.cs" />
     <Compile Include="Models\EntitiesForView\StatusPlatnosciForAllView.cs" />
     <Compile Include="Models\EntitiesForView\TypPokojuForAllView.cs" />
@@ -166,10 +166,10 @@
     <Compile Include="Models\Entities\Rezerwacja.cs">
       <DependentUpon>HotelEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Entities\RodzajPracownika.cs">
+    <Compile Include="Models\Entities\SposobPlatnosci.cs">
       <DependentUpon>HotelEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Entities\SposobPlatnosci.cs">
+    <Compile Include="Models\Entities\Stanowisko.cs">
       <DependentUpon>HotelEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Entities\StatusPlatnosci.cs">
@@ -215,8 +215,8 @@
     <Compile Include="ViewModels\Pracownik\WszystkiePracownikViewModel.cs" />
     <Compile Include="ViewModels\Rezerwacja\NowyRezerwacjaViewModel.cs" />
     <Compile Include="ViewModels\Rezerwacja\WszystkieRezerwacjaViewModel.cs" />
-    <Compile Include="ViewModels\RodzajPracownika\NowyRodzajPracownikaViewModel.cs" />
-    <Compile Include="ViewModels\RodzajPracownika\WszystkieRodzajPracownikaViewModel.cs" />
+    <Compile Include="ViewModels\Stanowisko\NowyStanowiskoViewModel.cs" />
+    <Compile Include="ViewModels\Stanowisko\WszystkieStanowiskoViewModel.cs" />
     <Compile Include="ViewModels\SposobPlatnosci\NowySposobPlatnosciViewModel.cs" />
     <Compile Include="ViewModels\SposobPlatnosci\WszystkieSposobPlatnosciViewModel.cs" />
     <Compile Include="ViewModels\StatusPlatnosci\NowyStatusPlatnosciViewModel.cs" />
@@ -293,11 +293,11 @@
     <Compile Include="Views\Rezerwacja\WszystkieRezerwacjaView.xaml.cs">
       <DependentUpon>WszystkieRezerwacjaView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\RodzajPracownika\NowyRodzajPracownikaView.xaml.cs">
-      <DependentUpon>NowyRodzajPracownikaView.xaml</DependentUpon>
+    <Compile Include="Views\Stanowisko\NowyStanowiskoView.xaml.cs">
+      <DependentUpon>NowyStanowiskoView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\RodzajPracownika\WszystkieRodzajPracownikaView.xaml.cs">
-      <DependentUpon>WszystkieRodzajPracownikaView.xaml</DependentUpon>
+    <Compile Include="Views\Stanowisko\WszystkieStanowiskoView.xaml.cs">
+      <DependentUpon>WszystkieStanowiskoView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SposobPlatnosci\NowySposobPlatnosciView.xaml.cs">
       <DependentUpon>NowySposobPlatnosciView.xaml</DependentUpon>
@@ -465,11 +465,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\RodzajPracownika\NowyRodzajPracownikaView.xaml">
+    <Page Include="Views\Stanowisko\NowyStanowiskoView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\RodzajPracownika\WszystkieRodzajPracownikaView.xaml">
+    <Page Include="Views\Stanowisko\WszystkieStanowiskoView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

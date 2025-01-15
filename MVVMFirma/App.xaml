@@ -4,15 +4,14 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:d1p1="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="clr-namespace:MVVMFirma.ViewModel"
     d1p1:Ignorable="d">
     <Application.Resources>
         <ResourceDictionary>
-
-            <vm:ViewModelLocator
-                xmlns:vm="clr-namespace:MVVMFirma.ViewModel"
-                x:Key="Locator"
-                d:IsDataSource="True" />
-
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Themes/Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <vm:ViewModelLocator x:Key="Locator" d:IsDataSource="True" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

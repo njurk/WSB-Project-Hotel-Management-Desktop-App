@@ -29,7 +29,7 @@ namespace MVVMFirma.ViewModels
                         IdPokoju = pokoj.IdPokoju,
                         NrPokoju = pokoj.NrPokoju,
                         TypPokojuNazwa = pokoj.TypPokoju.Nazwa,
-                        KlasaPokojuNazwa = pokoj.KlasaPokoju.Nazwa,
+                        KlasaPokojuNazwa = pokoj.KlasaPokoju.Nazwa
                     }
                 );
 
@@ -47,7 +47,6 @@ namespace MVVMFirma.ViewModels
                     r.DataWymeldowania >= dzisiaj);
 
                 pokoj.CzyZajety = isOccupied;
-                pokoj.Status = isOccupied ? "Zajęty" : "Wolny";
             }
         }
 

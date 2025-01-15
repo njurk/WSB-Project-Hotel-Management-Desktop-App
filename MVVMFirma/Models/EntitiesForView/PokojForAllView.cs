@@ -8,7 +8,6 @@
         public string KlasaPokojuNazwa { get; set; }
         public string PietroNr { get; set; }
         public bool CzyZajety { get; set; }
-        public string Status { get; set; }
 
     }
 }

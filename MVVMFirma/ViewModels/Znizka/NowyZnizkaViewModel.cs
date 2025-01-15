@@ -1,4 +1,5 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
+using MVVMFirma.Helper;
 using MVVMFirma.Models.Entities;
 using System.Linq;
 
@@ -82,6 +83,23 @@ namespace MVVMFirma.ViewModels
             }
         }
 
+        #endregion
+
+        #region Validation
+        protected override string ValidateProperty(string propertyName)
+        {
+            switch (propertyName)
+            {
+                case nameof(Nazwa):
+                    return StringValidator.ContainsOnlyLettersWithSpaces(Nazwa) ? "wprowadź poprawną nazwę (nie używaj cyfr ani znaków specjalnych)" : string.Empty;
+
+                case nameof(Wartosc):
+                    return !StringValidator.IsNumberInRange(Wartosc, 1, 100) ? "wprowadź liczbę całkowitą, bez znaków specjalnych, z zakresu 1-100" : string.Empty;
+
+                default:
+                    return string.Empty;
+            }
+        }
         #endregion
     }
 }

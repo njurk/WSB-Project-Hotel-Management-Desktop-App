@@ -64,6 +64,7 @@ namespace MVVMFirma.ViewModels
         {
             var allErrors = new List<string>();
 
+            // dla każdego propertisa z danej instancji klasy wywołuje validateproperty i zbiera błędy
             foreach (System.Reflection.PropertyInfo item in this.GetType().GetProperties())
             {
                 string error = ValidateProperty(item.Name);
@@ -72,12 +73,18 @@ namespace MVVMFirma.ViewModels
                     allErrors.Add(error);
                 }
             }
-            return allErrors;
-        }
 
-        protected bool IsValid()
-        {
-            return GetValidationErrors().Count == 0; // true jeśli formularz nie ma błędów
+            // wyjątek dla klasy z Cennikiem (walidacja spoza metody ValidateProperty)
+            if (this is NowyCennikViewModel cennikViewModel)
+            {
+                string cennikDuplicate = cennikViewModel.ValidateCennik();
+                if (!string.IsNullOrEmpty(cennikDuplicate))
+                {
+                    allErrors.Add(cennikDuplicate);
+                }
+            }
+
+            return allErrors;
         }
 
         private void ValidateAndSave()
@@ -89,11 +96,12 @@ namespace MVVMFirma.ViewModels
                 if (validationErrors.Count > 0)
                 {
                     string errorMessages = string.Join(Environment.NewLine + "- ", validationErrors);
-                    MessageBox.Show("Proszę prawidłowo wypełnić pola!\n- " + errorMessages, "Błędy formularza", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Proszę prawidłowo wypełnić formularz!\n- " + errorMessages, "Błędny formularz", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
+
                 else
                 {
-                    SaveAndClose();
+                    SaveAndCloseSuccess();
                 }
             }
             catch (Exception ex)
@@ -104,11 +112,11 @@ namespace MVVMFirma.ViewModels
 
 
         public abstract void Save();
-        public void SaveAndClose()
+        public void SaveAndCloseSuccess()
         {
             Save();
             OnRequestClose();
-            MessageBox.Show("Zmiany dokonane pomyślnie.", "Sukces");
+            MessageBox.Show("Zmiany dokonane pomyślnie.", "Sukces", MessageBoxButton.OK, MessageBoxImage.Information);
         }
         #endregion
     }

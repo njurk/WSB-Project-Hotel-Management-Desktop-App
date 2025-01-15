@@ -28,7 +28,7 @@
             Margin="0,8,0,8"
             DisplayMemberPath="Value"
             ItemsSource="{Binding KlasaPokojuItems}"
-            SelectedValue="{Binding Path=IdKlasyPokoju, Mode=TwoWay}"
+            SelectedValue="{Binding Path=IdKlasyPokoju, Mode=TwoWay, ValidatesOnDataErrors=True}"
             SelectedValuePath="Key" />
 
         <Label
@@ -42,7 +42,7 @@
             Margin="0,8,0,8"
             DisplayMemberPath="Value"
             ItemsSource="{Binding UdogodnienieItems}"
-            SelectedValue="{Binding Path=IdUdogodnienia, Mode=TwoWay}"
+            SelectedValue="{Binding Path=IdUdogodnienia, Mode=TwoWay, ValidatesOnDataErrors=True}"
             SelectedValuePath="Key" />
     </Grid>
 </local:JedenViewBase>

@@ -89,7 +89,7 @@
             <PropertyRef Name="IdPracownika" />
           </Key>
           <Property Name="IdPracownika" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="IdRodzajuPracownika" Type="int" Nullable="false" />
+          <Property Name="IdStanowiska" Type="int" Nullable="false" />
           <Property Name="Imie" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Nazwisko" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Ulica" Type="nvarchar" MaxLength="50" Nullable="false" />
@@ -120,18 +120,18 @@
           <Property Name="Kwota" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="IdZnizki" Type="int" />
         </EntityType>
-        <EntityType Name="RodzajPracownika">
-          <Key>
-            <PropertyRef Name="IdRodzajuPracownika" />
-          </Key>
-          <Property Name="IdRodzajuPracownika" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Nazwa" Type="nvarchar" MaxLength="50" Nullable="false" />
-        </EntityType>
         <EntityType Name="SposobPlatnosci">
           <Key>
             <PropertyRef Name="IdSposobuPlatnosci" />
           </Key>
           <Property Name="IdSposobuPlatnosci" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nazwa" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Stanowisko">
+          <Key>
+            <PropertyRef Name="IdStanowiska" />
+          </Key>
+          <Property Name="IdStanowiska" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Nazwa" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="StatusPlatnosci">
@@ -343,17 +343,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Pracownik_RodzajPracownika">
-          <End Role="RodzajPracownika" Type="Self.RodzajPracownika" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
+        <Association Name="FK_Pracownik_Stanowisko">
+          <End Role="Stanowisko" Type="Self.Stanowisko" Multiplicity="1" />
           <End Role="Pracownik" Type="Self.Pracownik" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="RodzajPracownika">
-              <PropertyRef Name="IdRodzajuPracownika" />
+            <Principal Role="Stanowisko">
+              <PropertyRef Name="IdStanowiska" />
             </Principal>
             <Dependent Role="Pracownik">
-              <PropertyRef Name="IdRodzajuPracownika" />
+              <PropertyRef Name="IdStanowiska" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -386,7 +384,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Rezerwacja_Znizka">
-          <End Role="Znizka" Type="Self.Znizka" Multiplicity="0..1" />
+          <End Role="Znizka" Type="Self.Znizka" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Rezerwacja" Type="Self.Rezerwacja" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Znizka">
@@ -435,8 +435,8 @@
           <EntitySet Name="Pokoj" EntityType="Self.Pokoj" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Pracownik" EntityType="Self.Pracownik" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Rezerwacja" EntityType="Self.Rezerwacja" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="RodzajPracownika" EntityType="Self.RodzajPracownika" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SposobPlatnosci" EntityType="Self.SposobPlatnosci" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Stanowisko" EntityType="Self.Stanowisko" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StatusPlatnosci" EntityType="Self.StatusPlatnosci" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TypPokoju" EntityType="Self.TypPokoju" Schema="dbo" store:Type="Tables" />
@@ -488,8 +488,8 @@
             <End Role="Kraj" EntitySet="Kraj" />
             <End Role="Pracownik" EntitySet="Pracownik" />
           </AssociationSet>
-          <AssociationSet Name="FK_Pracownik_RodzajPracownika" Association="Self.FK_Pracownik_RodzajPracownika">
-            <End Role="RodzajPracownika" EntitySet="RodzajPracownika" />
+          <AssociationSet Name="FK_Pracownik_Stanowisko" Association="Self.FK_Pracownik_Stanowisko">
+            <End Role="Stanowisko" EntitySet="Stanowisko" />
             <End Role="Pracownik" EntitySet="Pracownik" />
           </AssociationSet>
           <AssociationSet Name="FK_Rezerwacja_Klient" Association="Self.FK_Rezerwacja_Klient">
@@ -619,7 +619,7 @@
             <PropertyRef Name="IdPracownika" />
           </Key>
           <Property Name="IdPracownika" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IdRodzajuPracownika" Type="Int32" Nullable="false" />
+          <Property Name="IdStanowiska" Type="Int32" Nullable="false" />
           <Property Name="Imie" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Nazwisko" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Ulica" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
@@ -632,7 +632,7 @@
           <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Telefon" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Kraj" Relationship="Self.FK_Pracownik_Kraj" FromRole="Pracownik" ToRole="Kraj" />
-          <NavigationProperty Name="RodzajPracownika" Relationship="Self.FK_Pracownik_RodzajPracownika" FromRole="Pracownik" ToRole="RodzajPracownika" />
+          <NavigationProperty Name="Stanowisko" Relationship="Self.FK_Pracownik_Stanowisko" FromRole="Pracownik" ToRole="Stanowisko" />
         </EntityType>
         <EntityType Name="Rezerwacja">
           <Key>
@@ -657,14 +657,6 @@
           <NavigationProperty Name="Pokoj" Relationship="Self.FK_Rezerwacja_Pokoj" FromRole="Rezerwacja" ToRole="Pokoj" />
           <NavigationProperty Name="Znizka" Relationship="Self.FK_Rezerwacja_Znizka" FromRole="Rezerwacja" ToRole="Znizka" />
         </EntityType>
-        <EntityType Name="RodzajPracownika">
-          <Key>
-            <PropertyRef Name="IdRodzajuPracownika" />
-          </Key>
-          <Property Name="IdRodzajuPracownika" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Nazwa" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Pracownik" Relationship="Self.FK_Pracownik_RodzajPracownika" FromRole="RodzajPracownika" ToRole="Pracownik" />
-        </EntityType>
         <EntityType Name="SposobPlatnosci">
           <Key>
             <PropertyRef Name="IdSposobuPlatnosci" />
@@ -672,6 +664,14 @@
           <Property Name="IdSposobuPlatnosci" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Nazwa" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Platnosc" Relationship="Self.FK_Platnosc_SposobPlatnosci" FromRole="SposobPlatnosci" ToRole="Platnosc" />
+        </EntityType>
+        <EntityType Name="Stanowisko">
+          <Key>
+            <PropertyRef Name="IdStanowiska" />
+          </Key>
+          <Property Name="IdStanowiska" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nazwa" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Pracownik" Relationship="Self.FK_Pracownik_Stanowisko" FromRole="Stanowisko" ToRole="Pracownik" />
         </EntityType>
         <EntityType Name="StatusPlatnosci">
           <Key>
@@ -932,22 +932,22 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Pracownik_RodzajPracownika">
-          <End Role="RodzajPracownika" Type="Self.RodzajPracownika" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
+        <Association Name="FK_Pracownik_Stanowisko">
+          <End Role="Stanowisko" Type="Self.Stanowisko" Multiplicity="1" />
           <End Role="Pracownik" Type="Self.Pracownik" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="RodzajPracownika">
-              <PropertyRef Name="IdRodzajuPracownika" />
+            <Principal Role="Stanowisko">
+              <PropertyRef Name="IdStanowiska" />
             </Principal>
             <Dependent Role="Pracownik">
-              <PropertyRef Name="IdRodzajuPracownika" />
+              <PropertyRef Name="IdStanowiska" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Rezerwacja_Znizka">
-          <End Role="Znizka" Type="Self.Znizka" Multiplicity="0..1" />
+          <End Role="Znizka" Type="Self.Znizka" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Rezerwacja" Type="Self.Rezerwacja" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Znizka">
@@ -982,8 +982,8 @@
           <EntitySet Name="Pokoj" EntityType="Self.Pokoj" />
           <EntitySet Name="Pracownik" EntityType="Self.Pracownik" />
           <EntitySet Name="Rezerwacja" EntityType="Self.Rezerwacja" />
-          <EntitySet Name="RodzajPracownika" EntityType="Self.RodzajPracownika" />
           <EntitySet Name="SposobPlatnosci" EntityType="Self.SposobPlatnosci" />
+          <EntitySet Name="Stanowisko" EntityType="Self.Stanowisko" />
           <EntitySet Name="StatusPlatnosci" EntityType="Self.StatusPlatnosci" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
           <EntitySet Name="TypPokoju" EntityType="Self.TypPokoju" />
@@ -1047,8 +1047,8 @@
             <End Role="Pokoj" EntitySet="Pokoj" />
             <End Role="Rezerwacja" EntitySet="Rezerwacja" />
           </AssociationSet>
-          <AssociationSet Name="FK_Pracownik_RodzajPracownika" Association="Self.FK_Pracownik_RodzajPracownika">
-            <End Role="RodzajPracownika" EntitySet="RodzajPracownika" />
+          <AssociationSet Name="FK_Pracownik_Stanowisko" Association="Self.FK_Pracownik_Stanowisko">
+            <End Role="Stanowisko" EntitySet="Stanowisko" />
             <End Role="Pracownik" EntitySet="Pracownik" />
           </AssociationSet>
           <AssociationSet Name="FK_Rezerwacja_Znizka" Association="Self.FK_Rezerwacja_Znizka">
@@ -1156,7 +1156,7 @@
             <EntityTypeMapping TypeName="HotelModel.Pracownik">
               <MappingFragment StoreEntitySet="Pracownik">
                 <ScalarProperty Name="IdPracownika" ColumnName="IdPracownika" />
-                <ScalarProperty Name="IdRodzajuPracownika" ColumnName="IdRodzajuPracownika" />
+                <ScalarProperty Name="IdStanowiska" ColumnName="IdStanowiska" />
                 <ScalarProperty Name="Imie" ColumnName="Imie" />
                 <ScalarProperty Name="Nazwisko" ColumnName="Nazwisko" />
                 <ScalarProperty Name="Ulica" ColumnName="Ulica" />
@@ -1190,18 +1190,18 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="RodzajPracownika">
-            <EntityTypeMapping TypeName="HotelModel.RodzajPracownika">
-              <MappingFragment StoreEntitySet="RodzajPracownika">
-                <ScalarProperty Name="IdRodzajuPracownika" ColumnName="IdRodzajuPracownika" />
-                <ScalarProperty Name="Nazwa" ColumnName="Nazwa" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="SposobPlatnosci">
             <EntityTypeMapping TypeName="HotelModel.SposobPlatnosci">
               <MappingFragment StoreEntitySet="SposobPlatnosci">
                 <ScalarProperty Name="IdSposobuPlatnosci" ColumnName="IdSposobuPlatnosci" />
+                <ScalarProperty Name="Nazwa" ColumnName="Nazwa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Stanowisko">
+            <EntityTypeMapping TypeName="HotelModel.Stanowisko">
+              <MappingFragment StoreEntitySet="Stanowisko">
+                <ScalarProperty Name="IdStanowiska" ColumnName="IdStanowiska" />
                 <ScalarProperty Name="Nazwa" ColumnName="Nazwa" />
               </MappingFragment>
             </EntityTypeMapping>
