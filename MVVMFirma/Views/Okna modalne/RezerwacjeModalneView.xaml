@@ -1,0 +1,77 @@
+﻿<local:ModalViewBase
+    x:Class="MVVMFirma.Views.RezerwacjeModalneView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:MVVMFirma.Views"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="clr-namespace:MVVMFirma.ViewModels"
+    xmlns:vm1="clr-namespace:MVVMFirma.Helper"
+    Title="Rezerwacje Modalne"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    Background="White"
+    ResizeMode="NoResize"
+    WindowStartupLocation="CenterScreen"
+    mc:Ignorable="d">
+
+
+    <local:ModalViewBase.Resources>
+        <vm1:PercentFormatter x:Key="PercentFormatter" />
+    </local:ModalViewBase.Resources>
+
+    <Grid Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <DataGrid
+            Grid.Row="0"
+            HorizontalAlignment="Stretch"
+            AutoGenerateColumns="False"
+            CanUserAddRows="False"
+            CanUserDeleteRows="False"
+            IsReadOnly="True"
+            ItemsSource="{Binding List}"
+            SelectedItem="{Binding SelectedItem}">
+
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding IdRezerwacji}" Header="ID" />
+                <DataGridTextColumn Binding="{Binding NrRezerwacji}" Header="Numer rezerwacji" />
+                <DataGridTextColumn Binding="{Binding KlientImie}" Header="Imie klienta" />
+                <DataGridTextColumn Binding="{Binding KlientNazwisko}" Header="Nazwisko klienta" />
+                <DataGridTextColumn Binding="{Binding NrPokoju}" Header="Pokój" />
+                <DataGridTextColumn Binding="{Binding LiczbaDoroslych}" Header="Liczba dorosłych" />
+                <DataGridTextColumn Binding="{Binding LiczbaDzieci}" Header="Liczba dzieci" />
+                <DataGridCheckBoxColumn Binding="{Binding CzyZwierzeta}" Header="Zwierzęta" />
+                <DataGridTextColumn Binding="{Binding DataRezerwacji, StringFormat=yyyy-MM-dd}" Header="Data rezerwacji" />
+                <DataGridTextColumn Binding="{Binding DataZameldowania, StringFormat=yyyy-MM-dd}" Header="Zameldowanie" />
+                <DataGridTextColumn Binding="{Binding DataWymeldowania, StringFormat=yyyy-MM-dd}" Header="Wymeldowanie" />
+                <DataGridTextColumn Binding="{Binding Kwota, StringFormat={}{0:C}}" Header="Kwota" />
+                <DataGridTextColumn Binding="{Binding Znizka, Converter={StaticResource PercentFormatter}}" Header="Zniżka" />
+                <DataGridCheckBoxColumn Binding="{Binding CzyZaplacona}" Header="Czy zapłacona" />
+                <DataGridTextColumn Binding="{Binding Uwagi}" Header="Uwagi" />
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <StackPanel
+            Grid.Row="1"
+            Margin="10"
+            HorizontalAlignment="Center"
+            Orientation="Horizontal">
+            <Button
+                Width="100"
+                Height="25"
+                Margin="5"
+                Click="btnSendItem_Click"
+                Content="Wybierz" />
+            <Button
+                Width="100"
+                Height="25"
+                Margin="5"
+                Click="btnCancel_Click"
+                Content="Anuluj" />
+        </StackPanel>
+    </Grid>
+</local:ModalViewBase>

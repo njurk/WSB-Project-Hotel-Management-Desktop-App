@@ -207,6 +207,7 @@
     <Compile Include="ViewModels\Kraj\NowyKrajViewModel.cs" />
     <Compile Include="ViewModels\Kraj\WszystkieKrajViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
+    <Compile Include="ViewModels\Okna modalne\RezerwacjeModalneViewModel.cs" />
     <Compile Include="ViewModels\Platnosc\NowyPlatnoscViewModel.cs" />
     <Compile Include="ViewModels\Platnosc\WszystkiePlatnoscViewModel.cs" />
     <Compile Include="ViewModels\Pokoj\NowyPokojViewModel.cs" />
@@ -215,6 +216,7 @@
     <Compile Include="ViewModels\Pracownik\WszystkiePracownikViewModel.cs" />
     <Compile Include="ViewModels\Rezerwacja\NowyRezerwacjaViewModel.cs" />
     <Compile Include="ViewModels\Rezerwacja\WszystkieRezerwacjaViewModel.cs" />
+    <Compile Include="ViewModels\ModalViewModel.cs" />
     <Compile Include="ViewModels\Stanowisko\NowyStanowiskoViewModel.cs" />
     <Compile Include="ViewModels\Stanowisko\WszystkieStanowiskoViewModel.cs" />
     <Compile Include="ViewModels\SposobPlatnosci\NowySposobPlatnosciViewModel.cs" />
@@ -268,6 +270,10 @@
     </Compile>
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ModalViewBase.cs" />
+    <Compile Include="Views\Okna modalne\RezerwacjeModalneView.xaml.cs">
+      <DependentUpon>RezerwacjeModalneView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Platnosc\NowyPlatnoscView.xaml.cs">
       <DependentUpon>NowyPlatnoscView.xaml</DependentUpon>
@@ -432,6 +438,10 @@
     <Page Include="Views\MainWindowResources.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Okna modalne\RezerwacjeModalneView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Platnosc\NowyPlatnoscView.xaml">
       <SubType>Designer</SubType>

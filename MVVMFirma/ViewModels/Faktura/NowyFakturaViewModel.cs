@@ -3,6 +3,7 @@ using MVVMFirma.Helper;
 using MVVMFirma.Models.BusinessLogic;
 using MVVMFirma.Models.Entities;
 using MVVMFirma.Models.EntitiesForView;
+using MVVMFirma.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,8 +14,8 @@ namespace MVVMFirma.ViewModels
     public class NowyFakturaViewModel : JedenViewModel<Faktura>
     {
         #region Fields
-        private Rezerwacja _selectedRezerwacja;
         private BaseCommand _obliczNettoCommand;
+        private BaseCommand _openRezerwacjeModalne;
         private decimal _stawkaVat;
         private decimal _sumaPlatnosci;
         #endregion
@@ -37,6 +38,20 @@ namespace MVVMFirma.ViewModels
             }
         }
 
+        private string _nrRezerwacji;
+        public string NrRezerwacji
+        {
+            get
+            {
+                return _nrRezerwacji;
+            }
+            set
+            {
+                _nrRezerwacji = value;
+                OnPropertyChanged(() => NrRezerwacji);
+            }
+        }
+
         public int IdRezerwacji
         {
             get
@@ -49,12 +64,25 @@ namespace MVVMFirma.ViewModels
                 {
                     item.IdRezerwacji = value;
                     OnPropertyChanged(() => IdRezerwacji);
-                    // wybrana rezerwacja przekazywana do metody aby odczytać i wstawić
-                    // dane do pól - usprawnienie procesu dodawania
-                    SelectedRezerwacja = db.Rezerwacja.FirstOrDefault(r => r.IdRezerwacji == value);
+
+                    var rezerwacja = db.Rezerwacja.FirstOrDefault(r => r.IdRezerwacji == value);
+                    if (rezerwacja != null)
+                    {
+                        NrRezerwacji = rezerwacja.NrRezerwacji;
+                        DataSprzedazy = rezerwacja.DataZameldowania;
+                        KwotaBrutto = rezerwacja.Kwota;
+                        SumaPlatnosci = sumaPlatnosci(rezerwacja.IdRezerwacji);
+                        NIP = rezerwacja.Klient?.NIP ?? string.Empty;
+
+                        OnPropertyChanged(() => DataSprzedazy);
+                        OnPropertyChanged(() => KwotaBrutto);
+                        OnPropertyChanged(() => SumaPlatnosci);
+                        OnPropertyChanged(() => NIP);
+                    }
                 }
             }
         }
+
         public string NIP
         {
             get
@@ -165,40 +193,6 @@ namespace MVVMFirma.ViewModels
             }
         }
 
-        // ta właściwość pobiera z wybranej rezerwacji konkretne dane
-        // i ustawia w polach celem usprawnienia procesu dodawania faktury
-        public Rezerwacja SelectedRezerwacja
-        {
-            get { return _selectedRezerwacja; }
-            set
-            {
-                if (_selectedRezerwacja != value)
-                {
-                    _selectedRezerwacja = value;
-                    OnPropertyChanged(() => SelectedRezerwacja);
-                    if (_selectedRezerwacja != null)
-                    {
-                        // usatwienie daty sprzedaży
-                        DataSprzedazy = _selectedRezerwacja.DataZameldowania;
-                        OnPropertyChanged(() => DataSprzedazy);
-
-                        // usatwienie kwoty brutto
-                        var rezerwacja = db.Rezerwacja.FirstOrDefault(p => p.IdRezerwacji == _selectedRezerwacja.IdRezerwacji);
-                        if (rezerwacja != null)
-                        {
-                            KwotaBrutto = rezerwacja.Kwota;
-                            OnPropertyChanged(() => KwotaBrutto);
-                        }
-                        // ustawienie kwoty do zapłacenia
-                        SumaPlatnosci = sumaPlatnosci(_selectedRezerwacja.IdRezerwacji);
-
-                        NIP = _selectedRezerwacja.Klient?.NIP ?? string.Empty;
-                        OnPropertyChanged(() => NIP);
-                    }
-                }
-            }
-        }
-
         public decimal SumaPlatnosci
         {
             get
@@ -282,7 +276,38 @@ namespace MVVMFirma.ViewModels
         }
         #endregion
 
+        #region Commands
+        public BaseCommand ObliczNettoCommand
+        {
+            get
+            {
+                if (_obliczNettoCommand == null)
+                {
+                    _obliczNettoCommand = new BaseCommand(ObliczNetto);
+                }
+                return _obliczNettoCommand;
+            }
+        }
+
+        public BaseCommand OpenRezerwacjeModalneCommand
+        {
+            get
+            {
+                if (_openRezerwacjeModalne == null)
+                {
+                    _openRezerwacjeModalne = new BaseCommand(OpenRezerwacjeModalne);
+                }
+                return _openRezerwacjeModalne;
+            }
+        }
+        #endregion
+
         #region Methods
+        private void OpenRezerwacjeModalne()
+        {
+            var rezerwacjeModalne = new RezerwacjeModalneView();
+            rezerwacjeModalne.ShowDialog();
+        }
         private int DomyslnyVAT(string szukanyVAT)
         {
             var domyslnyVAT = VATItems.FirstOrDefault(v => v.Value == szukanyVAT);
@@ -294,19 +319,6 @@ namespace MVVMFirma.ViewModels
             else
             {
                 return -1;
-            }
-        }
-
-        // komenda wywołująca metodę ObliczNetto(), aby na widoku można było aktywować ją buttonem
-        public BaseCommand ObliczNettoCommand
-        {
-            get
-            {
-                if (_obliczNettoCommand == null)
-                {
-                    _obliczNettoCommand = new BaseCommand(ObliczNetto);
-                }
-                return _obliczNettoCommand;
             }
         }
 
@@ -373,6 +385,7 @@ namespace MVVMFirma.ViewModels
         #endregion
 
         #region Helpers
+        
         public override void Save()
         {
             if (item.IdFaktury == 0) // Dodawanie rekordu = brak ID = insert
@@ -406,7 +419,7 @@ namespace MVVMFirma.ViewModels
             NrFaktury = GenerujNumerFaktury();
             IdVat = DomyslnyVAT("23");
 
-            SelectedRezerwacja = new Rezerwacja();
+            Messenger.Default.Register<int>(this, idRezerwacji => IdRezerwacji = idRezerwacji);
         }
 
         public NowyFakturaViewModel(int itemId)
@@ -419,6 +432,7 @@ namespace MVVMFirma.ViewModels
             if (item != null)
             {
                 NrFaktury = item.NrFaktury;
+                NrRezerwacji = item.Rezerwacja.NrRezerwacji;
                 IdRezerwacji = item.IdRezerwacji;
                 NIP = item.NIP;
                 DataWystawienia = item.DataWystawienia;
@@ -428,9 +442,8 @@ namespace MVVMFirma.ViewModels
                 KwotaNetto = item.KwotaNetto;
                 TerminPlatnosci = item.TerminPlatnosci;
                 Opis = item.Opis;
-
-                SelectedRezerwacja = db.Rezerwacja.FirstOrDefault(r => r.IdRezerwacji == item.IdRezerwacji);
             }
+            Messenger.Default.Register<int>(this, idRezerwacji => IdRezerwacji = idRezerwacji);
         }
         #endregion
 
@@ -459,13 +472,13 @@ namespace MVVMFirma.ViewModels
                     return DataSprzedazy == null ? "wybierz poprawną datę sprzedaży faktury" : string.Empty;
 
                 case nameof(KwotaBrutto):
-                    return (KwotaBrutto == null || KwotaBrutto <= 0) ? "wprowadź poprawną kwotę brutto" : string.Empty;
+                    return KwotaBrutto <= 0 ? "wprowadź poprawną kwotę brutto" : string.Empty;
 
                 case nameof(IdVat):
                     return IdVat <= 0 ? "wybierz stawkę VAT" : string.Empty;
 
                 case nameof(KwotaNetto):
-                    return (KwotaNetto == null || KwotaNetto <= 0) ? "wprowadź poprawną kwotę netto" : string.Empty;
+                    return KwotaNetto <= 0 ? "wprowadź poprawną kwotę netto" : string.Empty;
 
                 case nameof(TerminPlatnosci):
                     return (TerminPlatnosci == null || TerminPlatnosci < DataWystawienia) ? "termin płatności musi być poźniej od daty wystawienia" : string.Empty;
