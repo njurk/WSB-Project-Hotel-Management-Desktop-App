@@ -159,21 +159,6 @@
           <Property Name="Nazwa" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="MaxLiczbaOsob" Type="nvarchar" MaxLength="5" Nullable="false" />
         </EntityType>
-        <EntityType Name="UdogodnieniaKlasPokoju">
-          <Key>
-            <PropertyRef Name="IdPolaczenia" />
-          </Key>
-          <Property Name="IdPolaczenia" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="IdKlasyPokoju" Type="int" Nullable="false" />
-          <Property Name="IdUdogodnienia" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Udogodnienie">
-          <Key>
-            <PropertyRef Name="IdUdogodnienia" />
-          </Key>
-          <Property Name="IdUdogodnienia" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Nazwa" Type="nvarchar" MaxLength="50" Nullable="false" />
-        </EntityType>
         <EntityType Name="VAT">
           <Key>
             <PropertyRef Name="IdVat" />
@@ -397,34 +382,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_UdogodnieniaKlasPokoju_KlasaPokoju">
-          <End Role="KlasaPokoju" Type="Self.KlasaPokoju" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="UdogodnieniaKlasPokoju" Type="Self.UdogodnieniaKlasPokoju" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="KlasaPokoju">
-              <PropertyRef Name="IdKlasyPokoju" />
-            </Principal>
-            <Dependent Role="UdogodnieniaKlasPokoju">
-              <PropertyRef Name="IdKlasyPokoju" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_UdogodnieniaKlasPokoju_Udogodnienie">
-          <End Role="Udogodnienie" Type="Self.Udogodnienie" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="UdogodnieniaKlasPokoju" Type="Self.UdogodnieniaKlasPokoju" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Udogodnienie">
-              <PropertyRef Name="IdUdogodnienia" />
-            </Principal>
-            <Dependent Role="UdogodnieniaKlasPokoju">
-              <PropertyRef Name="IdUdogodnienia" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="HotelModelStoreContainer">
           <EntitySet Name="Cennik" EntityType="Self.Cennik" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Faktura" EntityType="Self.Faktura" Schema="dbo" store:Type="Tables" />
@@ -440,8 +397,6 @@
           <EntitySet Name="StatusPlatnosci" EntityType="Self.StatusPlatnosci" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TypPokoju" EntityType="Self.TypPokoju" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="UdogodnieniaKlasPokoju" EntityType="Self.UdogodnieniaKlasPokoju" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Udogodnienie" EntityType="Self.Udogodnienie" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VAT" EntityType="Self.VAT" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Znizka" EntityType="Self.Znizka" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Cennik_KlasaPokoju" Association="Self.FK_Cennik_KlasaPokoju">
@@ -504,14 +459,6 @@
             <End Role="Znizka" EntitySet="Znizka" />
             <End Role="Rezerwacja" EntitySet="Rezerwacja" />
           </AssociationSet>
-          <AssociationSet Name="FK_UdogodnieniaKlasPokoju_KlasaPokoju" Association="Self.FK_UdogodnieniaKlasPokoju_KlasaPokoju">
-            <End Role="KlasaPokoju" EntitySet="KlasaPokoju" />
-            <End Role="UdogodnieniaKlasPokoju" EntitySet="UdogodnieniaKlasPokoju" />
-          </AssociationSet>
-          <AssociationSet Name="FK_UdogodnieniaKlasPokoju_Udogodnienie" Association="Self.FK_UdogodnieniaKlasPokoju_Udogodnienie">
-            <End Role="Udogodnienie" EntitySet="Udogodnienie" />
-            <End Role="UdogodnieniaKlasPokoju" EntitySet="UdogodnieniaKlasPokoju" />
-          </AssociationSet>
         </EntityContainer>
       </Schema>
     </edmx:StorageModels>
@@ -557,7 +504,6 @@
           <Property Name="Nazwa" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Cennik" Relationship="Self.FK_Cennik_KlasaPokoju" FromRole="KlasaPokoju" ToRole="Cennik" />
           <NavigationProperty Name="Pokoj" Relationship="Self.FK_Pokoj_KlasaPokoju" FromRole="KlasaPokoju" ToRole="Pokoj" />
-          <NavigationProperty Name="UdogodnieniaKlasPokoju" Relationship="Self.FK_UdogodnieniaKlasPokoju_KlasaPokoju" FromRole="KlasaPokoju" ToRole="UdogodnieniaKlasPokoju" />
         </EntityType>
         <EntityType Name="Klient">
           <Key>
@@ -701,24 +647,6 @@
           <NavigationProperty Name="Cennik" Relationship="Self.FK_Cennik_TypPokoju" FromRole="TypPokoju" ToRole="Cennik" />
           <NavigationProperty Name="Pokoj" Relationship="Self.FK_Pokoj_TypPokoju" FromRole="TypPokoju" ToRole="Pokoj" />
         </EntityType>
-        <EntityType Name="UdogodnieniaKlasPokoju">
-          <Key>
-            <PropertyRef Name="IdPolaczenia" />
-          </Key>
-          <Property Name="IdPolaczenia" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IdKlasyPokoju" Type="Int32" Nullable="false" />
-          <Property Name="IdUdogodnienia" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="KlasaPokoju" Relationship="Self.FK_UdogodnieniaKlasPokoju_KlasaPokoju" FromRole="UdogodnieniaKlasPokoju" ToRole="KlasaPokoju" />
-          <NavigationProperty Name="Udogodnienie" Relationship="Self.FK_UdogodnieniaKlasPokoju_Udogodnienie" FromRole="UdogodnieniaKlasPokoju" ToRole="Udogodnienie" />
-        </EntityType>
-        <EntityType Name="Udogodnienie">
-          <Key>
-            <PropertyRef Name="IdUdogodnienia" />
-          </Key>
-          <Property Name="IdUdogodnienia" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Nazwa" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="UdogodnieniaKlasPokoju" Relationship="Self.FK_UdogodnieniaKlasPokoju_Udogodnienie" FromRole="Udogodnienie" ToRole="UdogodnieniaKlasPokoju" />
-        </EntityType>
         <EntityType Name="VAT">
           <Key>
             <PropertyRef Name="IdVat" />
@@ -802,20 +730,6 @@
               <PropertyRef Name="IdKlasyPokoju" />
             </Principal>
             <Dependent Role="Pokoj">
-              <PropertyRef Name="IdKlasyPokoju" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_UdogodnieniaKlasPokoju_KlasaPokoju">
-          <End Role="KlasaPokoju" Type="Self.KlasaPokoju" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="UdogodnieniaKlasPokoju" Type="Self.UdogodnieniaKlasPokoju" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="KlasaPokoju">
-              <PropertyRef Name="IdKlasyPokoju" />
-            </Principal>
-            <Dependent Role="UdogodnieniaKlasPokoju">
               <PropertyRef Name="IdKlasyPokoju" />
             </Dependent>
           </ReferentialConstraint>
@@ -958,20 +872,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_UdogodnieniaKlasPokoju_Udogodnienie">
-          <End Role="Udogodnienie" Type="Self.Udogodnienie" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="UdogodnieniaKlasPokoju" Type="Self.UdogodnieniaKlasPokoju" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Udogodnienie">
-              <PropertyRef Name="IdUdogodnienia" />
-            </Principal>
-            <Dependent Role="UdogodnieniaKlasPokoju">
-              <PropertyRef Name="IdUdogodnienia" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="HotelEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Cennik" EntityType="Self.Cennik" />
           <EntitySet Name="Faktura" EntityType="Self.Faktura" />
@@ -987,8 +887,6 @@
           <EntitySet Name="StatusPlatnosci" EntityType="Self.StatusPlatnosci" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
           <EntitySet Name="TypPokoju" EntityType="Self.TypPokoju" />
-          <EntitySet Name="UdogodnieniaKlasPokoju" EntityType="Self.UdogodnieniaKlasPokoju" />
-          <EntitySet Name="Udogodnienie" EntityType="Self.Udogodnienie" />
           <EntitySet Name="VAT" EntityType="Self.VAT" />
           <EntitySet Name="Znizka" EntityType="Self.Znizka" />
           <AssociationSet Name="FK_Cennik_KlasaPokoju" Association="Self.FK_Cennik_KlasaPokoju">
@@ -1010,10 +908,6 @@
           <AssociationSet Name="FK_Pokoj_KlasaPokoju" Association="Self.FK_Pokoj_KlasaPokoju">
             <End Role="KlasaPokoju" EntitySet="KlasaPokoju" />
             <End Role="Pokoj" EntitySet="Pokoj" />
-          </AssociationSet>
-          <AssociationSet Name="FK_UdogodnieniaKlasPokoju_KlasaPokoju" Association="Self.FK_UdogodnieniaKlasPokoju_KlasaPokoju">
-            <End Role="KlasaPokoju" EntitySet="KlasaPokoju" />
-            <End Role="UdogodnieniaKlasPokoju" EntitySet="UdogodnieniaKlasPokoju" />
           </AssociationSet>
           <AssociationSet Name="FK_Klient_Kraj" Association="Self.FK_Klient_Kraj">
             <End Role="Kraj" EntitySet="Kraj" />
@@ -1054,10 +948,6 @@
           <AssociationSet Name="FK_Rezerwacja_Znizka" Association="Self.FK_Rezerwacja_Znizka">
             <End Role="Znizka" EntitySet="Znizka" />
             <End Role="Rezerwacja" EntitySet="Rezerwacja" />
-          </AssociationSet>
-          <AssociationSet Name="FK_UdogodnieniaKlasPokoju_Udogodnienie" Association="Self.FK_UdogodnieniaKlasPokoju_Udogodnienie">
-            <End Role="Udogodnienie" EntitySet="Udogodnienie" />
-            <End Role="UdogodnieniaKlasPokoju" EntitySet="UdogodnieniaKlasPokoju" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
@@ -1231,23 +1121,6 @@
                 <ScalarProperty Name="IdTypuPokoju" ColumnName="IdTypuPokoju" />
                 <ScalarProperty Name="Nazwa" ColumnName="Nazwa" />
                 <ScalarProperty Name="MaxLiczbaOsob" ColumnName="MaxLiczbaOsob" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="UdogodnieniaKlasPokoju">
-            <EntityTypeMapping TypeName="HotelModel.UdogodnieniaKlasPokoju">
-              <MappingFragment StoreEntitySet="UdogodnieniaKlasPokoju">
-                <ScalarProperty Name="IdPolaczenia" ColumnName="IdPolaczenia" />
-                <ScalarProperty Name="IdKlasyPokoju" ColumnName="IdKlasyPokoju" />
-                <ScalarProperty Name="IdUdogodnienia" ColumnName="IdUdogodnienia" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Udogodnienie">
-            <EntityTypeMapping TypeName="HotelModel.Udogodnienie">
-              <MappingFragment StoreEntitySet="Udogodnienie">
-                <ScalarProperty Name="IdUdogodnienia" ColumnName="IdUdogodnienia" />
-                <ScalarProperty Name="Nazwa" ColumnName="Nazwa" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

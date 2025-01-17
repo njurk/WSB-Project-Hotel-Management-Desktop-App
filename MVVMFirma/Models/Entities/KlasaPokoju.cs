@@ -19,7 +19,6 @@ namespace MVVMFirma.Models.Entities
         {
             this.Cennik = new HashSet<Cennik>();
             this.Pokoj = new HashSet<Pokoj>();
-            this.UdogodnieniaKlasPokoju = new HashSet<UdogodnieniaKlasPokoju>();
         }
     
         public int IdKlasyPokoju { get; set; }
@@ -29,7 +28,5 @@ namespace MVVMFirma.Models.Entities
         public virtual ICollection<Cennik> Cennik { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Pokoj> Pokoj { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UdogodnieniaKlasPokoju> UdogodnieniaKlasPokoju { get; set; }
     }
 }

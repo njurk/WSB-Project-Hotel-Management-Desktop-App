@@ -16,7 +16,8 @@
             CanUserDeleteRows="False"
             IsReadOnly="True"
             ItemsSource="{Binding List}"
-            SelectedItem="{Binding SelectedItem}">
+            SelectedItem="{Binding SelectedItem}"
+            SelectionMode="Single">
             <DataGrid.Columns>
 
                 <DataGridTextColumn Binding="{Binding IdTypuPokoju}" Header="ID" />

@@ -16,6 +16,7 @@ namespace MVVMFirma.ViewModels
         #region Fields
         private BaseCommand _obliczNettoCommand;
         private BaseCommand _openRezerwacjeModalne;
+        private string _nrRezerwacji;
         private decimal _stawkaVat;
         private decimal _sumaPlatnosci;
         #endregion
@@ -38,7 +39,6 @@ namespace MVVMFirma.ViewModels
             }
         }
 
-        private string _nrRezerwacji;
         public string NrRezerwacji
         {
             get
@@ -74,6 +74,7 @@ namespace MVVMFirma.ViewModels
                         SumaPlatnosci = sumaPlatnosci(rezerwacja.IdRezerwacji);
                         NIP = rezerwacja.Klient?.NIP ?? string.Empty;
 
+                        OnPropertyChanged(() => NrRezerwacji);
                         OnPropertyChanged(() => DataSprzedazy);
                         OnPropertyChanged(() => KwotaBrutto);
                         OnPropertyChanged(() => SumaPlatnosci);

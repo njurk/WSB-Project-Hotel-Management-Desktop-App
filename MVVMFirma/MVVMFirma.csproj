@@ -103,7 +103,6 @@
     <Compile Include="Models\BusinessLogic\SposobPlatnosciB.cs" />
     <Compile Include="Models\BusinessLogic\StatusPlatnosciB.cs" />
     <Compile Include="Models\BusinessLogic\TypPokojuB.cs" />
-    <Compile Include="Models\BusinessLogic\UdogodnienieB.cs" />
     <Compile Include="Models\BusinessLogic\VATB.cs" />
     <Compile Include="Models\BusinessLogic\ZnizkaB.cs" />
     <Compile Include="Models\EntitiesForView\CennikForAllView.cs" />
@@ -120,8 +119,6 @@
     <Compile Include="Models\EntitiesForView\SposobPlatnosciForAllView.cs" />
     <Compile Include="Models\EntitiesForView\StatusPlatnosciForAllView.cs" />
     <Compile Include="Models\EntitiesForView\TypPokojuForAllView.cs" />
-    <Compile Include="Models\EntitiesForView\UdogodnieniaKlasPokojuForAllView.cs" />
-    <Compile Include="Models\EntitiesForView\UdogodnienieForAllView.cs" />
     <Compile Include="Models\EntitiesForView\VATForAllView.cs" />
     <Compile Include="Models\EntitiesForView\ZnizkaForAllView.cs" />
     <Compile Include="Models\Entities\Cennik.cs">
@@ -181,12 +178,6 @@
     <Compile Include="Models\Entities\TypPokoju.cs">
       <DependentUpon>HotelEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Entities\UdogodnieniaKlasPokoju.cs">
-      <DependentUpon>HotelEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Entities\Udogodnienie.cs">
-      <DependentUpon>HotelEntities.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Entities\VAT.cs">
       <DependentUpon>HotelEntities.tt</DependentUpon>
     </Compile>
@@ -207,6 +198,7 @@
     <Compile Include="ViewModels\Kraj\NowyKrajViewModel.cs" />
     <Compile Include="ViewModels\Kraj\WszystkieKrajViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
+    <Compile Include="ViewModels\Okna modalne\KlienciModalneViewModel.cs" />
     <Compile Include="ViewModels\Okna modalne\RezerwacjeModalneViewModel.cs" />
     <Compile Include="ViewModels\Platnosc\NowyPlatnoscViewModel.cs" />
     <Compile Include="ViewModels\Platnosc\WszystkiePlatnoscViewModel.cs" />
@@ -225,10 +217,6 @@
     <Compile Include="ViewModels\StatusPlatnosci\WszystkieStatusPlatnosciViewModel.cs" />
     <Compile Include="ViewModels\TypPokoju\NowyTypPokojuViewModel.cs" />
     <Compile Include="ViewModels\TypPokoju\WszystkieTypPokojuViewModel.cs" />
-    <Compile Include="ViewModels\UdogodnieniaKlasPokoju\NowyUdogodnieniaKlasPokojuViewModel.cs" />
-    <Compile Include="ViewModels\UdogodnieniaKlasPokoju\WszystkieUdogodnieniaKlasPokojuViewModel.cs" />
-    <Compile Include="ViewModels\Udogodnienie\NowyUdogodnienieViewModel.cs" />
-    <Compile Include="ViewModels\Udogodnienie\WszystkieUdogodnienieViewModel.cs" />
     <Compile Include="ViewModels\VAT\NowyVATViewModel.cs" />
     <Compile Include="ViewModels\VAT\WszystkieVATViewModel.cs" />
     <Compile Include="ViewModels\WorkspaceViewModel.cs" />
@@ -272,6 +260,9 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ModalViewBase.cs" />
+    <Compile Include="Views\Okna modalne\KlienciModalneView.xaml.cs">
+      <DependentUpon>KlienciModalneView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Okna modalne\RezerwacjeModalneView.xaml.cs">
       <DependentUpon>RezerwacjeModalneView.xaml</DependentUpon>
     </Compile>
@@ -322,18 +313,6 @@
     </Compile>
     <Compile Include="Views\TypPokoju\WszystkieTypPokojuView.xaml.cs">
       <DependentUpon>WszystkieTypPokojuView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\UdogodnieniaKlasPokoju\NowyUdogodnieniaKlasPokojuView.xaml.cs">
-      <DependentUpon>NowyUdogodnieniaKlasPokojuView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\UdogodnieniaKlasPokoju\WszystkieUdogodnieniaKlasPokojuView.xaml.cs">
-      <DependentUpon>WszystkieUdogodnieniaKlasPokojuView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Udogodnienie\NowyUdogodnienieView.xaml.cs">
-      <DependentUpon>NowyUdogodnienieView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Udogodnienie\WszystkieUdogodnienieView.xaml.cs">
-      <DependentUpon>WszystkieUdogodnienieView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\VAT\NowyVATView.xaml.cs">
       <DependentUpon>NowyVATView.xaml</DependentUpon>
@@ -439,6 +418,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Okna modalne\KlienciModalneView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\Okna modalne\RezerwacjeModalneView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -507,22 +490,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\UdogodnieniaKlasPokoju\NowyUdogodnieniaKlasPokojuView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\UdogodnieniaKlasPokoju\WszystkieUdogodnieniaKlasPokojuView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\Udogodnienie\NowyUdogodnienieView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Udogodnienie\WszystkieUdogodnienieView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\VAT\NowyVATView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -543,6 +510,7 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="Models\Entities\HotelEntities.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

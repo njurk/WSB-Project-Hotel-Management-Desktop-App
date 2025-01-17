@@ -3,9 +3,11 @@ using MVVMFirma.Helper;
 using MVVMFirma.Models.BusinessLogic;
 using MVVMFirma.Models.Entities;
 using MVVMFirma.Models.EntitiesForView;
+using MVVMFirma.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Policy;
 
 namespace MVVMFirma.ViewModels
 {
@@ -17,7 +19,7 @@ namespace MVVMFirma.ViewModels
 
         #region Fields
         private decimal _doZaplaty;
-        private Rezerwacja _selectedRezerwacja;
+        private BaseCommand _openRezerwacjeModalne;
         #endregion
 
         #region Properties
@@ -33,6 +35,21 @@ namespace MVVMFirma.ViewModels
                 OnPropertyChanged(() => NrPlatnosci);
             }
         }
+
+        private string _nrRezerwacji;
+        public string NrRezerwacji
+        {
+            get
+            {
+                return _nrRezerwacji;
+            }
+            set
+            {
+                _nrRezerwacji = value;
+                OnPropertyChanged(() => NrRezerwacji);
+            }
+        }
+
         public int IdRezerwacji
         {
             get
@@ -41,11 +58,23 @@ namespace MVVMFirma.ViewModels
             }
             set
             {
-                item.IdRezerwacji = value;
-                OnPropertyChanged(() => IdRezerwacji);
-                // wybrana rezerwacja przekazywana do metody aby odczytać i wstawić
-                // dane do pól - usprawnienie procesu dodawania
-                SelectedRezerwacja = db.Rezerwacja.FirstOrDefault(r => r.IdRezerwacji == value);
+                if (item.IdRezerwacji != value)
+                {
+                    item.IdRezerwacji = value;
+                    OnPropertyChanged(() => IdRezerwacji);
+
+                    var rezerwacja = db.Rezerwacja.FirstOrDefault(r => r.IdRezerwacji == value);
+                    if (rezerwacja != null)
+                    {
+                        NrRezerwacji = rezerwacja.NrRezerwacji;
+                        DoZaplaty = rezerwacja.Kwota - sumaPlatnosci(rezerwacja.IdRezerwacji);
+                        Kwota = DoZaplaty;
+
+                        OnPropertyChanged(() => NrRezerwacji);
+                        OnPropertyChanged(() => Kwota);
+                        OnPropertyChanged(() => DoZaplaty);
+                    }
+                }
             }
         }
 
@@ -121,33 +150,6 @@ namespace MVVMFirma.ViewModels
                      .Where(p => p.IdRezerwacji == idRezerwacji)
                      .Sum(p => (decimal?)p.Kwota) ?? 0;
         }
-
-        // właściwość odpowiadająca za ustawienie kwoty oraz wartości do zapłaty na podstawie wybranej rezerwacji w combobox
-        public Rezerwacja SelectedRezerwacja
-        {
-            get { return _selectedRezerwacja; }
-            set
-            {
-                if (_selectedRezerwacja != value)
-                {
-                    _selectedRezerwacja = value;
-                    OnPropertyChanged(() => SelectedRezerwacja);
-
-                    if (_selectedRezerwacja != null)
-                    {
-                        var rezerwacja = db.Rezerwacja.FirstOrDefault(r => r.IdRezerwacji == _selectedRezerwacja.IdRezerwacji);
-                        if (rezerwacja != null)
-                        {
-                            DoZaplaty = rezerwacja.Kwota - sumaPlatnosci(rezerwacja.IdRezerwacji);
-                            Kwota = DoZaplaty;
-
-                            OnPropertyChanged(() => Kwota);
-                            OnPropertyChanged(() => DoZaplaty);
-                        }
-                    }
-                }
-            }
-        }
         #endregion
 
         #region Items
@@ -177,6 +179,24 @@ namespace MVVMFirma.ViewModels
         #endregion
 
         #region Methods
+        public BaseCommand OpenRezerwacjeModalneCommand
+        {
+            get
+            {
+                if (_openRezerwacjeModalne == null)
+                {
+                    _openRezerwacjeModalne = new BaseCommand(OpenRezerwacjeModalne);
+                }
+                return _openRezerwacjeModalne;
+            }
+        }
+    
+        private void OpenRezerwacjeModalne()
+        {
+            var rezerwacjeModalne = new RezerwacjeModalneView();
+            rezerwacjeModalne.ShowDialog();
+        }
+
         private string GenerujNumerPlatnosci()
         {
             // pobranie ostatniej platnosci z BD do ustalenia następnego numeru
@@ -261,6 +281,8 @@ namespace MVVMFirma.ViewModels
 
             DataPlatnosci = DateTime.Now;
             NrPlatnosci = GenerujNumerPlatnosci();
+
+            Messenger.Default.Register<int>(this, idRezerwacji => IdRezerwacji = idRezerwacji);
         }
 
         public NowyPlatnoscViewModel(int itemId)
@@ -279,6 +301,7 @@ namespace MVVMFirma.ViewModels
                 DataPlatnosci = item.DataPlatnosci;
                 Kwota = item.Kwota;
             }
+            Messenger.Default.Register<int>(this, idRezerwacji => IdRezerwacji = idRezerwacji);
         }
         #endregion
 
@@ -300,7 +323,7 @@ namespace MVVMFirma.ViewModels
                     return DataPlatnosci == null || DataPlatnosci > DateTime.Now ? "wybierz poprawną datę płatności" : string.Empty;
 
                 case nameof(Kwota):
-                    return (Kwota == null || Kwota <= 0) ? "wprowadź poprawną kwotę" : string.Empty;
+                    return Kwota <= 0 ? "wprowadź poprawną kwotę" : string.Empty;
 
                 default:
                     return string.Empty;

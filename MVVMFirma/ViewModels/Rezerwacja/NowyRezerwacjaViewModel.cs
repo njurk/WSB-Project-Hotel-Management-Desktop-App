@@ -3,6 +3,7 @@ using MVVMFirma.Helper;
 using MVVMFirma.Models.BusinessLogic;
 using MVVMFirma.Models.Entities;
 using MVVMFirma.Models.EntitiesForView;
+using MVVMFirma.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -21,9 +22,11 @@ namespace MVVMFirma.ViewModels
         #endregion
 
         #region Fields
+        private string _imieNazwiskoKlienta;
         private DateTime _dataZameldowania;
         private DateTime _dataWymeldowania;
         private Pokoj _selectedPokoj;
+        private BaseCommand _openKlienciModalne;
         #endregion
 
         #region Properties
@@ -39,16 +42,27 @@ namespace MVVMFirma.ViewModels
                 OnPropertyChanged(() => NrRezerwacji);
             }
         }
+
+        public string ImieNazwiskoKlienta
+        {
+            get => _imieNazwiskoKlienta;
+            set
+            {
+                _imieNazwiskoKlienta = value;
+                OnPropertyChanged(() => ImieNazwiskoKlienta);
+            }
+        }
+
         public int IdKlienta
         {
-            get
-            {
-                return item.IdKlienta;
-            }
+            get => item.IdKlienta;
             set
             {
                 item.IdKlienta = value;
                 OnPropertyChanged(() => IdKlienta);
+
+                var klient = db.Klient.FirstOrDefault(k => k.IdKlienta == value);
+                ImieNazwiskoKlienta = klient != null ? $"{klient.Imie} {klient.Nazwisko}" : string.Empty;
             }
         }
 
@@ -94,8 +108,6 @@ namespace MVVMFirma.ViewModels
             {
                 item.LiczbaDzieci = value;
                 OnPropertyChanged(() => LiczbaDzieci);
-                // należy wywołać walidacje pokoju przy każdej zmianie w liczbie dorosłych i dzieci
-                // inaczej MaxGuestsValidator nie dowie się o zmianach w tych polach jeśli pokój był wybrany najpierw
                 OnPropertyChanged(() => IdPokoju);
                 OnPropertyChanged(() => SelectedPokoj);
             }
@@ -294,6 +306,24 @@ namespace MVVMFirma.ViewModels
         #endregion
 
         #region Methods
+        public BaseCommand OpenKlienciModalneCommand
+        {
+            get
+            {
+                if (_openKlienciModalne == null)
+                {
+                    _openKlienciModalne = new BaseCommand(OpenKlienciModalne);
+                }
+                return _openKlienciModalne;
+            }
+        }
+
+        private void OpenKlienciModalne()
+        {
+            var klienciModalne = new KlienciModalneView();
+            klienciModalne.ShowDialog();
+        }
+
         public string GenerujNumerRezerwacji()
         {
             // pobranie ostatniego numeru rezerwacji z BD jako punkt odniesienia
@@ -367,14 +397,14 @@ namespace MVVMFirma.ViewModels
             // kwota podstawowa za pokój, za jedną noc
             decimal kwota = Convert.ToInt32(SelectedPokoj.TypPokoju.MaxLiczbaOsob) * cennik.CenaDorosly;
 
-            // Obliczanie kwoty z uwzględnieniem dzieci
+            // obliczanie kwoty uwzględniając dzieci
             kwota -= (dzieci * cennik.CenaDorosly);
             kwota += (dzieci * cennik.CenaDziecko);
 
             // cała kwota z doliczeniem ewentualnej opłaty za zwierzęta
             decimal kwotaCalkowita = kwota * liczbaNocy + (CzyZwierzeta ? cennik.CenaZwierzeta * liczbaNocy : 0);
 
-            // zastosowanie zniżki jeśli ją wybrano
+            // zastosowanie zniżki jeśli wybrana
             if (IdZnizki.HasValue)
             {
                 var znizka = db.Znizka.FirstOrDefault(z => z.IdZnizki == IdZnizki.Value);
@@ -420,6 +450,8 @@ namespace MVVMFirma.ViewModels
             DataZameldowania = DateTime.Now.AddDays(1);
             DataWymeldowania = DateTime.Now.AddDays(2);
             NrRezerwacji = GenerujNumerRezerwacji();
+
+            Messenger.Default.Register<int>(this, idKlienta => IdKlienta = idKlienta);
         }
 
         public NowyRezerwacjaViewModel(int itemId)
@@ -445,6 +477,7 @@ namespace MVVMFirma.ViewModels
                 // przekazanie pokoju do właściwości, która odpowiada za do ustawienie jej w comboboxie
                 SelectedPokoj = db.Pokoj.FirstOrDefault(p => p.IdPokoju == item.IdPokoju);
             }
+            Messenger.Default.Register<int>(this, idKlienta => IdKlienta = idKlienta);
         }
         #endregion
 

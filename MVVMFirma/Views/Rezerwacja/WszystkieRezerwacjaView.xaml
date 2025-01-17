@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:vm="clr-namespace:MVVMFirma.Helper"
     d:DesignHeight="450"
-    d:DesignWidth="1400"
+    d:DesignWidth="1100"
     mc:Ignorable="d">
 
     <local:WszystkieViewBase.Resources>
@@ -21,7 +21,8 @@
             CanUserDeleteRows="False"
             IsReadOnly="True"
             ItemsSource="{Binding List}"
-            SelectedItem="{Binding SelectedItem}">
+            SelectedItem="{Binding SelectedItem}"
+            SelectionMode="Single">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding IdRezerwacji}" Header="ID" />
                 <DataGridTextColumn Binding="{Binding NrRezerwacji}" Header="Numer rezerwacji" />

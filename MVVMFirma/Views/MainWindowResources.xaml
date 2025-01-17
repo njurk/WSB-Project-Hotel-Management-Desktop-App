@@ -63,14 +63,6 @@
         <vw:NowyTypPokojuView />
     </DataTemplate>
 
-    <DataTemplate DataType="{x:Type vm:WszystkieUdogodnienieViewModel}">
-        <vw:WszystkieUdogodnienieView />
-    </DataTemplate>
-
-    <DataTemplate DataType="{x:Type vm:NowyUdogodnienieViewModel}">
-        <vw:NowyUdogodnienieView />
-    </DataTemplate>
-
     <DataTemplate DataType="{x:Type vm:WszystkieFakturaViewModel}">
         <vw:WszystkieFakturaView />
     </DataTemplate>
@@ -109,14 +101,6 @@
 
     <DataTemplate DataType="{x:Type vm:NowyPokojViewModel}">
         <vw:NowyPokojView />
-    </DataTemplate>
-
-    <DataTemplate DataType="{x:Type vm:WszystkieUdogodnieniaKlasPokojuViewModel}">
-        <vw:WszystkieUdogodnieniaKlasPokojuView />
-    </DataTemplate>
-
-    <DataTemplate DataType="{x:Type vm:NowyUdogodnieniaKlasPokojuViewModel}">
-        <vw:NowyUdogodnieniaKlasPokojuView />
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type vm:WszystkieVATViewModel}">

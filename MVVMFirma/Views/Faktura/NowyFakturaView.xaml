@@ -38,10 +38,11 @@
             Grid.Column="0"
             Margin="0,8,0,8"
             Content="Numer faktury" />
-        <TextBlock
+        <TextBox
             Grid.Row="0"
             Grid.Column="1"
-            Margin="0,12,0,12"
+            Margin="0,8,0,8"
+            IsEnabled="False"
             Text="{Binding Path=NrFaktury}" />
 
         <Label
@@ -58,9 +59,9 @@
         <Button
             Grid.Row="1"
             Grid.Column="2"
-            Margin="10,8,59,8"
+            Margin="10,8,65,8"
             Command="{Binding OpenRezerwacjeModalneCommand}"
-            Content="..." />       
+            Content="..." />
 
         <Label
             Grid.Row="2"

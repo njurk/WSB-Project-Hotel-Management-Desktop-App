@@ -145,22 +145,6 @@ namespace MVVMFirma.ViewModels
                     new BaseCommand(() => this.ShowAllView(new WszystkieTypPokojuViewModel()))),
 
                 /*new CommandViewModel(
-                    "Udogodnienie klasy pokoju",
-                    new BaseCommand(() => this.CreateView(new NowyUdogodnieniaKlasPokojuViewModel()))),*/
-
-                new CommandViewModel(
-                    "Udogodnienia klas pokojów",
-                    new BaseCommand(() => this.ShowAllView(new WszystkieUdogodnieniaKlasPokojuViewModel()))),
-
-                /*new CommandViewModel(
-                    "Udogodnienie",
-                    new BaseCommand(() => this.CreateView(new NowyUdogodnienieViewModel()))),*/
-
-                new CommandViewModel(
-                    "Udogodnienia",
-                    new BaseCommand(() => this.ShowAllView(new WszystkieUdogodnienieViewModel()))),
-
-                /*new CommandViewModel(
                     "Stawka VAT",
                     new BaseCommand(() => this.CreateView(new NowyVATViewModel()))),*/
 
@@ -273,10 +257,6 @@ namespace MVVMFirma.ViewModels
                     CreateView(new NowyStatusPlatnosciViewModel());
                 if (name == "Typy pokojówAdd")
                     CreateView(new NowyTypPokojuViewModel());
-                if (name == "Udogodnienia klas pokojówAdd")
-                    CreateView(new NowyUdogodnieniaKlasPokojuViewModel());
-                if (name == "UdogodnieniaAdd")
-                    CreateView(new NowyUdogodnienieViewModel());
                 if (name == "KrajeAdd")
                     CreateView(new NowyKrajViewModel());
                 if (name == "Stawki VATAdd")
@@ -317,10 +297,6 @@ namespace MVVMFirma.ViewModels
                         EditView(new NowyStatusPlatnosciViewModel(itemId));
                     if (splitName == "Typy pokojówEdit")
                         EditView(new NowyTypPokojuViewModel(itemId));
-                    if (splitName == "Udogodnienia klas pokojówEdit")
-                        EditView(new NowyUdogodnieniaKlasPokojuViewModel(itemId));
-                    if (splitName == "UdogodnieniaEdit")
-                        EditView(new NowyUdogodnienieViewModel(itemId));
                     if (splitName == "KrajeEdit")
                         EditView(new NowyKrajViewModel(itemId));
                     if (splitName == "Stawki VATEdit")
