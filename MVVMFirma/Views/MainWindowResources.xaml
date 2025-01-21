@@ -127,6 +127,11 @@
         <vw:NowyCennikView />
     </DataTemplate>
 
+    <DataTemplate DataType="{x:Type vm:RaportPrzychodowViewModel}">
+        <vw:RaportPrzychodowView />
+    </DataTemplate>
+
+
 
     <Style x:Key="MainHCCStyle" TargetType="{x:Type HeaderedContentControl}">
         <Setter Property="HeaderTemplate">
@@ -243,4 +248,5 @@
             ItemTemplate="{StaticResource ClosableTabItemTemplate}"
             ItemsSource="{Binding}" />
     </DataTemplate>
+
 </ResourceDictionary>

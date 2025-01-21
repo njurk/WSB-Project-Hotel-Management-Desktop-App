@@ -8,10 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Automation.Peers;
 
 namespace MVVMFirma.ViewModels
 {
@@ -43,6 +40,7 @@ namespace MVVMFirma.ViewModels
             }
         }
 
+        // do wyświetlania imienia i nazwiska zamiast IdRezerwacji w textboxie na widoku
         public string ImieNazwiskoKlienta
         {
             get => _imieNazwiskoKlienta;
@@ -306,6 +304,7 @@ namespace MVVMFirma.ViewModels
         #endregion
 
         #region Methods
+        // komenda do wywołania metody otwierającej okienko modalne
         public BaseCommand OpenKlienciModalneCommand
         {
             get
@@ -387,7 +386,7 @@ namespace MVVMFirma.ViewModels
             int liczbaNocy = (DataWymeldowania - DataZameldowania).Days;
 
             var cennik = db.Cennik.FirstOrDefault(c => c.IdKlasyPokoju == SelectedPokoj.IdKlasyPokoju && c.IdTypuPokoju == SelectedPokoj.IdTypuPokoju);
-            // sprawdzenie czy istnieje cennik dla parametrów wybranego pokoju
+            // sprawdzenie czy istnieje cennik dla pary typu i klasy wybranego pokoju
             if (cennik == null)
             {
                 MessageBox.Show("nie znaleziono cennika dla parametrów wybranego pokoju, utwórz go w zakładce Cenniki", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -421,11 +420,11 @@ namespace MVVMFirma.ViewModels
         {
             ObliczKwote();
 
-            if (item.IdRezerwacji == 0) // Dodawanie rekordu = brak ID = insert
+            if (item.IdRezerwacji == 0) // dodawanie rekordu = brak ID = insert
             {
                 db.Rezerwacja.Add(item);
             }
-            else // Edycja rekordu = istnieje ID = update
+            else // edycja rekordu = istnieje ID = update
             {
                 var doEdycji = db.Rezerwacja.FirstOrDefault(f => f.IdRezerwacji == item.IdRezerwacji);
                 if (doEdycji != null)
@@ -486,8 +485,8 @@ namespace MVVMFirma.ViewModels
         {
             switch (propertyName)
             {
-                case nameof(IdKlienta):
-                    return IdKlienta <= 0 ? "wybierz klienta" : string.Empty;
+                case nameof(ImieNazwiskoKlienta):
+                    return ImieNazwiskoKlienta == null ? "wybierz klienta" : string.Empty;
 
                 case nameof(LiczbaDoroslych):
                     return !StringValidator.IsPositiveNumber(LiczbaDoroslych) ? "wprowadź poprawną liczbę dorosłych" : string.Empty;

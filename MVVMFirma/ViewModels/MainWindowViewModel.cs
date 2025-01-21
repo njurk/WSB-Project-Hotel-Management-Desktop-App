@@ -1,5 +1,6 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
 using MVVMFirma.Helper;
+using MVVMFirma.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -191,7 +192,6 @@ namespace MVVMFirma.ViewModels
             WorkspaceViewModel workspace = sender as WorkspaceViewModel;
             this.Workspaces.Remove(workspace);
         }
-
         #endregion
 
         #region Private Helpers
@@ -265,7 +265,7 @@ namespace MVVMFirma.ViewModels
                     CreateView(new NowyZnizkaViewModel());
             }
             // edycja - z komunikatu wyodrębniane jest ID a następnie wysyłane do specjalnego konstruktora klasy Nowy..ViewModel
-            else if (name.Contains("Edit-")) 
+            else if (name.Contains("Edit-"))
             {
                 string[] splitMessage = name.Split('-');
                 string splitName = splitMessage[0];
@@ -305,7 +305,29 @@ namespace MVVMFirma.ViewModels
                         EditView(new NowyZnizkaViewModel(itemId));
                 }
             }
-            #endregion
+        }
+        #endregion
+
+        private BaseCommand _openRaportPrzychodowViewCommand;
+
+        public BaseCommand OpenRaportPrzychodowViewCommand
+        {
+            get
+            {
+                if (_openRaportPrzychodowViewCommand == null)
+                {
+                    _openRaportPrzychodowViewCommand = new BaseCommand(OpenRaportPrzychodowView);
+                }
+                return _openRaportPrzychodowViewCommand;
+            }
+        }
+
+        private void OpenRaportPrzychodowView()
+        {
+            WorkspaceViewModel workspace = new RaportPrzychodowViewModel();
+
+            this.Workspaces.Add(workspace);
+            this.SetActiveWorkspace(workspace);
         }
     }
 }

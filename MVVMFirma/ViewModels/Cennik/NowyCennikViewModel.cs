@@ -101,12 +101,11 @@ namespace MVVMFirma.ViewModels
         #region Helpers
         public override void Save()
         {
-            // Walidacja istnienia cennika
             string validationError = ValidateCennik();
             if (!string.IsNullOrEmpty(validationError))
             {
                 MessageBox.Show(validationError, "Błąd walidacji", MessageBoxButton.OK, MessageBoxImage.Error);
-                return; // Przerwij zapisywanie, jeśli jest błąd
+                return;
             }
 
             if (item.IdCennika == 0) // Dodawanie rekordu = brak ID = insert
@@ -123,7 +122,7 @@ namespace MVVMFirma.ViewModels
             }
 
             db.SaveChanges();
-            // Wysłanie prośby o odświeżenie listy po zapisie
+            
             Messenger.Default.Send("CennikRefresh");
         }
         #endregion
@@ -135,7 +134,7 @@ namespace MVVMFirma.ViewModels
             var istniejacyCennik = db.Cennik.FirstOrDefault(c =>
                 c.IdTypuPokoju == IdTypuPokoju &&
                 c.IdKlasyPokoju == IdKlasyPokoju &&
-                c.IdCennika != item.IdCennika); // Nie porównuj z aktualnym ID
+                c.IdCennika != item.IdCennika);
 
             if (istniejacyCennik != null)
                 return $"istnieje cennik dla podanej pary typu i klasy pokoju, ma ID {istniejacyCennik.IdCennika}. Możesz go edytować, lub usunąć i dodać na nowo.";

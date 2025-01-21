@@ -3,9 +3,6 @@ using MVVMFirma.Models.Entities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
@@ -96,7 +93,7 @@ namespace MVVMFirma.ViewModels
                 if (validationErrors.Count > 0)
                 {
                     string errorMessages = string.Join(Environment.NewLine + "- ", validationErrors);
-                    MessageBox.Show("Proszę prawidłowo wypełnić formularz!\n- " + errorMessages, "Błędny formularz", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Proszę prawidłowo wypełnić formularz\n- " + errorMessages, "Błędny formularz", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
 
                 else
@@ -116,7 +113,7 @@ namespace MVVMFirma.ViewModels
         {
             Save();
             OnRequestClose();
-            MessageBox.Show("Zmiany dokonane pomyślnie.", "Sukces", MessageBoxButton.OK, MessageBoxImage.Information);
+            MessageBox.Show("Zmiany dokonane pomyślnie", "Sukces", MessageBoxButton.OK, MessageBoxImage.Information);
         }
         #endregion
     }

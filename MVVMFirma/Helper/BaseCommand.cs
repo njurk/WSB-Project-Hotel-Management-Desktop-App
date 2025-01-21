@@ -1,4 +1,6 @@
+using MVVMFirma.ViewModels;
 using System;
+using System.Collections.ObjectModel;
 using System.Windows.Input;
 
 namespace MVVMFirma.Helper
@@ -27,10 +29,15 @@ namespace MVVMFirma.Helper
         }
 
         public event EventHandler CanExecuteChanged;
-        // wywo³ywane gdy wartoœæ zwracana przez CanExecute mo¿e sie zmienic
+        // wywo³ywane gdy stan CanExecute mo¿e sie zmienic
         public void RaiseCanExecuteChanged()
         {
             CanExecuteChanged?.Invoke(this, EventArgs.Empty);
+        }
+
+        public static implicit operator BaseCommand(ReadOnlyCollection<CommandViewModel> v)
+        {
+            throw new NotImplementedException();
         }
     }
 }

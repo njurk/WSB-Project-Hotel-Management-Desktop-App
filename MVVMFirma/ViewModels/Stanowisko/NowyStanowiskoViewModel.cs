@@ -29,11 +29,11 @@ namespace MVVMFirma.ViewModels
         #region Helpers
         public override void Save()
         {
-            if (item.IdStanowiska == 0) // Dodawanie rekordu = brak ID = insert
+            if (item.IdStanowiska == 0) // dodawanie rekordu = brak ID = insert
             {
                 db.Stanowisko.Add(item);
             }
-            else // Edycja rekordu = istnieje ID = update
+            else // edycja rekordu = istnieje ID = update
             {
                 var doEdycji = db.Stanowisko.FirstOrDefault(f => f.IdStanowiska == item.IdStanowiska);
                 if (doEdycji != null)

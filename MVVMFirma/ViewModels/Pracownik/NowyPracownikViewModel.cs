@@ -194,11 +194,11 @@ namespace MVVMFirma.ViewModels
         #region Helpers
         public override void Save()
         {
-            if (item.IdPracownika == 0) // Dodawanie rekordu = brak ID = insert
+            if (item.IdPracownika == 0) // dodawanie rekordu = brak ID = insert
             {
                 db.Pracownik.Add(item);
             }
-            else // Edycja rekordu = istnieje ID = update
+            else // edycja rekordu = istnieje ID = update
             {
                 var doEdycji = db.Pracownik.FirstOrDefault(f => f.IdPracownika == item.IdPracownika);
                 if (doEdycji != null)
@@ -219,7 +219,7 @@ namespace MVVMFirma.ViewModels
         {
             db = new HotelEntities();
             item = new Pracownik();
-            DataUrodzenia = DateTime.Now.AddYears(-30); // domyślna data 30 lat wstecz, aby ułatwić wybór
+            DataUrodzenia = DateTime.Now.AddYears(-30); // domyślna data 30 lat wstecz aby ułatwić wybór
         }
 
         public NowyPracownikViewModel(int itemId)

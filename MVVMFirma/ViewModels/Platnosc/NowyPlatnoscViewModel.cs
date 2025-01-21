@@ -179,6 +179,7 @@ namespace MVVMFirma.ViewModels
         #endregion
 
         #region Methods
+        // komenda do wywołania metody otwierającej okienko modalne
         public BaseCommand OpenRezerwacjeModalneCommand
         {
             get
@@ -310,8 +311,8 @@ namespace MVVMFirma.ViewModels
         {
             switch (propertyName)
             {
-                case nameof(IdRezerwacji):
-                    return IdRezerwacji <= 0 ? "wybierz rezerwację" : string.Empty;
+                case nameof(NrRezerwacji):
+                    return NrRezerwacji == null ? "wybierz rezerwację" : string.Empty;
 
                 case nameof(IdSposobuPlatnosci):
                     return IdSposobuPlatnosci <= 0 ? "wybierz sposób płatności" : string.Empty;

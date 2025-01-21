@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.Windows.Input;
 
 namespace MVVMFirma.ViewModels
@@ -16,6 +17,11 @@ namespace MVVMFirma.ViewModels
                 throw new ArgumentNullException("command");
             this.DisplayName = displayName;
             this.Command = command;
+        }
+
+        public static implicit operator CommandViewModel(ReadOnlyCollection<CommandViewModel> v)
+        {
+            throw new NotImplementedException();
         }
         #endregion
 

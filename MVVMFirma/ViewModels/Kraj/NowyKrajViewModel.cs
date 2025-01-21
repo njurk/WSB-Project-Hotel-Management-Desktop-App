@@ -29,11 +29,11 @@ namespace MVVMFirma.ViewModels
         #region Helpers
         public override void Save()
         {
-            if (item.IdKraju == 0) // Dodawanie rekordu = brak ID = insert
+            if (item.IdKraju == 0) // dodawanie rekordu = brak ID = insert
             {
                 db.Kraj.Add(item);
             }
-            else // Edycja rekordu = istnieje ID = update
+            else // edycja rekordu = istnieje ID = update
             {
                 var doEdycji = db.Kraj.FirstOrDefault(f => f.IdKraju == item.IdKraju);
                 if (doEdycji != null)
@@ -43,7 +43,7 @@ namespace MVVMFirma.ViewModels
             }
 
             db.SaveChanges();
-            // wysłanie prośby o odświeżenie listy po zapisie
+            // wysłanie prośby o odświeżene listy po zapisie
             Messenger.Default.Send("KrajRefresh");
         }
         #endregion

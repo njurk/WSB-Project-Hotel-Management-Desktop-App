@@ -278,6 +278,7 @@ namespace MVVMFirma.ViewModels
         #endregion
 
         #region Commands
+        // komenda do wywołania metody otwierającej okienko modalne
         public BaseCommand ObliczNettoCommand
         {
             get
@@ -453,8 +454,8 @@ namespace MVVMFirma.ViewModels
         {
             switch (propertyName)
             {
-                case nameof(IdRezerwacji):
-                    return IdRezerwacji <= 0 ? "wybierz rezerwację" : string.Empty;
+                case nameof(NrRezerwacji):
+                    return NrRezerwacji == null ? "wybierz rezerwację" : string.Empty;
 
                 case nameof(NIP):
                     if (string.IsNullOrEmpty(NIP))
