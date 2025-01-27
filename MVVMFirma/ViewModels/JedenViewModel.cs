@@ -71,7 +71,8 @@ namespace MVVMFirma.ViewModels
                 }
             }
 
-            // wyjątek dla klasy z Cennikiem (walidacja spoza metody ValidateProperty)
+            // walidacja klasy z Cennikiem pod kątem duplikatu, wtedy nie wyświetla się
+            // komunikat o powodzeniu
             if (this is NowyCennikViewModel cennikViewModel)
             {
                 string cennikDuplicate = cennikViewModel.ValidateCennik();

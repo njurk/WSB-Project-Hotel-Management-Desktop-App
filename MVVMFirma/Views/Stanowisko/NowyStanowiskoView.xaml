@@ -15,6 +15,7 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="40" />
+            <RowDefinition Height="40" />
         </Grid.RowDefinitions>
         <Label
             Grid.Row="0"
@@ -26,5 +27,15 @@
             Grid.Column="1"
             Margin="0,8,0,8"
             Text="{Binding Path=Nazwa, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+        <Label
+            Grid.Row="1"
+            Grid.Column="0"
+            Margin="0,8,0,8"
+            Content="Stawka godzinowa" />
+        <TextBox
+            Grid.Row="1"
+            Grid.Column="1"
+            Margin="0,8,0,8"
+            Text="{Binding Path=StawkaGodzinowa, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
     </Grid>
 </local:JedenViewBase>

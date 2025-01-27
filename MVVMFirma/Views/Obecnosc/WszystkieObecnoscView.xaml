@@ -1,0 +1,33 @@
+﻿<local:WszystkieViewBase
+    x:Class="MVVMFirma.Views.WszystkieObecnoscView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:MVVMFirma.Views"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <Grid>
+        <DataGrid
+            AutoGenerateColumns="False"
+            CanUserAddRows="False"
+            CanUserDeleteRows="False"
+            IsReadOnly="True"
+            ItemsSource="{Binding List}"
+            SelectedItem="{Binding SelectedItem}"
+            SelectionMode="Single">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding IdObecnosci}" Header="ID" />
+                <DataGridTextColumn Binding="{Binding PracownikImie}" Header="Imie" />
+                <DataGridTextColumn Binding="{Binding PracownikNazwisko}" Header="Nazwisko" />
+                <DataGridTextColumn Binding="{Binding Data, StringFormat=yyyy-MM-dd}" Header="Data" />
+                <DataGridCheckBoxColumn Binding="{Binding CzyObecny}" Header="Obecność" />
+                <DataGridTextColumn Binding="{Binding GodzinaRozpoczecia, StringFormat='hh\\:mm'}" Header="Rozpoczęcie" />
+                <DataGridTextColumn Binding="{Binding GodzinaZakonczenia, StringFormat='hh\\:mm'}" Header="Zakończenie" />
+                <DataGridCheckBoxColumn Binding="{Binding CzyUsprawiedliwiony}" Header="Usprawiedliwiony" />
+                <DataGridTextColumn Binding="{Binding Uwagi}" Header="Uwagi" />
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</local:WszystkieViewBase>

@@ -27,7 +27,8 @@ namespace MVVMFirma.ViewModels
                 select new StanowiskoForAllView
                 {
                     IdStanowiska = stanowisko.IdStanowiska,
-                    Nazwa = stanowisko.Nazwa
+                    Nazwa = stanowisko.Nazwa,
+                    StawkaGodzinowa = stanowisko.StawkaGodzinowa
                 }
             );
         }

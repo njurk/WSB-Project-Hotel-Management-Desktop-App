@@ -22,6 +22,7 @@ namespace MVVMFirma.Models.Entities
     
         public int IdStanowiska { get; set; }
         public string Nazwa { get; set; }
+        public decimal StawkaGodzinowa { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Pracownik> Pracownik { get; set; }

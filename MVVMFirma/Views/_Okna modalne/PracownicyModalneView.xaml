@@ -1,0 +1,78 @@
+﻿<local:ModalViewBase
+    x:Class="MVVMFirma.Views.PracownicyModalneView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:local="clr-namespace:MVVMFirma.Views"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="clr-namespace:MVVMFirma.ViewModels"
+    Title="Wybieranie pracownika"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    Background="White"
+    ResizeMode="NoResize"
+    WindowStartupLocation="CenterScreen"
+    mc:Ignorable="d">
+
+    <local:ModalViewBase.Resources>
+        <vm:PracownicyModalneViewModel x:Key="PracownicyModalneViewModel" />
+    </local:ModalViewBase.Resources>
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
+    <Grid Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <DataGrid
+            AutoGenerateColumns="False"
+            CanUserAddRows="False"
+            CanUserDeleteRows="False"
+            IsReadOnly="True"
+            ItemsSource="{Binding List}"
+            SelectedItem="{Binding SelectedItem}"
+            SelectionMode="Single">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding IdPracownika}" Header="ID" />
+                <DataGridTextColumn Binding="{Binding StanowiskoNazwa}" Header="Stanowisko" />
+                <DataGridTextColumn Binding="{Binding Imie}" Header="Imie" />
+                <DataGridTextColumn Binding="{Binding Nazwisko}" Header="Nazwisko" />
+                <DataGridTextColumn Binding="{Binding Ulica}" Header="Ulica" />
+                <DataGridTextColumn Binding="{Binding NrDomu}" Header="Nr domu" />
+                <DataGridTextColumn Binding="{Binding NrLokalu}" Header="Nr lokalu" />
+                <DataGridTextColumn Binding="{Binding KodPocztowy}" Header="Kod pocztowy" />
+                <DataGridTextColumn Binding="{Binding Miasto}" Header="Miasto" />
+                <DataGridTextColumn Binding="{Binding Kraj}" Header="Kraj" />
+                <DataGridTextColumn Binding="{Binding DataUrodzenia, StringFormat=yyyy-MM-dd}" Header="Data urodzenia" />
+                <DataGridTextColumn Binding="{Binding Email}" Header="Email" />
+                <DataGridTextColumn Binding="{Binding Telefon}" Header="Telefon" />
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <StackPanel
+            Grid.Row="1"
+            Margin="10"
+            HorizontalAlignment="Center"
+            Orientation="Horizontal">
+            <Button
+                Width="100"
+                Height="25"
+                Margin="5"
+                Command="{Binding SendItemCommand}"
+                Content="Wybierz" />
+            <Button
+                Width="100"
+                Height="25"
+                Margin="5"
+                Command="{Binding CancelCommand}"
+                Content="Anuluj" />
+        </StackPanel>
+    </Grid>
+</local:ModalViewBase>

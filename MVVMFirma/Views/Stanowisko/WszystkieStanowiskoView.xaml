@@ -20,6 +20,7 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding IdStanowiska}" Header="ID" />
                 <DataGridTextColumn Binding="{Binding Nazwa}" Header="Nazwa" />
+                <DataGridTextColumn Binding="{Binding StawkaGodzinowa}" Header="Stawka godzinowa" />
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

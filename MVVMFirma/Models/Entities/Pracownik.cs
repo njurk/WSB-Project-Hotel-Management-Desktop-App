@@ -14,6 +14,12 @@ namespace MVVMFirma.Models.Entities
     
     public partial class Pracownik
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Pracownik()
+        {
+            this.Obecnosc = new HashSet<Obecnosc>();
+        }
+    
         public int IdPracownika { get; set; }
         public int IdStanowiska { get; set; }
         public string Imie { get; set; }
@@ -29,6 +35,8 @@ namespace MVVMFirma.Models.Entities
         public string Telefon { get; set; }
     
         public virtual Kraj Kraj { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Obecnosc> Obecnosc { get; set; }
         public virtual Stanowisko Stanowisko { get; set; }
     }
 }

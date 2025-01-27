@@ -127,10 +127,25 @@
         <vw:NowyCennikView />
     </DataTemplate>
 
+    <DataTemplate DataType="{x:Type vm:WszystkieObecnoscViewModel}">
+        <vw:WszystkieObecnoscView />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:NowyObecnoscViewModel}">
+        <vw:NowyObecnoscView />
+    </DataTemplate>
+
     <DataTemplate DataType="{x:Type vm:RaportPrzychodowViewModel}">
         <vw:RaportPrzychodowView />
     </DataTemplate>
 
+    <DataTemplate DataType="{x:Type vm:RaportOdwiedzinViewModel}">
+        <vw:RaportOdwiedzinView />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:AnalizaPracownikowViewModel}">
+        <vw:AnalizaPracownikowView />
+    </DataTemplate>
 
 
     <Style x:Key="MainHCCStyle" TargetType="{x:Type HeaderedContentControl}">

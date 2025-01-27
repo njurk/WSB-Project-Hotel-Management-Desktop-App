@@ -63,6 +63,19 @@
           <Property Name="IdKraju" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Nazwa" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <EntityType Name="Obecnosc">
+          <Key>
+            <PropertyRef Name="IdObecnosci" />
+          </Key>
+          <Property Name="IdObecnosci" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdPracownika" Type="int" Nullable="false" />
+          <Property Name="Data" Type="datetime" Nullable="false" />
+          <Property Name="CzyObecny" Type="bit" Nullable="false" />
+          <Property Name="CzyUsprawiedliwiony" Type="bit" Nullable="false" />
+          <Property Name="GodzinaRozpoczecia" Type="time" Precision="0" />
+          <Property Name="GodzinaZakonczenia" Type="time" Precision="0" />
+          <Property Name="Uwagi" Type="nvarchar" MaxLength="500" />
+        </EntityType>
         <EntityType Name="Platnosc">
           <Key>
             <PropertyRef Name="IdPlatnosci" />
@@ -133,6 +146,7 @@
           </Key>
           <Property Name="IdStanowiska" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Nazwa" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="StawkaGodzinowa" Type="decimal" Precision="18" Scale="2" Nullable="false" />
         </EntityType>
         <EntityType Name="StatusPlatnosci">
           <Key>
@@ -241,6 +255,18 @@
             </Principal>
             <Dependent Role="Klient">
               <PropertyRef Name="IdKraju" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Obecnosc_Pracownik">
+          <End Role="Pracownik" Type="Self.Pracownik" Multiplicity="1" />
+          <End Role="Obecnosc" Type="Self.Obecnosc" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pracownik">
+              <PropertyRef Name="IdPracownika" />
+            </Principal>
+            <Dependent Role="Obecnosc">
+              <PropertyRef Name="IdPracownika" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -388,6 +414,7 @@
           <EntitySet Name="KlasaPokoju" EntityType="Self.KlasaPokoju" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Klient" EntityType="Self.Klient" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Kraj" EntityType="Self.Kraj" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Obecnosc" EntityType="Self.Obecnosc" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Platnosc" EntityType="Self.Platnosc" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Pokoj" EntityType="Self.Pokoj" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Pracownik" EntityType="Self.Pracownik" Schema="dbo" store:Type="Tables" />
@@ -418,6 +445,10 @@
           <AssociationSet Name="FK_Klient_Kraj" Association="Self.FK_Klient_Kraj">
             <End Role="Kraj" EntitySet="Kraj" />
             <End Role="Klient" EntitySet="Klient" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Obecnosc_Pracownik" Association="Self.FK_Obecnosc_Pracownik">
+            <End Role="Pracownik" EntitySet="Pracownik" />
+            <End Role="Obecnosc" EntitySet="Obecnosc" />
           </AssociationSet>
           <AssociationSet Name="FK_Platnosc_Rezerwacja" Association="Self.FK_Platnosc_Rezerwacja">
             <End Role="Rezerwacja" EntitySet="Rezerwacja" />
@@ -533,6 +564,20 @@
           <NavigationProperty Name="Klient" Relationship="Self.FK_Klient_Kraj" FromRole="Kraj" ToRole="Klient" />
           <NavigationProperty Name="Pracownik" Relationship="Self.FK_Pracownik_Kraj" FromRole="Kraj" ToRole="Pracownik" />
         </EntityType>
+        <EntityType Name="Obecnosc">
+          <Key>
+            <PropertyRef Name="IdObecnosci" />
+          </Key>
+          <Property Name="IdObecnosci" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdPracownika" Type="Int32" Nullable="false" />
+          <Property Name="Data" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CzyObecny" Type="Boolean" Nullable="false" />
+          <Property Name="CzyUsprawiedliwiony" Type="Boolean" Nullable="false" />
+          <Property Name="GodzinaRozpoczecia" Type="Time" Precision="0" />
+          <Property Name="GodzinaZakonczenia" Type="Time" Precision="0" />
+          <Property Name="Uwagi" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Pracownik" Relationship="Self.FK_Obecnosc_Pracownik" FromRole="Obecnosc" ToRole="Pracownik" />
+        </EntityType>
         <EntityType Name="Platnosc">
           <Key>
             <PropertyRef Name="IdPlatnosci" />
@@ -578,6 +623,7 @@
           <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Telefon" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Kraj" Relationship="Self.FK_Pracownik_Kraj" FromRole="Pracownik" ToRole="Kraj" />
+          <NavigationProperty Name="Obecnosc" Relationship="Self.FK_Obecnosc_Pracownik" FromRole="Pracownik" ToRole="Obecnosc" />
           <NavigationProperty Name="Stanowisko" Relationship="Self.FK_Pracownik_Stanowisko" FromRole="Pracownik" ToRole="Stanowisko" />
         </EntityType>
         <EntityType Name="Rezerwacja">
@@ -617,6 +663,7 @@
           </Key>
           <Property Name="IdStanowiska" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Nazwa" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="StawkaGodzinowa" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
           <NavigationProperty Name="Pracownik" Relationship="Self.FK_Pracownik_Stanowisko" FromRole="Stanowisko" ToRole="Pracownik" />
         </EntityType>
         <EntityType Name="StatusPlatnosci">
@@ -776,6 +823,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Obecnosc_Pracownik">
+          <End Role="Pracownik" Type="Self.Pracownik" Multiplicity="1" />
+          <End Role="Obecnosc" Type="Self.Obecnosc" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pracownik">
+              <PropertyRef Name="IdPracownika" />
+            </Principal>
+            <Dependent Role="Obecnosc">
+              <PropertyRef Name="IdPracownika" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Platnosc_Rezerwacja">
           <End Role="Rezerwacja" Type="Self.Rezerwacja" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -878,6 +937,7 @@
           <EntitySet Name="KlasaPokoju" EntityType="Self.KlasaPokoju" />
           <EntitySet Name="Klient" EntityType="Self.Klient" />
           <EntitySet Name="Kraj" EntityType="Self.Kraj" />
+          <EntitySet Name="Obecnosc" EntityType="Self.Obecnosc" />
           <EntitySet Name="Platnosc" EntityType="Self.Platnosc" />
           <EntitySet Name="Pokoj" EntityType="Self.Pokoj" />
           <EntitySet Name="Pracownik" EntityType="Self.Pracownik" />
@@ -920,6 +980,10 @@
           <AssociationSet Name="FK_Pracownik_Kraj" Association="Self.FK_Pracownik_Kraj">
             <End Role="Kraj" EntitySet="Kraj" />
             <End Role="Pracownik" EntitySet="Pracownik" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Obecnosc_Pracownik" Association="Self.FK_Obecnosc_Pracownik">
+            <End Role="Pracownik" EntitySet="Pracownik" />
+            <End Role="Obecnosc" EntitySet="Obecnosc" />
           </AssociationSet>
           <AssociationSet Name="FK_Platnosc_Rezerwacja" Association="Self.FK_Platnosc_Rezerwacja">
             <End Role="Rezerwacja" EntitySet="Rezerwacja" />
@@ -1019,6 +1083,20 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Obecnosc">
+            <EntityTypeMapping TypeName="HotelModel.Obecnosc">
+              <MappingFragment StoreEntitySet="Obecnosc">
+                <ScalarProperty Name="IdObecnosci" ColumnName="IdObecnosci" />
+                <ScalarProperty Name="IdPracownika" ColumnName="IdPracownika" />
+                <ScalarProperty Name="Data" ColumnName="Data" />
+                <ScalarProperty Name="CzyObecny" ColumnName="CzyObecny" />
+                <ScalarProperty Name="CzyUsprawiedliwiony" ColumnName="CzyUsprawiedliwiony" />
+                <ScalarProperty Name="GodzinaRozpoczecia" ColumnName="GodzinaRozpoczecia" />
+                <ScalarProperty Name="GodzinaZakonczenia" ColumnName="GodzinaZakonczenia" />
+                <ScalarProperty Name="Uwagi" ColumnName="Uwagi" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Platnosc">
             <EntityTypeMapping TypeName="HotelModel.Platnosc">
               <MappingFragment StoreEntitySet="Platnosc">
@@ -1093,6 +1171,7 @@
               <MappingFragment StoreEntitySet="Stanowisko">
                 <ScalarProperty Name="IdStanowiska" ColumnName="IdStanowiska" />
                 <ScalarProperty Name="Nazwa" ColumnName="Nazwa" />
+                <ScalarProperty Name="StawkaGodzinowa" ColumnName="StawkaGodzinowa" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

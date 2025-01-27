@@ -1,7 +1,9 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
 using MVVMFirma.Helper;
 using MVVMFirma.Models.Entities;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Windows.Documents;
 using System.Windows.Input;
 
 namespace MVVMFirma.ViewModels
@@ -117,6 +119,18 @@ namespace MVVMFirma.ViewModels
             base.DisplayName = displayName;
             hotelEntities = new HotelEntities();
         }
+        #endregion
+
+        #region Sort and Filter
+        public string SortField { get; set; }
+        public List<string> SortComboboxItems
+        {
+            get
+            {
+                return GetComboboxSortList();
+            }
+        }
+        public abstract List<string> GetComboboxSortList();
         #endregion
     }
 }

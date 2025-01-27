@@ -1,6 +1,9 @@
-﻿using MVVMFirma.Helper;
+﻿using GalaSoft.MvvmLight.Messaging;
+using MVVMFirma.Helper;
 using MVVMFirma.Models.Entities;
 using System.Collections.ObjectModel;
+using System.Linq;
+using System.Windows;
 using System.Windows.Input;
 
 namespace MVVMFirma.ViewModels
@@ -8,65 +11,68 @@ namespace MVVMFirma.ViewModels
     public abstract class ModalViewModel<T> : WorkspaceViewModel
     {
         #region DB
-        protected readonly HotelEntities hotelEntities;
-        #endregion
-
-        #region Item
-        protected T item;
+        protected readonly HotelEntities HotelEntities;
         #endregion
 
         #region List
-        private ObservableCollection<T> _List;
+        private ObservableCollection<T> _list;
         public ObservableCollection<T> List
         {
-            get
-            {
-                if (_List == null)
-                    Load();
-                return _List;
-            }
+            get => _list;
             set
             {
-                _List = value;
+                _list = value;
                 OnPropertyChanged(() => List);
             }
         }
         #endregion
 
-        #region Commands
-        private BaseCommand _LoadCommand;
-        public ICommand LoadCommand
-        {
-            get
-            {
-                if (_LoadCommand == null)
-                    _LoadCommand = new BaseCommand(() => Load());
-                return _LoadCommand;
-            }
-        }
-        #endregion
-
-        #region Selected Item
-        private T _SelectedItem;
+        #region SelectedItem
+        private T _selectedItem;
         public T SelectedItem
         {
-            get => _SelectedItem;
+            get => _selectedItem;
             set
             {
-                _SelectedItem = value;
-                OnPropertyChanged(() => SelectedItem);
+                if (!object.ReferenceEquals(_selectedItem, value))
+                {
+                    _selectedItem = value;
+                    OnPropertyChanged(() => SelectedItem);
+                    ((BaseCommand)SendItemCommand).RaiseCanExecuteChanged();
+                }
             }
         }
         #endregion
 
-        #region Helpers
+        #region Commands
+        public ICommand LoadCommand { get; }
+        public ICommand SendItemCommand { get; }
+        public ICommand CancelCommand { get; }
+        #endregion
+
+        #region Methods
         public abstract void Load();
+
+        public abstract void SendItem();
+
+        protected virtual bool CanSendItem() => SelectedItem != null;
+
+        protected virtual void Cancel()
+        {
+            Application.Current.Windows
+                .OfType<Window>()
+                .SingleOrDefault(x => x.IsActive)
+                ?.Close();
+        }
         #endregion
 
         #region Constructor
-        public ModalViewModel()
-        { 
-            hotelEntities = new HotelEntities();
+        protected ModalViewModel()
+        {
+            HotelEntities = new HotelEntities();
+            LoadCommand = new BaseCommand(Load);
+            SendItemCommand = new BaseCommand(SendItem, CanSendItem);
+            CancelCommand = new BaseCommand(Cancel);
         }
         #endregion
     }

@@ -7,6 +7,7 @@ using MVVMFirma.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Windows;
 
 namespace MVVMFirma.ViewModels
@@ -14,7 +15,6 @@ namespace MVVMFirma.ViewModels
     public class NowyFakturaViewModel : JedenViewModel<Faktura>
     {
         #region Fields
-        private BaseCommand _obliczNettoCommand;
         private BaseCommand _openRezerwacjeModalne;
         private string _nrRezerwacji;
         private decimal _stawkaVat;
@@ -148,13 +148,16 @@ namespace MVVMFirma.ViewModels
                     item.IdVat = value;
                     OnPropertyChanged(() => IdVat);
 
-                    // konwersja wybranej stawki vat na decimal jest potrzebna
+                    // Konwersja wybranej stawki VAT na decimal jest potrzebna
                     // dla metody ObliczNetto
                     var vatItem = VATItems.FirstOrDefault(v => v.Key == IdVat);
                     _stawkaVat = vatItem != null ? Convert.ToDecimal(vatItem.Value) : 0;
+
+                    ObliczNetto();
                 }
             }
         }
+
 
         public decimal KwotaBrutto
         {
@@ -166,6 +169,7 @@ namespace MVVMFirma.ViewModels
             {
                 item.KwotaBrutto = value;
                 OnPropertyChanged(() => KwotaBrutto);
+                ObliczNetto();
             }
         }
 
@@ -209,65 +213,9 @@ namespace MVVMFirma.ViewModels
                 }
             }
         }
-        
-        //metoda do obliczania kwoty pozostałej do zapłacenia dla danej rezerwacji
-        private decimal sumaPlatnosci(int idRezerwacji)
-        {
-            return db.Platnosc
-                     .Where(p => p.IdRezerwacji == idRezerwacji)
-                     .Sum(p => (decimal?)p.Kwota) ?? 0;
-        }
         #endregion
 
         #region Items
-        public IEnumerable<KeyAndValue> RezerwacjaItems
-        {
-            get
-            {
-                // sprawdzenie czy jesteśmy w edycji
-                if (item.IdFaktury > 0)
-                {
-                    // dodanie do combobox numeru rezerwacji z faktury która jest aktualnie edytowana
-                    var rezerwacja = db.Rezerwacja
-                                       .FirstOrDefault(r => r.IdRezerwacji == item.IdRezerwacji);
-
-                    // dodanie do combobox wszystkich rezerwacji bez faktury
-                    var rezerwacjeBezFaktury = db.Rezerwacja
-                        .Where(r => !db.Faktura.Any(f => f.IdRezerwacji == r.IdRezerwacji))
-                        .Select(r => new KeyAndValue
-                        {
-                            Key = r.IdRezerwacji,
-                            Value = r.NrRezerwacji
-                        }).ToList();
-
-                    if (rezerwacja != null)
-                    {
-                        var selectedRezerwacja = new KeyAndValue
-                        {
-                            Key = rezerwacja.IdRezerwacji,
-                            Value = rezerwacja.NrRezerwacji
-                        };
-                        // numer rezerwacji z faktury aktualnie edytowanej jako pierwszy na liście
-                        rezerwacjeBezFaktury.Insert(0, selectedRezerwacja);
-                    }
-
-                    return rezerwacjeBezFaktury;
-                }
-                else
-                {
-                    // jesteśmy w dodawaniu nowej faktury
-                    // w combobox znajdą się do wyboru tylko rezerwacje bez faktury
-                    return db.Rezerwacja
-                        .Where(r => !db.Faktura.Any(f => f.IdRezerwacji == r.IdRezerwacji))
-                        .Select(r => new KeyAndValue
-                        {
-                            Key = r.IdRezerwacji,
-                            Value = r.NrRezerwacji
-                        }).ToList();
-                }
-            }
-        }
-
         public IEnumerable<KeyAndValue> VATItems
         {
             get
@@ -279,18 +227,6 @@ namespace MVVMFirma.ViewModels
 
         #region Commands
         // komenda do wywołania metody otwierającej okienko modalne
-        public BaseCommand ObliczNettoCommand
-        {
-            get
-            {
-                if (_obliczNettoCommand == null)
-                {
-                    _obliczNettoCommand = new BaseCommand(ObliczNetto);
-                }
-                return _obliczNettoCommand;
-            }
-        }
-
         public BaseCommand OpenRezerwacjeModalneCommand
         {
             get
@@ -307,8 +243,19 @@ namespace MVVMFirma.ViewModels
         #region Methods
         private void OpenRezerwacjeModalne()
         {
-            var rezerwacjeModalne = new RezerwacjeModalneView();
+            var rezerwacjeModalne = new RezerwacjeModalneView
+            {
+                DataContext = new RezerwacjeModalneViewModel(true)
+            };
             rezerwacjeModalne.ShowDialog();
+        }
+
+        //metoda do obliczania kwoty pozostałej do zapłacenia dla danej rezerwacji
+        private decimal sumaPlatnosci(int idRezerwacji)
+        {
+            return db.Platnosc
+                     .Where(p => p.IdRezerwacji == idRezerwacji)
+                     .Sum(p => (decimal?)p.Kwota) ?? 0;
         }
         private int DomyslnyVAT(string szukanyVAT)
         {
@@ -327,13 +274,10 @@ namespace MVVMFirma.ViewModels
         // metoda obliczająca kwotę netto na podstawie kwoty rezerwacji i wybranego VAT
         private void ObliczNetto()
         {
-            if (KwotaBrutto <= 0 || IdVat == -1)
+            if (KwotaBrutto > 0 && IdVat > 0)
             {
-                MessageBox.Show("Niepoprawna kwota brutto lub nie wybrano stawki VAT", "Błąd", MessageBoxButton.OK);
-                return;
+                KwotaNetto = Math.Round(_stawkaVat == 0 ? KwotaBrutto : KwotaBrutto / (1 + (_stawkaVat / 100)), 2);
             }
-
-            KwotaNetto = Math.Round(_stawkaVat == 0 ? KwotaBrutto : KwotaBrutto / (1 + (_stawkaVat / 100)), 2);
         }
 
         private string GenerujNumerFaktury()
@@ -419,7 +363,7 @@ namespace MVVMFirma.ViewModels
             DataSprzedazy = DateTime.Now;
             TerminPlatnosci = DateTime.Now.AddDays(14);
             NrFaktury = GenerujNumerFaktury();
-            IdVat = DomyslnyVAT("23");
+            IdVat = DomyslnyVAT("23"); // metoda szuka w naszej bazie danych wartości "23" i ustawia ją na domyślną, dzięki czemu nie trzeba znać ID w bazie
 
             Messenger.Default.Register<int>(this, idRezerwacji => IdRezerwacji = idRezerwacji);
         }
@@ -468,19 +412,19 @@ namespace MVVMFirma.ViewModels
                     }
 
                 case nameof(DataWystawienia):
-                    return (DataWystawienia == null || DataWystawienia > DateTime.Now) ? "data wystawienia faktury nie może być pusta ani w przyszłości" : string.Empty;
+                    return (DataWystawienia == null || DataWystawienia > DateTime.Now) ? "wprowadź poprawną datę" : string.Empty;
 
                 case nameof(DataSprzedazy):
                     return DataSprzedazy == null ? "wybierz poprawną datę sprzedaży faktury" : string.Empty;
 
                 case nameof(KwotaBrutto):
-                    return KwotaBrutto <= 0 ? "wprowadź poprawną kwotę brutto" : string.Empty;
+                    return KwotaBrutto <= 0 ? "niepoprawna kwota brutto" : string.Empty;
 
                 case nameof(IdVat):
                     return IdVat <= 0 ? "wybierz stawkę VAT" : string.Empty;
 
                 case nameof(KwotaNetto):
-                    return KwotaNetto <= 0 ? "wprowadź poprawną kwotę netto" : string.Empty;
+                return KwotaNetto <= 0 ? "niepoprawna kwota netto" : string.Empty;
 
                 case nameof(TerminPlatnosci):
                     return (TerminPlatnosci == null || TerminPlatnosci < DataWystawienia) ? "termin płatności musi być poźniej od daty wystawienia" : string.Empty;

@@ -10,5 +10,6 @@ namespace MVVMFirma.Models.EntitiesForView
     {
         public int IdStanowiska {  get; set; }
         public string Nazwa {  get; set; }
+        public decimal StawkaGodzinowa {  get; set; }
     }
 }

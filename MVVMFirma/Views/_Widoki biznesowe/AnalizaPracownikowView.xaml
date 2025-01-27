@@ -1,0 +1,191 @@
+﻿<UserControl
+    x:Class="MVVMFirma.Views.AnalizaPracownikowView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:liveCharts="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+    xmlns:local="clr-namespace:MVVMFirma.Views"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="800"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <Grid
+        Width="800"
+        Height="700"
+        HorizontalAlignment="Left"
+        VerticalAlignment="Top"
+        Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40" />
+            <RowDefinition Height="40" />
+            <RowDefinition Height="40" />
+            <RowDefinition Height="40" />
+            <RowDefinition Height="55" />
+            <RowDefinition Height="40" />
+            <RowDefinition Height="40" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Label
+            Grid.Row="0"
+            Margin="5"
+            HorizontalContentAlignment="Center"
+            Content="Analiza czasu pracy i wynagrodzenia dla wybranego pracownika" />
+
+        <Grid
+            Grid.Row="1"
+            Width="633"
+            HorizontalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="110" />
+                <ColumnDefinition Width="200" />
+                <ColumnDefinition Width="100" />
+                <ColumnDefinition Width="110" />
+                <ColumnDefinition Width="110" />
+            </Grid.ColumnDefinitions>
+            <Button
+                Grid.Column="0"
+                Margin="10,6"
+                Command="{Binding SetPracownikCommand}"
+                Content="Pracownik..." />
+            <TextBox
+                Grid.Column="1"
+                Margin="6"
+                IsEnabled="False"
+                Text="{Binding ImieNazwiskoPracownika}" />
+            <Button
+                Grid.Column="3"
+                Margin="6"
+                Command="{Binding SetLastYearCommand}"
+                Content="Ostatni rok" />
+            <Button
+                Grid.Column="4"
+                Margin="6"
+                Command="{Binding SetCurrentYearCommand}"
+                Content="Bieżący rok" />
+        </Grid>
+
+        <Grid
+            Grid.Row="2"
+            Width="632"
+            HorizontalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="410" />
+                <ColumnDefinition Width="110" />
+                <ColumnDefinition Width="110" />
+            </Grid.ColumnDefinitions>
+            <Button
+                Grid.Column="1"
+                Margin="6"
+                Command="{Binding SetLastMonthCommand}"
+                Content="Ostatni miesiąc" />
+            <Button
+                Grid.Column="2"
+                Margin="6"
+                Command="{Binding SetCurrentMonthCommand}"
+                Content="Bieżący miesiąc" />
+        </Grid>
+
+        <Grid Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="40" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="40" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Label
+                Grid.Column="0"
+                Margin="5"
+                Content="Od:" />
+            <DatePicker
+                Grid.Column="1"
+                Margin="5"
+                SelectedDate="{Binding DataOd, ValidatesOnDataErrors=True}" />
+            <Label
+                Grid.Column="2"
+                Margin="5"
+                Content="Do:" />
+            <DatePicker
+                Grid.Column="3"
+                Margin="5"
+                SelectedDate="{Binding DataDo, ValidatesOnDataErrors=True}" />
+        </Grid>
+        <Grid Grid.Row="4">
+            <Button
+                Grid.Column="1"
+                Margin="6"
+                Command="{Binding ObliczCommand}"
+                Content="Oblicz" />
+        </Grid>
+        <Grid
+            Grid.Row="5"
+            Width="340"
+            HorizontalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="110" />
+                <ColumnDefinition Width="120" />
+                <ColumnDefinition Width="100" />
+                <ColumnDefinition Width="70" />
+            </Grid.ColumnDefinitions>
+            <Label
+                Grid.Column="0"
+                Margin="6"
+                Content="Godzin ogółem:" />
+            <TextBlock
+                Grid.Column="1"
+                Margin="3,3,3,3"
+                Text="{Binding GodzinOgolem}" />
+            <Label
+                Grid.Column="2"
+                Margin="6"
+                Content="Nieobecności:" />
+            <TextBlock
+                Grid.Column="3"
+                Margin="6"
+                Text="{Binding Nieobecnosci}" />
+        </Grid>
+
+        <Grid
+            Grid.Row="6"
+            Width="470"
+            HorizontalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="190" />
+                <ColumnDefinition Width="90" />
+                <ColumnDefinition Width="120" />
+                <ColumnDefinition Width="90" />
+            </Grid.ColumnDefinitions>
+            <Label
+                Grid.Column="0"
+                Margin="6"
+                Content="Przewidywana wypłata (brutto):" />
+            <TextBlock
+                Grid.Column="1"
+                Margin="3"
+                Text="{Binding PrzewidywanaWyplata, StringFormat=C}" />
+            <Label
+                Grid.Column="2"
+                Margin="6"
+                Content="Koszt pracownika:" />
+            <TextBlock
+                Grid.Column="3"
+                Margin="3"
+                Text="{Binding KosztPracownika, StringFormat=C}" />
+        </Grid>
+
+        <Grid Grid.Row="7">
+            <liveCharts:CartesianChart LegendLocation="Right" Series="{Binding SeriesCollection}">
+                <liveCharts:CartesianChart.AxisX>
+                    <liveCharts:Axis Title="Dni" Labels="{Binding Labels}" />
+                </liveCharts:CartesianChart.AxisX>
+                <liveCharts:CartesianChart.AxisY>
+                    <liveCharts:Axis
+                        Title="Godziny"
+                        LabelFormatter="{Binding YFormatter}"
+                        MaxValue="12"
+                        MinValue="0" />
+                </liveCharts:CartesianChart.AxisY>
+            </liveCharts:CartesianChart>
+        </Grid>
+    </Grid>
+</UserControl>

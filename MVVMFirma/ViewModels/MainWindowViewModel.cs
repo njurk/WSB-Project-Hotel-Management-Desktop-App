@@ -17,6 +17,9 @@ namespace MVVMFirma.ViewModels
         #region Fields
         private ReadOnlyCollection<CommandViewModel> _Commands;
         private ObservableCollection<WorkspaceViewModel> _Workspaces;
+        private BaseCommand _openRaportPrzychodowCommand;
+        private BaseCommand _openRaportOdwiedzinCommand;
+        private BaseCommand _openRaportCzasuPracyCommand;
         #endregion
 
         #region Commands
@@ -159,7 +162,15 @@ namespace MVVMFirma.ViewModels
 
                 new CommandViewModel(
                     "Zniżki",
-                    new BaseCommand(() => this.ShowAllView(new WszystkieZnizkaViewModel())))
+                    new BaseCommand(() => this.ShowAllView(new WszystkieZnizkaViewModel()))),
+
+                /*new CommandViewModel(
+                    "Obecność",
+                    new BaseCommand(() => this.CreateView(new NowyObecnoscViewModel()))),*/
+
+                new CommandViewModel(
+                    "Obecności",
+                    new BaseCommand(() => this.ShowAllView(new WszystkieObecnoscViewModel())))
             };
         }
         #endregion
@@ -263,6 +274,8 @@ namespace MVVMFirma.ViewModels
                     CreateView(new NowyVATViewModel());
                 if (name == "ZniżkiAdd")
                     CreateView(new NowyZnizkaViewModel());
+                if (name == "ObecnościAdd")
+                    CreateView(new NowyObecnoscViewModel());
             }
             // edycja - z komunikatu wyodrębniane jest ID a następnie wysyłane do specjalnego konstruktora klasy Nowy..ViewModel
             else if (name.Contains("Edit-"))
@@ -303,31 +316,74 @@ namespace MVVMFirma.ViewModels
                         EditView(new NowyVATViewModel(itemId));
                     if (splitName == "ZniżkiEdit")
                         EditView(new NowyZnizkaViewModel(itemId));
+                    if (splitName == "ObecnościEdit")
+                        EditView(new NowyObecnoscViewModel(itemId));
                 }
             }
         }
         #endregion
 
-        private BaseCommand _openRaportPrzychodowViewCommand;
-
-        public BaseCommand OpenRaportPrzychodowViewCommand
+        #region Business Views Commands
+        public BaseCommand OpenRaportPrzychodowCommand
         {
             get
             {
-                if (_openRaportPrzychodowViewCommand == null)
+                if (_openRaportPrzychodowCommand == null)
                 {
-                    _openRaportPrzychodowViewCommand = new BaseCommand(OpenRaportPrzychodowView);
+                    _openRaportPrzychodowCommand = new BaseCommand(OpenRaportPrzychodow);
                 }
-                return _openRaportPrzychodowViewCommand;
+                return _openRaportPrzychodowCommand;
             }
         }
 
-        private void OpenRaportPrzychodowView()
+        public BaseCommand OpenRaportOdwiedzinCommand
+        {
+            get
+            {
+                if (_openRaportOdwiedzinCommand == null)
+                {
+                    _openRaportOdwiedzinCommand = new BaseCommand(OpenRaportOdwiedzin);
+                }
+                return _openRaportOdwiedzinCommand;
+            }
+        }
+
+        public BaseCommand OpenRaportCzasuPracyCommand
+        {
+            get
+            {
+                if (_openRaportCzasuPracyCommand == null)
+                {
+                    _openRaportCzasuPracyCommand = new BaseCommand(OpenRaportCzasuPracy);
+                }
+                return _openRaportCzasuPracyCommand;
+            }
+        }
+        #endregion
+
+        #region Business Views Methods
+        private void OpenRaportPrzychodow()
         {
             WorkspaceViewModel workspace = new RaportPrzychodowViewModel();
 
             this.Workspaces.Add(workspace);
             this.SetActiveWorkspace(workspace);
         }
+        private void OpenRaportOdwiedzin()
+        {
+            WorkspaceViewModel workspace = new RaportOdwiedzinViewModel();
+
+            this.Workspaces.Add(workspace);
+            this.SetActiveWorkspace(workspace);
+        }
+
+        private void OpenRaportCzasuPracy()
+        {
+            WorkspaceViewModel workspace = new AnalizaPracownikowViewModel();
+
+            this.Workspaces.Add(workspace);
+            this.SetActiveWorkspace(workspace);
+        }
+        #endregion
     }
 }

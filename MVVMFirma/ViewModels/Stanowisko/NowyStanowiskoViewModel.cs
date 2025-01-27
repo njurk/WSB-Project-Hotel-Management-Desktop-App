@@ -24,6 +24,19 @@ namespace MVVMFirma.ViewModels
                 OnPropertyChanged(() => Nazwa);
             }
         }
+
+        public decimal StawkaGodzinowa
+        {
+            get
+            {
+                return item.StawkaGodzinowa;
+            }
+            set
+            {
+                item.StawkaGodzinowa = value;
+                OnPropertyChanged(() => StawkaGodzinowa);
+            }
+        }
         #endregion
 
         #region Helpers
@@ -66,6 +79,7 @@ namespace MVVMFirma.ViewModels
             if (item != null)
             {
                 Nazwa = item.Nazwa;
+                StawkaGodzinowa = item.StawkaGodzinowa;
             }
         }
         #endregion
@@ -77,6 +91,9 @@ namespace MVVMFirma.ViewModels
             {
                 case nameof(Nazwa):
                     return StringValidator.ContainsOnlyLettersWithSpaces(Nazwa) ? "wprowadź poprawną nazwę (nie używaj cyfr ani znaków specjalnych)" : string.Empty;
+
+                case nameof(StawkaGodzinowa):
+                    return StawkaGodzinowa <= 0 ? "wprowadź poprawną kwotę" : string.Empty;
 
                 default:
                     return string.Empty;

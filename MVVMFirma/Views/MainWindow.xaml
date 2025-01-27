@@ -4,75 +4,88 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:vm="clr-namespace:MVVMFirma.Views"
     Title="MVVMFirma"
-    Width="300"
+    Width="600"
     Height="300"
     WindowState="Maximized">
-    
+
     <Window.Resources>
         <ResourceDictionary Source="MainWindowResources.xaml" />
     </Window.Resources>
-    
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="30" />
-            <RowDefinition Height="40" />
+            <RowDefinition Height="25" />
+            <RowDefinition Height="45" />
             <RowDefinition Height="*" />
-            <RowDefinition Height="30" />
+            <RowDefinition Height="25" />
         </Grid.RowDefinitions>
         <Menu
             Grid.Row="0"
             Grid.Column="0"
             Grid.ColumnSpan="2"
             Margin="2">
-            <MenuItem Header="_Plik" />
-            <MenuItem Header="_Magazyn">
-                <MenuItem Header="Wszystkie towary" />
-                <MenuItem Header="Nowy towar" />
-                <MenuItem Header="Wydanie Zewnętrzne (WZ)" />
-                <MenuItem Header="Przyjęcie Zewnętrzne (PZ)" />
+            <MenuItem Header="Narzędzia">
+                <MenuItem Header="Połącz z bazą danych..." />
+                <MenuItem Header="Rozłącz" />
+                <MenuItem Header="Eksportuj..." />
+                <MenuItem Header="Importuj..." />
+                <MenuItem Header="Drukuj..." />
+                <MenuItem Header="Ustawienia" />
+                <MenuItem Header="Wyjście" />
             </MenuItem>
-            <MenuItem Header="Program" />
+            <MenuItem Header="Widok">
+                <MenuItem Header="Motywy" />
+                <MenuItem Header="Nawigacja" />
+                <MenuItem Header="Paski narzędzi" />
+                <MenuItem Header="Właściwości" />
+            </MenuItem>
+            <MenuItem Header="Pomoc">
+                <MenuItem Header="Pomoc online" />
+                <MenuItem Header="Dokumentacja" />
+                <MenuItem Header="Sprawdź aktualizacje" />
+                <MenuItem Header="Informacje o programie" />
+            </MenuItem>
         </Menu>
         <ToolBar
             Grid.Row="1"
             Grid.Column="0"
             Grid.ColumnSpan="2"
             Margin="2"
-            >
+            Background="LightGray">
             <Button
                 Width="auto"
                 Height="25"
                 Margin="4"
-                Content="Raport przychodów"
-                Background="White" 
-                Command="{Binding OpenRaportPrzychodowViewCommand}"
-                />
+                Padding="8,1"
+                Background="White"
+                Command="{Binding OpenRaportPrzychodowCommand}"
+                Content="Raport przychodów" />
             <Button
                 Width="auto"
                 Height="25"
                 Margin="4"
-                Content="Utarg2"
-                Background="White" 
-                Command="{Binding OpenBusinessViewCommand}"
-                />
+                Padding="8,1"
+                Background="White"
+                Command="{Binding OpenRaportOdwiedzinCommand}"
+                Content="Raport odwiedzin" />
             <Button
                 Width="auto"
                 Height="25"
                 Margin="4"
-                Content="Utarg3"
-                Background="White" 
-                Command="{Binding OpenAnotherViewCommand}"
-                />
+                Padding="8,1"
+                Background="White"
+                Command="{Binding OpenRaportCzasuPracyCommand}"
+                Content="Raport czasu pracy" />
         </ToolBar>
         <Border Grid.Row="2" Grid.Column="0">
             <HeaderedContentControl
                 Content="{Binding Path=Commands}"
                 ContentTemplate="{StaticResource CommandsTemplate}"
-                Header="Operacje"
+                Header="Nawigacja"
                 Style="{StaticResource MainHCCStyle}" />
         </Border>
         <Border Grid.Row="2" Grid.Column="1">
@@ -87,7 +100,7 @@
             Grid.Column="0"
             Grid.ColumnSpan="2">
             <StatusBarItem>
-                <TextBlock>Nikola Jurkiewicz</TextBlock>
+                <TextBlock>2025 | WSB-NLU | Nikola Jurkiewicz</TextBlock>
             </StatusBarItem>
         </StatusBar>
     </Grid>

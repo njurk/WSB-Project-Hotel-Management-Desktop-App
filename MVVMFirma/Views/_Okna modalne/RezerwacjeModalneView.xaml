@@ -3,11 +3,12 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns:local="clr-namespace:MVVMFirma.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:vm="clr-namespace:MVVMFirma.ViewModels"
     xmlns:vm1="clr-namespace:MVVMFirma.Helper"
-    Title="Rezerwacje"
+    Title="Wybieranie rezerwacji"
     d:DesignHeight="450"
     d:DesignWidth="800"
     Background="White"
@@ -15,10 +16,16 @@
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
 
-
     <local:ModalViewBase.Resources>
+        <vm:RezerwacjeModalneViewModel x:Key="RezerwacjeModalneViewModel" />
         <vm1:PercentFormatter x:Key="PercentFormatter" />
     </local:ModalViewBase.Resources>
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
 
     <Grid Background="White">
         <Grid.RowDefinitions>
@@ -36,7 +43,6 @@
             ItemsSource="{Binding List}"
             SelectedItem="{Binding SelectedItem}"
             SelectionMode="Single">
-
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding IdRezerwacji}" Header="ID" />
                 <DataGridTextColumn Binding="{Binding NrRezerwacji}" Header="Numer rezerwacji" />
@@ -65,13 +71,13 @@
                 Width="100"
                 Height="25"
                 Margin="5"
-                Click="btnSendItem_Click"
+                Command="{Binding SendItemCommand}"
                 Content="Wybierz" />
             <Button
                 Width="100"
                 Height="25"
                 Margin="5"
-                Click="btnCancel_Click"
+                Command="{Binding CancelCommand}"
                 Content="Anuluj" />
         </StackPanel>
     </Grid>

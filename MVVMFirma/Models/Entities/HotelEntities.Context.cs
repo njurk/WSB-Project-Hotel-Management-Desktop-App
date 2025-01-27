@@ -30,6 +30,7 @@ namespace MVVMFirma.Models.Entities
         public virtual DbSet<KlasaPokoju> KlasaPokoju { get; set; }
         public virtual DbSet<Klient> Klient { get; set; }
         public virtual DbSet<Kraj> Kraj { get; set; }
+        public virtual DbSet<Obecnosc> Obecnosc { get; set; }
         public virtual DbSet<Platnosc> Platnosc { get; set; }
         public virtual DbSet<Pokoj> Pokoj { get; set; }
         public virtual DbSet<Pracownik> Pracownik { get; set; }
