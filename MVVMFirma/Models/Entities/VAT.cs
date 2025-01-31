@@ -25,5 +25,6 @@ namespace MVVMFirma.Models.Entities
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Faktura> Faktura { get; set; }
+        public string Nazwa { get; internal set; }
     }
 }

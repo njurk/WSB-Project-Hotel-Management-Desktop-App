@@ -129,7 +129,7 @@ namespace MVVMFirma.ViewModels
 
         #region Methods
         // metoda sprawdzająca czy istnieje już cennnik dla wybranej pary kluczy obcych
-        public string ValidateCennik()
+        public string ValidateDuplicate()
         {
             var istniejacyCennik = db.Cennik.FirstOrDefault(c =>
                 c.IdTypuPokoju == IdTypuPokoju &&

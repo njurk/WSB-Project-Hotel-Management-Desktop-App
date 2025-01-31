@@ -1,12 +1,9 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
 using MVVMFirma.Models.Entities;
 using MVVMFirma.Models.EntitiesForView;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace MVVMFirma.ViewModels
@@ -25,30 +22,41 @@ namespace MVVMFirma.ViewModels
         #region Helpers
         public override void Load()
         {
-            List = new ObservableCollection<SposobPlatnosciForAllView>
-            (
-                from sposobplatnosci in hotelEntities.SposobPlatnosci
-                select new SposobPlatnosciForAllView
-                {
-                    IdSposobuPlatnosci = sposobplatnosci.IdSposobuPlatnosci,
-                    Nazwa = sposobplatnosci.Nazwa
-                }
-            );
+            var query = hotelEntities.SposobPlatnosci.AsQueryable();
+            Reload(query);
         }
+
+        private void Reload(IQueryable<SposobPlatnosci> query)
+        {
+            var result = query.Select(sposobplatnosci => new SposobPlatnosciForAllView
+            {
+                IdSposobuPlatnosci = sposobplatnosci.IdSposobuPlatnosci,
+                Nazwa = sposobplatnosci.Nazwa
+            }).ToList();
+
+            List = new ObservableCollection<SposobPlatnosciForAllView>(result);
+        }
+
         public override void Delete()
         {
-            MessageBoxResult delete = MessageBox.Show("Czy na pewno chcesz usunąć wybrany sposób płatności:\n" + SelectedItem.Nazwa, "Usuwanie", MessageBoxButton.YesNo, MessageBoxImage.Question);
-
-            if (SelectedItem != null && delete == MessageBoxResult.Yes)
+            if (SelectedItem != null)
             {
-                hotelEntities.SposobPlatnosci.Remove(hotelEntities.SposobPlatnosci.FirstOrDefault(f => f.IdSposobuPlatnosci == SelectedItem.IdSposobuPlatnosci));
-                hotelEntities.SaveChanges();
-                Load();
+                var delete = MessageBox.Show($"Czy na pewno chcesz usunąć wybrany sposób płatności:\n{SelectedItem.Nazwa}?",
+                    "Usuwanie", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+                if (delete == MessageBoxResult.Yes)
+                {
+                    var itemToDelete = hotelEntities.SposobPlatnosci.FirstOrDefault(f => f.IdSposobuPlatnosci == SelectedItem.IdSposobuPlatnosci);
+                    if (itemToDelete != null)
+                    {
+                        hotelEntities.SposobPlatnosci.Remove(itemToDelete);
+                        hotelEntities.SaveChanges();
+                        Load();
+                    }
+                }
             }
         }
 
-        // w celu edycji wybranego rekordu wysyłana jest wiadomość zawierająca jego ID
-        // odbiera i obsługuje ją metoda open() w klasie MainWindowViewModel
         public override void Edit()
         {
             if (SelectedItem != null)
@@ -58,13 +66,61 @@ namespace MVVMFirma.ViewModels
             }
         }
 
-        // OnMessageReceived obsługuje wiadomość dotyczącą odświeżenia listy w widoku Wszystkie..View, wysłaną przy zapisie edytowanego rekordu 
         private void OnMessageReceived(string message)
         {
             if (message == "SposobPlatnosciRefresh")
             {
                 Load();
             }
+        }
+        #endregion
+
+        #region Sort and Find
+        public override List<string> GetComboboxSortList()
+        {
+            return new List<string> { "Nazwa" };
+        }
+
+        public override void Sort()
+        {
+            var query = hotelEntities.SposobPlatnosci.AsQueryable();
+
+            switch (SortField)
+            {
+                case "Nazwa":
+                    query = query.OrderBy(s => s.Nazwa);
+                    break;
+
+                default:
+                    break;
+            }
+
+            Reload(query);
+        }
+
+        public override List<string> GetComboboxFindList()
+        {
+            return new List<string> { "Nazwa" };
+        }
+
+        public override void Find()
+        {
+            var query = hotelEntities.SposobPlatnosci.AsQueryable();
+
+            if (!string.IsNullOrEmpty(FindTextBox))
+            {
+                switch (FindField)
+                {
+                    case "Nazwa":
+                        query = query.Where(s => s.Nazwa.Contains(FindTextBox));
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+
+            Reload(query);
         }
         #endregion
     }

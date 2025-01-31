@@ -99,7 +99,7 @@
                 Content="Przychód netto:" />
             <TextBlock
                 Grid.Column="1"
-                Margin="1,6"
+                Margin="3,12,3,12"
                 Text="{Binding PrzychodNetto, StringFormat=C}" />
             <Label
                 Grid.Column="2"
@@ -107,7 +107,7 @@
                 Content="Przychód brutto:" />
             <TextBlock
                 Grid.Column="3"
-                Margin="1,6"
+                Margin="3,12,3,12"
                 Text="{Binding PrzychodBrutto, StringFormat=C}" />
             <Label
                 Grid.Column="4"
@@ -115,7 +115,7 @@
                 Content="Podatek VAT:" />
             <TextBlock
                 Grid.Column="5"
-                Margin="1,6"
+                Margin="3,12,3,12"
                 Text="{Binding PodatekVAT, StringFormat=C}" />
         </Grid>
     </Grid>

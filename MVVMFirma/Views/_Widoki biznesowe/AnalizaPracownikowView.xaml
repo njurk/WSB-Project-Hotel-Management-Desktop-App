@@ -19,7 +19,6 @@
             <RowDefinition Height="40" />
             <RowDefinition Height="40" />
             <RowDefinition Height="40" />
-            <RowDefinition Height="40" />
             <RowDefinition Height="55" />
             <RowDefinition Height="40" />
             <RowDefinition Height="40" />
@@ -55,38 +54,17 @@
                 Text="{Binding ImieNazwiskoPracownika}" />
             <Button
                 Grid.Column="3"
-                Margin="6"
-                Command="{Binding SetLastYearCommand}"
-                Content="Ostatni rok" />
-            <Button
-                Grid.Column="4"
-                Margin="6"
-                Command="{Binding SetCurrentYearCommand}"
-                Content="Bieżący rok" />
-        </Grid>
-
-        <Grid
-            Grid.Row="2"
-            Width="632"
-            HorizontalAlignment="Center">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="410" />
-                <ColumnDefinition Width="110" />
-                <ColumnDefinition Width="110" />
-            </Grid.ColumnDefinitions>
-            <Button
-                Grid.Column="1"
-                Margin="6"
+                Margin="6,6,6,6"
                 Command="{Binding SetLastMonthCommand}"
                 Content="Ostatni miesiąc" />
             <Button
-                Grid.Column="2"
-                Margin="6"
+                Grid.Column="4"
+                Margin="5,6,7,6"
                 Command="{Binding SetCurrentMonthCommand}"
                 Content="Bieżący miesiąc" />
         </Grid>
 
-        <Grid Grid.Row="3">
+        <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="40" />
                 <ColumnDefinition Width="*" />
@@ -110,22 +88,19 @@
                 Margin="5"
                 SelectedDate="{Binding DataDo, ValidatesOnDataErrors=True}" />
         </Grid>
-        <Grid Grid.Row="4">
+        <Grid Grid.Row="3">
             <Button
                 Grid.Column="1"
                 Margin="6"
                 Command="{Binding ObliczCommand}"
                 Content="Oblicz" />
         </Grid>
-        <Grid
-            Grid.Row="5"
-            Width="340"
-            HorizontalAlignment="Center">
+        <Grid Grid.Row="4" HorizontalAlignment="Center">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="110" />
-                <ColumnDefinition Width="120" />
-                <ColumnDefinition Width="100" />
-                <ColumnDefinition Width="70" />
+                <ColumnDefinition Width="105" />
+                <ColumnDefinition Width="50" />
+                <ColumnDefinition Width="95" />
+                <ColumnDefinition Width="50" />
             </Grid.ColumnDefinitions>
             <Label
                 Grid.Column="0"
@@ -133,7 +108,7 @@
                 Content="Godzin ogółem:" />
             <TextBlock
                 Grid.Column="1"
-                Margin="3,3,3,3"
+                Margin="3,12,3,12"
                 Text="{Binding GodzinOgolem}" />
             <Label
                 Grid.Column="2"
@@ -141,18 +116,15 @@
                 Content="Nieobecności:" />
             <TextBlock
                 Grid.Column="3"
-                Margin="6"
+                Margin="3,12,3,12"
                 Text="{Binding Nieobecnosci}" />
         </Grid>
 
-        <Grid
-            Grid.Row="6"
-            Width="470"
-            HorizontalAlignment="Center">
+        <Grid Grid.Row="5" HorizontalAlignment="Center">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="190" />
                 <ColumnDefinition Width="90" />
-                <ColumnDefinition Width="120" />
+                <ColumnDefinition Width="117" />
                 <ColumnDefinition Width="90" />
             </Grid.ColumnDefinitions>
             <Label
@@ -161,7 +133,7 @@
                 Content="Przewidywana wypłata (brutto):" />
             <TextBlock
                 Grid.Column="1"
-                Margin="3"
+                Margin="3,12,3,12"
                 Text="{Binding PrzewidywanaWyplata, StringFormat=C}" />
             <Label
                 Grid.Column="2"
@@ -169,11 +141,11 @@
                 Content="Koszt pracownika:" />
             <TextBlock
                 Grid.Column="3"
-                Margin="3"
+                Margin="3,12,3,12"
                 Text="{Binding KosztPracownika, StringFormat=C}" />
         </Grid>
 
-        <Grid Grid.Row="7">
+        <Grid Grid.Row="6">
             <liveCharts:CartesianChart LegendLocation="Right" Series="{Binding SeriesCollection}">
                 <liveCharts:CartesianChart.AxisX>
                     <liveCharts:Axis Title="Dni" Labels="{Binding Labels}" />

@@ -1,6 +1,8 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
 using MVVMFirma.Models.Entities;
 using MVVMFirma.Models.EntitiesForView;
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
@@ -21,30 +23,40 @@ namespace MVVMFirma.ViewModels
         #region Helpers
         public override void Load()
         {
-            List = new ObservableCollection<VATForAllView>
-            (
-                from vat in hotelEntities.VAT
-                select new VATForAllView
-                {
-                    IdVat = vat.IdVat,
-                    Stawka = vat.Stawka
-                }
-            );
+            var query = hotelEntities.VAT.AsQueryable();
+            Reload(query);
         }
+
+        private void Reload(IQueryable<VAT> query)
+        {
+            var result = query.Select(vat => new VATForAllView
+            {
+                IdVat = vat.IdVat,
+                Stawka = vat.Stawka
+            }).ToList();
+
+            List = new ObservableCollection<VATForAllView>(result);
+        }
+
         public override void Delete()
         {
-            MessageBoxResult delete = MessageBox.Show("Czy na pewno chcesz usunąć wybraną stawkę VAT:\n" + SelectedItem.Stawka, "Usuwanie", MessageBoxButton.YesNo, MessageBoxImage.Question);
-
-            if (SelectedItem != null && delete == MessageBoxResult.Yes)
+            if (SelectedItem != null)
             {
-                hotelEntities.VAT.Remove(hotelEntities.VAT.FirstOrDefault(f => f.IdVat == SelectedItem.IdVat));
-                hotelEntities.SaveChanges();
-                Load();
+                var delete = MessageBox.Show($"Czy na pewno chcesz usunąć wybraną stawkę VAT:\n{SelectedItem.Stawka}?",
+                    "Usuwanie", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (delete == MessageBoxResult.Yes)
+                {
+                    var itemToDelete = hotelEntities.VAT.FirstOrDefault(v => v.IdVat == SelectedItem.IdVat);
+                    if (itemToDelete != null)
+                    {
+                        hotelEntities.VAT.Remove(itemToDelete);
+                        hotelEntities.SaveChanges();
+                        Load();
+                    }
+                }
             }
         }
 
-        // w celu edycji wybranego rekordu wysyłana jest wiadomość zawierająca jego ID
-        // odbiera i obsługuje ją metoda open() w klasie MainWindowViewModel
         public override void Edit()
         {
             if (SelectedItem != null)
@@ -54,13 +66,76 @@ namespace MVVMFirma.ViewModels
             }
         }
 
-        // OnMessageReceived obsługuje wiadomość dotyczącą odświeżenia listy w widoku Wszystkie..View, wysłaną przy zapisie edytowanego rekordu 
         private void OnMessageReceived(string message)
         {
             if (message == "VATRefresh")
             {
                 Load();
             }
+        }
+        #endregion
+
+        #region Sort and Find
+        public override List<string> GetComboboxSortList()
+        {
+            return new List<string> { "Stawka" };
+        }
+
+        public override void Sort()
+        {
+            var query = hotelEntities.VAT.AsQueryable();
+
+            var result = query.Select(v => new VATForAllView
+            {
+                IdVat = v.IdVat,
+                Stawka = v.Stawka
+            }).AsEnumerable(); // sortowanie lokalne z powodu konieczności konwersji stawki (query nie rozpozna funkcji TryParse)
+
+            switch (SortField)
+            {
+                case "Stawka":
+                    result = result.OrderBy(v => int.TryParse(v.Stawka.ToString(), out var stawkaInt) ? stawkaInt : 0);
+                    break;
+
+                default:
+                    break;
+            }
+
+            List = new ObservableCollection<VATForAllView>(result);
+        }
+
+        public override List<string> GetComboboxFindList()
+        {
+            return new List<string> { "Stawka" };
+        }
+
+        public override void Find()
+        {
+            var query = hotelEntities.VAT.AsQueryable();
+
+            var result = query.Select(v => new VATForAllView
+            {
+                IdVat = v.IdVat,
+                Stawka = v.Stawka
+            }).AsEnumerable(); // wyszukiwanie lokalne, jak powyżej
+
+            if (!string.IsNullOrEmpty(FindTextBox))
+            {
+                switch (FindField)
+                {
+                    case "Stawka":
+                        if (int.TryParse(FindTextBox, out var findStawkaInt))
+                        {
+                            result = result.Where(v => int.TryParse(v.Stawka.ToString(), out var stawkaInt) && stawkaInt == findStawkaInt);
+                        }
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+
+            List = new ObservableCollection<VATForAllView>(result);
         }
         #endregion
     }

@@ -1,6 +1,8 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
+using MVVMFirma.Models.Entities;
 using MVVMFirma.Models.EntitiesForView;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
@@ -21,50 +23,48 @@ namespace MVVMFirma.ViewModels
         #region Helpers
         public override void Load()
         {
-            List = new ObservableCollection<PokojForAllView>
-                (
-                    from pokoj in hotelEntities.Pokoj
-                    select new PokojForAllView
-                    {
-                        IdPokoju = pokoj.IdPokoju,
-                        NrPokoju = pokoj.NrPokoju,
-                        TypPokojuNazwa = pokoj.TypPokoju.Nazwa,
-                        KlasaPokojuNazwa = pokoj.KlasaPokoju.Nazwa
-                    }
-                );
-
-            UpdateStatus();
+            var query = hotelEntities.Pokoj.AsQueryable();
+            Reload(query);
         }
-        private void UpdateStatus()
+
+        private void Reload(IQueryable<Pokoj> query)
         {
-            var dzisiaj = DateTime.Now;
-
-            foreach (var pokoj in List)
+            var result = query.Select(pokoj => new PokojForAllView
             {
-                bool isOccupied = hotelEntities.Rezerwacja.Any(r =>
+                IdPokoju = pokoj.IdPokoju,
+                NrPokoju = pokoj.NrPokoju,
+                TypPokojuNazwa = pokoj.TypPokoju.Nazwa,
+                KlasaPokojuNazwa = pokoj.KlasaPokoju.Nazwa,
+                CzyZajety = hotelEntities.Rezerwacja.Any(r =>
                     r.IdPokoju == pokoj.IdPokoju &&
-                    r.DataZameldowania <= dzisiaj &&
-                    r.DataWymeldowania >= dzisiaj);
+                    r.DataZameldowania <= DateTime.Now &&
+                    r.DataWymeldowania >= DateTime.Now)
+            }).ToList();
 
-                pokoj.CzyZajety = isOccupied;
-            }
+            List = new ObservableCollection<PokojForAllView>(result);
         }
-
 
         public override void Delete()
         {
-            MessageBoxResult delete = MessageBox.Show("Czy na pewno chcesz usunąć wybrany pokój:\n" + SelectedItem.NrPokoju, "Usuwanie", MessageBoxButton.YesNo, MessageBoxImage.Question);
-
-            if (SelectedItem != null && delete == MessageBoxResult.Yes)
+            if (SelectedItem != null)
             {
-                hotelEntities.Pokoj.Remove(hotelEntities.Pokoj.FirstOrDefault(f => f.IdPokoju == SelectedItem.IdPokoju));
-                hotelEntities.SaveChanges();
-                Load();
+                var delete = MessageBox.Show(
+                    $"Czy na pewno chcesz usunąć wybrany pokój:\n{SelectedItem.NrPokoju}?",
+                    "Usuwanie", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+                if (delete == MessageBoxResult.Yes)
+                {
+                    var itemToDelete = hotelEntities.Pokoj.FirstOrDefault(p => p.IdPokoju == SelectedItem.IdPokoju);
+                    if (itemToDelete != null)
+                    {
+                        hotelEntities.Pokoj.Remove(itemToDelete);
+                        hotelEntities.SaveChanges();
+                        Load();
+                    }
+                }
             }
         }
 
-        // w celu edycji wybranego rekordu wysyłana jest wiadomość zawierająca jego ID
-        // odbiera i obsługuje ją metoda open() w klasie MainWindowViewModel
         public override void Edit()
         {
             if (SelectedItem != null)
@@ -74,13 +74,84 @@ namespace MVVMFirma.ViewModels
             }
         }
 
-        // OnMessageReceived obsługuje wiadomość dotyczącą odświeżenia listy w widoku Wszystkie..View, wysłaną przy zapisie edytowanego rekordu 
         private void OnMessageReceived(string message)
         {
             if (message == "PokojRefresh")
             {
                 Load();
             }
+        }
+        #endregion
+
+        #region Sort and Find
+        public override List<string> GetComboboxSortList()
+        {
+            return new List<string> { "Numer pokoju", "Typ pokoju", "Klasa pokoju", "Status pokoju" };
+        }
+
+        public override void Sort()
+        {
+            var query = hotelEntities.Pokoj.AsQueryable();
+
+            switch (SortField)
+            {
+                case "Numer pokoju":
+                    query = query.OrderBy(p => p.NrPokoju);
+                    break;
+
+                case "Typ pokoju":
+                    query = query.OrderBy(p => p.TypPokoju.Nazwa);
+                    break;
+
+                case "Klasa pokoju":
+                    query = query.OrderBy(p => p.KlasaPokoju.Nazwa);
+                    break;
+
+                case "Status pokoju":
+                    query = query.OrderByDescending(p => hotelEntities.Rezerwacja.Any(r =>
+                        r.IdPokoju == p.IdPokoju &&
+                        r.DataZameldowania <= DateTime.Now &&
+                        r.DataWymeldowania >= DateTime.Now));
+                    break;
+
+                default:
+                    break;
+            }
+
+            Reload(query);
+        }
+
+        public override List<string> GetComboboxFindList()
+        {
+            return new List<string> { "Numer pokoju", "Typ pokoju", "Klasa pokoju"};
+        }
+
+        public override void Find()
+        {
+            var query = hotelEntities.Pokoj.AsQueryable();
+
+            if (!string.IsNullOrEmpty(FindTextBox))
+            {
+                switch (FindField)
+                {
+                    case "Numer pokoju":
+                        query = query.Where(p => p.NrPokoju.Contains(FindTextBox));
+                        break;
+
+                    case "Typ pokoju":
+                        query = query.Where(p => p.TypPokoju.Nazwa.Contains(FindTextBox));
+                        break;
+
+                    case "Klasa pokoju":
+                        query = query.Where(p => p.KlasaPokoju.Nazwa.Contains(FindTextBox));
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+
+            Reload(query);
         }
         #endregion
     }

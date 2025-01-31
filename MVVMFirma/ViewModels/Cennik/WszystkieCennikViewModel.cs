@@ -1,12 +1,9 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
 using MVVMFirma.Models.Entities;
 using MVVMFirma.Models.EntitiesForView;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace MVVMFirma.ViewModels
@@ -25,27 +22,32 @@ namespace MVVMFirma.ViewModels
         #region Helpers
         public override void Load()
         {
-            List = new ObservableCollection<CennikForAllView>
-                (
-                    from cennik in hotelEntities.Cennik
-                    select new CennikForAllView
-                    {
-                        IdCennika = cennik.IdCennika,
-                        KlasaPokojuNazwa = cennik.KlasaPokoju.Nazwa,
-                        TypPokojuNazwa = cennik.TypPokoju.Nazwa,
-                        CenaDorosly = cennik.CenaDorosly,
-                        CenaDziecko = cennik.CenaDziecko,
-                        CenaZwierzeta = cennik.CenaZwierzeta
-                    }
-                );
+            var query = hotelEntities.Cennik.AsQueryable();
+            Reload(query);
         }
+
+        private void Reload(IQueryable<Cennik> query)
+        {
+            var result = query.Select(cennik => new CennikForAllView
+            {
+                IdCennika = cennik.IdCennika,
+                KlasaPokojuNazwa = cennik.KlasaPokoju.Nazwa,
+                TypPokojuNazwa = cennik.TypPokoju.Nazwa,
+                CenaDorosly = cennik.CenaDorosly,
+                CenaDziecko = cennik.CenaDziecko,
+                CenaZwierzeta = cennik.CenaZwierzeta
+            }).ToList();
+
+            List = new ObservableCollection<CennikForAllView>(result);
+        }
+
         public override void Delete()
         {
             MessageBoxResult delete = MessageBox.Show("Czy na pewno chcesz usunąć wybrany cennik?", "Usuwanie", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
             if (SelectedItem != null && delete == MessageBoxResult.Yes)
             {
-                hotelEntities.Cennik.Remove(hotelEntities.Cennik.FirstOrDefault(f => f.IdCennika == SelectedItem.IdCennika));
+                hotelEntities.Cennik.Remove(hotelEntities.Cennik.FirstOrDefault(c => c.IdCennika == SelectedItem.IdCennika));
                 hotelEntities.SaveChanges();
                 Load();
             }
@@ -70,6 +72,77 @@ namespace MVVMFirma.ViewModels
                 Load();
             }
         }
+        #endregion
+
+        #region Sort and Find
+        // tu decydujemy po czym sortować
+        public override List<string> GetComboboxSortList()
+        {
+            return new List<string> { "Klasa pokoju", "Typ pokoju", "Cena za dorosłego", "Cena za dziecko", "Cena za zwierzęta" };
+        }
+
+        // tu decydujemy jak sortować
+        public override void Sort()
+        {
+            var query = hotelEntities.Cennik.AsQueryable();
+
+            switch (SortField)
+            {
+                case "Klasa pokoju":
+                    query = query.OrderBy(c => c.KlasaPokoju.Nazwa);
+                    break;
+
+                case "Typ pokoju":
+                    query = query.OrderBy(c => c.TypPokoju.Nazwa);
+                    break;
+
+                case "Cena za dorosłego":
+                    query = query.OrderBy(c => c.CenaDorosly);
+                    break;
+
+                case "Cena za dziecko":
+                    query = query.OrderBy(c => c.CenaDziecko);
+                    break;
+
+                case "Cena za zwierzęta":
+                    query = query.OrderBy(c => c.CenaZwierzeta);
+                    break;
+
+                default:
+                    break;
+            }
+
+            Reload(query);
+        }
+
+        // tu decydujemy po czym wyszukiwać
+        public override List<string> GetComboboxFindList()
+        {
+            return new List<string> { "Klasa pokoju", "Typ pokoju" };
+        }
+
+        // tu decydujemy jak wyszukiwać
+        public override void Find()
+        {
+            var query = hotelEntities.Cennik.AsQueryable();
+
+            switch (FindField)
+            {
+                case "Klasa pokoju":
+                    query = query.Where(c => c.KlasaPokoju.Nazwa.Contains(FindTextBox));
+                    break;
+
+                case "Typ pokoju":
+                    query = query.Where(c => c.TypPokoju.Nazwa.Contains(FindTextBox));
+                    break;
+
+                default:
+                    break;
+            }
+
+            Reload(query);
+        }
+
         #endregion
     }
 }

@@ -304,7 +304,6 @@ namespace MVVMFirma.ViewModels
         #endregion
 
         #region Methods
-        // komenda do wywołania metody otwierającej okienko modalne
         public BaseCommand OpenKlienciModalneCommand
         {
             get
@@ -331,7 +330,6 @@ namespace MVVMFirma.ViewModels
                 .Select(r => r.NrRezerwacji)
                 .FirstOrDefault();
 
-            // deklaracja zmiennej która otrzyma i na końcu ustawi odpowiedni numer aktualnie tworzonej rezerwacji
             string nrRezerwacji;
 
             // jeśli istnieje jakakolwiek rezerwacja w bazie
@@ -342,13 +340,11 @@ namespace MVVMFirma.ViewModels
 
                 if (rezerwacjaMiesiac == obecnyMiesiac)
                 {
-                    // ustalenie pozycji "R" w stringu aby wyodrębnić numer do inkrementacji
+                    // ustalenie pozycji "R" w stringu aby oddzielić numer
                     int pozycjaR = ostatniaRezerwacja.IndexOf('R');
                     if (pozycjaR != -1 && pozycjaR + 1 < ostatniaRezerwacja.Length)
                     {
                         string nr = ostatniaRezerwacja.Substring(pozycjaR + 1);
-
-                        // próba konwersji stringu z numerem na int aby zwiększyć o 1
                         if (int.TryParse(nr, out int numerInt))
                         {
                             nrRezerwacji = (numerInt + 1).ToString();
@@ -368,39 +364,37 @@ namespace MVVMFirma.ViewModels
                     nrRezerwacji = "1";
                 }
             }
-            else // jeśli w bazie nie ma jeszcze ani jednej rezerwacji
+            else // jeśli w bazie nie ma jeszcze żadnej rezerwacji
             {
                 nrRezerwacji = "1";
             }
             return $"{DateTime.Now:yyyy-MM}-R{nrRezerwacji}";
         }
 
-        // metoda do obliczania całkowitej kwoty rezerwacji na podstawie długości pobytu, liczby gości, posiadania zwierząt, wybranego pokoju oraz ewentualnej zniżki
+        // metoda do obliczania całkowitej kwoty rezerwacji
         private void ObliczKwote()
         {
-            // pobranie liczby dorosłych i dzieci
             int dorosli = int.Parse(LiczbaDoroslych);
             int dzieci = string.IsNullOrEmpty(LiczbaDzieci) ? 0 : int.Parse(LiczbaDzieci);
 
-            // długość pobytu
             int liczbaNocy = (DataWymeldowania - DataZameldowania).Days;
 
             var cennik = db.Cennik.FirstOrDefault(c => c.IdKlasyPokoju == SelectedPokoj.IdKlasyPokoju && c.IdTypuPokoju == SelectedPokoj.IdTypuPokoju);
-            // sprawdzenie czy istnieje cennik dla pary typu i klasy wybranego pokoju
+            // cennik musi istnieć ponieważ z niego brane są dane do obliczeń
             if (cennik == null)
             {
                 MessageBox.Show("nie znaleziono cennika dla parametrów wybranego pokoju, utwórz go w zakładce Cenniki", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
-            // kwota podstawowa za pokój, za jedną noc
+            // kwota za jedną noc w danym pokoju
             decimal kwota = Convert.ToInt32(SelectedPokoj.TypPokoju.MaxLiczbaOsob) * cennik.CenaDorosly;
 
-            // obliczanie kwoty uwzględniając dzieci
+            // kwota za ilość dorosłych i dzieci
             kwota -= (dzieci * cennik.CenaDorosly);
             kwota += (dzieci * cennik.CenaDziecko);
 
-            // cała kwota z doliczeniem ewentualnej opłaty za zwierzęta
+            // kwota pomnożona przez długość pobytu z doliczeniem ewentualnej opłaty za zwierzęta
             decimal kwotaCalkowita = kwota * liczbaNocy + (CzyZwierzeta ? cennik.CenaZwierzeta * liczbaNocy : 0);
 
             // zastosowanie zniżki jeśli wybrana
@@ -410,7 +404,6 @@ namespace MVVMFirma.ViewModels
                 if (znizka != null) kwotaCalkowita *= 1 - Convert.ToInt32(znizka.Wartosc) / 100m;
             }
 
-            // kwota finalna
             Kwota = kwotaCalkowita;
         }
         #endregion
@@ -473,7 +466,7 @@ namespace MVVMFirma.ViewModels
                 DataRezerwacji = item.DataRezerwacji;
                 Kwota = item.Kwota;
                 Uwagi = item.Uwagi;
-                // przekazanie pokoju do właściwości, która odpowiada za do ustawienie jej w comboboxie
+                // przekazanie pokoju do właściwości, która odpowiada za ustawienie jej w comboboxie
                 SelectedPokoj = db.Pokoj.FirstOrDefault(p => p.IdPokoju == item.IdPokoju);
             }
             Messenger.Default.Register<int>(this, idKlienta => IdKlienta = idKlienta);
@@ -497,15 +490,19 @@ namespace MVVMFirma.ViewModels
                 case nameof(DataZameldowania):
                     if (DataZameldowania >= DataWymeldowania)
                         return "data zameldowania musi być wcześniej od daty wymeldowania";
-                    if (DataZameldowania < DateTime.Now.Date)
-                        return "data zameldowania nie może być w przeszłości";
+                    if (DataZameldowania == null)
+                        return "data zameldowania nie może być pusta";
                     return string.Empty;
 
                 case nameof(DataWymeldowania):
-                    return DataWymeldowania <= DataZameldowania ? "data wymeldowania musi być później od daty zameldowania" : string.Empty;
+                    if (DataWymeldowania <= DataZameldowania)
+                        return "data wymeldowania musi być później od daty zameldowania";
+                    if (DataWymeldowania == null)
+                        return "data wymeldowania nie może być pusta";
+                    return string.Empty;
 
                 case nameof(DataRezerwacji):
-                    return DataRezerwacji > DateTime.Now ? "data rezerwacji nie może być w przyszłości" : string.Empty;
+                    return DataRezerwacji == null ? "data rezerwacji nie może być pusta" : string.Empty;
 
                 case nameof(IdPokoju):
                     if (IdPokoju == 0)
@@ -518,7 +515,6 @@ namespace MVVMFirma.ViewModels
                         return "wprowadź poprawną liczbę dorosłych";
                     }
 
-                    // dzieci są opcjonalne w rezerwacji więc sprawdzamy tylko gdy wartość nie jest null
                     int liczbaDzieci = string.IsNullOrWhiteSpace(LiczbaDzieci) ? 0 : int.Parse(LiczbaDzieci);
 
                     string maxGuestsError = new MaxGuestsValidator(db).Validate(IdPokoju, dorosli, liczbaDzieci);

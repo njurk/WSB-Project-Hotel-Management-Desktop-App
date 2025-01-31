@@ -21,12 +21,6 @@
         <vm1:PercentFormatter x:Key="PercentFormatter" />
     </local:ModalViewBase.Resources>
 
-    <i:Interaction.Triggers>
-        <i:EventTrigger EventName="Loaded">
-            <i:InvokeCommandAction Command="{Binding LoadCommand}" />
-        </i:EventTrigger>
-    </i:Interaction.Triggers>
-
     <Grid Background="White">
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />

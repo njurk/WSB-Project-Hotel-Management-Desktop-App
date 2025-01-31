@@ -3,8 +3,8 @@
 public class ObecnoscForAllView
 {
     public int IdObecnosci { get; set; }
-    public string PracownikImie { get; set; }
-    public string PracownikNazwisko { get; set; }
+    public string PracownikImie { get; set; } // z klucza obcego
+    public string PracownikNazwisko { get; set; }// z klucza obcego
     public DateTime Data { get; set; }
     public bool CzyObecny { get; set; }
     public TimeSpan? GodzinaRozpoczecia { get; set; }

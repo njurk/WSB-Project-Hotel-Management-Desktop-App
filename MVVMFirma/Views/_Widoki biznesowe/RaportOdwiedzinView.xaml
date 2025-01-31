@@ -88,9 +88,9 @@
             Content="Oblicz" />
         <Grid Grid.Row="4" HorizontalAlignment="Center">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="140" />
+                <ColumnDefinition Width="130" />
                 <ColumnDefinition Width="80" />
-                <ColumnDefinition Width="95" />
+                <ColumnDefinition Width="90" />
                 <ColumnDefinition Width="80" />
             </Grid.ColumnDefinitions>
             <Label
@@ -99,7 +99,7 @@
                 Content="Wszystkich rezerwacji:" />
             <TextBlock
                 Grid.Column="1"
-                Margin="1,6"
+                Margin="3,12,3,12"
                 Text="{Binding LiczbaRezerwacji}" />
             <Label
                 Grid.Column="2"
@@ -107,7 +107,7 @@
                 Content="Gości w sumie:" />
             <TextBlock
                 Grid.Column="3"
-                Margin="1,6"
+                Margin="3,12,3,12"
                 Text="{Binding LiczbaGosci}" />
         </Grid>
         <Grid Grid.Row="5">

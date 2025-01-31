@@ -1,6 +1,7 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
 using MVVMFirma.Helper;
 using MVVMFirma.Models.Entities;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
@@ -74,6 +75,53 @@ namespace MVVMFirma.ViewModels
             SendItemCommand = new BaseCommand(SendItem, CanSendItem);
             CancelCommand = new BaseCommand(Cancel);
         }
+        #endregion
+
+        #region Sort and Find
+        // sortowanie
+        public string SortField { get; set; }
+        public List<string> SortComboboxItems
+        {
+            get
+            {
+                return GetComboboxSortList();
+            }
+        }
+        public abstract List<string> GetComboboxSortList();
+        private BaseCommand _SortCommand; // komenda która będzie wywołana po naciśnięciu przycisku Sortuj w sortowaniu Generic.xaml
+        public ICommand SortCommand
+        {
+            get
+            {
+                if (_SortCommand == null)
+                    _SortCommand = new BaseCommand(() => Sort());
+                return _SortCommand;
+            }
+        }
+        public abstract void Sort();
+
+        // filtrowanie
+        public string FindField { get; set; }
+        public List<string> FindComboboxItems
+        {
+            get
+            {
+                return GetComboboxFindList();
+            }
+        }
+        public abstract List<string> GetComboboxFindList();
+        public string FindTextBox { get; set; }
+        private BaseCommand _FindCommand; // komenda która będzie wywołana po naciśnięciu przycisku Szukaj
+        public ICommand FindCommand
+        {
+            get
+            {
+                if (_FindCommand == null)
+                    _FindCommand = new BaseCommand(() => { Load(); Find(); }); // przed każdym wyszukaniem lista załadowuje się na nowo
+                return _FindCommand;
+            }
+        }
+        public abstract void Find();
         #endregion
     }
 }

@@ -148,8 +148,7 @@ namespace MVVMFirma.ViewModels
                     item.IdVat = value;
                     OnPropertyChanged(() => IdVat);
 
-                    // Konwersja wybranej stawki VAT na decimal jest potrzebna
-                    // dla metody ObliczNetto
+                    // Konwersja wybranej stawki VAT na decimal jest potrzebna do metody ObliczNetto
                     var vatItem = VATItems.FirstOrDefault(v => v.Key == IdVat);
                     _stawkaVat = vatItem != null ? Convert.ToDecimal(vatItem.Value) : 0;
 

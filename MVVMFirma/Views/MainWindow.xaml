@@ -3,7 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:vm="clr-namespace:MVVMFirma.Views"
-    Title="MVVMFirma"
+    Title="Hotel Management System"
     Width="600"
     Height="300"
     WindowState="Maximized">
@@ -78,8 +78,8 @@
                 Margin="4"
                 Padding="8,1"
                 Background="White"
-                Command="{Binding OpenRaportCzasuPracyCommand}"
-                Content="Raport czasu pracy" />
+                Command="{Binding OpenAnalizaPracownikowCommand}"
+                Content="Analiza pracowników" />
         </ToolBar>
         <Border Grid.Row="2" Grid.Column="0">
             <HeaderedContentControl

@@ -28,5 +28,7 @@ namespace MVVMFirma.Models.Entities
     
         public virtual Rezerwacja Rezerwacja { get; set; }
         public virtual VAT VAT { get; set; }
+        public decimal Zaplacono { get; internal set; }
+        public object Klient { get; internal set; }
     }
 }

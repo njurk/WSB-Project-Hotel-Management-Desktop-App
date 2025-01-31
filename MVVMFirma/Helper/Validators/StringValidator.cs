@@ -85,7 +85,7 @@ namespace MVVMFirma.Helper
             {
                 return intNumber >= min && intNumber <= max;
             }
-            return false; // jeśli błąd przy konwersji, uznaje że jest poza zakresem
+            return false;
         }
     }
 }

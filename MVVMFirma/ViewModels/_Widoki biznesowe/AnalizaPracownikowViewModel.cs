@@ -122,8 +122,6 @@ namespace MVVMFirma.ViewModels
         public Func<double, string> YFormatter { get; set; }
 
         public BaseCommand SetPracownikCommand { get; }
-        public BaseCommand SetLastYearCommand { get; }
-        public BaseCommand SetCurrentYearCommand { get; }
         public BaseCommand SetLastMonthCommand { get; }
         public BaseCommand SetCurrentMonthCommand { get; }
         public BaseCommand ObliczCommand { get; }
@@ -145,8 +143,6 @@ namespace MVVMFirma.ViewModels
             YFormatter = value => value.ToString();
 
             SetPracownikCommand = new BaseCommand(SetPracownik);
-            SetLastYearCommand = new BaseCommand(SetLastYear);
-            SetCurrentYearCommand = new BaseCommand(SetCurrentYear);
             SetLastMonthCommand = new BaseCommand(SetLastMonth);
             SetCurrentMonthCommand = new BaseCommand(SetCurrentMonth);
             ObliczCommand = new BaseCommand(ObliczWszystko);
@@ -163,18 +159,6 @@ namespace MVVMFirma.ViewModels
         private void OpenPracownicyModalne()
         {
             new PracownicyModalneView().ShowDialog();
-        }
-
-        private void SetLastYear()
-        {
-            DataOd = new DateTime(DateTime.Now.Year - 1, 1, 1);
-            DataDo = new DateTime(DateTime.Now.Year - 1, 12, 31);
-        }
-
-        private void SetCurrentYear()
-        {
-            DataOd = new DateTime(DateTime.Now.Year, 1, 1);
-            DataDo = new DateTime(DateTime.Now.Year, 12, 31);
         }
 
         private void SetLastMonth()
@@ -197,24 +181,25 @@ namespace MVVMFirma.ViewModels
 
         private void ObliczWszystko()
         {
-            var errors = ValidateInputs();
+            // sprawdzenie czy jest wybrany pracownik oraz daty od i do
+            var errors = Validate();
             if (!string.IsNullOrEmpty(errors))
             {
-                MessageBox.Show($"Popraw następujące błędy:\n{errors}", "Błąd", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show($"Popraw błędy:\n{errors}", "Błąd", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
+            // zaczynamy na nowym, czystym wykresie
             SeriesCollection.Clear();
+            Labels.Clear();
 
-            // Dodaj nowy wykres słupkowy
             SeriesCollection.Add(new ColumnSeries
             {
                 Title = "Godziny pracy",
                 Values = new ChartValues<int>()
             });
 
-            Labels.Clear();
-
+            // zakres dni z pól ustawiany jest na oś x wykresu
             var days = (DataDo.Value - DataOd.Value).Days + 1;
             for (var i = 0; i < days; i++)
             {
@@ -224,13 +209,14 @@ namespace MVVMFirma.ViewModels
 
             using (var db = new HotelEntities())
             {
+                // pobranie godzin pracy praocwnika z danego okresu czasu
                 var godzinyPracy = db.Obecnosc
                     .Where(o => o.IdPracownika == IdPracownika && o.Data >= DataOd && o.Data <= DataDo)
                     .Select(o => new { o.Data, o.GodzinaRozpoczecia, o.GodzinaZakonczenia })
                     .ToList();
 
                 var workHours = new List<int>(new int[days]);
-
+                // lista z godzinami i indeksem względem początku wykresu
                 foreach (var godzina in godzinyPracy)
                 {
                     var hoursWorked = (godzina.GodzinaZakonczenia - godzina.GodzinaRozpoczecia)?.TotalHours ?? 0;
@@ -238,7 +224,7 @@ namespace MVVMFirma.ViewModels
                     workHours[dateIndex] = (int)hoursWorked;
                 }
 
-                // Dodaj dane do serii
+                // przypisanie danych z powyżej utworzonej listy na wykres
                 SeriesCollection[0].Values.AddRange(workHours.Cast<object>());
 
                 GodzinOgolem = workHours.Sum();
@@ -258,7 +244,7 @@ namespace MVVMFirma.ViewModels
             }
         }
 
-        private string ValidateInputs()
+        private string Validate()
         {
             var errors = string.Empty;
 

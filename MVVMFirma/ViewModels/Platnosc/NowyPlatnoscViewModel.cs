@@ -52,29 +52,20 @@ namespace MVVMFirma.ViewModels
 
         public int IdRezerwacji
         {
-            get
-            {
-                return item.IdRezerwacji;
-            }
+            get => item.IdRezerwacji;
             set
             {
-                if (item.IdRezerwacji != value)
-                {
-                    item.IdRezerwacji = value;
-                    OnPropertyChanged(() => IdRezerwacji);
+                item.IdRezerwacji = value;
+                OnPropertyChanged(() => IdRezerwacji);
 
-                    var rezerwacja = db.Rezerwacja.FirstOrDefault(r => r.IdRezerwacji == value);
-                    if (rezerwacja != null)
-                    {
-                        NrRezerwacji = rezerwacja.NrRezerwacji;
-                        DoZaplaty = rezerwacja.Kwota - sumaPlatnosci(rezerwacja.IdRezerwacji);
-                        Kwota = DoZaplaty;
+                var rezerwacja = db.Rezerwacja.FirstOrDefault(r => r.IdRezerwacji == value);
+                NrRezerwacji = rezerwacja.NrRezerwacji;
+                DoZaplaty = rezerwacja.Kwota - sumaPlatnosci(rezerwacja.IdRezerwacji);
+                Kwota = DoZaplaty;
 
-                        OnPropertyChanged(() => NrRezerwacji);
-                        OnPropertyChanged(() => Kwota);
-                        OnPropertyChanged(() => DoZaplaty);
-                    }
-                }
+                OnPropertyChanged(() => NrRezerwacji);
+                OnPropertyChanged(() => Kwota);
+                OnPropertyChanged(() => DoZaplaty);
             }
         }
 
@@ -198,18 +189,16 @@ namespace MVVMFirma.ViewModels
             rezerwacjeModalne.ShowDialog();
         }
 
+        // metoda stworzona na wzór identycznej metody z klasy NowyRezerwacjaViewModel
         private string GenerujNumerPlatnosci()
         {
-            // pobranie ostatniej platnosci z BD do ustalenia następnego numeru
             var ostatniaPlatnosc = db.Platnosc
                                      .OrderByDescending(f => f.IdPlatnosci)
                                      .Select(f => f.NrPlatnosci)
                                      .FirstOrDefault();
 
-            // deklaracja zmiennej która otrzyma i na końcu ustawi odpowiedni numer aktualnie tworzonej płatności
             string numerPlatnosci;
 
-            // jeśli istnieje jakakolwiek płatność w bazie
             if (ostatniaPlatnosc != null)
             {
                 string platnoscMiesiac = ostatniaPlatnosc.Substring(5, 2); // yyyy-MM
@@ -217,33 +206,31 @@ namespace MVVMFirma.ViewModels
 
                 if (platnoscMiesiac == obecnyMiesiac)
                 {
-                    // ustalenie pozycji "P" w stringu aby wyodrębnić numer do inkrementacji
                     int pozycjaP = ostatniaPlatnosc.IndexOf('P');
                     if (pozycjaP != -1 && pozycjaP + 1 < ostatniaPlatnosc.Length)
                     {
                         string numer = ostatniaPlatnosc.Substring(pozycjaP + 1);
 
-                        // próba konwersji stringu z numerem na int aby zwiększyć o 1
                         if (int.TryParse(numer, out int numerInt))
                         {
                             numerPlatnosci = (numerInt + 1).ToString();
                         }
-                        else // jeśli nie udało się zamienić na int
+                        else
                         {
                             numerPlatnosci = "1";
                         }
                     }
-                    else // jeśli P nie znaleziona lub nie ma za nią żadnych cyfr
+                    else
                     {
                         numerPlatnosci = "1";
                     }
                 }
-                else // jeśli jest nowy miesiąc
+                else
                 {
                     numerPlatnosci = "1";
                 }
             }
-            else // jeśli w bazie nie ma jeszcze ani jednej płatności
+            else
             {
                 numerPlatnosci = "1";
             }
@@ -302,6 +289,7 @@ namespace MVVMFirma.ViewModels
                 DataPlatnosci = item.DataPlatnosci;
                 Kwota = item.Kwota;
             }
+
             Messenger.Default.Register<int>(this, idRezerwacji => IdRezerwacji = idRezerwacji);
         }
         #endregion

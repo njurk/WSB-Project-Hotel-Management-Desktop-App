@@ -10,10 +10,13 @@
                     <Grid Margin="0,10,0,0">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="34" />
-                            <RowDefinition Height="60" />
+                            <RowDefinition Height="90" />
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
-                        <ToolBar Grid.Row="0" Margin="0,2,0,2">
+                        <ToolBar
+                            Grid.Row="0"
+                            Margin="0,2,0,2"
+                            Background="Gray">
                             <Button
                                 Margin="0,2,0,2"
                                 Command="{Binding AddCommand}"
@@ -31,12 +34,12 @@
                                 Command="{Binding LoadCommand}"
                                 Content="Odswiez" />
                         </ToolBar>
-                        <StackPanel Grid.Row="1" Background="Azure">
+                        <StackPanel Grid.Row="1" Background="LightGray">
                             <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="25" />
                                     <RowDefinition Height="25" />
-                                    <RowDefinition Height="30" />
+                                    <RowDefinition Height="25" />
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="230" />
@@ -125,11 +128,58 @@
                 <ControlTemplate TargetType="{x:Type local:ModalViewBase}">
                     <Grid Margin="0,10,0,0">
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="60" />
+                            <RowDefinition Height="90" />
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
-                        <StackPanel Grid.Row="0" Background="Azure">
-                            <Label>Sortowanie i filtrowanie</Label>
+                        <StackPanel Grid.Row="0" Background="LightGray">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="25" />
+                                    <RowDefinition Height="25" />
+                                    <RowDefinition Height="25" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="230" />
+                                    <ColumnDefinition Width="60" />
+                                    <ColumnDefinition Width="230" />
+                                </Grid.ColumnDefinitions>
+                                <Label
+                                    Grid.Row="0"
+                                    Grid.Column="0"
+                                    Content="Sortowanie:  " />
+                                <ComboBox
+                                    Grid.Row="1"
+                                    Grid.Column="0"
+                                    Margin="0,0,60,0"
+                                    ItemsSource="{Binding SortComboboxItems}"
+                                    SelectedValue="{Binding Path=SortField, Mode=TwoWay}" />
+                                <Button
+                                    Grid.Row="1"
+                                    Grid.Column="0"
+                                    Margin="170,0,0,0"
+                                    Command="{Binding SortCommand}"
+                                    Content="Sortuj" />
+                                <Label
+                                    Grid.Row="0"
+                                    Grid.Column="2"
+                                    Content="Wyszukiwanie:  " />
+                                <ComboBox
+                                    Grid.Row="1"
+                                    Grid.Column="2"
+                                    ItemsSource="{Binding FindComboboxItems}"
+                                    SelectedValue="{Binding Path=FindField, Mode=TwoWay}" />
+                                <TextBox
+                                    Grid.Row="2"
+                                    Grid.Column="2"
+                                    Margin="0,5,60,0"
+                                    Text="{Binding FindTextBox}" />
+                                <Button
+                                    Grid.Row="3"
+                                    Grid.Column="2"
+                                    Margin="170,5,0,0"
+                                    Command="{Binding FindCommand}"
+                                    Content="Szukaj" />
+                            </Grid>
                         </StackPanel>
                         <ContentPresenter Grid.Row="1" Margin="0,5,0,5" />
                     </Grid>

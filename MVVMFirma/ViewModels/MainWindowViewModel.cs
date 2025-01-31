@@ -19,7 +19,7 @@ namespace MVVMFirma.ViewModels
         private ObservableCollection<WorkspaceViewModel> _Workspaces;
         private BaseCommand _openRaportPrzychodowCommand;
         private BaseCommand _openRaportOdwiedzinCommand;
-        private BaseCommand _openRaportCzasuPracyCommand;
+        private BaseCommand _openAnalizaPracownikowCommand;
         #endregion
 
         #region Commands
@@ -348,15 +348,15 @@ namespace MVVMFirma.ViewModels
             }
         }
 
-        public BaseCommand OpenRaportCzasuPracyCommand
+        public BaseCommand OpenAnalizaPracownikowCommand
         {
             get
             {
-                if (_openRaportCzasuPracyCommand == null)
+                if (_openAnalizaPracownikowCommand == null)
                 {
-                    _openRaportCzasuPracyCommand = new BaseCommand(OpenRaportCzasuPracy);
+                    _openAnalizaPracownikowCommand = new BaseCommand(OpenAnalizaPracownikow);
                 }
-                return _openRaportCzasuPracyCommand;
+                return _openAnalizaPracownikowCommand;
             }
         }
         #endregion
@@ -377,7 +377,7 @@ namespace MVVMFirma.ViewModels
             this.SetActiveWorkspace(workspace);
         }
 
-        private void OpenRaportCzasuPracy()
+        private void OpenAnalizaPracownikow()
         {
             WorkspaceViewModel workspace = new AnalizaPracownikowViewModel();
 

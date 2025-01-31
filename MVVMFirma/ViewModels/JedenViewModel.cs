@@ -75,7 +75,7 @@ namespace MVVMFirma.ViewModels
             // komunikat o powodzeniu
             if (this is NowyCennikViewModel cennikViewModel)
             {
-                string cennikDuplicate = cennikViewModel.ValidateCennik();
+                string cennikDuplicate = cennikViewModel.ValidateDuplicate();
                 if (!string.IsNullOrEmpty(cennikDuplicate))
                 {
                     allErrors.Add(cennikDuplicate);

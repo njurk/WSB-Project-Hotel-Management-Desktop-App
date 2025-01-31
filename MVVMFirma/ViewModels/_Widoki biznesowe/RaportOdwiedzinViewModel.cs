@@ -104,56 +104,55 @@ namespace MVVMFirma.ViewModels
                 return;
             }
 
-            // Pobierz dane rezerwacji, uwzględniając daty zameldowania i wymeldowania
             var dane = db.Rezerwacja
                          .Where(r => r.DataZameldowania < DataDo && r.DataWymeldowania > DataOd)
-                         .AsEnumerable() // Przekształcamy do pamięci, aby obliczenia odbyły się w pamięci
+                         .AsEnumerable()
                          .Select(r => new
                          {
                              DataStart = r.DataZameldowania.Date,
                              DataEnd = r.DataWymeldowania.Date,
-                             LiczbaRezerwacji = 1, // Zakładamy, że każda rezerwacja to jedna pozycja
+                             LiczbaRezerwacji = 1,
                              LiczbaGosci = ParseLiczba(r.LiczbaDoroslych) + ParseLiczba(r.LiczbaDzieci)
                          })
                          .ToList();
 
-            // Generuj pełny zakres dat od DataOd do DataDo
+            // wszystkie dni danego zakresu ustawiamy do listy
             var wszystkieDaty = Enumerable.Range(0, (DataDo.Value - DataOd.Value).Days + 1)
                                           .Select(d => DataOd.Value.AddDays(d))
                                           .ToList();
 
-            // Uzupełnij etykiety o pełny zakres dat
+            // ustawiamy listę dni jako etykiety wykresu
             Labels = wszystkieDaty.Select(d => d.ToString("dd.MM")).ToList();
 
-            // Przygotuj dane do wykresu, sumując wartości dla poszczególnych dni w zakresie
+            // dla każdego dnia z zakresu obliczamy ile rezerwacji aktualnie trwa - wykres nie
+            // pokazuje dat dokonania rezerwacji tylko okresy trwania rezerwacji
             var liczbaRezerwacji = wszystkieDaty.Select(d =>
-                dane.Where(x => x.DataStart <= d && x.DataEnd >= d) // Sprawdzamy, czy rezerwacja obejmuje dany dzień
+                dane.Where(x => x.DataStart <= d && x.DataEnd >= d)
                     .Sum(x => x.LiczbaRezerwacji)
             ).ToList();
 
+            // tak samo obliczamy liczbę gości w hotelu dla każdego dnia z zakresu
             var liczbaGosci = wszystkieDaty.Select(d =>
-                dane.Where(x => x.DataStart <= d && x.DataEnd >= d) // Sprawdzamy, czy rezerwacja obejmuje dany dzień
+                dane.Where(x => x.DataStart <= d && x.DataEnd >= d)
                     .Sum(x => x.LiczbaGosci)
             ).ToList();
 
-            // Aktualizuj właściwości LiczbaGosci i LiczbaRezerwacji
             LiczbaRezerwacji = dane.Count();
             LiczbaGosci = dane.Sum(x => x.LiczbaGosci);
 
-            // Przypisz dane do wykresu
             SeriesCollection = new SeriesCollection
-    {
-        new LineSeries
-        {
-            Title = "Rezerwacje",
-            Values = new ChartValues<int>(liczbaRezerwacji)
-        },
-        new LineSeries
-        {
-            Title = "Goście",
-            Values = new ChartValues<int>(liczbaGosci)
-        }
-    };
+            {
+                new LineSeries
+                {
+                    Title = "Rezerwacje",
+                    Values = new ChartValues<int>(liczbaRezerwacji)
+                },
+                new LineSeries
+                {
+                    Title = "Goście",
+                    Values = new ChartValues<int>(liczbaGosci)
+                }
+            };
         }
         private int ParseLiczba(string liczba)
         {
