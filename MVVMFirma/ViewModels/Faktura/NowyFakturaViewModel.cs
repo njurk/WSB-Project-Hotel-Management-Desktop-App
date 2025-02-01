@@ -432,6 +432,26 @@ namespace MVVMFirma.ViewModels
                     return string.Empty;
             }
         }
+
+        public string ValidateDuplicate()
+        {
+            var istniejacyRekord = db.Faktura.FirstOrDefault(f =>
+                f.NrFaktury == NrFaktury &&
+                f.IdRezerwacji == IdRezerwacji &&
+                f.NIP == NIP &&
+                f.DataWystawienia == DataWystawienia &&
+                f.DataSprzedazy == DataSprzedazy &&
+                f.KwotaBrutto == KwotaBrutto &&
+                f.IdVat == IdVat &&
+                f.KwotaNetto == KwotaNetto &&
+                f.TerminPlatnosci == TerminPlatnosci &&
+                f.IdFaktury != item.IdFaktury);
+
+            if (istniejacyRekord != null)
+                return $"istnieje już faktura o tych samych danych. Ma ID {istniejacyRekord.IdFaktury}. Możesz ją edytować lub usunąć i dodać na nowo.";
+
+            return string.Empty;
+        }
         #endregion
     }
 }

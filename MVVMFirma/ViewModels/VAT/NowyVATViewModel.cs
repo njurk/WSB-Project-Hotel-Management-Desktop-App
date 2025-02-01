@@ -83,6 +83,18 @@ namespace MVVMFirma.ViewModels
                     return string.Empty;
             }
         }
+
+        public string ValidateDuplicate()
+        {
+            var istniejacyRekord = db.VAT.FirstOrDefault(s =>
+                s.Stawka == Stawka &&
+                s.IdVat != item.IdVat);
+
+            if (istniejacyRekord != null)
+                return $"istnieje już identyczna stawka VAT. Ma ID: {istniejacyRekord.IdVat}. Możesz ją edytować lub usunąć i dodać na nowo.";
+
+            return string.Empty;
+        }
         #endregion
     }
 }

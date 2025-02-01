@@ -100,6 +100,19 @@ namespace MVVMFirma.ViewModels
                     return string.Empty;
             }
         }
+
+        public string ValidateDuplicate()
+        {
+            var istniejacyRekord = db.TypPokoju.FirstOrDefault(s =>
+                s.Nazwa == Nazwa &&
+                s.MaxLiczbaOsob == MaxLiczbaOsob &&
+                s.IdTypuPokoju != item.IdTypuPokoju);
+
+            if (istniejacyRekord != null)
+                return $"istnieje już identyczny typ pokoju. Ma ID: {istniejacyRekord.IdTypuPokoju}. Możesz go edytować lub usunąć i dodać na nowo.";
+
+            return string.Empty;
+        }
         #endregion
     }
 }

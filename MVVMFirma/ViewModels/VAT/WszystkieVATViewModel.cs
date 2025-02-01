@@ -78,7 +78,7 @@ namespace MVVMFirma.ViewModels
         #region Sort and Find
         public override List<string> GetComboboxSortList()
         {
-            return new List<string> { "Stawka" };
+            return new List<string> { "Stawka rosnąco", "Stawka malejąco" };
         }
 
         public override void Sort()
@@ -93,8 +93,12 @@ namespace MVVMFirma.ViewModels
 
             switch (SortField)
             {
-                case "Stawka":
+                case "Stawka rosnąco":
                     result = result.OrderBy(v => int.TryParse(v.Stawka.ToString(), out var stawkaInt) ? stawkaInt : 0);
+                    break;
+
+                case "Stawka malejąco":
+                    result = result.OrderByDescending(v => int.TryParse(v.Stawka.ToString(), out var stawkaInt) ? stawkaInt : 0);
                     break;
 
                 default:

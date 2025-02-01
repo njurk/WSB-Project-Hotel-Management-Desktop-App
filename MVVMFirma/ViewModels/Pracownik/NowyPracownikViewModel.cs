@@ -309,6 +309,29 @@ namespace MVVMFirma.ViewModels
             
             }
         }
+
+        public string ValidateDuplicate()
+        {
+            var istniejacyPracownik = db.Pracownik.FirstOrDefault(p =>
+                p.Imie == Imie &&
+                p.Nazwisko == Nazwisko &&
+                p.Ulica == Ulica &&
+                p.NrDomu == NrDomu &&
+                p.NrLokalu == NrLokalu &&
+                p.KodPocztowy == KodPocztowy &&
+                p.Miasto == Miasto &&
+                p.IdKraju == IdKraju &&
+                p.DataUrodzenia == DataUrodzenia &&
+                p.Email == Email &&
+                p.Telefon == Telefon &&
+                p.IdStanowiska == IdStanowiska &&
+                p.IdPracownika != item.IdPracownika);
+
+            if (istniejacyPracownik != null)
+                return $"istnieje już identyczny pracownik. ID: {istniejacyPracownik.IdPracownika}. Możesz go edytować lub usunąć i dodać na nowo.";
+
+            return string.Empty;
+        }
         #endregion
     }
 }

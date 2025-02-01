@@ -290,6 +290,29 @@ namespace MVVMFirma.ViewModels
 
             }
         }
+
+        public string ValidateDuplicate()
+        {
+            var istniejacyRekord = db.Klient.FirstOrDefault(k =>
+                k.Imie == Imie &&
+                k.Nazwisko == Nazwisko &&
+                k.Ulica == Ulica &&
+                k.NrDomu == NrDomu &&
+                k.NrLokalu == NrLokalu &&
+                k.KodPocztowy == KodPocztowy &&
+                k.Miasto == Miasto &&
+                k.IdKraju == IdKraju &&
+                k.Email == Email &&
+                k.Telefon == Telefon &&
+                k.NIP == NIP &&
+                k.IdKlienta != item.IdKlienta);
+
+            if (istniejacyRekord != null)
+                return $"istnieje już klient o tych samych danych. Ma ID {istniejacyRekord.IdKlienta}. Możesz go edytować lub usunąć i dodać na nowo.";
+
+            return string.Empty;
+        }
+
         #endregion
     }
 }

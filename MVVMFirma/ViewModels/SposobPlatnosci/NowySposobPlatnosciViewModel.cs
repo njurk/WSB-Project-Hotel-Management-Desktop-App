@@ -83,6 +83,18 @@ namespace MVVMFirma.ViewModels
                     return string.Empty;
             }
         }
+
+        public string ValidateDuplicate()
+        {
+            var istniejacyRekord = db.SposobPlatnosci.FirstOrDefault(s =>
+                s.Nazwa == Nazwa &&
+                s.IdSposobuPlatnosci != item.IdSposobuPlatnosci);
+
+            if (istniejacyRekord != null)
+                return $"istnieje już identyczny sposób płatności. Ma ID: {istniejacyRekord.IdSposobuPlatnosci}. Możesz go edytować lub usunąć i dodać na nowo.";
+
+            return string.Empty;
+        }
         #endregion
     }
 }

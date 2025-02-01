@@ -318,6 +318,24 @@ namespace MVVMFirma.ViewModels
                     return string.Empty;
             }
         }
+
+        public string ValidateDuplicate()
+        {
+            var istniejacyRekord = db.Platnosc.FirstOrDefault(p =>
+                p.NrPlatnosci == NrPlatnosci &&
+                p.IdRezerwacji == IdRezerwacji &&
+                p.IdSposobuPlatnosci == IdSposobuPlatnosci &&
+                p.IdStatusuPlatnosci == IdStatusuPlatnosci &&
+                p.DataPlatnosci == DataPlatnosci &&
+                p.Kwota == Kwota &&
+                p.IdPlatnosci != item.IdPlatnosci);
+
+            if (istniejacyRekord != null)
+                return $"istnieje już identyczna płatność. Ma ID: {istniejacyRekord.IdPlatnosci}. Możesz ją edytować lub usunąć i dodać na nowo.";
+
+            return string.Empty;
+        }
+
         #endregion
     }
 }

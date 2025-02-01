@@ -78,7 +78,7 @@ namespace MVVMFirma.ViewModels
         // tu decydujemy po czym sortować
         public override List<string> GetComboboxSortList()
         {
-            return new List<string> { "Klasa pokoju", "Typ pokoju", "Cena za dorosłego", "Cena za dziecko", "Cena za zwierzęta" };
+            return new List<string> { "Klasa pokoju", "Typ pokoju", "Ceny rosnąco", "Ceny malejąco"};
         }
 
         // tu decydujemy jak sortować
@@ -96,16 +96,12 @@ namespace MVVMFirma.ViewModels
                     query = query.OrderBy(c => c.TypPokoju.Nazwa);
                     break;
 
-                case "Cena za dorosłego":
+                case "Ceny rosnąco":
                     query = query.OrderBy(c => c.CenaDorosly);
                     break;
 
-                case "Cena za dziecko":
-                    query = query.OrderBy(c => c.CenaDziecko);
-                    break;
-
-                case "Cena za zwierzęta":
-                    query = query.OrderBy(c => c.CenaZwierzeta);
+                case "Ceny malejąco":
+                    query = query.OrderBy(c => c.CenaDorosly);
                     break;
 
                 default:

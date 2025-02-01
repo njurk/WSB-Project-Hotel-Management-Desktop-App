@@ -92,7 +92,7 @@ namespace MVVMFirma.ViewModels
         #region Sort and Find
         public override List<string> GetComboboxSortList()
         {
-            return new List<string> { "Numer rezerwacji", "Imie", "Nazwisko", "Numer pokoju", "Liczba dorosłych", "Liczba dzieci", "Zwierzęta", "Data rezerwacji", "Data zameldowania", "Data wymeldowania", "Kwota", "Zapłacone","Zniżki" };
+            return new List<string> { "Numer rezerwacji", "Imie", "Nazwisko", "Numer pokoju", "Liczba dorosłych", "Liczba dzieci", "Zwierzęta", "Data rezerwacji", "Data zameldowania", "Data wymeldowania", "Kwota rosnąco", "Kwota malejąco", "Zapłacone","Zniżki" };
         }
 
         public override void Sort()
@@ -130,19 +130,23 @@ namespace MVVMFirma.ViewModels
                     break;
 
                 case "Data rezerwacji":
-                    query = query.OrderBy(r => r.DataRezerwacji);
+                    query = query.OrderByDescending(r => r.DataRezerwacji);
                     break;
 
                 case "Data zameldowania":
-                    query = query.OrderBy(r => r.DataZameldowania);
+                    query = query.OrderByDescending(r => r.DataZameldowania);
                     break;
 
                 case "Data wymeldowania":
-                    query = query.OrderBy(r => r.DataWymeldowania);
+                    query = query.OrderByDescending(r => r.DataWymeldowania);
                     break;
 
-                case "Kwota":
+                case "Kwota rosnąco":
                     query = query.OrderBy(r => r.Kwota);
+                    break;
+
+                case "Kwota malejąco":
+                    query = query.OrderByDescending(r => r.Kwota);
                     break;
 
                 case "Zapłacone":

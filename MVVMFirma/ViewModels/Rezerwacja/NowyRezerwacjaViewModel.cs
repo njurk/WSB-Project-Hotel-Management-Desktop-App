@@ -524,6 +524,30 @@ namespace MVVMFirma.ViewModels
                     return string.Empty;
             }
         }
+
+        public string ValidateDuplicate()
+        {
+            var istniejacaRezerwacja = db.Rezerwacja.FirstOrDefault(r =>
+                r.NrRezerwacji == NrRezerwacji &&
+                r.IdKlienta == IdKlienta &&
+                r.IdPokoju == IdPokoju &&
+                r.LiczbaDoroslych == LiczbaDoroslych &&
+                r.LiczbaDzieci == LiczbaDzieci &&
+                r.CzyZwierzeta == CzyZwierzeta &&
+                r.DataZameldowania == DataZameldowania &&
+                r.DataWymeldowania == DataWymeldowania &&
+                r.DataRezerwacji == DataRezerwacji &&
+                r.Uwagi == Uwagi &&
+                r.IdZnizki == IdZnizki &&
+                r.Kwota == Kwota &&
+                r.IdRezerwacji != item.IdRezerwacji);
+
+            if (istniejacaRezerwacja != null)
+                return $"istnieje już identyczna rezerwacja. Ma ID: {istniejacaRezerwacja.NrRezerwacji}. Możesz ją edytować lub usunąć i dodać na nowo.";
+
+            return string.Empty;
+        }
+
         #endregion
     }
 }

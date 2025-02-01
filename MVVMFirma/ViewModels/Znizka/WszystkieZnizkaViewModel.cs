@@ -78,7 +78,7 @@ namespace MVVMFirma.ViewModels
         #region Sort and Find
         public override List<string> GetComboboxSortList()
         {
-            return new List<string> { "Nazwa", "Wartość" };
+            return new List<string> { "Nazwa", "Wartość rosnąco", "Wartość malejąco" };
         }
 
         public override void Sort()
@@ -99,8 +99,12 @@ namespace MVVMFirma.ViewModels
                     result = result.OrderBy(z => z.Nazwa);
                     break;
 
-                case "Wartość":
+                case "Wartość rosnąco":
                     result = result.OrderBy(z => int.TryParse(z.Wartosc.ToString(), out var wartoscInt) ? wartoscInt : 0);
+                    break;
+
+                case "Wartość malejąco":
+                    result = result.OrderByDescending(z => int.TryParse(z.Wartosc.ToString(), out var wartoscInt) ? wartoscInt : 0);
                     break;
 
                 default:

@@ -71,19 +71,21 @@ namespace MVVMFirma.ViewModels
                 }
             }
 
-            // walidacja klasy z Cennikiem pod kątem duplikatu, wtedy nie wyświetla się
-            // komunikat o powodzeniu
-            if (this is NowyCennikViewModel cennikViewModel)
+            var validateDuplicateMethod = this.GetType().GetMethod("ValidateDuplicate");
+
+            if (validateDuplicateMethod != null)
             {
-                string cennikDuplicate = cennikViewModel.ValidateDuplicate();
-                if (!string.IsNullOrEmpty(cennikDuplicate))
+                // wywołanie ValidateDuplicate jeśli dostępna
+                var result = validateDuplicateMethod.Invoke(this, null) as string;
+                if (!string.IsNullOrEmpty(result))
                 {
-                    allErrors.Add(cennikDuplicate);
+                    allErrors.Add(result);
                 }
             }
 
             return allErrors;
         }
+
 
         private void ValidateAndSave()
         {
@@ -94,7 +96,7 @@ namespace MVVMFirma.ViewModels
                 if (validationErrors.Count > 0)
                 {
                     string errorMessages = string.Join(Environment.NewLine + "- ", validationErrors);
-                    MessageBox.Show("Proszę prawidłowo wypełnić formularz\n- " + errorMessages, "Błędny formularz", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Proszę poprawić formularz\n- " + errorMessages, "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
 
                 else

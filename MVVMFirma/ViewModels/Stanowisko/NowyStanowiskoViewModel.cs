@@ -99,6 +99,19 @@ namespace MVVMFirma.ViewModels
                     return string.Empty;
             }
         }
+
+        public string ValidateDuplicate()
+        {
+            var istniejacyRekord = db.Stanowisko.FirstOrDefault(s =>
+                s.Nazwa == Nazwa &&
+                s.StawkaGodzinowa == StawkaGodzinowa &&
+                s.IdStanowiska != item.IdStanowiska);
+
+            if (istniejacyRekord != null)
+                return $"istnieje już identyczne stanowisko. Ma ID: {istniejacyRekord.IdStanowiska}. Możesz je edytować lub usunąć i dodać na nowo.";
+
+            return string.Empty;
+        }
         #endregion
     }
 }

@@ -100,6 +100,19 @@ namespace MVVMFirma.ViewModels
                     return string.Empty;
             }
         }
+
+        public string ValidateDuplicate()
+        {
+            var istniejacyRekord = db.Znizka.FirstOrDefault(s =>
+                s.Nazwa == Nazwa &&
+                s.Wartosc == Wartosc &&
+                s.IdZnizki != item.IdZnizki);
+
+            if (istniejacyRekord != null)
+                return $"istnieje już identyczna zniżka. Ma ID: {istniejacyRekord.IdZnizki}. Możesz ją edytować lub usunąć i dodać na nowo.";
+
+            return string.Empty;
+        }
         #endregion
     }
 }

@@ -91,8 +91,8 @@ namespace MVVMFirma.ViewModels
         // tu decydujemy po czym sortować
         public override List<string> GetComboboxSortList()
         {
-            return new List<string> { "Numer faktury", "Numer rezerwacji", "NIP", "Imie klienta", "Nazwisko klienta", "Data wystawienia", "Data sprzedaży", "Kwota netto", 
-                "Procent VAT", "Kwota brutto", "Termin płatności", "Zapłacono" };
+            return new List<string> { "Numer faktury", "Numer rezerwacji", "NIP", "Imie klienta", "Nazwisko klienta", "Data wystawienia", "Data sprzedaży", 
+                "Kwota rosnąco", "Kwota malejąco", "Termin płatności", "Zapłacono" };
         }
 
         // tu decydujemy jak sortować
@@ -123,27 +123,23 @@ namespace MVVMFirma.ViewModels
                     break;
 
                 case "Data wystawienia":
-                    query = query.OrderBy(f => f.DataWystawienia);
+                    query = query.OrderByDescending(f => f.DataWystawienia);
                     break;
 
                 case "Data sprzedaży":
-                    query = query.OrderBy(f => f.DataSprzedazy);
+                    query = query.OrderByDescending(f => f.DataSprzedazy);
                     break;
 
-                case "Kwota netto":
-                    query = query.OrderBy(f => f.KwotaNetto);
-                    break;
-
-                case "Procent VAT":
-                    query = query.OrderBy(f => f.VAT.Stawka);
-                    break;
-
-                case "Kwota brutto":
+                case "Kwota rosnąco":
                     query = query.OrderBy(f => f.KwotaBrutto);
                     break;
 
+                case "Kwota malejąco":
+                    query = query.OrderByDescending(f => f.KwotaBrutto);
+                    break;
+
                 case "Termin płatności":
-                    query = query.OrderBy(f => f.TerminPlatnosci);
+                    query = query.OrderByDescending(f => f.TerminPlatnosci);
                     break;
 
                 case "Zapłacono":
@@ -161,7 +157,7 @@ namespace MVVMFirma.ViewModels
         // tu decydujemy po czym wyszukiwać
         public override List<string> GetComboboxFindList()
         {
-            return new List<string> { "Numer faktury", "Numer rezerwacji", "NIP", "Imie klienta", "Nazwisko klienta", "Kwota netto", "Kwota brutto", "Opis"};
+            return new List<string> { "Numer faktury", "Numer rezerwacji", "NIP", "Imie klienta", "Nazwisko klienta", "Opis"};
         }
 
         // tu decydujemy jak wyszukiwać
@@ -191,20 +187,6 @@ namespace MVVMFirma.ViewModels
 
                     case "Nazwisko klienta":
                         query = query.Where(f => f.Rezerwacja.Klient.Nazwisko.Contains(FindTextBox));
-                        break;
-
-                    case "Kwota netto":
-                        if (decimal.TryParse(FindTextBox, out decimal kwotaNetto))
-                        {
-                            query = query.Where(f => f.KwotaNetto == kwotaNetto);
-                        }
-                        break;
-
-                    case "Kwota brutto":
-                        if (decimal.TryParse(FindTextBox, out decimal kwotaBrutto))
-                        {
-                            query = query.Where(f => f.KwotaBrutto == kwotaBrutto);
-                        }
                         break;
 
                     case "Opis":

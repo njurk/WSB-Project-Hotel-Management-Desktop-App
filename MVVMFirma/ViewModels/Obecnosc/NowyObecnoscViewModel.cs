@@ -149,6 +149,7 @@ namespace MVVMFirma.ViewModels
             }
         }
 
+        // zmiana dostępności kontrolek
         public bool IsGodzinyEnabled => CzyObecny; // aktywne tylko kiedy czyobecny=true
         public bool IsUsprawiedliwionyEnabled => !CzyObecny; // aktywne tylko kiedy czyobecny=false
         #endregion
@@ -203,57 +204,6 @@ namespace MVVMFirma.ViewModels
         }
         #endregion
 
-        #region Validation
-        protected override string ValidateProperty(string propertyName)
-        {
-            if (CzyObecny)
-            {
-                switch (propertyName)
-                {
-                    case nameof(GodzinaRozpoczecia):
-                        return GodzinaRozpoczecia == null || GodzinaRozpoczecia >= GodzinaZakonczenia
-                            ? "wprowadź poprawną godzinę rozpoczęcia"
-                            : string.Empty;
-
-                    case nameof(GodzinaZakonczenia):
-                        return GodzinaZakonczenia == null || GodzinaZakonczenia <= GodzinaRozpoczecia
-                            ? "wprowadź poprawną godzinę zakończenia"
-                            : string.Empty;
-
-                    case nameof(CzyUsprawiedliwiony):
-                        return string.Empty;
-                }
-            }
-
-            if (!CzyObecny)
-            {
-                switch (propertyName)
-                {
-                    case nameof(GodzinaRozpoczecia):
-                    case nameof(GodzinaZakonczenia):
-                        return string.Empty;
-
-                    case nameof(CzyUsprawiedliwiony):
-                        return string.Empty;
-                }
-            }
-
-            switch (propertyName)
-            {
-                case nameof(ImieNazwiskoPracownika):
-                    return string.IsNullOrEmpty(ImieNazwiskoPracownika) ? "wybierz pracownika" : string.Empty;
-
-                case nameof(Data):
-                    return Data == default || Data > DateTime.Now ? "wprowadź poprawną datę" : string.Empty;
-
-                default:
-                    return string.Empty;
-            }
-        }
-
-
-        #endregion
-
         #region Constructors
         public NowyObecnoscViewModel()
             : base("Obecność")
@@ -284,6 +234,70 @@ namespace MVVMFirma.ViewModels
                 Uwagi = item.Uwagi;
             }
             Messenger.Default.Register<int>(this, idPracownika => IdPracownika = idPracownika);
+        }
+        #endregion
+
+        #region Validation
+        protected override string ValidateProperty(string propertyName)
+        {
+            if (CzyObecny)
+            {
+                switch (propertyName)
+                {
+                    case nameof(GodzinaRozpoczecia):
+                        return GodzinaRozpoczecia == null || GodzinaRozpoczecia >= GodzinaZakonczenia
+                            ? "wprowadź poprawną godzinę rozpoczęcia"
+                            : string.Empty;
+
+                    case nameof(GodzinaZakonczenia):
+                        return GodzinaZakonczenia == null || GodzinaZakonczenia <= GodzinaRozpoczecia
+                            ? "wprowadź poprawną godzinę zakończenia"
+                            : string.Empty;
+
+                    case nameof(CzyUsprawiedliwiony):
+                        return string.Empty;
+                }
+            }
+
+            if (!CzyObecny)
+            {
+                switch (propertyName)
+                {
+                    case nameof(GodzinaRozpoczecia):
+                    case nameof(GodzinaZakonczenia):
+                    case nameof(CzyUsprawiedliwiony):
+                        return string.Empty;
+                }
+            }
+
+            switch (propertyName)
+            {
+                case nameof(ImieNazwiskoPracownika):
+                    return string.IsNullOrEmpty(ImieNazwiskoPracownika) ? "wybierz pracownika" : string.Empty;
+
+                case nameof(Data):
+                    return Data == default || Data > DateTime.Now ? "wprowadź poprawną datę" : string.Empty;
+
+                default:
+                    return string.Empty;
+            }
+        }
+
+        public string ValidateDuplicate()
+        {
+            var istniejacyRekord = db.Obecnosc.FirstOrDefault(o =>
+                o.IdPracownika == IdPracownika &&
+                o.Data == Data &&
+                o.CzyObecny == CzyObecny &&
+                o.GodzinaRozpoczecia == GodzinaRozpoczecia &&
+                o.GodzinaZakonczenia == GodzinaZakonczenia &&
+                o.CzyUsprawiedliwiony == CzyUsprawiedliwiony &&
+                o.IdObecnosci != item.IdObecnosci);
+
+            if (istniejacyRekord != null)
+                return $"istnieje już identyczny zapis obecności. ID: {istniejacyRekord.IdObecnosci}.";
+
+            return string.Empty;
         }
         #endregion
     }

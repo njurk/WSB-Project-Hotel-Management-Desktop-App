@@ -101,13 +101,6 @@ namespace MVVMFirma.ViewModels
         #region Helpers
         public override void Save()
         {
-            string validationError = ValidateCennik();
-            if (!string.IsNullOrEmpty(validationError))
-            {
-                MessageBox.Show(validationError, "Błąd walidacji", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
-
             if (item.IdCennika == 0) // Dodawanie rekordu = brak ID = insert
             {
                 db.Cennik.Add(item);
@@ -124,22 +117,6 @@ namespace MVVMFirma.ViewModels
             db.SaveChanges();
             
             Messenger.Default.Send("CennikRefresh");
-        }
-        #endregion
-
-        #region Methods
-        // metoda sprawdzająca czy istnieje już cennnik dla wybranej pary kluczy obcych
-        public string ValidateDuplicate()
-        {
-            var istniejacyCennik = db.Cennik.FirstOrDefault(c =>
-                c.IdTypuPokoju == IdTypuPokoju &&
-                c.IdKlasyPokoju == IdKlasyPokoju &&
-                c.IdCennika != item.IdCennika);
-
-            if (istniejacyCennik != null)
-                return $"istnieje cennik dla podanej pary typu i klasy pokoju, ma ID {istniejacyCennik.IdCennika}. Możesz go edytować, lub usunąć i dodać na nowo.";
-
-            return string.Empty;
         }
         #endregion
 
@@ -192,6 +169,20 @@ namespace MVVMFirma.ViewModels
                 default:
                     return string.Empty;
             }
+        }
+
+        // metoda sprawdzająca czy istnieje już cennnik dla wybranej pary kluczy obcych
+        public string ValidateDuplicate()
+        {
+            var istniejacyRekord = db.Cennik.FirstOrDefault(c =>
+                c.IdTypuPokoju == IdTypuPokoju &&
+                c.IdKlasyPokoju == IdKlasyPokoju &&
+                c.IdCennika != item.IdCennika);
+
+            if (istniejacyRekord != null)
+                return $"istnieje już cennik dla podanej pary typu i klasy pokoju. Ma ID {istniejacyRekord.IdCennika}. Możesz go edytować, lub usunąć i dodać na nowo.";
+
+            return string.Empty;
         }
         #endregion
     }

@@ -105,11 +105,11 @@ namespace MVVMFirma.ViewModels
                     break;
 
                 case "Data obecności":
-                    query = query.OrderBy(o => o.Data);
+                    query = query.OrderByDescending(o => o.Data);
                     break;
 
                 case "Obecność":
-                    query = query.OrderBy(o => o.CzyObecny);
+                    query = query.OrderByDescending(o => o.CzyObecny);
                     break;
 
                 case "Godzina rozpoczęcia":
@@ -121,7 +121,7 @@ namespace MVVMFirma.ViewModels
                     break;
 
                 case "Usprawiedliwiony":
-                    query = query.OrderBy(o => o.CzyUsprawiedliwiony);
+                    query = query.OrderByDescending(o => o.CzyUsprawiedliwiony);
                     break;
 
                 default:

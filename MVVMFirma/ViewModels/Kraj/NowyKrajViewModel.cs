@@ -82,6 +82,19 @@ namespace MVVMFirma.ViewModels
                     return string.Empty;
             }
         }
+
+        public string ValidateDuplicate()
+        {
+            var istniejacyRekord = db.Kraj.FirstOrDefault(k =>
+                k.Nazwa == Nazwa &&
+                k.IdKraju != item.IdKraju);
+
+            if (istniejacyRekord != null)
+                return $"ten kraj już istnieje. Ma ID {istniejacyRekord.IdKraju}. Możesz go edytować lub usunąć i dodać na nowo.";
+
+            return string.Empty;
+        }
+
         #endregion
     }
 }

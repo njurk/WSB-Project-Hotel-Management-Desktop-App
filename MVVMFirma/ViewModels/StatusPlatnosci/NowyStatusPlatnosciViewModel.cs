@@ -87,6 +87,18 @@ namespace MVVMFirma.ViewModels
                     return string.Empty;
             }
         }
+
+        public string ValidateDuplicate()
+        {
+            var istniejacyRekord = db.StatusPlatnosci.FirstOrDefault(s =>
+                s.Nazwa == Nazwa &&
+                s.IdStatusuPlatnosci != item.IdStatusuPlatnosci);
+
+            if (istniejacyRekord != null)
+                return $"istnieje już identyczny status płatności. Ma ID: {istniejacyRekord.IdStatusuPlatnosci}. Możesz go edytować lub usunąć i dodać na nowo.";
+
+            return string.Empty;
+        }
         #endregion
     }
 }

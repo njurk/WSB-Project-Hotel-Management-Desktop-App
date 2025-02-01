@@ -138,6 +138,20 @@ namespace MVVMFirma.ViewModels
 
             }
         }
+
+        public string ValidateDuplicate()
+        {
+            var istniejacyRekord = db.Pokoj.FirstOrDefault(p =>
+                p.NrPokoju == NrPokoju &&
+                p.IdTypuPokoju == IdTypuPokoju &&
+                p.IdKlasyPokoju == IdKlasyPokoju &&
+                p.IdPokoju != item.IdPokoju);
+
+            if (istniejacyRekord != null)
+                return $"istnieje już identyczny pokój. ID: {istniejacyRekord.IdPokoju}. Możesz go edytować lub usunąć i dodać na nowo.";
+
+            return string.Empty;
+        }
         #endregion
     }
 }
