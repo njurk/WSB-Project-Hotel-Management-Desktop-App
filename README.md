@@ -1,4 +1,6 @@
-A desktop app for managing a hotel database in .NET Framework 4.8 with Entity Framework. Database-First approach. 
+A desktop app for managing a hotel database in .NET Framework 4.8 with Entity Framework. 
+Database-First approach.
+Model-View-ViewModel (MVVM).
 Uses LiveCharts and Extended WPF Toolkit.
 
 ![1](https://github.com/user-attachments/assets/abeb5843-7263-48cb-b826-d4e12b27e4eb)
